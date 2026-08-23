@@ -1,0 +1,97 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   tokens.chart.css — the categorical palette for data visualisation.
+
+   WHY THIS IS A SEPARATE FILE FROM THE BRAND ACCENT
+   -------------------------------------------------
+   A chart's colours do a different job from a brand's colours, so they are
+   not derived from the accent and they are not the status ramp.
+
+     brand accent (--accent)   identity. One hue. "This is Anthony."
+     status (--forest/rust)    state. RESERVED — never a series colour.
+     categorical (this file)   IDENTITY OF A SERIES. Needs 8 hues that a
+                               human can tell apart at a glance, including
+                               the ~8% of men with a colour-vision
+                               deficiency.
+
+   Trying to derive eight distinguishable series hues from one amber gives
+   you eight ambers nobody can separate. Charts genuinely need the range —
+   the constraint is separability, not restraint.
+
+   THESE VALUES ARE VALIDATED, NOT CHOSEN BY EYE
+   ----------------------------------------------
+   Both modes pass every hard gate of the six-check colour formula:
+
+     lightness band     PASS  (all 8 inside the mode's band)
+     chroma floor       PASS  (all 8 >= 0.1)
+     CVD separation     PASS  worst adjacent dE 9.1 light / 8.4 dark  (>=8)
+     normal-vision      PASS  worst adjacent dE 19.6 light / 19.3 dark (>=15)
+     contrast           light: slots 3, 4, 5 sit below 3:1 — see RELIEF below
+                        dark:  all 8 clear 3:1
+
+   The ORDER is the colourblind-safety mechanism, not decoration. Slots are
+   assigned in fixed order and NEVER cycled. Re-ordering silently breaks the
+   adjacent-pair separation the gates above measure. If you change anything
+   here, re-run the validator on both modes before shipping.
+
+   RULES OF USE
+   ------------
+   - Fixed order, never cycled. A 9th series is not a generated hue: fold it
+     into "Other", facet into small multiples, or cut it. (`stats-pie.tsx`
+     already does this correctly — top 8 + "Other".)
+   - Colour follows the ENTITY, never its rank. A filter that changes the
+     series count must not repaint the survivors. Map name -> slot once.
+   - RELIEF: on light mode, slots 3/4/5 fall below 3:1 against the surface.
+     That is legal only with visible direct labels or a table view — which
+     the donut's centre readout and the legend already provide. Do not use
+     those three as the ONLY signal for a mark with no label.
+   - Never colour-alone: >=2 series always carries a legend, and <=4 are also
+     direct-labelled.
+   - Text wears text tokens (--ink / --ink-soft / --slate), never the series
+     colour. A coloured mark beside a label carries the identity.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --chart-surface: var(--card);
+
+  --chart-1: #2a78d6; /* blue    */
+  --chart-2: #eb6834; /* orange  */
+  --chart-3: #1baf7a; /* aqua    — relief required (2.74:1) */
+  --chart-4: #eda100; /* yellow  — relief required (2.11:1) */
+  --chart-5: #e87ba4; /* magenta — relief required (2.62:1) */
+  --chart-6: #008300; /* green   */
+  --chart-7: #4a3aa7; /* violet  */
+  --chart-8: #e34948; /* red     */
+
+  /* Everything past slot 8 aggregates here. Deliberately neutral: "Other"
+     is not an entity, so it does not earn a hue. */
+  --chart-other: var(--slate);
+
+  /* Axes, gridlines and the ring behind overlapping marks. Recessive by
+     design — the data is the ink, the frame is not. */
+  --chart-grid: var(--line);
+  --chart-axis: var(--slate);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --chart-1: #3987e5;
+    --chart-2: #d95926;
+    --chart-3: #199e70;
+    --chart-4: #c98500;
+    --chart-5: #d55181;
+    --chart-6: #008300;
+    --chart-7: #9085e9;
+    --chart-8: #e66767;
+  }
+}
+
+:root[data-theme='dark'] {
+  --chart-1: #3987e5;
+  --chart-2: #d95926;
+  --chart-3: #199e70;
+  --chart-4: #c98500;
+  --chart-5: #d55181;
+  --chart-6: #008300;
+  --chart-7: #9085e9;
+  --chart-8: #e66767;
+}
