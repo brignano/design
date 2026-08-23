@@ -1,0 +1,55 @@
+/* Tailwind v4 bridge for @brignano/design.
+   Import AFTER tokens.css and after `@import "tailwindcss"`:
+
+     @import "tailwindcss";
+     @import "@brignano/design/tokens.css";
+     @import "@brignano/design/tailwind.css";
+
+   `@theme inline` is load-bearing: it makes the generated utilities emit
+   `var(--i)` rather than baking a literal at build time, so `bg-interactive`
+   follows the light/dark switch instead of freezing one theme's value. */
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-slate: var(--slate);
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
+
+  --color-interactive: var(--i);
+  --color-interactive-ink: var(--i-ink);
+  --color-interactive-hover: var(--i-hover);
+  --color-interactive-pressed: var(--i-pressed);
+  --color-interactive-surface: var(--i-surface);
+  --color-on-interactive: var(--on-i);
+
+  --color-success: var(--success);
+  --color-success-ink: var(--success-ink);
+  --color-success-surface: var(--success-surface);
+  --color-attention: var(--attention);
+  --color-attention-ink: var(--attention-ink);
+  --color-attention-surface: var(--attention-surface);
+  --color-danger: var(--danger);
+  --color-danger-ink: var(--danger-ink);
+  --color-danger-surface: var(--danger-surface);
+
+  --color-mark: var(--mark);
+  --color-mark-ink: var(--mark-ink);
+
+  --font-sans: var(--sans);
+  --font-mono: var(--mono);
+  --font-display: var(--display);
+
+  --radius-sm: var(--radius-sm);
+  --radius-DEFAULT: var(--radius);
+  --radius-lg: var(--radius-lg);
+
+  --shadow-1: var(--shadow-1);
+  --shadow-2: var(--shadow-2);
+  --shadow-3: var(--shadow-3);
+
+  --ease-brand: var(--ease);
+}

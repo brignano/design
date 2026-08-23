@@ -1,15 +1,29 @@
 {
   "name": "@brignano/design",
   "version": "0.1.0",
-  "description": "Shared design system for brignano surfaces — colour, type, space, shape, motion.",
+  "description": "Shared design system for brignano surfaces \u2014 colour, type, space, shape, motion.",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/brignano/design.git" },
-  "publishConfig": { "access": "public", "provenance": true },
-  "files": ["tokens.css", "tokens.chart.css", "tailwind-preset.js", "DESIGN.md", "DECISIONS.md"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brignano/design.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "tokens.css",
+    "tokens.chart.css",
+    "tailwind.css",
+    "DESIGN.md",
+    "DECISIONS.md"
+  ],
   "exports": {
     "./tokens.css": "./tokens.css",
     "./tokens.chart.css": "./tokens.chart.css",
-    "./tailwind-preset": "./tailwind-preset.js"
+    "./tailwind.css": "./tailwind.css"
   },
-  "sideEffects": ["*.css"]
+  "sideEffects": [
+    "*.css"
+  ]
 }
