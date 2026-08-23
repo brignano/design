@@ -70,6 +70,31 @@
      design — the data is the ink, the frame is not. */
   --chart-grid: var(--line);
   --chart-axis: var(--slate);
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SEQUENTIAL — one hue, light to dark, for CONTINUOUS MAGNITUDE.
+   Not categorical. Use when the thing being coloured is "how much", not
+   "which one": the GitHub contribution heatmap, a density map, a calendar.
+
+   Rules that differ from the categorical palette above:
+     - ONE hue. Never a rainbow — a rainbow implies categories where there
+       are only degrees.
+     - Lightness must be MONOTONIC. Verified: light L 0.838 -> 0.107
+       descending, dark L 0.015 -> 0.532 ascending, every adjacent step
+       separated by dL >= 0.037.
+     - `--seq-0` is NEUTRAL on purpose. Zero contributions is not a small
+       amount of the hue, it is the absence of a value — colouring it a pale
+       blue would claim data that isn't there.
+
+   The hue is cobalt, the same family as --i. That is intentional: a
+   magnitude ramp is informational, the same register as a link, and giving
+   it its own hue would add a meaning the system doesn't need.
+   ───────────────────────────────────────────────────────────────────────── */
+  --seq-0: var(--line);
+  --seq-1: #c7dcfb;
+  --seq-2: #8ab4f4;
+  --seq-3: #3b82f6;
+  --seq-4: #1d4ed8;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -82,6 +107,12 @@
     --chart-6: #008300;
     --chart-7: #9085e9;
     --chart-8: #e66767;
+
+    --seq-0: var(--line);
+    --seq-1: #1e3a8a;
+    --seq-2: #1d4ed8;
+    --seq-3: #3b82f6;
+    --seq-4: #93c5fd;
   }
 }
 
@@ -94,4 +125,10 @@
   --chart-6: #008300;
   --chart-7: #9085e9;
   --chart-8: #e66767;
+
+  --seq-0: var(--line);
+  --seq-1: #1e3a8a;
+  --seq-2: #1d4ed8;
+  --seq-3: #3b82f6;
+  --seq-4: #93c5fd;
 }
