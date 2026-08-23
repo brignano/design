@@ -171,7 +171,36 @@ Non-negotiable in both themes:
 - Measured ratios sit next to their values in `tokens.css`. Changing a value means
   re-measuring it.
 
-## 10. The one rule that keeps this true
+## 10. Integrating with a Tailwind consumer
+
+Tailwind's dark variant keys off a `.dark` class; these tokens key off
+`[data-theme]`. **Both must be set together**, by the same code, in both places
+that change the theme (the pre-paint script and the toggle):
+
+```js
+root.classList.toggle("dark", d);
+root.setAttribute("data-theme", d ? "dark" : "light");
+```
+
+Setting only the class is a silent, half-broken state: Tailwind utilities flip
+but the tokens do not, and the page renders one theme's tokens under the other
+theme's utilities. Setting only the attribute leaves every `dark:` utility dead.
+
+The reason the attribute is required rather than relying on
+`prefers-color-scheme`: a site with a manual toggle has already *resolved* the
+OS preference into an explicit choice. If the tokens also consulted the media
+query, a user on a dark OS who chose light would get dark tokens under light
+utilities. `[data-theme]` is what makes the choice authoritative.
+
+Import order matters — Tailwind first, then tokens, then the bridge:
+
+```css
+@import "tailwindcss";
+@import "@brignano/design/tokens.css";
+@import "@brignano/design/tailwind.css";
+```
+
+## 11. The one rule that keeps this true
 
 **Never hardcode a hex outside `tokens.css`.**
 
