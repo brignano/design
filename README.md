@@ -59,5 +59,9 @@ npm version minor   # bumps package.json, commits, tags
 git push --follow-tags
 ```
 
-Publishing is done by CI, never from a laptop: provenance attestation needs the
-OIDC token that only a runner has.
+Publishing is done by CI, never from a laptop. There is no npm token anywhere in
+this repo and there should never be one — the runner exchanges its OIDC identity
+for a short-lived credential via npm [trusted publishing][tp], which is also what
+produces the provenance attestation. A laptop has no such identity.
+
+[tp]: https://docs.npmjs.com/trusted-publishers/
