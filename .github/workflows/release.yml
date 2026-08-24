@@ -1,0 +1,53 @@
+name: Release
+
+# Publishes to npm when a v* tag is pushed. The tag is the trigger and the
+# source of truth for the version — see the guard step below.
+#
+#   npm version minor && git push --follow-tags
+#
+# Auth today is a granular access token in the NPM_TOKEN secret. Once the
+# package exists on the registry, configure a Trusted Publisher on npmjs.com
+# (Settings -> Trusted Publisher -> GitHub Actions) and the token can be
+# deleted: OIDC covers auth and provenance on its own.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for provenance attestation
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      # A tag that disagrees with package.json publishes a version nobody can
+      # find by tag. npm versions are immutable, so catch it before publish.
+      - name: Tag matches package.json version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "::error::tag v${tag} does not match package.json version ${pkg}"
+            exit 1
+          fi
+          echo "publishing ${pkg}"
+
+      # No install step: the package is CSS and markdown, with no dependencies
+      # and no build. --access and --provenance come from publishConfig.
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
