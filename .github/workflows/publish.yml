@@ -1,4 +1,4 @@
-name: Release
+name: Publish
 
 # Publishes to npm when a v* tag is pushed. The tag is the trigger and the
 # source of truth for the version — see the guard step below.
@@ -8,8 +8,14 @@ name: Release
 # Auth is npm trusted publishing (OIDC). There is no NPM_TOKEN and there
 # should never be one: the runner exchanges its OIDC identity for a
 # short-lived credential, which also produces the provenance attestation.
+#
 # This requires a Trusted Publisher configured on npmjs.com for the package,
-# pointing at this repo and this workflow filename.
+# pointing at this repo and at this file BY NAME — the filename is part of
+# the OIDC claim, not a label. Renaming this file without changing the npm
+# setting to match breaks publishing, and it fails as ENEEDAUTH rather than
+# as anything that mentions the name: npm declines the exchange, npm publish
+# falls through to token auth, and there is no token. `publish.yml` is the
+# name npm's own setup form suggests, which is the whole reason to use it.
 
 on:
   push:

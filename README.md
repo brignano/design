@@ -55,7 +55,7 @@ something actually looks different.
 
 ## Releasing
 
-The tag is the trigger. `.github/workflows/release.yml` publishes to npm on any
+The tag is the trigger. `.github/workflows/publish.yml` publishes to npm on any
 `v*` tag, after checking the tag agrees with `package.json` — npm versions are
 immutable, so a mismatch is caught before it's permanent.
 
@@ -68,5 +68,20 @@ Publishing is done by CI, never from a laptop. There is no npm token anywhere in
 this repo and there should never be one — the runner exchanges its OIDC identity
 for a short-lived credential via npm [trusted publishing][tp], which is also what
 produces the provenance attestation. A laptop has no such identity.
+
+**The workflow is called `publish.yml` in every repo that publishes a package,
+and that is not cosmetic.** npm's Trusted Publisher form takes the workflow
+filename as part of the OIDC claim, and offers `publish.yml` as its example. Any
+other name is a value you have to remember correctly, from the GitHub side, while
+filling in a form on the npm side. Getting it wrong fails as `ENEEDAUTH` — npm
+declines the exchange, `npm publish` falls back to token auth, and there is no
+token — which names neither the workflow nor the mismatch. Matching the tool's
+default is cheaper than being right every time.
+
+Setting up a new package: create `.github/workflows/publish.yml` from this one,
+then add the Trusted Publisher on npmjs.com — publisher GitHub Actions, the org
+and repo, workflow filename `publish.yml`, and **environment name blank**, since
+these workflows declare no `environment:`. Configure it before the first tag, or
+the first publish fails the way this one did.
 
 [tp]: https://docs.npmjs.com/trusted-publishers/
