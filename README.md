@@ -22,8 +22,8 @@ Distinctiveness lives in the brand layer; conventionality lives in the control l
 
 ## Consuming it
 
-```jsonc
-"dependencies": { "@brignano/design": "github:brignano/design#v1.0.0" }
+```sh
+npm install @brignano/design
 ```
 
 ```css
@@ -43,6 +43,21 @@ outside `tokens.css`** — a literal survives a theme change silently, which is 
 
 ## Status
 
-Pre-1.0. Not yet published to npm — install from the git tag above. Publishing
-`v1.0.0` waits until `brignano.io` is actually consuming it, so the first published
-version isn't one that's immediately superseded.
+`0.x`, and deliberately so. `brignano.io` consumes it; `life`, `homelab` and
+`driftwood` don't yet. Token *names* may still move while those land, and a `0.x`
+range says that out loud — `^0.2.0` won't silently take a breaking rename the way
+`^1.1.0` would. `1.0.0` gets cut when the names stop changing, not on a date.
+
+## Releasing
+
+The tag is the trigger. `.github/workflows/release.yml` publishes to npm on any
+`v*` tag, after checking the tag agrees with `package.json` — npm versions are
+immutable, so a mismatch is caught before it's permanent.
+
+```sh
+npm version minor   # bumps package.json, commits, tags
+git push --follow-tags
+```
+
+Publishing is done by CI, never from a laptop: provenance attestation needs the
+OIDC token that only a runner has.
