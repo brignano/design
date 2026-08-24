@@ -45,8 +45,13 @@ outside `tokens.css`** — a literal survives a theme change silently, which is 
 
 `0.x`, and deliberately so. `brignano.io` consumes it; `life`, `homelab` and
 `driftwood` don't yet. Token *names* may still move while those land, and a `0.x`
-range says that out loud — `^0.2.0` won't silently take a breaking rename the way
-`^1.1.0` would. `1.0.0` gets cut when the names stop changing, not on a date.
+range says that out loud — a caret on `0.x` pins the minor, so `^0.1.1` won't
+silently take a breaking rename the way `^1.1.0` would. `1.0.0` gets cut when the
+names stop changing, not on a date.
+
+Versions track the *tokens*, not the plumbing. A release that changes only
+packaging or docs is a patch; the minor is reserved for the first release where
+something actually looks different.
 
 ## Releasing
 
