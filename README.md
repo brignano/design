@@ -9,6 +9,7 @@ The shared design system for every brignano surface — `brignano.io`, `life`,
 | [`DECISIONS.md`](./DECISIONS.md) | Why the values are what they are. ADRs. |
 | [`tokens.css`](./tokens.css) | Single source of truth for colour, type, space, shape, motion. |
 | [`tokens.chart.css`](./tokens.chart.css) | Validated categorical palette for data viz. |
+| [`previews/`](./previews) | Live swatches. Open one in a browser to see the tokens render. |
 
 ## The shape of it
 
@@ -34,6 +35,31 @@ npm install @brignano/design
 The tool tier is the default. A marketing surface opts in with
 `class="tier-marketing"` on `<html>`, which unlocks the display face and opens the
 type scale. Colour is identical across tiers.
+
+## Previews
+
+`previews/` holds a page per area — colour, type, elevation, controls, feedback,
+status. Each renders its subject twice, once in the viewer's theme and once on a
+forced-dark ground, so drift between the two shows up without toggling anything.
+No build step: open the file.
+
+Every preview opens with a card marker:
+
+```html
+<!-- @dsCard group="Foundations" -->
+```
+
+That first line is what a [claude.ai/design][ds] design-system project reads to
+build its card index — `group` becomes the section heading in the Design System
+pane. The markers are comments, so they cost nothing when the page is opened
+locally.
+
+**A sync to such a project keeps this layout** — `tokens.css` at the project
+root, `previews/` one level below it. `_preview.css` reaches it with
+`@import '../tokens.css'` rather than carrying its own copy, because a second
+copy of the tokens is the drift this repo exists to prevent. The trade is that
+the parent reference is load-bearing: flatten the uploaded bundle and every
+preview renders unstyled.
 
 ## For agents
 
@@ -84,4 +110,5 @@ and repo, workflow filename `publish.yml`, and **environment name blank**, since
 these workflows declare no `environment:`. Configure it before the first tag, or
 the first publish fails the way this one did.
 
+[ds]: https://claude.ai/design
 [tp]: https://docs.npmjs.com/trusted-publishers/
