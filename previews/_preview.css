@@ -1,7 +1,13 @@
 /* Shared chrome for preview pages. Deliberately thin — the point is to see the
    TOKENS, not this stylesheet. Each preview shows its component twice: once in
    the viewer's theme, once on a forced-dark ground, so drift between the two is
-   visible without toggling. */
+   visible without toggling.
+
+   The import below is parent-relative on purpose. tokens.css is the single
+   source of truth and is never copied in here, so whatever serves these pages
+   — the filesystem, a static server, a claude.ai/design project — has to keep
+   the repo's shape: tokens.css at the root, previews/ one level down. Flatten
+   the bundle and every preview renders unstyled. */
 @import '../tokens.css';
 
 * { box-sizing: border-box; }
