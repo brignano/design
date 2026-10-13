@@ -38,7 +38,7 @@ type scale. Colour is identical across tiers.
 
 ## Previews
 
-`previews/` holds a page per area — colour, type, elevation, controls, feedback,
+`previews/` holds a page per area — colour, type, elevation, controls, feedback, diagrams,
 status. Each renders its subject twice, once in the viewer's theme and once on a
 forced-dark ground, so drift between the two shows up without toggling anything.
 No build step: open the file.
