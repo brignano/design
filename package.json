@@ -1,7 +1,7 @@
 {
   "name": "@brignano/design",
-  "version": "0.1.2",
-  "description": "Shared design system for brignano surfaces \u2014 colour, type, space, shape, motion.",
+  "version": "0.2.0",
+  "description": "Shared design system for brignano surfaces — colour, type, space, shape, motion.",
   "license": "MIT",
   "repository": {
     "type": "git",
