@@ -159,7 +159,44 @@ rationale in [`tokens.chart.css`](./tokens.chart.css). The short version:
 - Text wears text tokens, never the series colour.
 - **Never a dual-axis chart.** Two measures of different scale → two charts.
 
-## 9. Accessibility floor
+## 9. Diagrams and diffs
+
+An architecture diagram (`driftwood`, `homelab`) is a picture of a system, read to
+answer "what changed, and what is broken". It follows the restraint rule, **not**
+the chart exception: node *type* is a category like event type, and is carried by
+an icon and a label, never a hue. A diagram where every node is tinted by family
+is thirty coloured things, and the one that is down disappears among them.
+
+- **Nodes are neutral.** `--card` fill, `--line-strong` edge, `--radius` corners,
+  an icon in `--ink-soft`, the name in `--ink`, the kind in `--mono` at
+  `--text-xs` in `--ink-soft`. Grouping is a zone: `--line` hairline, no fill or
+  a faint one, a `--mono` eyebrow label.
+- **Edges are `--slate`.** They are UI marks (3:1), never text.
+- **Only state gets colour**, and always as a tag with a symbol and a word as well:
+
+  | Token | Means | Tag |
+  |---|---|---|
+  | `--diff-added` | this change created it | `+ added` |
+  | `--diff-changed` | this change modified it | `~ changed` |
+  | `--diff-removed` | this change removes it — dashed, struck through | `− removed` |
+  | `--danger` | it is down | `✕ down` |
+  | `--attention` | degraded, or differs from the design | `▲ degraded` |
+
+  The diff tokens alias the state hues on purpose (added is *settled*, a change is
+  *informational*, a removal is the change that can lose data), so a diff adds no
+  hue to the system. Health wins the fill (`-surface`); a diff only takes the edge.
+- **Selection** is the focus treatment: a 2px `--i-ink` outline, offset. Asking
+  "what depends on this?" dims everything unrelated to ~30% opacity and inks the
+  connecting edges in `--ink`; it never introduces a colour.
+- **Lead with the verdict.** A page about a deploy opens with one sentence saying
+  what happened and what needs you, then the pills that back it up, then the
+  picture.
+- **Diagrams follow the theme.** On a page they use the tokens like everything
+  else. A diagram exported as a standalone file (an SVG, a Mermaid block in a pull
+  request) cannot use `var()`; it takes the **light** theme's values, resolved from
+  this file at build time, never typed in.
+
+## 10. Accessibility floor
 
 Non-negotiable in both themes:
 
@@ -171,7 +208,7 @@ Non-negotiable in both themes:
 - Measured ratios sit next to their values in `tokens.css`. Changing a value means
   re-measuring it.
 
-## 10. Integrating with a Tailwind consumer
+## 11. Integrating with a Tailwind consumer
 
 Tailwind's dark variant keys off a `.dark` class; these tokens key off
 `[data-theme]`. **Both must be set together**, by the same code, in both places
@@ -200,7 +237,7 @@ Import order matters — Tailwind first, then tokens, then the bridge:
 @import "@brignano/design/tailwind.css";
 ```
 
-## 11. The one rule that keeps this true
+## 12. The one rule that keeps this true
 
 **Never hardcode a hex outside `tokens.css`.**
 
