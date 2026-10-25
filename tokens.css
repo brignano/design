@@ -88,8 +88,8 @@
 
        --i          fill               5.17:1  (white label 5.17:1)
        --i-ink      link/icon/focus    6.70:1  on #fff
-       --i-hover    hover fill        10.36:1
-       --i-pressed  pressed fill      12.65:1
+       --i-hover    hover fill         8.72:1
+       --i-pressed  pressed fill      10.36:1
 
      DISABLED IS NEUTRAL, NEVER HUED — a greyed-out control must stop
      signalling "click me". */
@@ -218,7 +218,7 @@
      Content is ALWAYS visible by default; motion is enhancement layered on
      top, never the thing that makes content appear. brignano.io shipped a
      homepage whose contact CTA was invisible on 100% of loads because an
-     animation library owned the visible state. See DESIGN.md §6. */
+     animation library owned the visible state. See DESIGN.md §7. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 150ms;
   --dur: 250ms;

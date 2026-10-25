@@ -4,10 +4,10 @@
    WHY THIS IS A SEPARATE FILE FROM THE BRAND ACCENT
    -------------------------------------------------
    A chart's colours do a different job from a brand's colours, so they are
-   not derived from the accent and they are not the status ramp.
+   not derived from the mark and they are not the state hues.
 
-     brand accent (--accent)   identity. One hue. "This is Anthony."
-     status (--forest/rust)    state. RESERVED — never a series colour.
+     mark (--mark)             identity. One hue. "This is Anthony."
+     state (--success/…)       state. RESERVED — never a series colour.
      categorical (this file)   IDENTITY OF A SERIES. Needs 8 hues that a
                                human can tell apart at a glance, including
                                the ~8% of men with a colour-vision

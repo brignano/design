@@ -7,7 +7,10 @@
 
    `@theme inline` is load-bearing: it makes the generated utilities emit
    `var(--i)` rather than baking a literal at build time, so `bg-interactive`
-   follows the light/dark switch instead of freezing one theme's value. */
+   follows the light/dark switch instead of freezing one theme's value.
+
+   The bare `--radius` key is what drives `rounded`. Tailwind v4 has no
+   `-DEFAULT` suffix; with one, `rounded` silently stayed at 0.25rem. */
 @theme inline {
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
@@ -15,26 +18,46 @@
   --color-bg: var(--bg);
   --color-card: var(--card);
   --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
   --color-line-strong: var(--line-strong);
   --color-surface-hover: var(--surface-hover);
   --color-surface-active: var(--surface-active);
+  --color-on-dark: var(--on-dark);
 
   --color-interactive: var(--i);
   --color-interactive-ink: var(--i-ink);
   --color-interactive-hover: var(--i-hover);
   --color-interactive-pressed: var(--i-pressed);
   --color-interactive-surface: var(--i-surface);
+  --color-interactive-line: var(--i-line);
   --color-on-interactive: var(--on-i);
 
   --color-success: var(--success);
   --color-success-ink: var(--success-ink);
   --color-success-surface: var(--success-surface);
+  --color-success-line: var(--success-line);
   --color-attention: var(--attention);
   --color-attention-ink: var(--attention-ink);
   --color-attention-surface: var(--attention-surface);
+  --color-attention-line: var(--attention-line);
   --color-danger: var(--danger);
   --color-danger-ink: var(--danger-ink);
   --color-danger-surface: var(--danger-surface);
+  --color-danger-line: var(--danger-line);
+  --color-info: var(--info);
+  --color-info-ink: var(--info-ink);
+  --color-info-surface: var(--info-surface);
+  --color-info-line: var(--info-line);
+
+  --color-diff-added: var(--diff-added);
+  --color-diff-added-ink: var(--diff-added-ink);
+  --color-diff-added-surface: var(--diff-added-surface);
+  --color-diff-changed: var(--diff-changed);
+  --color-diff-changed-ink: var(--diff-changed-ink);
+  --color-diff-changed-surface: var(--diff-changed-surface);
+  --color-diff-removed: var(--diff-removed);
+  --color-diff-removed-ink: var(--diff-removed-ink);
+  --color-diff-removed-surface: var(--diff-removed-surface);
 
   --color-mark: var(--mark);
   --color-mark-ink: var(--mark-ink);
@@ -44,7 +67,7 @@
   --font-display: var(--display);
 
   --radius-sm: var(--radius-sm);
-  --radius-DEFAULT: var(--radius);
+  --radius: var(--radius);
   --radius-lg: var(--radius-lg);
 
   --shadow-1: var(--shadow-1);

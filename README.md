@@ -15,11 +15,11 @@ The shared design system for every brignano surface — `brignano.io`, `life`,
 
 Three layers, so no colour does two jobs:
 
-- **`--brand-*`** — identity. Larch amber. The trail, the monogram. Never a control.
+- **`--mark`** — identity. Larch amber. Inks the trail and the monogram. Never a control.
 - **`--i-*`** — affordance. Cobalt. Links, buttons, focus, selection. Semantically inert.
-- **`--ok / --warn / --err / --info`** — state. Conventional hues, always with an icon and a word.
+- **`--success / --attention / --danger`** — state. Conventional hues, always with an icon and a word.
 
-Distinctiveness lives in the brand layer; conventionality lives in the control layer.
+Distinctiveness lives in the mark; conventionality lives in the control layer.
 
 ## Consuming it
 
