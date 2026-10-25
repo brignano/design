@@ -14,7 +14,7 @@
 body {
   margin: 0; padding: 28px; background: var(--bg); color: var(--ink);
   font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased;
-  font-feature-settings: 'tnum' 1;
+  font-variant-numeric: tabular-nums;
 }
 h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margin: 0 0 4px; }
 .sub { font-size: var(--text-sm); color: var(--slate); margin: 0 0 24px; font-family: var(--mono); }
@@ -32,7 +32,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
   --n-800:#d0d0d2; --n-900:#f2f2f0;
   --bg:var(--n-0); --card:var(--n-50); --surface-hover:var(--n-100); --surface-active:var(--n-200);
   --ink:var(--n-900); --ink-soft:var(--n-700); --slate:var(--n-500);
-  --line:var(--n-100); --line-soft:var(--n-50); --line-strong:var(--n-300);
+  --line:var(--n-100); --line-soft:var(--n-50); --line-strong:var(--n-300); --line-control:#6b6b73;
   --i:#60a5fa; --i-ink:#60a5fa; --i-hover:#93c5fd; --i-pressed:#bfdbfe; --on-i:#111111;
   --i-surface:color-mix(in srgb,var(--i) 20%,transparent);
   --i-line:color-mix(in srgb,var(--i) 44%,transparent);
@@ -64,7 +64,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .btn-primary { background: var(--i); color: var(--on-i); }
 .btn-primary:hover { background: var(--i-hover); }
 .btn-primary:active { background: var(--i-pressed); }
-.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-control); }
 .btn-secondary:hover { background: var(--surface-hover); }
 .btn-ghost { background: transparent; color: var(--i-ink); }
 .btn-ghost:hover { background: var(--i-surface); }

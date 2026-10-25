@@ -1,0 +1,25 @@
+name: Check
+
+# The rules in DESIGN.md §10 and §12, run instead of remembered: contrast
+# floors in both themes, the two dark blocks agreeing, the preview's dark
+# panel matching tokens.css, and no hex outside the token files.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Design rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      # No install: the check has no dependencies.
+      - run: node scripts/check.mjs

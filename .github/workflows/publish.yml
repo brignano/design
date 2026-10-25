@@ -63,6 +63,11 @@ jobs:
           fi
           echo "publishing ${pkg}"
 
+      # npm versions are immutable, so a release that breaks a contrast floor
+      # or the dark-block parity stays broken forever. Same check as CI.
+      - name: Design rules hold
+        run: node scripts/check.mjs
+
       # No install step: the package is CSS and markdown, with no dependencies
       # and no build. --access comes from publishConfig; provenance is implicit
       # under trusted publishing.
