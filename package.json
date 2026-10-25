@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/brignano/design.git"
   },
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true

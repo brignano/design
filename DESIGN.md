@@ -106,13 +106,18 @@ The part that makes an interface feel built rather than styled.
 - Focus is always visible: 2px `--i-ink` outline, 2px offset. Never remove it.
 - Hover and pressed surfaces on neutral elements come from `--surface-hover` and
   `--surface-active`, not from opacity tricks.
+- A control's own edge — an input, a secondary button — is `--line-control`
+  (≥ 3:1). `--line-strong` is a divider, too faint to tell you a control is there.
+- Native checkboxes, radios and ranges inherit `accent-color: var(--i)` from
+  `tokens.css`; don't restyle them just to recolour them.
 
 ## 5. Type
 
 Three roles, no more:
 
-- **`--sans` (Geist)** — body and headings, both tiers. Tabular figures (`tnum`) on
-  body copy so dates, prices and countdowns align in a column.
+- **`--sans` (Geist)** — body and headings, both tiers. Tabular figures
+  (`font-variant-numeric: tabular-nums`) on body copy so dates, prices and
+  countdowns align in a column.
 - **`--mono` (IBM Plex Mono)** — data that must read *precise*: confirmation codes,
   timestamps, stat numbers, eyebrow labels.
 - **`--display` (Silkscreen)** — marketing tier only. The `A|B` monogram and hero
@@ -200,13 +205,16 @@ is thirty coloured things, and the one that is down disappears among them.
 
 Non-negotiable in both themes:
 
-- Body text ≥ 4.5:1; large text and UI marks ≥ 3:1.
+- Body text ≥ 4.5:1; large text and UI marks ≥ 3:1. `--slate` is the quietest
+  text step and clears 4.5:1 in both themes; `--n-500` in light does not, so it
+  is never text.
 - Touch targets ≥ 44px on coarse pointers, with a `.touch-hit` opt-out for controls
   whose shape is meaningful (a 22px circular checkbox forced to 44px becomes an
   oval — it expands its hit area instead).
 - Every state carries an icon and a word.
-- Measured ratios sit next to their values in `tokens.css`. Changing a value means
-  re-measuring it.
+- Measured ratios sit next to their values in `tokens.css`, and `npm run check`
+  (run in CI on every pull request) fails if any floor above is missed, if the two
+  dark blocks disagree, or if a hex appears outside the token files.
 
 ## 11. Integrating with a Tailwind consumer
 

@@ -61,8 +61,8 @@
   --n-200: #e2e2e0; /* hover surface */
   --n-300: #cbcbce; /* strong border, pressed surface */
   --n-400: #a9a9ae;
-  --n-500: #8a8a8f; /* muted label   3.44:1 — large text / UI marks only */
-  --n-600: #6b6b73; /*               5.28:1 */
+  --n-500: #8a8a8f; /*               3.44:1 — UI marks only, never text */
+  --n-600: #6b6b73; /* muted label   5.28:1 */
   --n-700: #52525b; /* secondary     7.73:1 */
   --n-800: #33333a;
   --n-900: #111111; /* primary      18.88:1 */
@@ -74,10 +74,14 @@
   --surface-active: var(--n-200);
   --ink: var(--n-900);
   --ink-soft: var(--n-700);
-  --slate: var(--n-500);
+  --slate: var(--n-600); /* text-safe: eyebrows, axis labels, captions */
   --line: var(--n-100);
   --line-soft: var(--n-50);
-  --line-strong: var(--n-300);
+  --line-strong: var(--n-300); /* 1.62:1 — decoration, not a boundary */
+  /* The edge that tells you a control is there: inputs, secondary buttons.
+     WCAG 1.4.11 asks 3:1 of a boundary you need to find the control, which
+     --line-strong is nowhere near. 3.44:1 on card, 3.29:1 on bg. */
+  --line-control: var(--n-500);
   --on-dark: var(--n-25);
 
   /* ── Interactive — cobalt ─────────────────────────────────────────────
@@ -259,6 +263,8 @@
     --surface-hover: var(--n-100);
     --surface-active: var(--n-200);
     --on-dark: var(--n-0);
+    --slate: var(--n-500); /* 5.29:1 — dark n-500 is already text-safe */
+    --line-control: #6b6b73; /* 3.39:1 on card, 3.68:1 on bg — between n-400 and n-500 */
 
     --i: #60a5fa; /* 7.04:1 */
     --i-ink: #60a5fa;
@@ -316,6 +322,8 @@
   --surface-hover: var(--n-100);
   --surface-active: var(--n-200);
   --on-dark: var(--n-0);
+  --slate: var(--n-500);
+  --line-control: #6b6b73;
 
   --i: #60a5fa;
   --i-ink: #60a5fa;
@@ -381,13 +389,19 @@
   --text-xl: 1.5rem;
   --text-2xl: 2rem;
   --text-3xl: 2.75rem;
-  --text-4xl: clamp(2.75rem, 6vw, 4rem);
+  --text-4xl: clamp(2.75rem, 1rem + 4.5vw, 4rem); /* rem term keeps it zoomable (WCAG 1.4.4) */
   --section-gap: var(--s9);
   --measure: 68ch;
 }
 
 ::selection {
   background: var(--i-selection);
+}
+
+/* Native checkboxes, radios, range and progress take the control hue
+   instead of the browser's own blue. */
+:root {
+  accent-color: var(--i);
 }
 
 /* Ships here so no surface can forget it. */
