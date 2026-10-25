@@ -8,7 +8,7 @@
 //      a theme block or a preview copy is a second list, and second lists drift;
 //   3. a light-dark() or color-mix() argument is a var() (tokens.css rule 2),
 //      or a value repeated to honour that rule has drifted from its source;
-//   4. a neutral ramp step leaves the ramp's one hue (OKLCH 286°);
+//   4. a colour family leaves its hue: the neutral ramp 286°, cobalt 256°;
 //   5. a hex literal appears outside the token files.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
@@ -161,10 +161,17 @@ for (const [k, steps] of Object.entries(STEPS))
     if (step && hexOf(k, map) !== hexOf(step, map)) fail(`drift (${theme}): ${k} is ${hexOf(k, map)}, but ${step} is ${hexOf(step, map)}`);
   });
 
-// ── 3c. The neutral ramp is one temperature ──────────────────────────────────
-// Every tinted step of --n-* sits at OKLCH hue 286°. Near-zero chroma has no
+// ── 3c. Each family holds its hue ────────────────────────────────────────────
+// The neutral ramp is one temperature, OKLCH 286° (ADR-0007). Cobalt — the
+// interactive steps and the sequential ramp built from it — is 256°, our own
+// rather than Tailwind's blue-600 at 263° (ADR-0008). Near-zero chroma has no
 // meaningful hue, so pure white is exempt.
-const RAMP_HUE = 286, HUE_TOLERANCE = 3;
+const HUES = [
+  [/^--n-\d+$/, 286, 'ramp temperature'],
+  [/^--i(-ink|-hover|-pressed)?$/, 256, 'cobalt hue'],
+  [/^--seq-[1-9]$/, 256, 'cobalt hue'],
+];
+const HUE_TOLERANCE = 3;
 function oklch([r, g, b]) {
   const lin = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
   [r, g, b] = [r, g, b].map(lin);
@@ -176,12 +183,14 @@ function oklch([r, g, b]) {
   return { C: Math.hypot(A, B), H: ((Math.atan2(B, A) * 180) / Math.PI + 360) % 360 };
 }
 for (const [k] of tokens) {
-  if (!/^--n-\d+$/.test(k)) continue;
+  const rule = HUES.find(([re]) => re.test(k));
+  if (!rule) continue;
+  const [, hue, label] = rule;
   for (const [theme, map] of [['light', light], ['dark', dark]]) {
     const { C, H } = oklch(resolve(`var(${k})`, map).rgb);
     if (C < 0.001) continue;
-    if (Math.abs(H - RAMP_HUE) > HUE_TOLERANCE)
-      fail(`ramp temperature (${theme}): ${k} ${hexOf(k, map)} sits at hue ${H.toFixed(1)}°, not ${RAMP_HUE}° ±${HUE_TOLERANCE}°`);
+    if (Math.abs(H - hue) > HUE_TOLERANCE)
+      fail(`${label} (${theme}): ${k} ${hexOf(k, map)} sits at hue ${H.toFixed(1)}°, not ${hue}° ±${HUE_TOLERANCE}°`);
   }
 }
 
@@ -238,4 +247,4 @@ if (failures.length) {
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, one ramp temperature, no stray hex`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex`);

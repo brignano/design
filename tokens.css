@@ -139,22 +139,27 @@
      green and red do — and complementary to the mark hue, so identity and
      affordance never compete for the same attention.
 
-       --i          fill               5.17:1 / 7.04:1  (label 5.17 / 7.43)
-       --i-ink      link/icon/focus    6.70:1 / 7.04:1
-       --i-hover    hover fill         8.72:1 / 10.47:1 (label)
-       --i-pressed  pressed fill      10.36:1 / 13.29:1 (label)
+     Every step sits at OKLCH hue 256° (`npm run check` holds it), as near
+     to larch's opposite (~248°) as sRGB allows while keeping cobalt's
+     chroma. It is deliberately NOT Tailwind's blue-600 (263°, a touch
+     violet and electric): same affordance, our own colour (ADR-0008).
+
+       --i          fill               5.18:1 / 7.07:1  (label 5.18 / 7.46)
+       --i-ink      link/icon/focus    6.78:1 / 7.07:1
+       --i-hover    hover fill         8.65:1 / 10.50:1 (label)
+       --i-pressed  pressed fill      10.44:1 / 13.32:1 (label)
 
      In dark, fill and ink converge, and hover/pressed get LIGHTER.
 
      DISABLED IS NEUTRAL, NEVER HUED — a greyed-out control must stop
      signalling "click me". */
-  --i: light-dark(#2563eb, #60a5fa);
-  --i-ink: light-dark(#1d4ed8, #60a5fa);
-  --i-hover: light-dark(#1e40af, #93c5fd);
-  --i-pressed: light-dark(#1e3a8a, #bfdbfe);
-  --i-surface: light-dark(color-mix(in srgb, #2563eb 12%, transparent), color-mix(in srgb, #60a5fa 20%, transparent));
-  --i-line: light-dark(color-mix(in srgb, #2563eb 32%, transparent), color-mix(in srgb, #60a5fa 44%, transparent));
-  --i-selection: light-dark(color-mix(in srgb, #2563eb 26%, transparent), color-mix(in srgb, #60a5fa 30%, transparent));
+  --i: light-dark(#076bd3, #6ba5f3);
+  --i-ink: light-dark(#0159b5, #6ba5f3);
+  --i-hover: light-dark(#014a97, #98c4ff);
+  --i-pressed: light-dark(#003e82, #c0dbff);
+  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #6ba5f3 20%, transparent));
+  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #6ba5f3 44%, transparent));
+  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #6ba5f3 30%, transparent));
   --on-i: light-dark(#ffffff, #111111);
   --i-disabled-bg: var(--n-200);
   --i-disabled-ink: var(--n-400);
