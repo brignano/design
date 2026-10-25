@@ -80,9 +80,9 @@
    Rules that differ from the categorical palette above:
      - ONE hue. Never a rainbow — a rainbow implies categories where there
        are only degrees.
-     - Lightness must be MONOTONIC. Verified: light L 0.838 -> 0.107
-       descending, dark L 0.015 -> 0.532 ascending, every adjacent step
-       separated by dL >= 0.037.
+     - Lightness must be MONOTONIC. Verified in OKLCH: light L 0.888 ->
+       0.487 descending, dark L 0.380 -> 0.808 ascending, every adjacent
+       step separated by dL >= 0.107.
      - `--seq-0` is NEUTRAL on purpose. Zero contributions is not a small
        amount of the hue, it is the absence of a value — colouring it a pale
        blue would claim data that isn't there.
@@ -92,8 +92,8 @@
    it its own hue would add a meaning the system doesn't need.
    ───────────────────────────────────────────────────────────────────────── */
   --seq-0: var(--line);
-  --seq-1: light-dark(#c7dcfb, #1e3a8a);
-  --seq-2: light-dark(#8ab4f4, #1d4ed8);
-  --seq-3: #3b82f6;
-  --seq-4: light-dark(#1d4ed8, #93c5fd);
+  --seq-1: light-dark(#c6dcfb, #014084);
+  --seq-2: light-dark(#87b5f3, #015cbb);
+  --seq-3: #2885f5;
+  --seq-4: light-dark(#015cbb, #98c3fe);
 }

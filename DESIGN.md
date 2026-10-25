@@ -235,7 +235,7 @@ not just `<html>`.** A dark hero band on a light marketing page is
 Two consequences for code that touches tokens directly:
 
 - **Don't read a token's value with `getPropertyValue`.** It returns the
-  declaration text, `light-dark(#2563eb, #60a5fa)`, not a colour. To get the
+  declaration text, `light-dark(#076bd3, #6ba5f3)`, not a colour. To get the
   colour a chart library needs, resolve it on an element in the right subtree:
   set `el.style.color = 'var(--chart-1)'` and read `getComputedStyle(el).color`.
   Re-read it when the theme changes.
