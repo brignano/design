@@ -1,8 +1,8 @@
 name: Check
 
 # The rules in DESIGN.md §10 and §12, run instead of remembered: contrast
-# floors in both themes, the two dark blocks agreeing, the preview's dark
-# panel matching tokens.css, and no hex outside the token files.
+# floors in both themes, every colour declared once as light-dark(), repeated
+# values matching their source, and no hex outside the token files.
 
 on:
   pull_request:

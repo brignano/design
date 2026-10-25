@@ -32,6 +32,11 @@ npm install @brignano/design
 @import '@brignano/design/tokens.chart.css'; /* only if the surface has charts */
 ```
 
+Light and dark follow the OS until something sets `data-theme="light"` or
+`"dark"` — on `<html>` for the whole page, or on any element to theme just that
+part (DESIGN.md §11). Each colour is a single `light-dark()` declaration, so this
+needs a browser from mid-2024 or later.
+
 The tool tier is the default. A marketing surface opts in with
 `class="tier-marketing"` on `<html>`, which unlocks the display face and opens the
 type scale. Colour is identical across tiers.

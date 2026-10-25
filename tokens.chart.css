@@ -19,6 +19,7 @@
 
    THESE VALUES ARE VALIDATED, NOT CHOSEN BY EYE
    ----------------------------------------------
+   Values are light-dark(<light>, <dark>), one declaration each.
    Both modes pass every hard gate of the six-check colour formula:
 
      lightness band     PASS  (all 8 inside the mode's band)
@@ -53,14 +54,14 @@
 :root {
   --chart-surface: var(--card);
 
-  --chart-1: #2a78d6; /* blue    */
-  --chart-2: #eb6834; /* orange  */
-  --chart-3: #1baf7a; /* aqua    — relief required (2.74:1) */
-  --chart-4: #eda100; /* yellow  — relief required (2.11:1) */
-  --chart-5: #e87ba4; /* magenta — relief required (2.62:1) */
-  --chart-6: #008300; /* green   */
-  --chart-7: #4a3aa7; /* violet  */
-  --chart-8: #e34948; /* red     */
+  --chart-1: light-dark(#2a78d6, #3987e5); /* blue    */
+  --chart-2: light-dark(#eb6834, #d95926); /* orange  */
+  --chart-3: light-dark(#1baf7a, #199e70); /* aqua    — relief required (2.74:1) */
+  --chart-4: light-dark(#eda100, #c98500); /* yellow  — relief required (2.11:1) */
+  --chart-5: light-dark(#e87ba4, #d55181); /* magenta — relief required (2.62:1) */
+  --chart-6: #008300; /* green — same in both */
+  --chart-7: light-dark(#4a3aa7, #9085e9); /* violet  */
+  --chart-8: light-dark(#e34948, #e66767); /* red     */
 
   /* Everything past slot 8 aggregates here. Deliberately neutral: "Other"
      is not an entity, so it does not earn a hue. */
@@ -91,44 +92,8 @@
    it its own hue would add a meaning the system doesn't need.
    ───────────────────────────────────────────────────────────────────────── */
   --seq-0: var(--line);
-  --seq-1: #c7dcfb;
-  --seq-2: #8ab4f4;
+  --seq-1: light-dark(#c7dcfb, #1e3a8a);
+  --seq-2: light-dark(#8ab4f4, #1d4ed8);
   --seq-3: #3b82f6;
-  --seq-4: #1d4ed8;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --chart-1: #3987e5;
-    --chart-2: #d95926;
-    --chart-3: #199e70;
-    --chart-4: #c98500;
-    --chart-5: #d55181;
-    --chart-6: #008300;
-    --chart-7: #9085e9;
-    --chart-8: #e66767;
-
-    --seq-0: var(--line);
-    --seq-1: #1e3a8a;
-    --seq-2: #1d4ed8;
-    --seq-3: #3b82f6;
-    --seq-4: #93c5fd;
-  }
-}
-
-:root[data-theme='dark'] {
-  --chart-1: #3987e5;
-  --chart-2: #d95926;
-  --chart-3: #199e70;
-  --chart-4: #c98500;
-  --chart-5: #d55181;
-  --chart-6: #008300;
-  --chart-7: #9085e9;
-  --chart-8: #e66767;
-
-  --seq-0: var(--line);
-  --seq-1: #1e3a8a;
-  --seq-2: #1d4ed8;
-  --seq-3: #3b82f6;
-  --seq-4: #93c5fd;
+  --seq-4: light-dark(#1d4ed8, #93c5fd);
 }
