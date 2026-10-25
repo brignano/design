@@ -86,26 +86,36 @@
      hover or pressed background token, so every interactive surface in
      both repos was improvising.
 
-     Deliberately COOL-leaning — a cool grey lets the warm mark and the
-     amber attention state read as warm, instead of muddying into them. */
+     Deliberately COOL — a cool grey lets the warm mark and the amber
+     attention state read as warm, instead of muddying into them.
+
+     ONE TEMPERATURE, top to bottom, both themes: every tinted step sits at
+     OKLCH hue 286° (±3°, `npm run check` holds it). Chroma is a whisper at
+     the ends (~0.0015 at n-25) and peaks in the mid-tones (~0.015 at
+     n-700), where a grey reads most neutral-flat without it. Only pure
+     white (light n-0) is untinted. An earlier ramp mixed warm hairlines
+     (106°) with cool text, so a border and the label beside it disagreed.
+
+     Changing a step: keep its OKLCH lightness, keep the hue, re-run the
+     check. */
   --n-0: light-dark(#ffffff, #0d0d0f);
-  --n-25: light-dark(#fafafa, #131316);
-  --n-50: light-dark(#f3f3f1, #17171a);
-  --n-100: light-dark(#ececea, #202024); /* hairline */
-  --n-200: light-dark(#e2e2e0, #2a2a2f); /* hover surface */
+  --n-25: light-dark(#fafafb, #131316);
+  --n-50: light-dark(#f3f3f4, #17171a);
+  --n-100: light-dark(#ececee, #202024); /* hairline */
+  --n-200: light-dark(#e1e1e4, #2a2a2f); /* hover surface */
   --n-300: light-dark(#cbcbce, #3a3a41); /* strong border, pressed surface */
   --n-400: light-dark(#a9a9ae, #55555e);
   --n-500: light-dark(#8a8a8f, #8b8b93); /* 3.44:1 — UI marks only, never text / 5.29:1 */
   --n-600: light-dark(#6b6b73, #9c9ca4); /* muted label 5.28:1 */
   --n-700: light-dark(#52525b, #a8a8b0); /* secondary 7.73:1 / 7.58:1 */
-  --n-800: light-dark(#33333a, #d0d0d2);
-  --n-900: light-dark(#111111, #f2f2f0); /* primary 18.88:1 / 15.96:1 */
+  --n-800: light-dark(#33333a, #d0d0d5);
+  --n-900: light-dark(#111114, #f2f2f4); /* primary 18.85:1 / 16.00:1 */
 
   /* Semantic aliases. Components use THESE, not the raw steps.
      Where a role sits on a different step in each theme, the step's two
      hexes are written out (rule 2) and named in the comment; the check
      holds them to the ramp. */
-  --bg: light-dark(#fafafa, #0d0d0f); /* n-25 / n-0 */
+  --bg: light-dark(#fafafb, #0d0d0f); /* n-25 / n-0 */
   --card: light-dark(#ffffff, #17171a); /* n-0 / n-50 */
   --surface-hover: var(--n-100);
   --surface-active: var(--n-200);
@@ -121,7 +131,7 @@
      on bg); dark sits between n-400 and n-500, which the ramp has no step
      for (3.39:1 on card, 3.68:1 on bg). */
   --line-control: light-dark(#8a8a8f, #6b6b73);
-  --on-dark: light-dark(#fafafa, #0d0d0f); /* n-25 / n-0 */
+  --on-dark: light-dark(#fafafb, #0d0d0f); /* n-25 / n-0 */
 
   /* ── Interactive — cobalt ─────────────────────────────────────────────
      Everything you can act on: links, buttons, focus, selection. Chosen to
