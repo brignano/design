@@ -4,9 +4,10 @@
 //
 // Fails when:
 //   1. a contrast floor is missed, in either theme;
-//   2. the two dark blocks (media query and [data-theme]) disagree — CSS makes
-//      us write them twice, so this is the check that keeps them one list;
-//   3. the forced-dark preview panel has drifted from the dark tokens;
+//   2. a colour is declared anywhere but once, as light-dark(), on :root —
+//      a theme block or a preview copy is a second list, and second lists drift;
+//   3. a light-dark() or color-mix() argument is a var() (tokens.css rule 2),
+//      or a value repeated to honour that rule has drifted from its source;
 //   4. a hex literal appears outside the token files.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
@@ -51,38 +52,56 @@ function blocks(css) {
   return out;
 }
 
-const norm = (v) => v.replace(/\s+/g, '').replace(/(^|[^\d])0\./g, '$1.').toLowerCase();
-
-const files = ['tokens.css', 'tokens.chart.css'].map((f) => [f, blocks(read(f))]);
-const MEDIA_DARK = "@media (prefers-color-scheme: dark) > :root:not([data-theme='light'])";
-const ATTR_DARK = ":root[data-theme='dark']";
-
-const light = new Map();
-const mediaDark = new Map();
-const attrDark = new Map();
-for (const [, bs] of files) {
-  for (const { selector, decls } of bs) {
-    const target = { ':root': light, [MEDIA_DARK]: mediaDark, [ATTR_DARK]: attrDark }[selector];
-    if (target) for (const [k, v] of decls) target.set(k, v);
+// Calls of `fn(` in a value, as { start, end, args } with top-level args split.
+function calls(value, fn) {
+  const out = [];
+  for (let i = value.indexOf(fn + '('); i >= 0; i = value.indexOf(fn + '(', i + 1)) {
+    if (/[\w-]/.test(value[i - 1] ?? '')) continue;
+    let depth = 0, from = i + fn.length + 1;
+    const args = [];
+    for (let j = from - 1; j < value.length; j++) {
+      if (value[j] === '(') depth++;
+      else if (value[j] === ')' && --depth === 0) {
+        args.push(value.slice(from, j).trim());
+        out.push({ start: i, end: j + 1, args });
+        break;
+      } else if (value[j] === ',' && depth === 1) {
+        args.push(value.slice(from, j).trim());
+        from = j + 1;
+      }
+    }
   }
+  return out;
 }
-const dark = new Map([...light, ...attrDark]);
-
-// ── 2. The two dark blocks are one list ──────────────────────────────────────
-for (const k of new Set([...mediaDark.keys(), ...attrDark.keys()])) {
-  if (!mediaDark.has(k)) fail(`dark parity: ${k} is in [data-theme='dark'] but not the media query`);
-  else if (!attrDark.has(k)) fail(`dark parity: ${k} is in the media query but not [data-theme='dark']`);
-  else if (norm(mediaDark.get(k)) !== norm(attrDark.get(k)))
-    fail(`dark parity: ${k} is ${mediaDark.get(k)} in the media query, ${attrDark.get(k)} under [data-theme]`);
+// One theme's side of a value: every light-dark(a, b) replaced by a or b.
+function side(value, i) {
+  const [c] = calls(value, 'light-dark');
+  return c ? side(value.slice(0, c.start) + c.args[i] + value.slice(c.end), i) : value;
 }
 
-// ── 3. The preview's forced-dark panel matches the dark tokens ───────────────
+const tokens = new Map();
+for (const f of ['tokens.css', 'tokens.chart.css'])
+  for (const { selector, decls } of blocks(read(f)))
+    for (const [k, v] of decls) {
+      if (selector === ':root') tokens.set(k, v);
+      // .tier-marketing re-declares type and rhythm, never colour.
+      else if (selector !== '.tier-marketing' || /light-dark|#|rgb|color-mix/.test(v))
+        fail(`one list: ${f} declares ${k} under \`${selector}\`; colours live once, on :root, as light-dark()`);
+    }
+const light = new Map([...tokens].map(([k, v]) => [k, side(v, 0)]));
+const dark = new Map([...tokens].map(([k, v]) => [k, side(v, 1)]));
+
+// ── 2. The preview's dark panel is a color-scheme, not a copy ───────────────
 const panel = blocks(read('previews/_preview.css')).find((b) => b.selector === '.panel.dark');
 if (!panel) fail('previews/_preview.css: no .panel.dark block found');
-else
-  for (const [k, v] of panel.decls)
-    if (!dark.has(k)) fail(`preview drift: .panel.dark sets ${k}, which tokens.css doesn't declare`);
-    else if (norm(dark.get(k)) !== norm(v)) fail(`preview drift: .panel.dark ${k} is ${v}, tokens.css dark is ${dark.get(k)}`);
+else for (const k of panel.decls.keys()) fail(`one list: .panel.dark re-declares ${k}; color-scheme: dark is all it needs`);
+
+// ── 3. Arguments are concrete colours ────────────────────────────────────────
+for (const [k, v] of tokens)
+  for (const fn of ['light-dark', 'color-mix'])
+    for (const { args } of calls(v, fn))
+      if (args.some((a) => /var\(|light-dark\(/.test(a)))
+        fail(`nesting: ${k} passes a var() or light-dark() into ${fn}() — write the concrete colour (tokens.css rule 2)`);
 
 // ── Colour maths ─────────────────────────────────────────────────────────────
 function hex(h) {
@@ -118,6 +137,28 @@ const ratio = (a, b) => {
   const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p);
   return (x + 0.05) / (y + 0.05);
 };
+
+// ── 3b. Repeated values match their source ───────────────────────────────────
+// A wash repeats its hue; a role on a different step per theme repeats the
+// step. Each copy must still equal what it copies.
+const hexOf = (name, map) => toHex(resolve(`var(${name})`, map).rgb);
+for (const [k] of tokens) {
+  const m = k.match(/^--(i|success|attention|danger)-(surface|line|selection)$/);
+  if (!m) continue;
+  for (const [theme, map] of [['light', light], ['dark', dark]]) {
+    const base = map.get(k).match(/^color-mix\(in srgb,\s*(#[0-9a-f]{3,6})\s/i)?.[1];
+    if (!base) fail(`drift (${theme}): ${k} is not a color-mix() of a hex`);
+    else if (toHex(hex(base)) !== hexOf(`--${m[1]}`, map))
+      fail(`drift (${theme}): ${k} mixes ${base}, but --${m[1]} is ${hexOf(`--${m[1]}`, map)}`);
+  }
+}
+const STEPS = { '--bg': ['--n-25', '--n-0'], '--card': ['--n-0', '--n-50'], '--on-dark': ['--n-25', '--n-0'],
+  '--slate': ['--n-600', '--n-500'], '--line-control': ['--n-500', null] };
+for (const [k, steps] of Object.entries(STEPS))
+  steps.forEach((step, i) => {
+    const [theme, map] = i ? ['dark', dark] : ['light', light];
+    if (step && hexOf(k, map) !== hexOf(step, map)) fail(`drift (${theme}): ${k} is ${hexOf(k, map)}, but ${step} is ${hexOf(step, map)}`);
+  });
 
 // ── 1. Contrast floors ───────────────────────────────────────────────────────
 // [foreground, background, floor]. A translucent background (a wash) is laid
@@ -155,8 +196,7 @@ for (const [theme, map] of [['light', light], ['dark', dark]]) {
 }
 
 // ── 4. No hex outside the token files ────────────────────────────────────────
-// The .panel.dark block is the one sanctioned copy, and check 3 holds it to
-// tokens.css. `&#8212;` is an entity, not a colour.
+// `&#8212;` is an entity, not a colour.
 const HEX = /(?<![&\w])#[0-9a-f]{3,8}\b/gi;
 const scan = (file, text) => {
   text.split('\n').forEach((line, i) => {
@@ -164,7 +204,7 @@ const scan = (file, text) => {
   });
 };
 scan('tailwind.css', read('tailwind.css').replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, '')));
-scan('previews/_preview.css', read('previews/_preview.css').replace(/\.panel\.dark\s*\{[^}]*\}/, (b) => b.replace(/[^\n]/g, '')));
+scan('previews/_preview.css', read('previews/_preview.css'));
 for (const f of readdirSync(new URL('previews/', root)).filter((f) => f.endsWith('.html')))
   scan(`previews/${f}`, read(`previews/${f}`));
 
@@ -173,4 +213,4 @@ if (failures.length) {
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, dark parity, preview drift, no stray hex`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, no stray hex`);

@@ -198,8 +198,9 @@ is thirty coloured things, and the one that is down disappears among them.
   picture.
 - **Diagrams follow the theme.** On a page they use the tokens like everything
   else. A diagram exported as a standalone file (an SVG, a Mermaid block in a pull
-  request) cannot use `var()`; it takes the **light** theme's values, resolved from
-  this file at build time, never typed in.
+  request) cannot use `var()`; it takes the **light** theme's values — the first
+  argument of each `light-dark()` — resolved from this file at build time, never
+  typed in.
 
 ## 10. Accessibility floor
 
@@ -213,10 +214,39 @@ Non-negotiable in both themes:
   oval — it expands its hit area instead).
 - Every state carries an icon and a word.
 - Measured ratios sit next to their values in `tokens.css`, and `npm run check`
-  (run in CI on every pull request) fails if any floor above is missed, if the two
-  dark blocks disagree, or if a hex appears outside the token files.
+  (run in CI on every pull request) fails if any floor above is missed, if a colour
+  is declared anywhere but once, or if a hex appears outside the token files.
 
-## 11. Integrating with a Tailwind consumer
+## 11. Themes, and integrating with a Tailwind consumer
+
+### How the theme is chosen
+
+Every colour is one declaration holding both values, `light-dark(<light>, <dark>)`,
+and the browser picks a side from the element's `color-scheme`:
+
+- **No attribute** — `color-scheme: light dark`, so the page follows the OS.
+- **`data-theme="light"` / `"dark"`** — the explicit choice, which wins over the OS.
+
+The pick happens where a colour is *used*, so **`data-theme` works on any element,
+not just `<html>`.** A dark hero band on a light marketing page is
+`<section data-theme="dark">`. Give that element its own
+`background: var(--bg); color: var(--ink)` — backgrounds don't inherit.
+
+Two consequences for code that touches tokens directly:
+
+- **Don't read a token's value with `getPropertyValue`.** It returns the
+  declaration text, `light-dark(#2563eb, #60a5fa)`, not a colour. To get the
+  colour a chart library needs, resolve it on an element in the right subtree:
+  set `el.style.color = 'var(--chart-1)'` and read `getComputedStyle(el).color`.
+  Re-read it when the theme changes.
+- **Don't wrap a token in `color-mix()` or `light-dark()`.** Nesting is valid CSS,
+  but not every engine has been verified to resolve it. If you need a wash, it's
+  a token (`--*-surface`, `--*-line`); if it isn't, add it here.
+
+Needs Chrome/Edge 123, Firefox 120, Safari 17.5 or later (all shipped by May 2024).
+An older browser drops every colour token and renders unstyled rather than wrong.
+
+### Tailwind
 
 Tailwind's dark variant keys off a `.dark` class; these tokens key off
 `[data-theme]`. **Both must be set together**, by the same code, in both places
@@ -231,11 +261,11 @@ Setting only the class is a silent, half-broken state: Tailwind utilities flip
 but the tokens do not, and the page renders one theme's tokens under the other
 theme's utilities. Setting only the attribute leaves every `dark:` utility dead.
 
-The reason the attribute is required rather than relying on
-`prefers-color-scheme`: a site with a manual toggle has already *resolved* the
-OS preference into an explicit choice. If the tokens also consulted the media
-query, a user on a dark OS who chose light would get dark tokens under light
-utilities. `[data-theme]` is what makes the choice authoritative.
+The reason the attribute is required rather than leaving the OS to decide: a
+site with a manual toggle has already *resolved* the OS preference into an
+explicit choice. Without the attribute, the tokens would still follow the OS, and
+a user on a dark OS who chose light would get dark tokens under light utilities.
+`[data-theme]` is what makes the choice authoritative.
 
 Import order matters — Tailwind first, then tokens, then the bridge:
 
