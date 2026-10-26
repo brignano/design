@@ -23,6 +23,7 @@
   --color-line-control: var(--line-control);
   --color-surface-hover: var(--surface-hover);
   --color-surface-active: var(--surface-active);
+  --color-surface-sticky: var(--surface-sticky);
   --color-on-dark: var(--on-dark);
 
   --color-interactive: var(--i);

@@ -143,16 +143,21 @@ const ratio = (a, b) => {
 // A wash repeats its hue; a role on a different step per theme repeats the
 // step. Each copy must still equal what it copies.
 const hexOf = (name, map) => toHex(resolve(`var(${name})`, map).rgb);
+// Each wash and the token it mixes, [light, dark]. State washes mix their own
+// hue; --surface-sticky mixes the surface it sits on, which differs by theme.
+const WASHES = { '--surface-sticky': ['--card', '--bg'] };
 for (const [k] of tokens) {
   const m = k.match(/^--(i|success|attention|danger)-(surface|line|selection)$/);
-  if (!m) continue;
-  for (const [theme, map] of [['light', light], ['dark', dark]]) {
-    const base = map.get(k).match(/^color-mix\(in srgb,\s*(#[0-9a-f]{3,6})\s/i)?.[1];
-    if (!base) fail(`drift (${theme}): ${k} is not a color-mix() of a hex`);
-    else if (toHex(hex(base)) !== hexOf(`--${m[1]}`, map))
-      fail(`drift (${theme}): ${k} mixes ${base}, but --${m[1]} is ${hexOf(`--${m[1]}`, map)}`);
-  }
+  if (m) WASHES[k] = [`--${m[1]}`, `--${m[1]}`];
 }
+for (const [k, sources] of Object.entries(WASHES))
+  [['light', light], ['dark', dark]].forEach(([theme, map], i) => {
+    const src = sources[i];
+    const base = map.get(k)?.match(/^color-mix\(in srgb,\s*(#[0-9a-f]{3,6})\s/i)?.[1];
+    if (!base) fail(`drift (${theme}): ${k} is not a color-mix() of a hex`);
+    else if (toHex(hex(base)) !== hexOf(src, map))
+      fail(`drift (${theme}): ${k} mixes ${base}, but ${src} is ${hexOf(src, map)}`);
+  });
 const STEPS = { '--bg': ['--n-25', '--n-0'], '--card': ['--n-0', '--n-50'], '--on-dark': ['--n-25', '--n-0'],
   '--slate': ['--n-600', '--n-500'], '--line-control': ['--n-500', null] };
 for (const [k, steps] of Object.entries(STEPS))
@@ -202,6 +207,7 @@ const floors = [];
 for (const fg of ['--ink', '--ink-soft', '--slate', '--i-ink', '--success-ink', '--attention-ink', '--danger-ink'])
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, TEXT]);
 floors.push(['--slate', '--line-soft', TEXT]); // the Idea pill
+floors.push(['--ink', '--surface-sticky', TEXT], ['--ink-soft', '--surface-sticky', TEXT]); // sticky bars
 for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);

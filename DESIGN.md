@@ -135,6 +135,10 @@ for cards, `--radius-lg` for hero surfaces.
 a shadow (`--shadow-1/2/3`). Dark mode does not use borders — surfaces get
 *lighter* with elevation. This is why `--line` can stay nearly invisible in dark.
 
+**Sticky chrome** — a header or toolbar that content scrolls under — is
+`--surface-sticky` with `backdrop-filter: blur(8px)`: 92% of the card in light,
+of the page ground in dark, so it reads as the surface it sits on, not a new layer.
+
 ## 7. Motion
 
 **Content is visible by default. Motion is progressive enhancement layered on top
@@ -241,10 +245,29 @@ Two consequences for code that touches tokens directly:
   Re-read it when the theme changes.
 - **Don't wrap a token in `color-mix()` or `light-dark()`.** Nesting is valid CSS,
   but not every engine has been verified to resolve it. If you need a wash, it's
-  a token (`--*-surface`, `--*-line`); if it isn't, add it here.
+  a token (`--*-surface`, `--*-line`, `--surface-sticky`); if it isn't, add it here.
 
 Needs Chrome/Edge 123, Firefox 120, Safari 17.5 or later (all shipped by May 2024).
 An older browser drops every colour token and renders unstyled rather than wrong.
+
+### Build tools that lower `light-dark()`
+
+A CSS pipeline that targets browsers older than that floor rewrites
+`light-dark()` into a fallback. Lightning CSS (inside Next.js, Vite, Parcel)
+turns each token into `var(--lightningcss-light, …) var(--lightningcss-dark, …)`
+and flips those two variables wherever `color-scheme` changes. The tokens
+resolve on `:root`, so the side is fixed there. Page-wide theming still works,
+but **`data-theme` on an inner element stops re-theming that section.**
+
+The fix is to target the same floor the tokens need, which leaves `light-dark()`
+alone. In the consumer's `package.json`:
+
+```json
+"browserslist": ["chrome >= 123", "edge >= 123", "firefox >= 120", "safari >= 17.5"]
+```
+
+Verified with Lightning CSS: older targets lower the tokens; these targets
+pass `light-dark(#076bd3, #6ba5f3)` through untouched.
 
 ### Tailwind
 

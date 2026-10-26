@@ -299,7 +299,12 @@ other theme.
   needs a colour resolves it through `getComputedStyle` on an element
   (DESIGN.md §11). ADR-0002's advice that `chart-colors.ts` read the custom
   properties still stands, but by that route.
-- Consumers shouldn't wrap tokens in `color-mix()`; washes are tokens.
+- Consumers shouldn't wrap tokens in `color-mix()`; washes are tokens. The
+  first consumer that needed one (`life`'s sticky bars) got `--surface-sticky`
+  in 0.3.1 rather than a local mix.
+- A build that lowers `light-dark()` for older browsers (Lightning CSS, inside
+  Next.js and Vite) fixes the theme at `:root`, losing scoped theming. Found in
+  `brignano.io`; consumers set `browserslist` to the floor (DESIGN.md §11).
 - Not a token rename and not a visual change, so a patch release.
 
 
