@@ -119,6 +119,11 @@
   --card: light-dark(#ffffff, #17171a); /* n-0 / n-50 */
   --surface-hover: var(--n-100);
   --surface-active: var(--n-200);
+  /* Sticky chrome — a header or toolbar that content scrolls under, usually
+     with `backdrop-filter: blur()`. 92% of the surface it sits on: the card
+     in light, the page ground in dark, where cards are lighter than the
+     page. A token so consumers never color-mix() one (DESIGN.md §11). */
+  --surface-sticky: light-dark(color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, #0d0d0f 92%, transparent)); /* card / bg */
   --ink: var(--n-900);
   --ink-soft: var(--n-700);
   --slate: light-dark(#6b6b73, #8b8b93); /* n-600 / n-500 — text-safe: eyebrows, axis labels, captions */
