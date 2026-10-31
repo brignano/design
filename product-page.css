@@ -10,7 +10,8 @@
  *   .pp-hero      status, a one-line thesis, a subhead, two actions, a proof slot
  *   .pp-story     3–4 numbered chapters: problem, how it works, who it's for, why now
  *   .pp-close     the primary action again, with whatever it needs (a form)
- *   .pp-footer
+ *   .pp-footer    brand and links, then the legal line: © year, owner, and
+ *                 the product's Privacy and Terms links if it has them
  *
  * The skeleton is previews/product-page.html: copy it, keep the order, replace
  * the words. Rules (DESIGN.md §13):
@@ -177,3 +178,8 @@ body.pp { margin: 0; }
 .pp-footer nav { display: flex; flex-wrap: wrap; gap: var(--s4); }
 .pp-footer nav a { color: var(--ink-soft); text-decoration: none; }
 .pp-footer nav a:hover { color: var(--ink); }
+/* The legal line: the copyright, then Privacy / Terms when the product has
+   them. Full width under the brand row, quieter than it. The year is filled in
+   by the site's build, never typed and never written by client script. */
+.pp-legal { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s2) var(--s5); padding-top: var(--s4); border-top: 1px solid var(--line); font-size: var(--text-xs); }
+.pp-legal small { font-size: inherit; }
