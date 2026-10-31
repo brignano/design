@@ -34,6 +34,9 @@
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
+/* On <body>, drop the browser's 8px margin so the sticky header and every band
+   run to the screen edges. On a wrapper, the body is the site's business. */
+body.pp { margin: 0; }
 @media (max-width: 560px) { .pp { --pp-gutter: var(--s4); } }
 
 /* The content column every band lines up on. */
@@ -62,7 +65,9 @@
 .pp-header-actions { display: flex; align-items: center; gap: var(--s3); }
 .pp-nav + .pp-header-actions { margin-left: 0; }
 .pp-brand + .pp-header-actions { margin-left: auto; }
-@media (max-width: 860px) { .pp-nav { display: none; } .pp-header-actions { margin-left: auto; } }
+/* With the nav hidden, the actions go right. The selector repeats
+   .pp-nav + .pp-header-actions so it outranks the margin-left: 0 above. */
+@media (max-width: 860px) { .pp-nav { display: none; } .pp-nav + .pp-header-actions { margin-left: auto; } }
 @media (max-width: 480px) { .pp-header .pp-status { display: none; } }
 
 /* ── Status ────────────────────────────────────────────────────────────
@@ -84,7 +89,7 @@
    .pp-button is the page's one primary action. .is-secondary is everything
    else. Works on <a> and <button>. */
 .pp-button {
-  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); box-sizing: border-box;
   font: 600 var(--text-base) / 1.2 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer;
   padding: 13px 22px; border-radius: 8px; border: 1px solid var(--i);
   background: var(--i); color: var(--on-i);
@@ -98,6 +103,8 @@
 .pp-button.is-small { font-size: var(--text-sm); padding: 8px 14px; }
 .pp-button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 .pp-button:disabled { background: var(--i-disabled-bg); border-color: transparent; color: var(--i-disabled-ink); cursor: not-allowed; }
+/* The 44px touch target includes padding and border (border-box above), so
+   a small header button stays 44px tall rather than growing to 62px. */
 @media (pointer: coarse) { .pp-button { min-height: 44px; } }
 
 .pp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin: 0; }
