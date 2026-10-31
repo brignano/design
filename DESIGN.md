@@ -367,8 +367,9 @@ Rules:
   `"soon"` takes `--attention`; no attribute stays neutral. The word carries the
   meaning on its own (§3, never colour alone).
 - **Prices sit beside the ask, not apart from it.** `dl.pp-price` holds two to
-  four options, one `<div>` each: the price as `<dt>` ("From $100"), one line of condition as `<dd>`. Its home is the
-  close band, under the subhead, so the price is read right before the action.
+  four options, one `<div>` each: the price as `<dt>` ("From $100"), one line
+  of condition as `<dd>`. A single price needs no list; say it in the subhead.
+  Its home is the close band, under the subhead, so the price is read right before the action.
   Only when pricing *is* the argument (tiers the reader has to choose between)
   does it get its own chapter, in the chapter body like `.pp-points`. An option
   never gets its own `.pp-button`: the one primary action stays in the panel and
