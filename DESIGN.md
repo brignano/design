@@ -344,7 +344,12 @@ The order is fixed, because each band answers the question the last one raised:
    headline that is a sentence, a short body, and optionally `.pp-points` (two to
    four ruled columns) or a `.pp-figure`.
 4. **Close** (`.pp-close`) — the primary action again, with the room a form needs
-   (`.pp-panel`).
+   (`.pp-panel`). A short form is `.pp-form` of `.pp-field` (label above the
+   control), then the button, then a `.pp-note` for the privacy line. Mark the
+   optional fields (`.pp-optional`), not the required ones. A field that fails
+   takes `aria-invalid="true"` and a `.pp-error` sentence under it; a failed send
+   puts its error in the note (`.pp-note.is-error`). On success the form gives
+   way to `.pp-done`, a heading and one line with `role="status"`, focused.
 5. **Footer** (`.pp-footer`) — the brand and a line about it, a few links, then
    the **legal line** (`.pp-legal`): `© {year} Anthony Brignano. All rights
    reserved.` and, if the product has them, its Privacy and Terms links
