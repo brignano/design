@@ -1,0 +1,172 @@
+/* product-page.css — the page structure for a product's marketing site.
+ *
+ *   @import '@brignano/design/tokens.css';
+ *   @import '@brignano/design/product-page.css';
+ *   <html class="tier-marketing">
+ *
+ * One page, read top to bottom, that makes one argument and asks for one thing:
+ *
+ *   .pp-header    brand, a few in-page links, the status, the primary action
+ *   .pp-hero      status, a one-line thesis, a subhead, two actions, a proof slot
+ *   .pp-story     3–4 numbered chapters: problem, how it works, who it's for, why now
+ *   .pp-close     the primary action again, with whatever it needs (a form)
+ *   .pp-footer
+ *
+ * The skeleton is previews/product-page.html: copy it, keep the order, replace
+ * the words. Rules (DESIGN.md §13):
+ *
+ *   - One primary action per page (.pp-button). Everything else is secondary.
+ *   - The status is a word with a dot, never a coloured badge on its own.
+ *   - The proof slot is the product itself where possible (a live demo), else a
+ *     real screenshot. No stock imagery, no illustrations of people.
+ *   - Chapters are numbered by the list, so reordering them renumbers them.
+ *
+ * Every class starts with .pp- so it can sit beside a site's own stylesheet.
+ * Colours are tokens only; widths are --pp-width / --pp-gutter, which a page
+ * may override on .pp. */
+
+.pp {
+  --pp-width: 1160px;
+  --pp-gutter: var(--s5);
+  background: var(--bg);
+  color: var(--ink);
+  font: var(--text-base) / 1.6 var(--sans);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+@media (max-width: 560px) { .pp { --pp-gutter: var(--s4); } }
+
+/* The content column every band lines up on. */
+.pp-wrap { max-width: var(--pp-width); margin: 0 auto; padding: 0 var(--pp-gutter); }
+
+/* ── Skip link ─────────────────────────────────────────────────────────── */
+.pp-skip { position: absolute; left: var(--s4); top: -100px; z-index: 20; padding: var(--s2) var(--s3);
+  background: var(--card); color: var(--ink); border-radius: var(--radius-sm); box-shadow: var(--shadow-2); }
+.pp-skip:focus { top: var(--s3); }
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.pp-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--surface-sticky); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.pp-header > .pp-wrap { display: flex; align-items: center; gap: var(--s5); min-height: 64px; }
+.pp-brand {
+  display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none;
+  font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.01em;
+}
+.pp-brand img, .pp-brand svg { width: 26px; height: 26px; }
+.pp-nav { display: flex; align-items: center; gap: var(--s5); margin-left: auto; }
+.pp-nav a { color: var(--ink-soft); text-decoration: none; font-size: var(--text-sm); font-weight: 500; }
+.pp-nav a:hover { color: var(--ink); }
+.pp-header-actions { display: flex; align-items: center; gap: var(--s3); }
+.pp-nav + .pp-header-actions { margin-left: 0; }
+.pp-brand + .pp-header-actions { margin-left: auto; }
+@media (max-width: 860px) { .pp-nav { display: none; } .pp-header-actions { margin-left: auto; } }
+@media (max-width: 480px) { .pp-header .pp-status { display: none; } }
+
+/* ── Status ────────────────────────────────────────────────────────────
+   Where the product stands, as a word with a dot: "Pilot open", "In
+   development", "Closed beta". The dot takes a state hue only when the state
+   asks something of the reader (DESIGN.md §3): open = success (you can join),
+   soon = attention (it is coming, watch for it). Without data-state it stays
+   neutral. The word always carries the meaning on its own. */
+.pp-status {
+  display: inline-flex; align-items: center; gap: var(--s2); white-space: nowrap;
+  font: 500 var(--text-xs) / 1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-soft); padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 999px;
+}
+.pp-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--slate); flex: none; }
+.pp-status[data-state="open"]::before { background: var(--success); box-shadow: 0 0 0 3px var(--success-surface); }
+.pp-status[data-state="soon"]::before { background: var(--attention); box-shadow: 0 0 0 3px var(--attention-surface); }
+
+/* ── Buttons ───────────────────────────────────────────────────────────
+   .pp-button is the page's one primary action. .is-secondary is everything
+   else. Works on <a> and <button>. */
+.pp-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  font: 600 var(--text-base) / 1.2 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer;
+  padding: 13px 22px; border-radius: 8px; border: 1px solid var(--i);
+  background: var(--i); color: var(--on-i);
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.pp-button:hover { background: var(--i-hover); border-color: var(--i-hover); color: var(--on-i); }
+.pp-button:active { background: var(--i-pressed); border-color: var(--i-pressed); }
+.pp-button.is-secondary { background: transparent; color: var(--ink); border-color: var(--line-control); font-weight: 500; }
+.pp-button.is-secondary:hover { background: var(--surface-hover); color: var(--ink); }
+.pp-button.is-secondary:active { background: var(--surface-active); }
+.pp-button.is-small { font-size: var(--text-sm); padding: 8px 14px; }
+.pp-button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+.pp-button:disabled { background: var(--i-disabled-bg); border-color: transparent; color: var(--i-disabled-ink); cursor: not-allowed; }
+@media (pointer: coarse) { .pp-button { min-height: 44px; } }
+
+.pp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin: 0; }
+.pp-note { margin: var(--s3) 0 0; font-size: var(--text-sm); color: var(--ink-soft); }
+
+/* ── Hero ──────────────────────────────────────────────────────────────
+   Copy on the left, proof on the right; stacked below 960px with the copy
+   first. The thesis is one line of argument, not a tagline. */
+.pp-hero { padding: var(--s8) 0 var(--s8); }
+.pp-hero > .pp-wrap { display: grid; gap: var(--s7); align-items: center; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) { .pp-hero > .pp-wrap { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
+.pp-hero .pp-status { margin-bottom: var(--s5); }
+.pp-thesis {
+  font-size: var(--text-4xl); font-weight: 600; line-height: 1.04; letter-spacing: -0.035em;
+  margin: 0 0 var(--s4); max-width: 14ch; text-wrap: balance;
+}
+.pp-subhead { font-size: var(--text-lg); line-height: 1.5; color: var(--ink-soft); margin: 0 0 var(--s6); max-width: 40ch; }
+.pp-media { margin: 0; min-width: 0; }
+
+/* ── Story ─────────────────────────────────────────────────────────────
+   An <ol> of chapters. Each opens on a hairline with "01 / Label" in mono,
+   then a headline that is a sentence, then a short body and an optional
+   figure. Wide screens put the label in its own column. */
+.pp-story { list-style: none; margin: 0; padding: 0; counter-reset: pp-chapter; }
+.pp-chapter { counter-increment: pp-chapter; padding: var(--s8) 0; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
+.pp-chapter > .pp-wrap { display: grid; gap: var(--s4) var(--s7); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) {
+  .pp-chapter > .pp-wrap { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); }
+  .pp-chapter-body { grid-column: 2; }
+}
+.pp-label { margin: 0; padding-top: 0.4em; font: 500 var(--text-xs) / 1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.pp-label::before { content: counter(pp-chapter, decimal-leading-zero) " / "; color: var(--ink); }
+.pp-chapter h2 {
+  font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.025em; margin: 0 0 var(--s4); max-width: 22ch; text-wrap: balance;
+}
+.pp-chapter-body > p { margin: 0 0 var(--s4); max-width: 62ch; color: var(--ink-soft); font-size: var(--text-lg); line-height: 1.55; }
+.pp-chapter-body > p:last-child { margin-bottom: 0; }
+
+/* Two to four short points under a chapter: a ruled column each. */
+.pp-points { list-style: none; margin: var(--s6) 0 0; padding: 0; display: grid; gap: var(--s5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.pp-points > li { border-top: 2px solid var(--ink); padding-top: var(--s3); }
+.pp-points h3 { margin: 0 0 6px; font-size: var(--text-lg); font-weight: 600; letter-spacing: -0.01em; }
+.pp-points p { margin: 0; color: var(--ink-soft); }
+
+/* A chapter's figure: a terminal, a screenshot, a small mock of the product. */
+.pp-figure { margin: var(--s6) 0 0; }
+.pp-figure > img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); border: 1px solid var(--line); box-shadow: var(--shadow-2); }
+.pp-figure figcaption { margin-top: var(--s2); font-size: var(--text-sm); color: var(--ink-soft); }
+.pp-terminal { margin: 0; overflow-x: auto; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-1);
+  padding: var(--s5); font: var(--text-sm) / 1.7 var(--mono); }
+.pp-terminal code { font: inherit; }
+
+/* ── Close ─────────────────────────────────────────────────────────────
+   The primary action once more, with the room a form needs. */
+.pp-close { padding: var(--s8) 0 var(--s9); border-top: 1px solid var(--line); scroll-margin-top: 64px; }
+.pp-close > .pp-wrap { display: grid; gap: var(--s6); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 960px) { .pp-close > .pp-wrap { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
+.pp-close h2 { font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; margin: var(--s4) 0 var(--s3); text-wrap: balance; }
+.pp-close .pp-subhead { margin-bottom: 0; }
+.pp-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: var(--s6); }
+@media (max-width: 560px) { .pp-panel { padding: var(--s5) var(--s4); } }
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.pp-footer { border-top: 1px solid var(--line); padding: var(--s6) 0 var(--s7); color: var(--ink-soft); font-size: var(--text-sm); }
+.pp-footer > .pp-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4) var(--s6); }
+.pp-footer p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
+.pp-footer .pp-brand { font-size: var(--text-base); }
+.pp-footer .pp-brand img, .pp-footer .pp-brand svg { width: 20px; height: 20px; }
+.pp-footer nav { display: flex; flex-wrap: wrap; gap: var(--s4); }
+.pp-footer nav a { color: var(--ink-soft); text-decoration: none; }
+.pp-footer nav a:hover { color: var(--ink); }
