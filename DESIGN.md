@@ -306,3 +306,47 @@ Hardcoded values silently survive a theme change. `life`'s status pills carried
 literal greys for months and would have stayed light grey in dark mode.
 `brignano.io` carried four literal violet hexes plus ~15 `violet-*` utilities,
 which is why changing the accent was a migration rather than a one-line edit.
+
+## 13. Product pages
+
+A product's marketing page is one argument and one ask. `product-page.css` is its
+structure; `previews/product-page.html` is the skeleton to copy. Import it after
+the tokens, put `tier-marketing` on `<html>` and `pp` on `<body>` (or a wrapper).
+
+```css
+@import '@brignano/design/tokens.css';
+@import '@brignano/design/product-page.css';
+```
+
+The order is fixed, because each band answers the question the last one raised:
+
+1. **Header** (`.pp-header`) — brand, two or three in-page links, the status, the
+   primary action. Sticky, on `--surface-sticky`.
+2. **Hero** (`.pp-hero`) — the status, a one-line **thesis** (`.pp-thesis`), a
+   subhead of one or two sentences, the primary action and one secondary, and a
+   **proof slot** (`.pp-media`). The proof is the product itself where it can be
+   (a live demo), else a real screenshot. Never stock imagery.
+3. **Story** (`ol.pp-story` of `.pp-chapter`) — three or four numbered chapters,
+   usually *the problem*, *how it works*, *who it's for*, *why now*. Each is a mono
+   label (`.pp-label`, numbered `01 /` by the list, so reordering renumbers), a
+   headline that is a sentence, a short body, and optionally `.pp-points` (two to
+   four ruled columns) or a `.pp-figure`.
+4. **Close** (`.pp-close`) — the primary action again, with the room a form needs
+   (`.pp-panel`).
+5. **Footer** (`.pp-footer`).
+
+Rules:
+
+- **One primary action per page.** `.pp-button` is that action, everywhere it
+  appears. Anything else is `.pp-button.is-secondary` or a link.
+- **The status is a word with a dot** (`.pp-status`): "Pilot open", "In
+  development". `data-state="open"` takes `--success` (you can join now),
+  `"soon"` takes `--attention`; no attribute stays neutral. The word carries the
+  meaning on its own (§3, never colour alone).
+- **Headlines are sentences.** Calm and declarative, no exclamation marks, no
+  claims the page can't back up.
+- **Restraint carries the style.** Hairlines between chapters, whitespace, the
+  type scale. No gradients, no tinted section backgrounds, no decorative colour.
+
+Every class starts with `.pp-`, so the file sits beside a site's own stylesheet.
+A page can change `--pp-width` (default 1160px) and `--pp-gutter` on `.pp`.

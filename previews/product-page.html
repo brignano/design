@@ -1,0 +1,119 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en" class="tier-marketing">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product page</title>
+<!-- The skeleton for a product's marketing page (product-page.css, DESIGN.md §13).
+     Copy this file to start one: keep the order, replace the words. -->
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../product-page.css">
+<style>
+  /* Preview only: a stand-in for the proof slot. */
+  .stand-in { aspect-ratio: 4 / 3; display: grid; place-items: center; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-3); color: var(--ink-soft); font: var(--text-sm) var(--mono); }
+</style>
+</head>
+<body class="pp" style="margin:0">
+<a class="pp-skip" href="#main">Skip to content</a>
+
+<header class="pp-header">
+  <div class="pp-wrap">
+    <a class="pp-brand" href="#">Product</a>
+    <nav class="pp-nav" aria-label="On this page">
+      <a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#">Docs</a>
+    </nav>
+    <div class="pp-header-actions">
+      <span class="pp-status" data-state="open">Pilot open</span>
+      <a class="pp-button is-small" href="#start">Start a pilot</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="pp-hero">
+    <div class="pp-wrap">
+      <div>
+        <span class="pp-status" data-state="open">Pilot open</span>
+        <h1 class="pp-thesis">One line that is the whole argument.</h1>
+        <p class="pp-subhead">One or two sentences: what the product does, for whom, and the difference it makes. No adjectives it can't back up.</p>
+        <p class="pp-actions"><a class="pp-button" href="#start">Start a pilot</a><a class="pp-button is-secondary" href="#">Second action</a></p>
+        <p class="pp-note">A short line that removes a reason not to click.</p>
+      </div>
+      <figure class="pp-media"><div class="stand-in">The product, live if it can be</div></figure>
+    </div>
+  </section>
+
+  <ol class="pp-story">
+    <li class="pp-chapter" id="problem">
+      <div class="pp-wrap">
+        <p class="pp-label">The problem</p>
+        <div class="pp-chapter-body">
+          <h2>A headline that is a sentence about the reader's world.</h2>
+          <p>Two or three sentences that make the cost concrete: who hits it, when, and what it costs them.</p>
+        </div>
+      </div>
+    </li>
+    <li class="pp-chapter" id="how">
+      <div class="pp-wrap">
+        <p class="pp-label">How it works</p>
+        <div class="pp-chapter-body">
+          <h2>Three verbs, in the order you'd do them.</h2>
+          <ul class="pp-points">
+            <li><h3>First</h3><p>One sentence each.</p></li>
+            <li><h3>Then</h3><p>One sentence each.</p></li>
+            <li><h3>Finally</h3><p>One sentence each.</p></li>
+          </ul>
+          <figure class="pp-figure"><pre class="pp-terminal"><code>$ product check
+✓ 12 passed</code></pre></figure>
+        </div>
+      </div>
+    </li>
+    <li class="pp-chapter" id="who">
+      <div class="pp-wrap">
+        <p class="pp-label">Who it's for</p>
+        <div class="pp-chapter-body">
+          <h2>The people it's for, named plainly.</h2>
+          <ul class="pp-points">
+            <li><h3>Audience one</h3><p>What they get.</p></li>
+            <li><h3>Audience two</h3><p>What they get.</p></li>
+            <li><h3>Audience three</h3><p>What they get.</p></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li class="pp-chapter" id="why-now">
+      <div class="pp-wrap">
+        <p class="pp-label">Why now</p>
+        <div class="pp-chapter-body">
+          <h2>What changed that makes this the moment.</h2>
+          <p>The shift in the world, then why the product is the answer to it.</p>
+        </div>
+      </div>
+    </li>
+  </ol>
+
+  <section class="pp-close" id="start">
+    <div class="pp-wrap">
+      <div>
+        <span class="pp-status" data-state="open">Pilot open</span>
+        <h2>The primary action, once more.</h2>
+        <p class="pp-subhead">What happens after they click, and how soon.</p>
+      </div>
+      <div class="pp-panel">
+        <p class="pp-actions"><a class="pp-button" href="#">Start a pilot</a></p>
+        <p class="pp-note">Or a short form, if the action needs one.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pp-footer">
+  <div class="pp-wrap">
+    <p><a class="pp-brand" href="#">Product</a><span>One line about it.</span></p>
+    <nav aria-label="More"><a href="#">Docs</a><a href="#">Privacy</a><a href="#">Contact</a></nav>
+  </div>
+</footer>
+</body>
+</html>
