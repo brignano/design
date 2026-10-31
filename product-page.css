@@ -9,8 +9,9 @@
  *   .pp-header    brand, a few in-page links, the status, the primary action
  *   .pp-hero      status, a one-line thesis, a subhead, two actions, a proof slot
  *   .pp-story     3–4 numbered chapters: problem, how it works, who it's for, why now
- *   .pp-close     the primary action again, with whatever it needs (a form),
- *                 and the prices (.pp-price) if the product has them
+ *   .pp-close     the primary action again, with whatever it needs: a short
+ *                 .pp-form of .pp-field (.pp-done once it's sent), and the
+ *                 prices (.pp-price) if the product has them
  *   .pp-footer    brand and links, then the legal line: © year, owner, and
  *                 the product's Privacy and Terms links if it has them
  *
@@ -245,6 +246,49 @@ body.pp { margin: 0; }
 .pp-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: var(--s6); }
 @media (max-width: 560px) { .pp-panel { padding: var(--s5) var(--s4); } }
 
+/* ── Form ──────────────────────────────────────────────────────────────
+   The short form a close panel may need: a few .pp-field, then the primary
+   action in .pp-actions, then a .pp-note for the privacy line (or, after a
+   failed send, the error). Mark the optional fields with .pp-optional inside
+   the label; required is the default and goes unmarked.
+
+   A field that fails takes aria-invalid="true" on its control and a
+   .pp-error message under it, tied with aria-describedby. The message is a
+   sentence, so the colour is never the only sign (DESIGN.md §3).
+
+   On success the form is replaced in the panel by .pp-done: a short heading
+   and one line, with role="status" so it is announced, and tabindex="-1" so
+   script can move focus to it. */
+.pp-form { display: grid; gap: var(--s4); margin: 0; }
+.pp-form .pp-actions { margin-top: var(--s2); }
+/* [hidden] is how the form gives way to .pp-done; display: grid would beat it. */
+.pp-form[hidden], .pp-error[hidden], .pp-done[hidden] { display: none; }
+.pp-field { display: grid; gap: 6px; min-width: 0; }
+.pp-field > label { font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
+.pp-optional { font-weight: 400; color: var(--ink-soft); }
+.pp-field input, .pp-field textarea {
+  box-sizing: border-box; width: 100%; margin: 0; min-width: 0;
+  font: var(--text-base) / 1.5 var(--sans); color: var(--ink);
+  background: var(--card); border: 1px solid var(--line-control); border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.pp-field textarea { min-height: 7em; resize: vertical; }
+.pp-field input::placeholder, .pp-field textarea::placeholder { color: var(--slate); opacity: 1; }
+/* Hover darkens the edge rather than lightening it: --line-strong would drop
+   the boundary under 3:1 (DESIGN.md §4). */
+.pp-field input:hover, .pp-field textarea:hover { border-color: var(--ink-soft); }
+.pp-field input:focus-visible, .pp-field textarea:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+.pp-field input:disabled, .pp-field textarea:disabled { background: var(--surface-hover); color: var(--ink-soft); cursor: not-allowed; }
+.pp-field [aria-invalid="true"], .pp-field [aria-invalid="true"]:hover { border-color: var(--danger); }
+.pp-error { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--danger-ink); }
+/* A send error reuses the note under the button. */
+.pp-note.is-error { color: var(--danger-ink); }
+
+.pp-done h3 { margin: 0 0 var(--s2); font-size: var(--text-xl); font-weight: 600; line-height: 1.25; letter-spacing: -0.015em; }
+.pp-done p { margin: 0; color: var(--ink-soft); }
+.pp-done:focus { outline: none; }
+.pp-done:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 4px; border-radius: var(--radius-sm); }
 /* ── Price ─────────────────────────────────────────────────────────────
    Two to four ways to pay, as a <dl>: one <div> per option, the price as <dt>,
    one line of condition as <dd>. Ruled like .pp-points, narrower so three fit
