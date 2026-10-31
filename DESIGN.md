@@ -333,7 +333,16 @@ The order is fixed, because each band answers the question the last one raised:
    four ruled columns) or a `.pp-figure`.
 4. **Close** (`.pp-close`) — the primary action again, with the room a form needs
    (`.pp-panel`).
-5. **Footer** (`.pp-footer`).
+5. **Footer** (`.pp-footer`) — the brand and a line about it, a few links, then
+   the **legal line** (`.pp-legal`): `© {year} Anthony Brignano. All rights
+   reserved.` and, if the product has them, its Privacy and Terms links
+   (`<nav aria-label="Legal">`). Leave out a link whose page doesn't exist.
+
+The year is the current year **at build time**. This package is CSS and HTML,
+so the consuming site's build fills it in (a template value from
+`new Date().getFullYear()`, or a bundler `define`). Never type it by hand, where
+it goes stale every January, and never write it from client script, where it
+flashes or is missing without JavaScript.
 
 Rules:
 
@@ -350,3 +359,16 @@ Rules:
 
 Every class starts with `.pp-`, so the file sits beside a site's own stylesheet.
 A page can change `--pp-width` (default 1160px) and `--pp-gutter` on `.pp`.
+
+Before a product page ships, check it:
+
+- [ ] Bands in order: header, hero, story, close, footer.
+- [ ] One primary action, the same everywhere it appears.
+- [ ] A status word with a dot, in the header and the hero.
+- [ ] A one-line thesis; every headline is a sentence.
+- [ ] The proof slot is the product (a live demo) or a real screenshot.
+- [ ] Three or four story chapters, numbered by the list.
+- [ ] Has a copyright footer: `© {year} Anthony Brignano. All rights reserved.`,
+      the year filled in at build time, plus Privacy and Terms links for the
+      pages the product has.
+- [ ] No hex outside `tokens.css` (`npm run check`).

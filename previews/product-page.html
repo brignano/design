@@ -112,7 +112,14 @@
 <footer class="pp-footer">
   <div class="pp-wrap">
     <p><a class="pp-brand" href="#">Product</a><span>One line about it.</span></p>
-    <nav aria-label="More"><a href="#">Docs</a><a href="#">Privacy</a><a href="#">Contact</a></nav>
+    <nav aria-label="More"><a href="#">Docs</a><a href="#">Contact</a></nav>
+    <div class="pp-legal">
+      <!-- The year is the site build's job: render it from the build's clock
+           (e.g. new Date().getFullYear() in the build script), never type it. -->
+      <small>&copy; 2026 Anthony Brignano. All rights reserved.</small>
+      <!-- Optional, per product: keep only the pages the product has. -->
+      <nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+    </div>
   </div>
 </footer>
 </body>
