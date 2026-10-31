@@ -345,7 +345,8 @@ The order is fixed, because each band answers the question the last one raised:
    headline that is a sentence, a short body, and optionally `.pp-points` (two to
    four ruled columns) or a `.pp-figure`.
 4. **Close** (`.pp-close`) — the primary action again, with the room a form needs
-   (`.pp-panel`).
+   (`.pp-panel`). If the product has prices, they go in the left column under the
+   subhead, as a **price list** (`dl.pp-price`, below).
 5. **Footer** (`.pp-footer`) — the brand and a line about it, a few links, then
    the **legal line** (`.pp-legal`): `© {year} Anthony Brignano. All rights
    reserved.` and, if the product has them, its Privacy and Terms links
@@ -365,6 +366,16 @@ Rules:
   development". `data-state="open"` takes `--success` (you can join now),
   `"soon"` takes `--attention`; no attribute stays neutral. The word carries the
   meaning on its own (§3, never colour alone).
+- **Prices sit beside the ask, not apart from it.** `dl.pp-price` holds two to
+  four options, one `<div>` each: the price as `<dt>` ("From $100"), one line
+  of condition as `<dd>`. A single price needs no list; say it in the subhead.
+  Its home is the close band, under the subhead, so the price is read right before the action.
+  Only when pricing *is* the argument (tiers the reader has to choose between)
+  does it get its own chapter, in the chapter body like `.pp-points`. An option
+  never gets its own `.pp-button`: the one primary action stays in the panel and
+  covers every option (the form can ask which). An option that needs a separate
+  way in gets a plain link in its `<dd>`. Write the price the way you'd say it;
+  no strike-through prices, "most popular" badges or highlighted tiers.
 - **Headlines are sentences.** Calm and declarative, no exclamation marks, no
   claims the page can't back up.
 - **Restraint carries the style.** Hairlines between chapters, whitespace, the
@@ -437,6 +448,8 @@ Before a product page ships, check it:
 - [ ] A clip has a finished-state poster, a Pause / Play button, and no
       `autoplay` attribute.
 - [ ] Three or four story chapters, numbered by the list.
+- [ ] Prices, if any, are a `.pp-price` of two to four options in the close
+      band (or one chapter), with no buttons of their own.
 - [ ] Has a copyright footer: `© {year} Anthony Brignano. All rights reserved.`,
       the year filled in at build time, plus Privacy and Terms links for the
       pages the product has.

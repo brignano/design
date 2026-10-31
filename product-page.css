@@ -9,7 +9,8 @@
  *   .pp-header    brand, a few in-page links, the status, the primary action
  *   .pp-hero      status, a one-line thesis, a subhead, two actions, a proof slot
  *   .pp-story     3–4 numbered chapters: problem, how it works, who it's for, why now
- *   .pp-close     the primary action again, with whatever it needs (a form)
+ *   .pp-close     the primary action again, with whatever it needs (a form),
+ *                 and the prices (.pp-price) if the product has them
  *   .pp-footer    brand and links, then the legal line: © year, owner, and
  *                 the product's Privacy and Terms links if it has them
  *
@@ -243,6 +244,19 @@ body.pp { margin: 0; }
 .pp-close .pp-subhead { margin-bottom: 0; }
 .pp-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: var(--s6); }
 @media (max-width: 560px) { .pp-panel { padding: var(--s5) var(--s4); } }
+
+/* ── Price ─────────────────────────────────────────────────────────────
+   Two to four ways to pay, as a <dl>: one <div> per option, the price as <dt>,
+   one line of condition as <dd>. Ruled like .pp-points, narrower so three fit
+   in the close band's left column. It goes under the close's subhead (or in a
+   chapter body, if pricing is the argument). The options carry no buttons:
+   the page's one .pp-button stays in the panel, and an option that needs its
+   own way in gets a plain link in its <dd>. */
+.pp-price { margin: var(--s6) 0 0; display: grid; gap: var(--s5); grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.pp-price > div { border-top: 2px solid var(--ink); padding-top: var(--s3); }
+.pp-price dt { margin: 0 0 6px; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.pp-price dd { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
+.pp-price dd a { color: var(--i-ink); }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
 .pp-footer { border-top: 1px solid var(--line); padding: var(--s6) 0 var(--s7); color: var(--ink-soft); font-size: var(--text-sm); }
