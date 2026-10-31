@@ -337,7 +337,8 @@ The order is fixed, because each band answers the question the last one raised:
 2. **Hero** (`.pp-hero`) — the status, a one-line **thesis** (`.pp-thesis`), a
    subhead of one or two sentences, the primary action and one secondary, and a
    **proof slot** (`.pp-media`). The proof is the product itself where it can be
-   (a live demo), else a real screenshot. Never stock imagery.
+   (a live demo), else a real screenshot or a short screen recording (see
+   *Video in the proof slot* below). Never stock imagery.
 3. **Story** (`ol.pp-story` of `.pp-chapter`) — three or four numbered chapters,
    usually *the problem*, *how it works*, *who it's for*, *why now*. Each is a mono
    label (`.pp-label`, numbered `01 /` by the list, so reordering renumbers), a
@@ -380,6 +381,59 @@ Rules:
 - **Restraint carries the style.** Hairlines between chapters, whitespace, the
   type scale. No gradients, no tinted section backgrounds, no decorative colour.
 
+### Video in the proof slot
+
+When the proof is something a person does, such as editing their site on a
+phone and seeing it update, a short clip shows it better than a still.
+`.pp-media` takes a `<video>` (or `<img>`) directly, framed like a hero surface,
+or inside `.pp-device`, a phone frame. `previews/product-media.html` shows both.
+
+- **The clip.** `<video muted loop playsinline preload="metadata">` with
+  `width`/`height` set, a `poster`, and no `autoplay` attribute. Keep it under
+  about 15 seconds and silent: it loops, and nobody turns sound on in a hero.
+- **The poster is the finished state.** It is what shows before the clip
+  loads, without JavaScript, and under `prefers-reduced-motion`, so it has to
+  make the argument on its own (§7: content is visible by default).
+- **The phone frame** (`.pp-device`) is a 10px bezel in `--device`, which stays
+  dark in both themes. A phone is a dark object, and a bezel in `--ink` would
+  turn near-white in dark mode. Its one child is the screen, at 9 : 19.5.
+  `--pp-device-width` (default 280px) sizes it.
+- **Steps** (`ol.pp-steps` in a `figcaption.pp-caption`) name what the clip
+  shows, in mono: *1 Change the hours, 2 Press Save, 3 The site updates*. Each
+  `<li data-at="3">` gives the second it starts at, and the step the clip is on
+  gets `aria-current="step"`, which inks it. The list is the sequence as text,
+  so it reads the same with the clip stopped.
+- **Pause / Play** (`button.pp-play`) is required. Motion that runs longer than
+  five seconds needs a way to stop it (WCAG 2.2.2). It starts `hidden`, and the
+  script shows it.
+
+The package is CSS, so the page carries this script, once, after the figure:
+
+```js
+for (const fig of document.querySelectorAll('.pp-media')) {
+  const video = fig.querySelector('video'), button = fig.querySelector('.pp-play');
+  if (!video || !button) continue;
+  const steps = [...fig.querySelectorAll('.pp-steps > li[data-at]')];
+  const label = () => { button.textContent = video.paused ? 'Play' : 'Pause'; };
+  video.addEventListener('timeupdate', () => {
+    const now = steps.filter((s) => video.currentTime >= +s.dataset.at).pop();
+    for (const s of steps) {
+      if (s === now) s.setAttribute('aria-current', 'step');
+      else s.removeAttribute('aria-current');
+    }
+  });
+  video.addEventListener('play', label);
+  video.addEventListener('pause', label);
+  button.addEventListener('click', () => (video.paused ? video.play() : video.pause()));
+  button.hidden = false;
+  label();
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) video.play().catch(label);
+}
+```
+
+Under reduced motion the clip waits on its poster with a **Play** button, so it
+runs only when the reader asks for it, the same terms as ADR-0009.
+
 Every class starts with `.pp-`, so the file sits beside a site's own stylesheet.
 A page can change `--pp-width` (default 1160px) and `--pp-gutter` on `.pp`.
 
@@ -389,7 +443,10 @@ Before a product page ships, check it:
 - [ ] One primary action, the same everywhere it appears.
 - [ ] A status word with a dot, in the header and the hero.
 - [ ] A one-line thesis; every headline is a sentence.
-- [ ] The proof slot is the product (a live demo) or a real screenshot.
+- [ ] The proof slot is the product (a live demo), a real screenshot, or a
+      real screen recording.
+- [ ] A clip has a finished-state poster, a Pause / Play button, and no
+      `autoplay` attribute.
 - [ ] Three or four story chapters, numbered by the list.
 - [ ] Prices, if any, are a `.pp-price` of two to four options in the close
       band (or one chapter), with no buttons of their own.

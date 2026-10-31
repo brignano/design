@@ -137,6 +137,11 @@
      for (3.39:1 on card, 3.68:1 on bg). */
   --line-control: light-dark(#8a8a8f, #6b6b73);
   --on-dark: light-dark(#fafafb, #0d0d0f); /* n-25 / n-0 */
+  /* A phone's bezel (.pp-device). A phone is a dark object in either theme,
+     so this stays dark rather than flipping with --ink, which would draw a
+     near-white bezel in dark mode. Dark lifts it to n-300 so the frame still
+     has an edge against the near-black page. Decoration, not a boundary. */
+  --device: light-dark(#111114, #3a3a41); /* n-900 / n-300 */
 
   /* ── Interactive — cobalt ─────────────────────────────────────────────
      Everything you can act on: links, buttons, focus, selection. Chosen to
