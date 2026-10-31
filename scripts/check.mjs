@@ -160,7 +160,8 @@ for (const [k, sources] of Object.entries(WASHES))
       fail(`drift (${theme}): ${k} mixes ${base}, but ${src} is ${hexOf(src, map)}`);
   });
 const STEPS = { '--bg': ['--n-25', '--n-0'], '--card': ['--n-0', '--n-50'], '--on-dark': ['--n-25', '--n-0'],
-  '--slate': ['--n-600', '--n-500'], '--line-control': ['--n-500', null] };
+  '--slate': ['--n-600', '--n-500'], '--line-control': ['--n-500', null],
+  '--device': ['--n-900', '--n-300'] };
 for (const [k, steps] of Object.entries(STEPS))
   steps.forEach((step, i) => {
     const [theme, map] = i ? ['dark', dark] : ['light', light];

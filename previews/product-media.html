@@ -1,0 +1,52 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en" class="tier-marketing">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product page: video proof</title>
+<!-- The proof slot as a clip in a phone frame, with the steps it shows
+     (product-page.css, DESIGN.md §13 "Video in the proof slot"). A real page
+     puts a <video> where the stand-in screen is and adds the script from §13;
+     here the second step is lit by hand so the state is visible. -->
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../product-page.css">
+<style>
+  /* Preview only: a stand-in screen, drawn in tokens, where the video goes. */
+  .screen { display: flex !important; flex-direction: column; gap: 10px; padding: 44px 16px 16px; font-size: var(--text-xs); color: var(--ink-soft); }
+  .screen b { color: var(--ink); font-size: var(--text-sm); }
+  .screen .bar { height: 8px; border-radius: 4px; background: var(--line); }
+  .screen .field { border: 1px solid var(--line-control); border-radius: var(--radius-sm); padding: 8px 10px; color: var(--ink); }
+  .screen .save { margin-top: auto; text-align: center; padding: 10px; border-radius: 8px; background: var(--i); color: var(--on-i); font-weight: 600; }
+  .panel .pp-media { padding: 12px 0; }
+</style>
+</head>
+<body>
+<h1>Video proof</h1>
+<p class="sub">.pp-device phone frame, .pp-steps, .pp-play. The bezel stays dark in both themes.</p>
+<div class="pair">
+  <div class="panel"><span class="tag">Viewer theme</span>
+    <figure class="pp-media">
+      <div class="pp-device">
+        <div class="screen"><b>Opening hours</b><div class="field">Mon–Fri 8–6</div><div class="field">Sat 9–2</div><div class="bar"></div><div class="bar" style="width:60%"></div><div class="save">Save</div></div>
+      </div>
+      <figcaption class="pp-caption">
+        <ol class="pp-steps"><li data-at="0">Change the hours</li><li data-at="3" aria-current="step">Press Save</li><li data-at="6">The site updates</li></ol>
+        <button class="pp-play" type="button">Pause</button>
+      </figcaption>
+    </figure>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <figure class="pp-media">
+      <div class="pp-device">
+        <div class="screen"><b>Opening hours</b><div class="field">Mon–Fri 8–6</div><div class="field">Sat 9–2</div><div class="bar"></div><div class="bar" style="width:60%"></div><div class="save">Save</div></div>
+      </div>
+      <figcaption class="pp-caption">
+        <ol class="pp-steps"><li data-at="0">Change the hours</li><li data-at="3" aria-current="step">Press Save</li><li data-at="6">The site updates</li></ol>
+        <button class="pp-play" type="button">Pause</button>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+</body>
+</html>
