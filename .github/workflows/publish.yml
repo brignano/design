@@ -21,6 +21,21 @@ on:
   push:
     tags:
       - "v*"
+  # Used by release.yml: a tag or release created with the workflow
+  # GITHUB_TOKEN does not start other workflows, so release.yml dispatches this
+  # one instead. It still runs as this file, which is what the npm trusted
+  # publisher is configured for.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish, like v1.2.3
+        required: true
+        type: string
+      prerelease:
+        description: Publish to the `next` dist-tag
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -34,6 +49,8 @@ jobs:
       id-token: write # required for OIDC exchange and provenance
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.tag || github.ref }}
 
       # Deliberately no registry-url. It makes setup-node write an
       # `_authToken=${NODE_AUTH_TOKEN}` line into .npmrc, which expands to
@@ -53,9 +70,19 @@ jobs:
 
       # A tag that disagrees with package.json publishes a version nobody can
       # find by tag. npm versions are immutable, so catch it before publish.
+      #
+      # A dispatch from release.yml has no version-bump commit, so there the
+      # tag is the source of truth and package.json is rewritten in the runner.
       - name: Tag matches package.json version
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+          DISPATCHED: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
-          tag="${GITHUB_REF_NAME#v}"
+          tag="${TAG#v}"
+          [[ "$tag" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]] || { echo "::error::'$TAG' is not a version like v1.2.3"; exit 1; }
+          if [ "$DISPATCHED" = "true" ]; then
+            npm version "$tag" --no-git-tag-version --allow-same-version
+          fi
           pkg="$(node -p "require('./package.json').version")"
           if [ "$tag" != "$pkg" ]; then
             echo "::error::tag v${tag} does not match package.json version ${pkg}"
@@ -71,5 +98,10 @@ jobs:
       # No install step: the package is CSS and markdown, with no dependencies
       # and no build. --access comes from publishConfig; provenance is implicit
       # under trusted publishing.
+      # Pre-releases go to the `next` dist-tag so a plain `npm i` never resolves
+      # to them.
       - name: Publish
-        run: npm publish
+        env:
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          if [ "$PRERELEASE" = "true" ]; then npm publish --tag next; else npm publish; fi
