@@ -19,7 +19,8 @@
  *   - One primary action per page (.pp-button). Everything else is secondary.
  *   - The status is a word with a dot, never a coloured badge on its own.
  *   - The proof slot is the product itself where possible (a live demo), else a
- *     real screenshot. No stock imagery, no illustrations of people.
+ *     real screenshot or a screen recording, optionally in a .pp-device phone
+ *     frame. No stock imagery, no illustrations of people.
  *   - Chapters are numbered by the list, so reordering them renumbers them.
  *
  * Every class starts with .pp- so it can sit beside a site's own stylesheet.
@@ -124,6 +125,80 @@ body.pp { margin: 0; }
 }
 .pp-subhead { font-size: var(--text-lg); line-height: 1.5; color: var(--ink-soft); margin: 0 0 var(--s6); max-width: 40ch; }
 .pp-media { margin: 0; min-width: 0; }
+
+/* ── Proof media: a clip, a phone frame, the steps it shows ───────────────
+   The proof slot holds an <img> or a <video>, bare or in a .pp-device phone
+   frame, and optionally a row of .pp-steps naming what the clip shows.
+
+     <figure class="pp-media">
+       <div class="pp-device">
+         <video muted loop playsinline preload="metadata" width="390" height="844"
+                poster="finished.png" aria-describedby="clip-steps">
+           <source src="clip.mp4" type="video/mp4"></video>
+       </div>
+       <figcaption class="pp-caption">
+         <ol class="pp-steps" id="clip-steps">
+           <li data-at="0">Change the hours</li>
+           <li data-at="3">Press Save</li>
+           <li data-at="6">The site updates</li>
+         </ol>
+         <button class="pp-play" type="button" hidden>Pause</button>
+       </figcaption>
+     </figure>
+
+   No autoplay attribute: the small script in DESIGN.md §13 starts the clip
+   unless the reader prefers reduced motion, shows the Pause / Play button,
+   and lights the step the clip is on. Without the script, or with reduced
+   motion, the poster stands still, so the poster is the finished state. */
+.pp-media > img, .pp-media > video {
+  display: block; width: 100%; height: auto; background: var(--card);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-3);
+}
+
+/* A phone around the clip. The bezel is --device, dark in both themes; the
+   screen is whatever the frame's one child is (video, img, or a stand-in). */
+.pp-device {
+  --pp-device-width: 280px;
+  box-sizing: border-box; width: min(100%, var(--pp-device-width)); margin: 0 auto;
+  padding: 10px; background: var(--device); border-radius: 44px; box-shadow: var(--shadow-3);
+}
+.pp-device > * {
+  display: block; box-sizing: border-box; width: 100%; height: auto; aspect-ratio: 9 / 19.5;
+  object-fit: cover; overflow: hidden; border-radius: 34px; background: var(--card);
+}
+
+/* Under the clip: the steps in mono, then the control. Centred, because the
+   phone is. */
+.pp-caption {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: var(--s3) var(--s5);
+  margin-top: var(--s5);
+}
+.pp-steps {
+  list-style: none; margin: 0; padding: 0; counter-reset: pp-step;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2) var(--s4);
+}
+.pp-steps > li {
+  counter-increment: pp-step; padding-top: var(--s2); border-top: 2px solid var(--line-strong);
+  font: 500 var(--text-xs) / 1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft);
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.pp-steps > li::before { content: counter(pp-step) " "; color: var(--ink); }
+/* The step the clip is on. Ink, not a hue: it is emphasis, not state. */
+.pp-steps > li[aria-current="step"] { color: var(--ink); border-top-color: var(--ink); }
+
+/* Pause / Play. A word, because moving content that runs past five seconds
+   needs a way to stop it (WCAG 2.2.2). Hidden until the script wires it. */
+.pp-play {
+  display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer;
+  font: 500 var(--text-xs) / 1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-control);
+  background: transparent; color: var(--ink);
+}
+.pp-play:hover { background: var(--surface-hover); }
+.pp-play:active { background: var(--surface-active); }
+.pp-play:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+.pp-play[hidden] { display: none; }
+@media (pointer: coarse) { .pp-play { min-height: 44px; } }
 
 /* ── Story ─────────────────────────────────────────────────────────────
    An <ol> of chapters. Each opens on a hairline with "01 / Label" in mono,
