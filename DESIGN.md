@@ -154,6 +154,14 @@ or is disabled is disqualified.
 and that block ships inside `tokens.css` so no surface can forget it. One easing
 curve (`--ease`), three durations, compositor-only properties.
 
+**The tool tier has one exception: motion a person asks for.** A control that
+walks through a sequence step by step, such as driftwood's *Trace a request*,
+may animate, because the reader started it to follow an order of events, and
+the order is the content. It runs only when clicked, never on load; it can be
+stopped at any step; every state it passes through is also listed as text; and
+under `prefers-reduced-motion` it shows the final state (the whole sequence lit)
+at once. Nothing decorative qualifies: no entrance, hover or scroll animation.
+
 ## 8. Charts
 
 The one place the restraint rule does **not** apply: a categorical chart needs
@@ -197,6 +205,10 @@ is thirty coloured things, and the one that is down disappears among them.
 - **Selection** is the focus treatment: a 2px `--i-ink` outline, offset. Asking
   "what depends on this?" dims everything unrelated to ~30% opacity and inks the
   connecting edges in `--ink`; it never introduces a colour.
+- **A path is numbered, not coloured.** A request path drawn over a diagram
+  numbers its hops in order (`1`, `2a`/`2b` for a branch) in `--mono`, in a
+  `--line-strong` ring, and lists them beside the picture. Tracing it lights each
+  hop with the selection treatment above, never with a new hue.
 - **Lead with the verdict.** A page about a deploy opens with one sentence saying
   what happened and what needs you, then the pills that back it up, then the
   picture.
