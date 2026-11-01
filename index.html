@@ -1,61 +1,225 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="tier-marketing">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>@brignano/design previews</title>
+<title>@brignano/design — the design system behind brignano.io</title>
+<meta name="description" content="The design system behind brignano.io and its tools: one foundation for colour, type, space, shape and motion, previewed live in light and dark.">
+<script src="previews/_site.js"></script>
 <link rel="stylesheet" href="previews/_preview.css">
 <style>
-  /* The landing page for the hosted previews (wrangler.jsonc). Every file in
-     previews/ is linked here; scripts/check.mjs fails when one is missing. */
-  body { max-width: 720px; margin: 0 auto; }
-  section { margin: 0 0 var(--s6); }
-  h2 { margin: 0 0 var(--s2); }
-  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s2); }
-  ul a {
-    display: block; min-height: 44px; padding: 10px 14px; border-radius: var(--radius);
-    border: 1px solid var(--line); background: var(--card); color: var(--ink);
-    text-decoration: none; transition: background-color var(--dur-fast);
-  }
-  ul a:hover { background: var(--surface-hover); }
-  ul a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-  ul a b { display: block; font-weight: 600; color: var(--i-ink); }
-  ul a span { display: block; font-size: var(--text-sm); color: var(--ink-soft); }
-  .foot { font-size: var(--text-sm); color: var(--ink-soft); margin: 0; }
-  .foot a { display: inline-block; padding: 12px 0; }
+  /* The landing page of design.brignano.io (wrangler.jsonc). Marketing tier,
+     built only from tokens and the preview chrome in previews/_preview.css.
+     Every file in previews/ is linked here, in previews/_site.js PAGES order;
+     scripts/check.mjs fails when one is missing or out of order. The
+     specimens on each card are the same classes the previews use, so they
+     move when the tokens move. */
+  body { padding: 0; font-size: var(--text-base); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--s5); }
+
+  .top { display: flex; align-items: center; justify-content: space-between; gap: var(--s4);
+         padding: var(--s4) 0; border-bottom: 1px solid var(--line); }
+  .top .name { font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft); }
+
+  .hero { padding: var(--s8) 0 var(--s7); max-width: var(--measure); }
+  .eyebrow { font-family: var(--display); font-size: var(--text-sm); letter-spacing: .08em;
+             text-transform: uppercase; color: var(--ink-soft); margin: 0 0 var(--s4); }
+  .hero h1 { font-size: var(--text-4xl); line-height: 1.05; letter-spacing: -.03em; margin: 0; }
+  /* The hero rule: one of the three graphics --mark is allowed to ink (DESIGN.md §3). */
+  .rule { display: block; width: 56px; height: 3px; border-radius: 2px; background: var(--mark);
+          margin: var(--s5) 0; }
+  .lede { font-size: var(--text-lg); color: var(--ink-soft); margin: 0 0 var(--s6); line-height: 1.5; }
+  .get { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s5); }
+  .get code { font-family: var(--mono); font-size: var(--text-sm); background: var(--card);
+              border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 14px;
+              box-shadow: var(--shadow-1); }
+  .get nav { display: flex; gap: var(--s4); font-size: var(--text-sm); }
+  .get a, .foot a { display: inline-block; padding: 10px 0; }
+
+  section { padding: 0 0 var(--s8); }
+  .label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .12em;
+           text-transform: uppercase; color: var(--slate); margin: 0 0 var(--s2); }
+  section h2 { font-size: var(--text-2xl); letter-spacing: -.02em; line-height: 1.2;
+               margin: 0 0 var(--s5); max-width: var(--measure); }
+
+  /* Three colour layers. The swatches are decoration; the words carry it. */
+  .layers { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+  @media (max-width: 760px) { .layers { grid-template-columns: 1fr; } }
+  .layer { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+           padding: var(--s5); box-shadow: var(--shadow-1); }
+  .layer .chips { display: flex; gap: 6px; margin: 0 0 var(--s4); }
+  .layer .chips i { display: block; height: 36px; flex: 1; border-radius: var(--radius-sm); }
+  .layer h3 { font-size: var(--text-lg); margin: 0 0 var(--s1); }
+  .layer p { margin: 0 0 var(--s2); color: var(--ink-soft); font-size: var(--text-sm); }
+  .layer code { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); }
+
+  /* Gallery: each card is one link with a live specimen above its words. */
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s4);
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .card { display: flex; flex-direction: column; height: 100%; text-decoration: none;
+          color: var(--ink); background: var(--card); border: 1px solid var(--line);
+          border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-1);
+          transition: box-shadow var(--dur-fast), border-color var(--dur-fast); }
+  .card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-2); }
+  .card:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+  .spec { height: 132px; display: flex; align-items: center; justify-content: center; gap: 8px;
+          flex-wrap: wrap; align-content: center; padding: var(--s4); background: var(--bg);
+          border-bottom: 1px solid var(--line); overflow: hidden; }
+  .txt { padding: var(--s4) var(--s5) var(--s5); }
+  .txt b { display: block; font-size: var(--text-lg); font-weight: 600; margin: 0 0 2px; }
+  .txt span { display: block; font-size: var(--text-sm); color: var(--ink-soft); }
+  .txt .go { color: var(--i-ink); font-weight: 500; margin-top: var(--s2); }
+
+  /* Specimen bits that the previews don't already provide. */
+  .mini-ramp { display: grid; grid-template-columns: repeat(12, 1fr); width: 100%;
+               height: 40px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+  .dots { display: flex; gap: 8px; width: 100%; }
+  .dots i { flex: 1; height: 22px; border-radius: 6px; }
+  .aa { font-size: 3rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; width: 100%; text-align: center; }
+  .aa-mono { font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft); }
+  /* Elevation differs by theme (shadows in light, lighter surfaces in dark),
+     so the specimen shows both halves, each themed with data-theme. */
+  .spec.split { padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+                align-items: stretch; align-content: stretch; }
+  .spec.split > div { height: 100%; display: flex; align-items: center; justify-content: center;
+                      gap: 10px; background: var(--bg); }
+  .elev i { width: 40px; height: 40px; border-radius: 9px; background: var(--card);
+            border: 1px solid var(--line); }
+  .elev[data-theme="dark"] i.e2 { background: var(--n-100); }
+  .elev[data-theme="dark"] i.e3 { background: var(--n-200); }
+  .spec .msg { width: 100%; max-width: 280px; }
+  .spec .node { width: 210px; }
+  .frame { display: grid; gap: 7px; width: 70%; }
+  .frame i { display: block; height: 10px; border-radius: 4px; background: var(--line-strong); }
+  .frame i.bar { height: 14px; background: var(--line); }
+  .frame i.cta { width: 34%; height: 18px; background: var(--i); }
+  .phone { width: 64px; height: 108px; border-radius: 14px; border: 3px solid var(--ink);
+           display: flex; align-items: center; justify-content: center; }
+  .phone svg { width: 22px; height: 22px; color: var(--ink-soft); }
+
+  .foot { border-top: 1px solid var(--line); padding: var(--s5) 0 var(--s7);
+          font-size: var(--text-sm); color: var(--ink-soft); display: flex; flex-wrap: wrap;
+          align-items: center; gap: 0 var(--s5); }
 </style>
 </head>
 <body>
-<h1>@brignano/design</h1>
-<p class="sub">The design system behind brignano.io and its tools. Every page renders straight from tokens.css, in light and dark side by side.</p>
+<div class="wrap">
 
-<section>
-  <h2 class="tag">Foundations</h2>
-  <ul>
-    <li><a href="previews/color.html"><b>Colour</b><span>Neutral ramp and the semantic hues, light and dark.</span></a></li>
-    <li><a href="previews/type.html"><b>Type</b><span>The type scale, sans and mono.</span></a></li>
-    <li><a href="previews/elevation.html"><b>Elevation</b><span>Three steps: shadows in light, lighter surfaces in dark.</span></a></li>
+<header class="top">
+  <span class="name">@brignano/design</span>
+  <span data-site-toggle></span>
+</header>
+
+<main>
+<div class="hero">
+  <p class="eyebrow">Design system</p>
+  <h1>Competence and calm.</h1>
+  <span class="rule" aria-hidden="true"></span>
+  <p class="lede">The foundation under brignano.io and every tool beside it. Near-monochrome, with colour used so sparingly that when it appears, you look at it. Every page here renders straight from tokens.css, in light and dark side by side.</p>
+  <div class="get">
+    <code>npm install @brignano/design</code>
+    <nav aria-label="Project links">
+      <a class="link" href="https://github.com/brignano/design">Source</a>
+      <a class="link" href="https://www.npmjs.com/package/@brignano/design">npm</a>
+      <a class="link" href="https://github.com/brignano/design/blob/main/DECISIONS.md">Decisions</a>
+    </nav>
+  </div>
+</div>
+
+<section aria-labelledby="layers">
+  <p class="label">Colour</p>
+  <h2 id="layers">Three layers, so no colour does two jobs.</h2>
+  <div class="layers">
+    <div class="layer">
+      <div class="chips" aria-hidden="true"><i style="background:var(--mark)"></i></div>
+      <h3>Identity</h3>
+      <p>Inks a graphic only: the trail, the monogram, a hero rule. Never a control.</p>
+      <code>--mark</code>
+    </div>
+    <div class="layer">
+      <div class="chips" aria-hidden="true"><i style="background:var(--i)"></i></div>
+      <h3>Interactive</h3>
+      <p>One hue for everything you can act on, in every state.</p>
+      <code>--i</code>
+    </div>
+    <div class="layer">
+      <div class="chips" aria-hidden="true"><i style="background:var(--success)"></i><i style="background:var(--attention)"></i><i style="background:var(--danger)"></i></div>
+      <h3>State</h3>
+      <p>Settled, wants you, gone wrong. Always with an icon or a word.</p>
+      <code>--success · --attention · --danger</code>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="foundations">
+  <p class="label">01 / Foundations</p>
+  <h2 id="foundations">The values everything else is made of.</h2>
+  <ul class="grid">
+    <li><a class="card" href="previews/color.html">
+      <div class="spec" aria-hidden="true">
+        <div class="mini-ramp"><i style="background:var(--n-0)"></i><i style="background:var(--n-25)"></i><i style="background:var(--n-50)"></i><i style="background:var(--n-100)"></i><i style="background:var(--n-200)"></i><i style="background:var(--n-300)"></i><i style="background:var(--n-400)"></i><i style="background:var(--n-500)"></i><i style="background:var(--n-600)"></i><i style="background:var(--n-700)"></i><i style="background:var(--n-800)"></i><i style="background:var(--n-900)"></i></div>
+        <div class="dots"><i style="background:var(--i)"></i><i style="background:var(--success)"></i><i style="background:var(--attention)"></i><i style="background:var(--danger)"></i></div>
+      </div>
+      <div class="txt"><b>Colour</b><span>Neutral ramp and the semantic hues, light and dark.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="card" href="previews/type.html">
+      <div class="spec" aria-hidden="true"><span class="aa">Aa</span><span class="aa-mono">FR-8821 · 09:15 · 64%</span></div>
+      <div class="txt"><b>Type</b><span>Geist for everything, IBM Plex Mono for data that must read precise.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="card" href="previews/elevation.html">
+      <div class="spec split" aria-hidden="true"><div class="elev" data-theme="light"><i class="e1"></i><i class="e2"></i><i class="e3"></i></div><div class="elev" data-theme="dark"><i class="e1"></i><i class="e2"></i><i class="e3"></i></div></div>
+      <div class="txt"><b>Elevation</b><span>Three steps: shadows in light, lighter surfaces in dark.</span><span class="go">View →</span></div>
+    </a></li>
   </ul>
 </section>
 
-<section>
-  <h2 class="tag">Components</h2>
-  <ul>
-    <li><a href="previews/buttons.html"><b>Buttons &amp; links</b><span>Every interaction state, including disabled and focus.</span></a></li>
-    <li><a href="previews/feedback.html"><b>Messages</b><span>Success, attention, danger and info, each with an icon.</span></a></li>
-    <li><a href="previews/status.html"><b>Pills</b><span>Status pills for the tool tier.</span></a></li>
-    <li><a href="previews/diagram.html"><b>Diagram nodes</b><span>Neutral nodes, health states and diff tags.</span></a></li>
+<section aria-labelledby="components">
+  <p class="label">02 / Components</p>
+  <h2 id="components">Every state has a real value.</h2>
+  <ul class="grid">
+    <li><a class="card" href="previews/buttons.html">
+      <div class="spec" aria-hidden="true"><span class="btn btn-primary">Primary</span><span class="btn btn-secondary">Secondary</span><span class="btn btn-ghost">Ghost</span></div>
+      <div class="txt"><b>Buttons &amp; links</b><span>Every interaction state, including disabled and focus.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="card" href="previews/feedback.html">
+      <div class="spec" aria-hidden="true"><div class="msg msg-success"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><div><b>Booked</b><span>Confirmation FR-8821 saved.</span></div></div></div>
+      <div class="txt"><b>Messages</b><span>Success, attention, danger and info, each with an icon.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="card" href="previews/status.html">
+      <div class="spec" aria-hidden="true"><span class="pill pill-booked">Booked</span><span class="pill pill-active">Now</span><span class="pill pill-overdue">Overdue</span><span class="pill pill-idea">Idea</span></div>
+      <div class="txt"><b>Pills</b><span>Status for the tool tier. Colour marks a state you would act on.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="card" href="previews/diagram.html">
+      <div class="spec" aria-hidden="true"><div class="node node-added"><span class="dtag dtag-added">+ added</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><div><b>orders-api</b><small>aws_ecs_service</small></div></div></div>
+      <div class="txt"><b>Diagram nodes</b><span>Neutral by default. Colour only for health and for what a change did.</span><span class="go">View →</span></div>
+    </a></li>
   </ul>
 </section>
 
-<section>
-  <h2 class="tag">Templates</h2>
-  <ul>
-    <li><a href="previews/product-page.html"><b>Product page</b><span>The marketing-tier product page.</span></a></li>
-    <li><a href="previews/product-media.html"><b>Product page: video proof</b><span>Phone frame, steps and play button.</span></a></li>
+<section aria-labelledby="templates">
+  <p class="label">03 / Templates</p>
+  <h2 id="templates">One argument and one ask.</h2>
+  <ul class="grid">
+    <li><a class="card" href="previews/product-page.html">
+      <div class="spec" aria-hidden="true"><div class="frame"><i class="bar"></i><i style="width:80%"></i><i style="width:55%"></i><i class="cta"></i></div></div>
+      <div class="txt"><b>Product page</b><span>The marketing-tier product page skeleton.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="card" href="previews/product-media.html">
+      <div class="spec" aria-hidden="true"><div class="phone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></div></div>
+      <div class="txt"><b>Product page: video proof</b><span>Phone frame, steps and play button.</span><span class="go">View →</span></div>
+    </a></li>
   </ul>
 </section>
+</main>
 
-<p class="foot"><a class="link" href="https://github.com/brignano/design">Source on GitHub</a> · <a class="link" href="https://www.npmjs.com/package/@brignano/design">@brignano/design on npm</a></p>
+<footer class="foot">
+  <span>MIT licensed</span>
+  <a class="link" href="https://github.com/brignano/design">Source on GitHub</a>
+  <a class="link" href="https://www.npmjs.com/package/@brignano/design">@brignano/design on npm</a>
+  <a class="link" href="https://brignano.io">brignano.io</a>
+</footer>
+
+</div>
 </body>
 </html>

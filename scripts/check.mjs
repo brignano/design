@@ -11,7 +11,9 @@
 //   4. a colour family leaves its hue: the neutral ramp 286°, cobalt 256°;
 //   5. a hex literal appears outside the token files (product-page.css,
 //      the previews and index.html included);
-//   6. index.html, the hosted preview site's landing page, misses a preview.
+//   6. index.html, the hosted preview site's landing page, misses a preview;
+//   7. a preview skips the shared header script, previews/_site.js lists the
+//      pages differently from the files, or index.html orders them differently.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -249,6 +251,7 @@ const scan = (file, text) => {
 scan('tailwind.css', read('tailwind.css').replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, '')));
 scan('product-page.css', read('product-page.css'));
 scan('previews/_preview.css', read('previews/_preview.css'));
+scan('previews/_site.css', read('previews/_site.css'));
 const previews = readdirSync(new URL('previews/', root)).filter((f) => f.endsWith('.html'));
 for (const f of previews) scan(`previews/${f}`, read(`previews/${f}`));
 scan('index.html', read('index.html'));
@@ -260,9 +263,26 @@ const index = read('index.html');
 for (const f of previews)
   if (!index.includes(`href="previews/${f}"`)) fail(`index.html does not link previews/${f}`);
 
+// ── 7. One script, one page order ────────────────────────────────────────────
+// previews/_site.js holds the order the header's previous/next links follow;
+// index.html must list the same order, and every preview must load the script.
+for (const f of previews)
+  if (!read(`previews/${f}`).includes('<script src="_site.js"></script>'))
+    fail(`previews/${f} does not load <script src="_site.js"></script>`);
+const pages = [...read('previews/_site.js').matchAll(/\['([\w-]+\.html)'/g)].map((m) => m[1]);
+for (const f of previews) {
+  const n = pages.filter((p) => p === f).length;
+  if (n !== 1) fail(`previews/_site.js PAGES lists ${f} ${n} times; it must be exactly once`);
+}
+for (const p of new Set(pages))
+  if (!previews.includes(p)) fail(`previews/_site.js PAGES lists ${p}, which is not in previews/`);
+const indexOrder = [...index.matchAll(/href="previews\/([\w-]+\.html)"/g)].map((m) => m[1]);
+if (indexOrder.join() !== pages.join())
+  fail(`order: index.html links\n    ${indexOrder.join(', ')}\n  but previews/_site.js PAGES is\n    ${pages.join(', ')}`);
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order`);
