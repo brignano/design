@@ -102,7 +102,10 @@ The part that makes an interface feel built rather than styled.
 
 - `--i` fill, `--i-hover`, `--i-pressed`, `--i-ink` for links/icons/focus.
 - **Disabled is neutral, never hued** (`--i-disabled-bg` / `--i-disabled-ink`). A
-  greyed-out control must stop signalling "click me".
+  greyed-out control must stop signalling "click me". Its low contrast is allowed
+  only because WCAG 1.4.3 exempts *inactive* controls, so the state must be real:
+  `disabled` on a button or input, `aria-disabled="true"` otherwise. Disabled
+  styling on an element that isn't marked disabled is just low-contrast text.
 - Focus is always visible: 2px `--i-ink` outline, 2px offset. Never remove it.
 - Hover and pressed surfaces on neutral elements come from `--surface-hover` and
   `--surface-active`, not from opacity tricks.
