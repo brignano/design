@@ -1,8 +1,14 @@
-// Hosts index.html and previews/ so every PR gets a tappable preview link.
-// Static assets only, no Worker code. Workers Builds (connected in the
-// Cloudflare dashboard) uploads a version per push; the Cloudflare GitHub app
-// comments its preview URL on the PR. Access: the account-wide `Me` floor
-// covers production and previews, so the site is private to Anthony.
+// Hosts index.html and previews/ as a static-assets Worker. No Worker code.
+// Workers Builds (connected in the Cloudflare dashboard) deploys main and
+// uploads a version per PR push; the Cloudflare GitHub app comments that
+// preview URL on the PR.
+//
+// Access, by hostname (most specific rule wins):
+//   design.brignano.io  — public showcase: a hostname Access app with a
+//                         Bypass / Everyone policy, so brignano.io can link it.
+//   *.workers.dev       — production and PR previews stay private behind the
+//                         account-wide `Me` floor. Never attach a Worker-level
+//                         bypass: it would open the previews too.
 //
 // The assets directory is the repo root because the previews load
 // ../tokens.css; .assetsignore keeps everything else out. Nothing here is
@@ -12,6 +18,7 @@
   "name": "design",
   "compatibility_date": "2026-10-01",
   "assets": { "directory": "." },
+  "routes": [{ "pattern": "design.brignano.io", "custom_domain": true }],
   "workers_dev": true,
   "preview_urls": true
 }
