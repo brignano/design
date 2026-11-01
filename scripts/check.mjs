@@ -9,8 +9,9 @@
 //   3. a light-dark() or color-mix() argument is a var() (tokens.css rule 2),
 //      or a value repeated to honour that rule has drifted from its source;
 //   4. a colour family leaves its hue: the neutral ramp 286°, cobalt 256°;
-//   5. a hex literal appears outside the token files (product-page.css and
-//      the previews included).
+//   5. a hex literal appears outside the token files (product-page.css,
+//      the previews and index.html included);
+//   6. index.html, the hosted preview site's landing page, misses a preview.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -248,12 +249,20 @@ const scan = (file, text) => {
 scan('tailwind.css', read('tailwind.css').replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, '')));
 scan('product-page.css', read('product-page.css'));
 scan('previews/_preview.css', read('previews/_preview.css'));
-for (const f of readdirSync(new URL('previews/', root)).filter((f) => f.endsWith('.html')))
-  scan(`previews/${f}`, read(`previews/${f}`));
+const previews = readdirSync(new URL('previews/', root)).filter((f) => f.endsWith('.html'));
+for (const f of previews) scan(`previews/${f}`, read(`previews/${f}`));
+scan('index.html', read('index.html'));
+
+// ── 6. The hosted index links every preview ──────────────────────────────────
+// index.html is the landing page of the preview site (wrangler.jsonc); a
+// preview it doesn't list is one nobody finds from a PR link.
+const index = read('index.html');
+for (const f of previews)
+  if (!index.includes(`href="previews/${f}"`)) fail(`index.html does not link previews/${f}`);
 
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed`);

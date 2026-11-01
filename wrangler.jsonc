@@ -1,0 +1,17 @@
+// Hosts index.html and previews/ so every PR gets a tappable preview link.
+// Static assets only, no Worker code. Workers Builds (connected in the
+// Cloudflare dashboard) uploads a version per push; the Cloudflare GitHub app
+// comments its preview URL on the PR. Access: the account-wide `Me` floor
+// covers production and previews, so the site is private to Anthony.
+//
+// The assets directory is the repo root because the previews load
+// ../tokens.css; .assetsignore keeps everything else out. Nothing here is
+// in package.json `files`, so npm publishes exactly what it did before.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "design",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "." },
+  "workers_dev": true,
+  "preview_urls": true
+}
