@@ -19,6 +19,7 @@
     ['status.html', 'Pills'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
+    ['product-page-example.html', 'Product page: worked example'],
     ['product-media.html', 'Product page: video proof'],
   ];
 

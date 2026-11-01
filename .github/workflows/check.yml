@@ -23,3 +23,32 @@ jobs:
           node-version: 24
       # No install: the check has no dependencies.
       - run: node scripts/check.mjs
+
+  fold:
+    # DESIGN.md §13: the first phone screen of the product page previews shows
+    # the thesis, the proof and the action, and the page stays short.
+    name: Product page first screen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      # Playwright only for this job; the package itself stays dependency-free.
+      # It drives the runner's own Chrome: Playwright's browser download lags
+      # new runner images (1.56 refused ubuntu 26.04).
+      - run: npm i --no-save --no-package-lock playwright-core@1.63.0
+      - run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          echo "Chrome: $CHROME_PATH"
+          python3 -m http.server 8080 >/dev/null 2>&1 &
+          sleep 1
+          node scripts/fold.mjs \
+            http://localhost:8080/previews/product-page.html \
+            http://localhost:8080/previews/product-page-example.html \
+            --shots fold-shots
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: first-screen
+          path: fold-shots

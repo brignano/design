@@ -15,6 +15,7 @@
   /* Preview only: a stand-in for the proof slot. */
   .stand-in { aspect-ratio: 4 / 3; display: grid; place-items: center; background: var(--card); border: 1px solid var(--line);
     border-radius: var(--radius-lg); box-shadow: var(--shadow-3); color: var(--ink-soft); font: var(--text-sm) var(--mono); }
+  .stand-in.small { aspect-ratio: auto; width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
 </style>
 </head>
 <body class="pp">
@@ -24,7 +25,7 @@
   <div class="pp-wrap">
     <a class="pp-brand" href="#">Product</a>
     <nav class="pp-nav" aria-label="On this page">
-      <a href="#how">How it works</a><a href="#who">Who it's for</a><a href="#">Docs</a>
+      <a href="#gets">What you get</a><a href="#how">How it works</a><a href="#">Docs</a>
     </nav>
     <div class="pp-header-actions">
       <span class="pp-status" data-state="open">Pilot open</span>
@@ -34,67 +35,52 @@
 </header>
 
 <main id="main">
+  <!-- Show, then tell. On a phone: status and thesis, then the proof, then
+       the subhead and the actions, so the first screen shows what it is and
+       what it does. scripts/fold.mjs checks it. -->
   <section class="pp-hero">
     <div class="pp-wrap">
-      <div>
+      <div class="pp-hero-head">
         <span class="pp-status" data-state="open">Pilot open</span>
-        <h1 class="pp-thesis">One line that is the whole argument.</h1>
-        <p class="pp-subhead">One or two sentences: what the product does, for whom, and the difference it makes. No adjectives it can't back up.</p>
-        <p class="pp-actions"><a class="pp-button" href="#start">Start a pilot</a><a class="pp-button is-secondary" href="#">Second action</a></p>
-        <p class="pp-note">A short line that removes a reason not to click.</p>
+        <p class="pp-audience">For the people it's for</p>
+        <h1 class="pp-thesis">The outcome, in eight words or fewer.</h1>
       </div>
-      <figure class="pp-media"><div class="stand-in">The product, live if it can be</div></figure>
+      <figure class="pp-media"><div class="stand-in">The product doing the thing</div></figure>
+      <div class="pp-hero-body">
+        <p class="pp-subhead">One sentence: what it does for whom, in their words.</p>
+        <p class="pp-actions"><a class="pp-button" href="#start">Start a pilot</a><a class="pp-button is-secondary" href="#">Try the live demo</a></p>
+        <!-- What happens after the click. If nothing can be tried without
+             signing up, the secondary action is "How it works" (#how). -->
+        <p class="pp-note">What happens after they click, and how soon.</p>
+      </div>
     </div>
   </section>
 
-  <ol class="pp-story">
-    <li class="pp-chapter" id="problem">
-      <div class="pp-wrap">
-        <p class="pp-label">The problem</p>
-        <div class="pp-chapter-body">
-          <h2>A headline that is a sentence about the reader's world.</h2>
-          <p>Two or three sentences that make the cost concrete: who hits it, when, and what it costs them.</p>
-        </div>
-      </div>
-    </li>
-    <li class="pp-chapter" id="how">
-      <div class="pp-wrap">
-        <p class="pp-label">How it works</p>
-        <div class="pp-chapter-body">
-          <h2>Three verbs, in the order you'd do them.</h2>
-          <ul class="pp-points">
-            <li><h3>First</h3><p>One sentence each.</p></li>
-            <li><h3>Then</h3><p>One sentence each.</p></li>
-            <li><h3>Finally</h3><p>One sentence each.</p></li>
-          </ul>
-          <figure class="pp-figure"><pre class="pp-terminal"><code>$ product check
-✓ 12 passed</code></pre></figure>
-        </div>
-      </div>
-    </li>
-    <li class="pp-chapter" id="who">
-      <div class="pp-wrap">
-        <p class="pp-label">Who it's for</p>
-        <div class="pp-chapter-body">
-          <h2>The people it's for, named plainly.</h2>
-          <ul class="pp-points">
-            <li><h3>Audience one</h3><p>What they get.</p></li>
-            <li><h3>Audience two</h3><p>What they get.</p></li>
-            <li><h3>Audience three</h3><p>What they get.</p></li>
-          </ul>
-        </div>
-      </div>
-    </li>
-    <li class="pp-chapter" id="why-now">
-      <div class="pp-wrap">
-        <p class="pp-label">Why now</p>
-        <div class="pp-chapter-body">
-          <h2>What changed that makes this the moment.</h2>
-          <p>The shift in the world, then why the product is the answer to it.</p>
-        </div>
-      </div>
-    </li>
-  </ol>
+  <section class="pp-band" id="gets">
+    <div class="pp-wrap">
+      <h2 class="pp-title">What you get, as a sentence.</h2>
+      <!-- Three cards. The picture is the product doing it; the words name it. -->
+      <ul class="pp-gets">
+        <li class="pp-get"><figure class="pp-get-media"><div class="stand-in small">Picture one</div></figure>
+          <h3>First thing you get</h3><p>One line on what it does for you.</p></li>
+        <li class="pp-get"><figure class="pp-get-media"><div class="stand-in small">Picture two</div></figure>
+          <h3>Second thing you get</h3><p>One line on what it does for you.</p></li>
+        <li class="pp-get"><figure class="pp-get-media"><div class="stand-in small">Picture three</div></figure>
+          <h3>Third thing you get</h3><p>One line on what it does for you.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="pp-band" id="how">
+    <div class="pp-wrap">
+      <h2 class="pp-title">How it works, in three steps.</h2>
+      <ol class="pp-how">
+        <li><h3>Connect</h3><p>One line. Tool names go here, not in the thesis.</p></li>
+        <li><h3>See</h3><p>One line.</p></li>
+        <li><h3>Act</h3><p>One line.</p></li>
+      </ol>
+    </div>
+  </section>
 
   <section class="pp-close" id="start">
     <div class="pp-wrap">
