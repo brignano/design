@@ -9,9 +9,11 @@
  * without reading a paragraph:
  *
  *   .pp-header    brand, a few in-page links, the status, the primary action
- *   .pp-hero      .pp-hero-head (status, a thesis of 8 words or fewer), the
+ *   .pp-hero      .pp-hero-head (status, .pp-audience naming who it's for, a
+ *                 thesis of 8 words or fewer), the
  *                 proof (.pp-media), then .pp-hero-body (a short subhead, the
- *                 actions). On a phone the proof sits between the thesis and
+ *                 actions: the ask, plus "Try the live demo" when there is one,
+ *                 and a note saying what happens after the click). On a phone the proof sits between the thesis and
  *                 the subhead, so it is on the first screen.
  *   .pp-gets      "What you get": three cards, each a small picture of the
  *                 product (.pp-get-media) and one line on what it does for you
@@ -153,6 +155,9 @@ body.pp { margin: 0; }
   .pp-hero-head ~ .pp-media { align-self: center; }
 }
 .pp-hero .pp-status { margin-bottom: var(--s4); }
+/* Who it's for, in a few words, above the thesis: "For teams running on AWS".
+   A stranger decides "is this for me?" before reading anything else. */
+.pp-audience { margin: 0 0 var(--s2); font-size: var(--text-base); font-weight: 600; line-height: 1.4; color: var(--i-ink); }
 /* The thesis names the outcome in 8 words or fewer. On a phone it steps down
    from --text-4xl so it takes two or three lines, not five. */
 .pp-thesis {

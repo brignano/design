@@ -342,16 +342,25 @@ The order is fixed, because each band answers the question the last one raised:
 1. **Header** (`.pp-header`) — brand, two or three in-page links, the status, the
    primary action. Sticky, on `--surface-sticky`.
 2. **Hero** (`.pp-hero`) — three parts, in this order:
-   `.pp-hero-head` (the status and a **thesis**, `.pp-thesis`, of **8 words or
-   fewer** that names the outcome for the reader), the **proof** (`.pp-media`),
-   then `.pp-hero-body` (a subhead of **one sentence, 25 words or fewer**, the
-   primary action and one secondary, and an optional note). On a phone they
+   `.pp-hero-head` (the status, an **audience line**, `.pp-audience`, naming who
+   it's for in a few words, such as "For teams running on AWS", and a
+   **thesis**, `.pp-thesis`, of **8 words or fewer** that names the outcome for
+   the reader), the **proof** (`.pp-media`), then `.pp-hero-body` (a subhead of
+   **one sentence, 25 words or fewer**, the primary action and one secondary,
+   and a note saying **what happens after the click**). On a phone they
    stack in that order, so the proof is on the first screen; from 960px the
    head and body share the left column and the proof takes the right. The
    proof is the product doing the thing, ideally mid-story (something broke,
-   here is why): a live demo, a real screenshot, a short screen recording
-   (see *Video in the proof slot* below), or a faithful mock built from the
-   product's own components. Never stock imagery.
+   here is why). In order of preference: a short looping clip of someone
+   using it (see *Video in the proof slot* below), a live demo, a real
+   screenshot, then a faithful mock built from the product's own components.
+   A static picture shows the product; a clip shows using it, and is believed
+   more. Never stock imagery.
+
+   **Demo first.** If the product has anything a stranger can try without
+   signing up (a sample workspace, a read-only demo, a playground), the
+   secondary action is "Try the live demo" and opens it directly. Trying
+   beats reading, and it beats a form.
 3. **What you get** (`section.pp-band` with `.pp-title` and `ul.pp-gets` of
    `.pp-get`) — three cards. Each is a small picture of the product
    (`.pp-get-media`), a short heading naming what the reader gets, and one
@@ -405,6 +414,14 @@ Rules:
 - **Write for the reader, in their words.** The thesis is what they get ("See
   what broke, and what changed it."), not what the product is made of. A
   thesis a person outside the field can't repeat back is too abstract.
+- **Every claim is backed or cut.** A time, a number or a superlative ("set up
+  in an afternoon", "10× faster") needs a source the page can point to: a
+  customer, a measured run, the docs. Without one it costs trust, so drop it.
+- **The ask says what happens next.** The note by the primary action tells the
+  reader what follows the click ("We reply within two working days").
+- **Scroll stays the reader's.** No scroll-jacking, pinned sections or reveals
+  the reader must scroll through to see the words: they feel slow on a phone
+  and lose skimmers. Motion lives in the hero clip, under §7 and ADR-0009.
 - **Pictures over paragraphs.** Every band after the hero leads with a picture
   or a list, never a block of prose. The page is 7 phone screens or fewer.
 - **Restraint carries the style, the product carries the colour.** Hairlines
@@ -481,8 +498,13 @@ node node_modules/@brignano/design/scripts/fold.mjs https://product.example/ --s
       works, close, footer. At most one story chapter.
 - [ ] On a phone, the first screen shows the thesis, at least 160px of the
       proof, and the primary action (`fold.mjs`).
+- [ ] An audience line says who it's for (`fold.mjs`).
 - [ ] The thesis is 8 words or fewer and names the outcome; the hero subhead
       is one sentence of 25 words or fewer (`fold.mjs`).
+- [ ] If anything can be tried without signing up, "Try the live demo" is
+      the secondary action.
+- [ ] The note by the primary action says what happens after the click.
+- [ ] Every time, number or superlative is backed, or cut.
 - [ ] The proof is the product doing the thing, not cropped on a phone
       (`fold.mjs`).
 - [ ] Three "you get" cards, each with a picture; three how-it-works steps.

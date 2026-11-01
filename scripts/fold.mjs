@@ -6,7 +6,7 @@
 // glancing at it would not get what it is and what to do (DESIGN.md §13):
 //
 //   1. the thesis (h1.pp-thesis) is not wholly on the first screen, or runs
-//      past 8 words;
+//      past 8 words, or the hero has no audience line (.pp-audience);
 //   2. the hero subhead runs past 25 words;
 //   3. less than 160px of the proof (.pp-hero .pp-media) is on the first
 //      screen, or the proof is wider than its box (cropped on a phone);
@@ -58,9 +58,11 @@ for (const url of args) {
       const r = b.getBoundingClientRect();
       return r.width > 0 && r.top >= 0 && r.bottom <= H;
     });
+    const audience = document.querySelector('.pp-hero .pp-audience');
     const tb = box(thesis), mb = box(media);
     return {
       thesis: thesis ? { words: words(thesis), bottom: tb.bottom } : null,
+      audience: audience ? audience.textContent.trim() : '',
       subheadWords: words(subhead),
       media: media ? { visible: Math.max(0, Math.min(mb.bottom, H) - mb.top), overflow: media.scrollWidth - media.clientWidth } : null,
       buttons: buttons.length,
@@ -75,6 +77,7 @@ for (const url of args) {
     if (r.thesis.bottom > H) problems.push(`thesis ends at ${Math.round(r.thesis.bottom)}px, below the first screen (${H}px)`);
     if (r.thesis.words > LIMITS.thesisWords) problems.push(`thesis is ${r.thesis.words} words (max ${LIMITS.thesisWords})`);
   }
+  if (!r.audience) problems.push('no audience line (.pp-hero .pp-audience) saying who it is for');
   if (r.subheadWords > LIMITS.subheadWords) problems.push(`hero subhead is ${r.subheadWords} words (max ${LIMITS.subheadWords})`);
   if (!r.media) problems.push('no proof (.pp-hero .pp-media)');
   else {

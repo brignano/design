@@ -446,3 +446,9 @@ checks the first phone screen and the page length in CI.
   around them stays restrained.
 - driftwood, guidebook and sites each rewrite their copy to the new limits in
   their own repos.
+- A cold read of the first example still left a stranger asking who it was
+  for, whether they could try it, and what "Request access" leads to. So the
+  hero also carries an audience line (checked), the secondary action is a
+  live demo when one exists, the note says what happens next, and unbacked
+  claims are cut. Forced scroll animation was considered and rejected: it
+  slows phones and loses skimmers; a hero clip carries the motion instead.
