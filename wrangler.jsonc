@@ -10,6 +10,9 @@
 //                         account-wide `Me` floor. Never attach a Worker-level
 //                         bypass: it would open the previews too.
 //
+// Analytics: previews/_site.js loads Google Analytics (brignano.io's GA4
+// property) on design.brignano.io only, so previews are never counted.
+//
 // The assets directory is the repo root because the previews load
 // ../tokens.css; .assetsignore keeps everything else out. Nothing here is
 // in package.json `files`, so npm publishes exactly what it did before.
