@@ -18,6 +18,7 @@
     "tokens.css",
     "tokens.chart.css",
     "product-page.css",
+    "scripts/fold.mjs",
     "tailwind.css",
     "DESIGN.md",
     "DECISIONS.md"
