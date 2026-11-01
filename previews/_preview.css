@@ -43,7 +43,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .stack { display: flex; flex-direction: column; gap: 10px; }
 
 /* ── Component specimens ── */
-.btn { font-family: inherit; font-size: var(--text-sm); font-weight: 500; padding: 9px 17px;
+.btn { font-family: inherit; line-height: inherit; font-size: var(--text-sm); font-weight: 500; padding: 9px 17px;
        border-radius: 8px; border: 1px solid transparent; cursor: pointer;
        text-decoration: none; display: inline-block; transition: background-color var(--dur-fast); }
 .btn-primary { background: var(--i); color: var(--on-i); }
