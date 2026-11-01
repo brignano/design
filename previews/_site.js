@@ -1,10 +1,11 @@
 // _site.js — the one shared script every preview page loads from <head>.
 //
-// It owns three things so no page has to:
+// It owns four things so no page has to:
 //   1. the page order (PAGES below; it must match index.html, and
 //      `npm run check` fails when it doesn't);
 //   2. the saved theme, applied the moment the script runs so there is no flash;
-//   3. the small header: a link home, previous / next, and the theme switch.
+//   3. the small header: a link home, previous / next, and the theme switch;
+//   4. Google Analytics, on design.brignano.io only (see below).
 //
 // On index.html, an element marked [data-site-toggle] receives the theme switch
 // and nothing else is added. Inside an iframe (a design-tool card) no header is
@@ -37,6 +38,26 @@
   };
   const saved = read();
   if (saved === 'light' || saved === 'dark') root.dataset.theme = saved;
+
+  // ── Google Analytics ──────────────────────────────────────────────────────
+  // The same GA4 property as brignano.io, so both sites report in one place
+  // and a visit that crosses between them is one session (GA's cookie is set
+  // on brignano.io, which covers the subdomain). Page views and outbound
+  // clicks (npm, GitHub) come from GA4's enhanced measurement; no custom
+  // events. Only on the public hostname and only at the top level: the
+  // private *.workers.dev and PR preview URLs, local files and design-tool
+  // iframes send nothing.
+  const GA_MEASUREMENT_ID = 'G-QGJLCCQ9X8';
+  if (location.hostname === 'design.brignano.io' && window.self === window.top) {
+    const ga = document.createElement('script');
+    ga.async = true;
+    ga.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_MEASUREMENT_ID);
+  }
 
   // ── Stylesheet, resolved from this script's own URL ───────────────────────
   if (script && script.src) {
