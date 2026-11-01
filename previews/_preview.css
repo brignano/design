@@ -9,6 +9,7 @@
    — the filesystem, a static server, a claude.ai/design project — has to keep
    the repo's shape: tokens.css at the root, previews/ one level down. Flatten
    the bundle and every preview renders unstyled. */
+@import '_fonts.css';
 @import '../tokens.css';
 
 * { box-sizing: border-box; }
@@ -17,6 +18,8 @@ body {
   font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased;
   font-variant-numeric: tabular-nums;
 }
+/* The shared header (_site.js, _site.css) bleeds to the edges of this padding. */
+body > .site-bar { margin: -28px -28px 24px; padding: 0 28px; }
 h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margin: 0 0 4px; }
 .sub { font-size: var(--text-sm); color: var(--slate); margin: 0 0 24px; font-family: var(--mono); }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }

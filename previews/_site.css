@@ -1,0 +1,51 @@
+/* _site.css — the shared preview header, injected by _site.js. Tokens only. */
+
+.site-bar {
+  background: var(--bg);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--sans);
+  font-size: var(--text-sm);
+}
+.site-bar nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 8px 0;
+}
+/* Pages on _preview.css pad <body>; that file bleeds the bar to the edges. */
+.site-bar a,
+.site-theme {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font: inherit;
+  color: var(--i-ink);
+}
+.site-bar a:first-child { color: var(--ink); font-weight: 600; }
+.site-bar a:first-child,
+.site-bar a:not(:first-child) { text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.site-theme {
+  margin-inline-start: auto;
+  padding: 0 12px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line-control);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--dur-fast);
+}
+.site-theme:hover { background: var(--surface-hover); }
+.site-bar a:focus-visible,
+.site-theme:focus-visible {
+  outline: 2px solid var(--i-ink);
+  outline-offset: 2px;
+}
+@media (pointer: coarse) {
+  .site-bar a,
+  .site-theme { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-theme { transition: none; }
+}
