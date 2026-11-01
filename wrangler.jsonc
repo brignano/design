@@ -20,5 +20,8 @@
   "assets": { "directory": "." },
   "routes": [{ "pattern": "design.brignano.io", "custom_domain": true }],
   "workers_dev": true,
-  "preview_urls": true
+  "preview_urls": true,
+  // Required by `npx wrangler preview`, the Workers Builds preview command,
+  // which fails without it. Empty: assets and settings stay at the top level.
+  "previews": {}
 }
