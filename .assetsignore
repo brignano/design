@@ -1,0 +1,12 @@
+# Kept out of the hosted previews (wrangler.jsonc serves the repo root).
+.git
+.github
+.claude
+node_modules
+scripts
+releases
+wrangler.jsonc
+.assetsignore
+AGENTS.md
+CLAUDE.md
+.wrangler
