@@ -16,7 +16,7 @@
 //      become a case study.
 //
 // Needs Playwright with Chromium (`npm i --no-save playwright` and
-// `npx playwright install chromium`); the design package itself stays
+// `npx playwright install chromium`, or set CHROME_PATH); the design package itself stays
 // dependency-free, so this script is run in CI and by the sites that copy it,
 // not by `npm run check`. --shots writes a first-screen PNG per page.
 
@@ -24,7 +24,7 @@ import { mkdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { chromium } = require('playwright');
+const { chromium } = (() => { try { return require('playwright'); } catch { return require('playwright-core'); } })();
 
 const args = process.argv.slice(2);
 const shotsAt = args.indexOf('--shots');
@@ -38,7 +38,9 @@ if (shots) mkdirSync(shots, { recursive: true });
 const W = 390, H = 844;
 const LIMITS = { thesisWords: 8, subheadWords: 25, proofVisible: 160, screens: 7 };
 
-const browser = await chromium.launch();
+// CHROME_PATH points at an installed Chrome instead of Playwright's own
+// download (CI uses the runner's Chrome, which tracks new OS images).
+const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
 await page.route(/googletagmanager|google-analytics|plausible|cloudflareinsights/, (r) => r.abort());
 

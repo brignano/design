@@ -35,9 +35,12 @@ jobs:
         with:
           node-version: 24
       # Playwright only for this job; the package itself stays dependency-free.
-      - run: npm i --no-save --no-package-lock playwright@1.56.1
-      - run: npx playwright install --with-deps chromium
+      # It drives the runner's own Chrome: Playwright's browser download lags
+      # new runner images (1.56 refused ubuntu 26.04).
+      - run: npm i --no-save --no-package-lock playwright-core@1.63.0
       - run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          echo "Chrome: $CHROME_PATH"
           python3 -m http.server 8080 >/dev/null 2>&1 &
           sleep 1
           node scripts/fold.mjs \
