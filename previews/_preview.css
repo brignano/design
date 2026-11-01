@@ -1,7 +1,8 @@
 /* Shared chrome for preview pages. Deliberately thin — the point is to see the
-   TOKENS, not this stylesheet. Each preview shows its component twice: once in
-   the viewer's theme, once on a forced-dark ground, so drift between the two is
-   visible without toggling.
+   TOKENS, not this stylesheet. Each preview shows its component twice: on a
+   forced-light ground and on a forced-dark one, so both themes are visible
+   whatever the viewer's own theme is, and drift between them shows without
+   toggling.
 
    The import below is parent-relative on purpose. tokens.css is the single
    source of truth and is never copied in here, so whatever serves these pages
@@ -24,13 +25,15 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
   border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;
   background: var(--card); display: flex; flex-direction: column; gap: 16px;
 }
-/* Forced-dark ground. One line because tokens.css declares every colour as
+/* Forced grounds. One line each because tokens.css declares every colour as
    light-dark(): setting color-scheme here flips this subtree, with no copy
-   of the dark values to drift. */
-.panel.dark {
-  color-scheme: dark;
+   of either theme's values to drift. `color` is re-declared because an
+   inherited colour was resolved in the body's scheme, not the panel's. */
+.panel.light, .panel.dark {
   background: var(--card); color: var(--ink); border-color: var(--line);
 }
+.panel.light { color-scheme: light; }
+.panel.dark { color-scheme: dark; }
 .tag { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em;
        text-transform: uppercase; color: var(--slate); }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
