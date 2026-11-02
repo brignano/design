@@ -241,6 +241,19 @@
   --mark: light-dark(#b4741f, #e0a44f);
   --mark-ink: light-dark(#8a5714, #e0a44f); /* when the mark carries a label, 6.08:1 / 8.17:1 */
 
+  /* ── Product marks — one per product page ─────────────────────────────
+     Each product's marketing page picks one, so Driftwood, Guidebook and
+     Sites don't read as the same page with the words swapped (ADR-0011).
+     Same contract as --mark: it inks the product's graphics (its glyph,
+     the hero rule, the proof's stage, step numerals), never a button,
+     link, text or state. Hues sit away from cobalt (act), forest
+     (success), amber (attention) and rust (danger). All ≥ 3:1 on --bg and
+     --card in both themes. product-page.css maps one onto --pp-mark via
+     data-mark on .pp. */
+  --mark-teal: light-dark(#0e7c86, #4cc0cb);
+  --mark-violet: light-dark(#7148c9, #a990f2);
+  --mark-magenta: light-dark(#b1366f, #ea7fb0);
+
   /* ── Legacy aliases ───────────────────────────────────────────────────
      Kept so existing `life` components keep compiling. Do not use in new
      work — reach for the semantic tokens above.

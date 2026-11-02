@@ -7,7 +7,10 @@
 <title>Product page</title>
 <script src="_site.js"></script>
 <!-- The skeleton for a product's marketing page (product-page.css, DESIGN.md §13).
-     Copy this file to start one: keep the order, replace the words. -->
+     Write the brief first (below, and BRIEF.md in the product's repo) and get
+     it approved; every word on the page comes from it. Then copy this file,
+     pick the product's mark, hero layout and proof frame, and pick the one
+     signature band only this product could have. -->
 <link rel="stylesheet" href="_fonts.css">
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../product-page.css">
@@ -18,7 +21,16 @@
   .stand-in.small { aspect-ratio: auto; width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
 </style>
 </head>
-<body class="pp">
+<!-- The brief, five lines, plain words a stranger would use:
+       Who:     who it's for, as they'd say it         → .pp-audience
+       Pain:    what goes wrong for them today          → first half of .pp-subhead
+       Promise: what they get, 8 words or fewer         → .pp-thesis
+       Moment:  the 10 seconds that prove it            → the proof (.pp-media)
+       Ask:     the one action, and what happens next   → .pp-button and .pp-note
+     Identity (ADR-0011): data-mark on <body> (teal | violet | magenta),
+     data-layout on .pp-hero (split | mirror | stage), and the proof's frame
+     (bare, .pp-device or .pp-browser). No two products share all three. -->
+<body class="pp" data-mark="teal">
 <a class="pp-skip" href="#main">Skip to content</a>
 
 <header class="pp-header">
@@ -28,7 +40,6 @@
       <a href="#gets">What you get</a><a href="#how">How it works</a><a href="#">Docs</a>
     </nav>
     <div class="pp-header-actions">
-      <span class="pp-status" data-state="open">Pilot open</span>
       <a class="pp-button is-small" href="#start">Start a pilot</a>
     </div>
   </div>
@@ -37,25 +48,29 @@
 <main id="main">
   <!-- Show, then tell. On a phone: status and thesis, then the proof, then
        the subhead and the actions, so the first screen shows what it is and
-       what it does. scripts/fold.mjs checks it. -->
-  <section class="pp-hero">
+       what it does. 40 words of copy at most; scripts/fold.mjs checks it. -->
+  <section class="pp-hero" data-layout="split">
     <div class="pp-wrap">
       <div class="pp-hero-head">
         <span class="pp-status" data-state="open">Pilot open</span>
-        <p class="pp-audience">For the people it's for</p>
-        <h1 class="pp-thesis">The outcome, in eight words or fewer.</h1>
+        <p class="pp-audience">For who it's for</p>
+        <h1 class="pp-thesis">The promise, in eight words or fewer.</h1>
       </div>
       <figure class="pp-media"><div class="stand-in">The product doing the thing</div></figure>
       <div class="pp-hero-body">
-        <p class="pp-subhead">One sentence: what it does for whom, in their words.</p>
+        <p class="pp-subhead">When the pain happens, the product fixes it like this.</p>
         <p class="pp-actions"><a class="pp-button" href="#start">Start a pilot</a><a class="pp-button is-secondary" href="#">Try the live demo</a></p>
-        <!-- What happens after the click. If nothing can be tried without
-             signing up, the secondary action is "How it works" (#how). -->
-        <p class="pp-note">What happens after they click, and how soon.</p>
+        <!-- What happens after the click, in ten words or so. If nothing can be
+             tried without signing up, the secondary action is "How it works". -->
+        <p class="pp-note">What happens next, and how soon.</p>
       </div>
     </div>
   </section>
 
+  <!-- The signature band: ONE of these, the one only this product could
+       have. Three "you get" cards (below); the product beside the obvious
+       alternative (.pp-compare, commented out below); or a band of its own,
+       such as a library of ready-made things or the live demo itself. -->
   <section class="pp-band" id="gets">
     <div class="pp-wrap">
       <h2 class="pp-title">What you get, as a sentence.</h2>
@@ -70,6 +85,16 @@
       </ul>
     </div>
   </section>
+  <!-- Or, the product beside the obvious alternative:
+  <section class="pp-band" id="compare">
+    <div class="pp-wrap">
+      <h2 class="pp-title">Not another X.</h2>
+      <div class="pp-compare">
+        <div><h3>The usual way</h3><ul><li>What it costs you</li><li>What it leaves to you</li><li>Where it stops</li></ul></div>
+        <div class="is-ours"><h3>Product</h3><ul><li>What you get instead</li><li>What it does for you</li><li>Where it keeps going</li></ul></div>
+      </div>
+    </div>
+  </section> -->
 
   <section class="pp-band" id="how">
     <div class="pp-wrap">

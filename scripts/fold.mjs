@@ -13,7 +13,17 @@
 //   4. no primary action (.pp-button) is visible on the first screen;
 //   5. the page scrolls sideways;
 //   6. the page is longer than 7 phone screens, the length at which it has
-//      become a case study.
+//      become a case study;
+//   7. the words are over budget: more than 40 words of copy on the first
+//      screen, or 180 on the whole page. Copy is what the reader has to read:
+//      the words inside pictures (.pp-media, .pp-get-media), the form, the
+//      header and the footer don't count, nor anything marked
+//      data-fold="skip" (the preview site's own bar);
+//   8. the status (.pp-status) shows more than once on the first screen.
+//
+// It can't tell whether a stranger gets it. That is the stranger test in
+// DESIGN.md §13: hand the first-screen shot (--shots) to someone, or a fresh
+// agent with no context, and compare what they say to the page's brief.
 //
 // Needs Playwright with Chromium (`npm i --no-save playwright` and
 // `npx playwright install chromium`, or set CHROME_PATH); the design package itself stays
@@ -36,7 +46,7 @@ if (!args.length) {
 if (shots) mkdirSync(shots, { recursive: true });
 
 const W = 390, H = 844;
-const LIMITS = { thesisWords: 8, subheadWords: 25, proofVisible: 160, screens: 7 };
+const LIMITS = { thesisWords: 8, subheadWords: 25, proofVisible: 160, screens: 7, foldWords: 40, pageWords: 180 };
 
 // CHROME_PATH points at an installed Chrome instead of Playwright's own
 // download (CI uses the runner's Chrome, which tracks new OS images).
@@ -59,6 +69,23 @@ for (const url of args) {
       return r.width > 0 && r.top >= 0 && r.bottom <= H;
     });
     const audience = document.querySelector('.pp-hero .pp-audience');
+    // Copy words: text the reader has to read, outside pictures, form, header, footer.
+    const skip = '.pp-media, .pp-get-media, .pp-form, .pp-done, .pp-header, .pp-footer, .pp-skip, script, style, [hidden], [data-fold="skip"]';
+    let foldWords = 0, pageWords = 0;
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (walk.nextNode()) {
+      const el = walk.currentNode.parentElement;
+      if (!el || el.closest(skip)) continue;
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) continue;
+      const n = walk.currentNode.textContent.split(/\s+/).filter(Boolean).length;
+      pageWords += n;
+      if (r.top < H && r.bottom > 0) foldWords += n;
+    }
+    const statuses = [...document.querySelectorAll('.pp-status')].filter((s) => {
+      const r = s.getBoundingClientRect();
+      return r.width > 0 && r.top < H && r.bottom > 0;
+    }).length;
     const tb = box(thesis), mb = box(media);
     return {
       thesis: thesis ? { words: words(thesis), bottom: tb.bottom } : null,
@@ -66,6 +93,7 @@ for (const url of args) {
       subheadWords: words(subhead),
       media: media ? { visible: Math.max(0, Math.min(mb.bottom, H) - mb.top), overflow: media.scrollWidth - media.clientWidth } : null,
       buttons: buttons.length,
+      foldWords, pageWords, statuses,
       scrollWidth: document.documentElement.scrollWidth,
       height: document.documentElement.scrollHeight,
     };
@@ -86,6 +114,9 @@ for (const url of args) {
   }
   if (!r.buttons) problems.push('no .pp-button visible on the first screen');
   if (r.scrollWidth > W) problems.push(`page scrolls sideways (${r.scrollWidth}px wide)`);
+  if (r.foldWords > LIMITS.foldWords) problems.push(`${r.foldWords} words of copy on the first screen (max ${LIMITS.foldWords}): let the proof say it`);
+  if (r.pageWords > LIMITS.pageWords) problems.push(`${r.pageWords} words of copy on the page (max ${LIMITS.pageWords}): move the argument to the docs`);
+  if (r.statuses > 1) problems.push(`the status shows ${r.statuses} times on the first screen (once is enough)`);
   const screens = r.height / H;
   if (screens > LIMITS.screens) problems.push(`page is ${screens.toFixed(1)} phone screens long (max ${LIMITS.screens})`);
 
@@ -97,7 +128,7 @@ for (const url of args) {
     failed++;
     console.log(`✗ ${url}\n${problems.map((p) => `    ${p}`).join('\n')}`);
   } else {
-    console.log(`✓ ${url} · thesis ${r.thesis.words} words, ${Math.round(r.media.visible)}px of proof on screen one, ${screens.toFixed(1)} screens`);
+    console.log(`✓ ${url} · thesis ${r.thesis.words} words, ${r.foldWords} words on screen one, ${r.pageWords} on the page, ${Math.round(r.media.visible)}px of proof, ${screens.toFixed(1)} screens`);
   }
 }
 await browser.close();

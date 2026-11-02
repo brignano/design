@@ -9,7 +9,7 @@ The shared design system for every brignano surface — `brignano.io`, `life`,
 | [`DECISIONS.md`](./DECISIONS.md) | Why the values are what they are. ADRs. |
 | [`tokens.css`](./tokens.css) | Single source of truth for colour, type, space, shape, motion. |
 | [`tokens.chart.css`](./tokens.chart.css) | Validated categorical palette for data viz. |
-| [`product-page.css`](./product-page.css) | The structure of a product's marketing page, show then tell: thesis and proof on the first phone screen, what you get, how it works, closing ask. DESIGN.md §13; skeleton in `previews/product-page.html`, worked example in `previews/product-page-example.html`, first-screen check in `scripts/fold.mjs`. |
+| [`product-page.css`](./product-page.css) | The structure of a product's marketing page, built from a five-line brief: thesis and proof on the first phone screen, one signature band, how it works, closing ask; a product mark, hero layout and proof frame so each product looks like itself. DESIGN.md §13; skeleton in `previews/product-page.html`, worked example in `previews/product-page-example.html`, first-screen check in `scripts/fold.mjs`. |
 | [`previews/`](./previews) | Live swatches. Open one in a browser to see the tokens render. |
 
 ## The shape of it

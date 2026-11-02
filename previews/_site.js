@@ -113,6 +113,7 @@
 
     const header = document.createElement('header');
     header.className = 'site-bar';
+    header.dataset.fold = 'skip'; // not the product's copy: scripts/fold.mjs leaves it out
 
     const nav = document.createElement('nav');
     nav.setAttribute('aria-label', 'Design system pages');
