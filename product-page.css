@@ -6,25 +6,35 @@
  *
  * Show, then tell. A stranger glancing at a phone gets what the product is,
  * what it does for them, and the one thing to do, from the first screen and
- * without reading a paragraph:
+ * without reading a paragraph. Write the five-line brief first (DESIGN.md
+ * §13); the page is built from it.
  *
- *   .pp-header    brand, a few in-page links, the status, the primary action
+ *   .pp-header    brand, a few in-page links, the primary action
  *   .pp-hero      .pp-hero-head (status, .pp-audience naming who it's for, a
- *                 thesis of 8 words or fewer), the
- *                 proof (.pp-media), then .pp-hero-body (a short subhead, the
- *                 actions: the ask, plus "Try the live demo" when there is one,
- *                 and a note saying what happens after the click). On a phone the proof sits between the thesis and
+ *                 thesis of 8 words or fewer), the proof (.pp-media), then
+ *                 .pp-hero-body (the pain and the fix in one sentence, the
+ *                 ask, "Try the live demo" when there is one, and a short
+ *                 note). On a phone the proof sits between the thesis and
  *                 the subhead, so it is on the first screen.
- *   .pp-gets      "What you get": three cards, each a small picture of the
- *                 product (.pp-get-media) and one line on what it does for you
+ *   one signature band, the one only this product could have:
+ *     .pp-gets    three cards, each a small picture of the product
+ *     .pp-compare this product beside the obvious alternative
+ *     or a band of the product's own (a library, an embedded demo)
  *   .pp-how       three numbered steps, one line each
- *   .pp-story     optional, at most one chapter: the longer argument lives in
- *                 the product's docs, not on this page
  *   .pp-close     the primary action again, with whatever it needs: a short
  *                 .pp-form of .pp-field (.pp-done once it's sent), and the
  *                 prices (.pp-price) if the product has them
  *   .pp-footer    brand and links, then the legal line: © year, owner, and
  *                 the product's Privacy and Terms links if it has them
+ *
+ * Each product looks like itself (ADR-0011), with three choices on the page:
+ *
+ *   data-mark on .pp       teal | violet | magenta: the product's mark, which
+ *                          inks its glyph, the hero rule, the stage behind the
+ *                          proof and the step numerals. Never a button or text.
+ *   data-layout on .pp-hero  split (default) | mirror (proof on the left) |
+ *                          stage (centred words and actions, the proof full width under them)
+ *   the proof's frame      bare, .pp-device (a phone) or .pp-browser (a window)
  *
  * The skeleton is previews/product-page.html, and a worked example is
  * previews/product-page-example.html: copy one, keep the order, replace the
@@ -46,12 +56,19 @@
 .pp {
   --pp-width: 1160px;
   --pp-gutter: var(--s5);
+  /* The product's mark (ADR-0011): ink until data-mark picks one. The stage
+     is the field behind the hero proof, a faint wash of the mark. */
+  --pp-mark: var(--ink);
+  --pp-stage: color-mix(in srgb, var(--pp-mark) 8%, transparent);
   background: var(--bg);
   color: var(--ink);
   font: var(--text-base) / 1.6 var(--sans);
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
+.pp[data-mark="teal"] { --pp-mark: var(--mark-teal); }
+.pp[data-mark="violet"] { --pp-mark: var(--mark-violet); }
+.pp[data-mark="magenta"] { --pp-mark: var(--mark-magenta); }
 /* On <body>, drop the browser's 8px margin so the sticky header and every band
    run to the screen edges. On a wrapper, the body is the site's business. */
 body.pp { margin: 0; }
@@ -77,6 +94,8 @@ body.pp { margin: 0; }
   font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.01em;
 }
 .pp-brand img, .pp-brand svg { width: 26px; height: 26px; }
+/* An inline glyph drawn in currentColor takes the product's mark. */
+.pp-brand svg { color: var(--pp-mark); }
 .pp-nav { display: flex; align-items: center; gap: var(--s5); margin-left: auto; }
 .pp-nav a { color: var(--ink-soft); text-decoration: none; font-size: var(--text-sm); font-weight: 500; }
 .pp-nav a:hover { color: var(--ink); }
@@ -155,9 +174,16 @@ body.pp { margin: 0; }
   .pp-hero-head ~ .pp-media { align-self: center; }
 }
 .pp-hero .pp-status { margin-bottom: var(--s4); }
+/* The hero rule: a short bar in the product's mark, the first thing on the
+   page that is this product's and nobody else's. */
+.pp-hero-head::before {
+  content: ""; display: block; width: 48px; height: 4px; border-radius: 2px;
+  background: var(--pp-mark); margin-bottom: var(--s4);
+}
 /* Who it's for, in a few words, above the thesis: "For teams running on AWS".
-   A stranger decides "is this for me?" before reading anything else. */
-.pp-audience { margin: 0 0 var(--s2); font-size: var(--text-base); font-weight: 600; line-height: 1.4; color: var(--i-ink); }
+   A stranger decides "is this for me?" before reading anything else. Ink,
+   not cobalt: cobalt says "you can act on this", and this is a label. */
+.pp-audience { margin: 0 0 var(--s2); font-size: var(--text-base); font-weight: 600; line-height: 1.4; color: var(--ink-soft); }
 /* The thesis names the outcome in 8 words or fewer. On a phone it steps down
    from --text-4xl so it takes two or three lines, not five. */
 .pp-thesis {
@@ -168,6 +194,52 @@ body.pp { margin: 0; }
 /* The subhead is one sentence, 25 words or fewer. */
 .pp-subhead { font-size: var(--text-lg); line-height: 1.5; color: var(--ink-soft); margin: 0 0 var(--s5); max-width: 40ch; text-wrap: pretty; }
 .pp-media { margin: 0; min-width: 0; }
+/* The stage: the proof sits on a field of the product's mark, so the eye
+   lands on it first and each product's first screen has its own colour. */
+.pp-hero .pp-media { box-sizing: border-box; padding: var(--s6); border-radius: calc(var(--radius-lg) * 2); background: var(--pp-stage); }
+@media (max-width: 560px) { .pp-hero .pp-media { padding: var(--s4); border-radius: var(--radius-lg); } }
+
+/* Hero layouts (ADR-0011). Split is the default above. Mirror puts the proof
+   on the left, for a product whose picture should be read first. Stage
+   centres the words and the actions, then gives the proof the full width
+   under them, for a wide picture: a map, a dashboard, a before and after.
+   The actions sit above the proof so they stay on a laptop's first screen.
+   On a phone all three stack the same way: head, proof, body. */
+@media (min-width: 960px) {
+  .pp-hero[data-layout="mirror"] > .pp-wrap:has(> .pp-hero-head) {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); grid-template-areas: "media head" "media body";
+  }
+  .pp-hero[data-layout="stage"] > .pp-wrap:has(> .pp-hero-head) {
+    grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "body" "media"; grid-template-rows: auto;
+    gap: var(--s6); justify-items: center; text-align: center;
+  }
+  .pp-hero[data-layout="stage"] .pp-hero-head::before { margin-inline: auto; }
+  .pp-hero[data-layout="stage"] .pp-thesis { max-width: 20ch; margin-inline: auto; }
+  .pp-hero[data-layout="stage"] .pp-subhead { max-width: 52ch; margin-inline: auto; }
+  .pp-hero[data-layout="stage"] .pp-actions { justify-content: center; }
+  .pp-hero[data-layout="stage"] .pp-hero-head ~ .pp-media { width: 100%; max-width: 1000px; }
+  .pp-hero[data-layout="stage"] .pp-media { text-align: start; }
+}
+
+/* A browser window around the proof, for a product that lives in a web page
+   (an extension, a web app). The bar holds the address, in mono. */
+.pp-browser {
+  overflow: hidden; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-3);
+}
+.pp-browser-bar {
+  display: flex; align-items: center; gap: var(--s3); padding: 8px 12px;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.pp-browser-bar::before {
+  content: ""; flex: none; width: 44px; height: 10px;
+  background: radial-gradient(circle at 5px 5px, var(--line-strong) 4px, transparent 4.5px) 0 0 / 17px 10px repeat-x;
+}
+.pp-browser-url {
+  flex: 1; min-width: 0; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--card);
+  font: var(--text-xs) / 1.4 var(--mono); color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pp-browser > :not(.pp-browser-bar) { display: block; width: 100%; height: auto; }
 
 /* ── Proof media: a clip, a phone frame, the steps it shows ───────────────
    The proof slot holds an <img> or a <video>, bare or in a .pp-device phone
@@ -226,8 +298,9 @@ body.pp { margin: 0; }
   transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .pp-steps > li::before { content: counter(pp-step) " "; color: var(--ink); }
-/* The step the clip is on. Ink, not a hue: it is emphasis, not state. */
-.pp-steps > li[aria-current="step"] { color: var(--ink); border-top-color: var(--ink); }
+/* The step the clip is on: the word inks, the bar takes the product's mark.
+   Identity, not state, so it never needs a word of its own. */
+.pp-steps > li[aria-current="step"] { color: var(--ink); border-top-color: var(--pp-mark); }
 
 /* Pause / Play. A word, because moving content that runs past five seconds
    needs a way to stop it (WCAG 2.2.2). Hidden until the script wires it. */
@@ -265,13 +338,28 @@ body.pp { margin: 0; }
 .pp-get h3 { margin: var(--s4) var(--s4) 4px; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
 .pp-get p { margin: 0 var(--s4) var(--s4); color: var(--ink-soft); }
 
+/* Compare: this product beside the thing the reader would otherwise use
+   ("a site builder", "a wiki of screenshots"). Two columns, the same rows in
+   each, said as words, so nothing rests on colour. Ours is on the right and
+   carries the mark on its top rule. On a phone they stack, ours first. */
+.pp-compare { margin: var(--s6) 0 0; display: grid; gap: var(--s4); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .pp-compare { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pp-compare > div { padding: var(--s5); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card); }
+.pp-compare > .is-ours { border-top: 4px solid var(--pp-mark); box-shadow: var(--shadow-2); }
+@media (max-width: 719px) { .pp-compare > .is-ours { order: -1; } }
+.pp-compare h3 { margin: 0 0 var(--s3); font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.pp-compare > :not(.is-ours) h3 { color: var(--ink-soft); }
+.pp-compare ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); }
+.pp-compare li { padding-top: var(--s2); border-top: 1px solid var(--line); }
+.pp-compare > :not(.is-ours) li { color: var(--ink-soft); }
+
 /* How it works: three numbered steps, one line each, numbered by the list. */
 .pp-how { list-style: none; margin: var(--s6) 0 0; padding: 0; counter-reset: pp-how; display: grid; gap: var(--s5);
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .pp-how > li { counter-increment: pp-how; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px var(--s3); align-items: baseline; }
 .pp-how > li::before {
   content: counter(pp-how); grid-row: span 2; display: inline-grid; place-items: center; width: 28px; height: 28px;
-  border-radius: 50%; border: 1px solid var(--line-strong); font: 600 var(--text-sm) / 1 var(--mono); color: var(--ink);
+  border-radius: 50%; border: 2px solid var(--pp-mark); font: 600 var(--text-sm) / 1 var(--mono); color: var(--ink);
 }
 .pp-how h3 { margin: 0; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
 .pp-how p { margin: 0; color: var(--ink-soft); }

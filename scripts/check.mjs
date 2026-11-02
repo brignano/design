@@ -216,7 +216,7 @@ floors.push(['--ink', '--surface-sticky', TEXT], ['--ink-soft', '--surface-stick
 for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);
-for (const fg of ['--i', '--success', '--attention', '--danger', '--line-control'])
+for (const fg of ['--i', '--success', '--attention', '--danger', '--line-control', '--mark-teal', '--mark-violet', '--mark-magenta'])
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, MARK]);
 // Chart series: light slots 3–5 are exempt by the relief rule in tokens.chart.css.
 for (let n = 1; n <= 8; n++) floors.push([`--chart-${n}`, '--chart-surface', MARK, n >= 3 && n <= 5 ? 'dark' : null]);

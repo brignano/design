@@ -54,24 +54,30 @@
   .pill.ok { color: var(--success-ink); background: var(--success-surface); border-color: var(--success-line); }
 </style>
 </head>
-<body class="pp">
+<!-- Brief:
+       Who:     teams running an app on AWS
+       Pain:    the app goes down and nobody knows which piece, or why
+       Promise: See what broke, and what changed it.
+       Moment:  a red box, AWS's reason, and the line the last deploy changed
+       Ask:     request access; the demo needs no signup
+     Identity: teal mark, stage hero (the map is wide), bare proof, "you get" cards. -->
+<body class="pp" data-mark="teal">
 <a class="pp-skip" href="#main">Skip to content</a>
 
 <header class="pp-header">
   <div class="pp-wrap">
-    <a class="pp-brand" href="#">Driftwood</a>
+    <a class="pp-brand" href="#"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="3" width="9" height="7" rx="2"/><rect x="15" y="3" width="9" height="7" rx="2"/><rect x="8.5" y="16" width="9" height="7" rx="2"/><path d="M6.5 10v2.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V10M13 14v2"/></svg>Driftwood</a>
     <nav class="pp-nav" aria-label="On this page">
       <a href="#gets">What you get</a><a href="#how">How it works</a><a href="#">Docs</a>
     </nav>
     <div class="pp-header-actions">
-      <span class="pp-status" data-state="soon">Private beta</span>
       <a class="pp-button is-small" href="#start">Request access</a>
     </div>
   </div>
 </header>
 
 <main id="main">
-  <section class="pp-hero">
+  <section class="pp-hero" data-layout="stage">
     <div class="pp-wrap">
       <div class="pp-hero-head">
         <span class="pp-status" data-state="soon">Private beta</span>
@@ -81,7 +87,7 @@
       <figure class="pp-media">
         <div class="shot" role="img" aria-label="Driftwood during an incident: the storefront service is down, 3 of 4 tasks fail health checks, and the last deploy changed its health-check path from /health to /healthz.">
           <div class="shot-bar"><span>shop · prod · deploy 214</span><span>checked 12s ago</span></div>
-          <div class="shot-alert">Storefront is down. Checkout requests are failing.</div>
+          <div class="shot-alert">Your shop is down. Checkout is failing.</div>
           <div class="path" aria-hidden="true">
             <div class="node ok"><b>Load balancer</b><small>healthy</small></div><span class="arrow">→</span>
             <div class="node down"><b>Storefront</b><small>✕ down</small></div><span class="arrow">→</span>
@@ -89,29 +95,29 @@
           </div>
           <div class="why" aria-hidden="true">
             <p>Why</p>
-            <p class="cause">3 of 4 tasks fail health checks (AWS: response code mismatch).</p>
-            <p style="margin-top: var(--s3)">Changed in the last deploy</p>
+            <p class="cause">The last deploy changed the address AWS checks, so it thinks the shop is dead.</p>
+            <p style="margin-top: var(--s3)">The change</p>
             <pre class="diff"><span class="rm">- health_check = "/health"</span><span class="add">+ health_check = "/healthz"</span></pre>
           </div>
         </div>
       </figure>
       <div class="pp-hero-body">
-        <p class="pp-subhead">A live map of your cloud, drawn from the code you already deploy. Open it when something breaks.</p>
+        <p class="pp-subhead">When your app goes down, Driftwood shows the broken piece, why, and what the last deploy changed.</p>
         <p class="pp-actions"><a class="pp-button" href="#start">Request access</a><a class="pp-button is-secondary" href="#">Try the live demo</a></p>
-        <p class="pp-note">The demo is a sample system, no signup. Request access and we reply within two working days to set you up.</p>
+        <p class="pp-note">Demo needs no signup. We reply within two days.</p>
       </div>
     </div>
   </section>
 
   <section class="pp-band" id="gets">
     <div class="pp-wrap">
-      <h2 class="pp-title">Everything the incident call needs, on one screen.</h2>
+      <h2 class="pp-title">What you see when it breaks.</h2>
       <ul class="pp-gets">
         <li class="pp-get">
           <figure class="pp-get-media"><div class="mini" aria-hidden="true">
             <div class="path"><div class="node"><b>LB</b></div><span class="arrow">→</span><div class="node"><b>Listener</b></div><span class="arrow">→</span><div class="node down"><b>Store</b></div><span class="arrow">→</span><div class="node"><b>Tasks</b></div></div>
           </div></figure>
-          <h3>The path a request takes</h3><p>Follow it box by box instead of asking who remembers the wiring.</p>
+          <h3>Where it broke</h3><p>The path a request takes, with the broken box in red.</p>
         </li>
         <li class="pp-get">
           <figure class="pp-get-media"><div class="mini" aria-hidden="true">
@@ -119,13 +125,13 @@
             <div class="row"><b>payments</b><span class="pill deg">▲ degraded</span></div>
             <div class="row"><b>orders-api</b><span class="pill ok">✓ healthy</span></div>
           </div></figure>
-          <h3>What's broken right now</h3><p>Live health on every box, with AWS's own reason next to it.</p>
+          <h3>Why it broke</h3><p>AWS's own reason, next to each box.</p>
         </li>
         <li class="pp-get">
           <figure class="pp-get-media"><div class="mini" aria-hidden="true">
             <pre class="diff"><span>  storefront</span><span class="rm">- health_check = "/health"</span><span class="add">+ health_check = "/healthz"</span><span>  desired_count = 4</span></pre>
           </div></figure>
-          <h3>What the last deploy changed</h3><p>The likely cause, one tap from the red box.</p>
+          <h3>What changed</h3><p>The last deploy's edits, one tap away.</p>
         </li>
       </ul>
     </div>
@@ -133,11 +139,11 @@
 
   <section class="pp-band" id="how">
     <div class="pp-wrap">
-      <h2 class="pp-title">Three steps, and you never redraw it again.</h2>
+      <h2 class="pp-title">Set up once. It redraws every deploy.</h2>
       <ol class="pp-how">
-        <li><h3>Point it at your infrastructure code</h3><p>Terraform or CloudFormation, the files your pipeline already makes. Read-only.</p></li>
-        <li><h3>Get a fresh map every deploy</h3><p>An overview, a view per service, and live health on each box.</p></li>
-        <li><h3>Review drift as a pull request</h3><p>When what's running stops matching the design, you see the difference.</p></li>
+        <li><h3>Point it at your code</h3><p>Terraform or CloudFormation. Read-only.</p></li>
+        <li><h3>Add one pipeline step</h3><p>Every deploy draws a fresh map.</p></li>
+        <li><h3>Open it when it breaks</h3><p>Live health, with the login you have.</p></li>
       </ol>
     </div>
   </section>
@@ -147,7 +153,7 @@
       <div>
         <span class="pp-status" data-state="soon">Private beta</span>
         <h2>Try it on your own system.</h2>
-        <p class="pp-subhead">Tell us what you run. We'll set you up within a week.</p>
+        <p class="pp-subhead">Tell us what you run. We reply within two days.</p>
       </div>
       <div class="pp-panel">
         <form class="pp-form" id="pilot-form" action="#" novalidate>
@@ -176,7 +182,7 @@
 
 <footer class="pp-footer">
   <div class="pp-wrap">
-    <p><a class="pp-brand" href="#">Driftwood</a><span>The architecture diagram that stays true.</span></p>
+    <p><a class="pp-brand" href="#">Driftwood</a><span>See what broke, and what changed it.</span></p>
     <nav aria-label="More"><a href="#">Docs</a><a href="#">Contact</a></nav>
     <div class="pp-legal">
       <small>&copy; 2026 Anthony Brignano. All rights reserved.</small>

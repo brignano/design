@@ -324,114 +324,153 @@ which is why changing the accent was a migration rather than a one-line edit.
 
 ## 13. Product pages
 
-A product's marketing page is one argument and one ask, and it has about
-five seconds on a phone to land. **Show, then tell**: a stranger who glances
-at the first phone screen sees what the product is, sees it doing the thing,
-and sees the one thing to do, without reading a paragraph. The longer
-argument (the problem in depth, who it's for, why now) belongs in the docs.
+A product's marketing page has about five seconds on a phone to land, with
+someone who has never heard of it: a buyer, a stranger at a meetup, your mum.
+**Show, then tell**: the first phone screen says who it's for, shows the
+product doing the thing, and offers one thing to do, without a paragraph.
+The longer argument belongs in the docs.
+
+Pages built from layout rules alone kept failing the same way (ADR-0011): the
+words came from the repo, so they described how the product works instead of
+why anyone should want it, and each review added another required line. So
+the order of work is fixed: **brief, page, checks, stranger test.**
+
+### 1. Write the brief first
+
+Five lines, in the words a stranger would use, kept as `BRIEF.md` in the
+product's repo and approved before any page work. Every word on the page comes
+from it; a change of message is a change to the brief, then the page.
+
+| Line | Answers | Becomes |
+|---|---|---|
+| **Who** | who it's for, as they'd say it | `.pp-audience` |
+| **Pain** | what goes wrong for them today | the first half of `.pp-subhead` |
+| **Promise** | what they get, 8 words or fewer | `.pp-thesis` |
+| **Moment** | the 10 seconds that prove it | the proof (`.pp-media`) |
+| **Ask** | the one action, and what happens next | `.pp-button`, `.pp-note` |
+
+No jargon in Who, Pain or Promise. Tool names (Terraform, CI, AWS) go in the
+how-it-works steps. If a person outside the field can't repeat the Promise
+back, rewrite the brief, not the page.
+
+### 2. Build the page from it
 
 `product-page.css` is the structure; `previews/product-page.html` is the
-skeleton to copy and `previews/product-page-example.html` is a worked example.
-Import it after the tokens, put `tier-marketing` on `<html>` and `pp` on
-`<body>` (or a wrapper).
+skeleton (the brief template is at its top) and
+`previews/product-page-example.html` is a worked example. Import it after the
+tokens, put `tier-marketing` on `<html>` and `pp` on `<body>`.
 
 ```css
 @import '@brignano/design/tokens.css';
 @import '@brignano/design/product-page.css';
 ```
 
-The order is fixed, because each band answers the question the last one raised:
+The bands, in order:
 
-1. **Header** (`.pp-header`) — brand, two or three in-page links, the status, the
-   primary action. Sticky, on `--surface-sticky`.
-2. **Hero** (`.pp-hero`) — three parts, in this order:
-   `.pp-hero-head` (the status, an **audience line**, `.pp-audience`, naming who
-   it's for in a few words, such as "For teams running on AWS", and a
-   **thesis**, `.pp-thesis`, of **8 words or fewer** that names the outcome for
-   the reader), the **proof** (`.pp-media`), then `.pp-hero-body` (a subhead of
-   **one sentence, 25 words or fewer**, the primary action and one secondary,
-   and a note saying **what happens after the click**). On a phone they
-   stack in that order, so the proof is on the first screen; from 960px the
-   head and body share the left column and the proof takes the right. The
-   proof is the product doing the thing, ideally mid-story (something broke,
-   here is why). In order of preference: a short looping clip of someone
-   using it (see *Video in the proof slot* below), a live demo, a real
-   screenshot, then a faithful mock built from the product's own components.
-   A static picture shows the product; a clip shows using it, and is believed
-   more. Never stock imagery.
+1. **Header** (`.pp-header`): brand, two or three in-page links, the primary
+   action. The status is not repeated here.
+2. **Hero** (`.pp-hero`), three parts: `.pp-hero-head` (the status, the
+   audience line, the thesis), the **proof** (`.pp-media`), then
+   `.pp-hero-body` (the subhead, the primary action and one secondary, and a
+   note). On a phone they stack in that order, so the proof is on the first
+   screen.
+   - The **subhead** is one sentence, the Pain then the fix: "When your app
+     goes down, Driftwood shows the broken piece, why, and what the last
+     deploy changed."
+   - The **proof** is the Moment: the product doing the thing, ideally
+     mid-story. In order of preference: a short captioned clip (*Video in the
+     proof slot*, below), a live demo, a real screenshot, a faithful mock from
+     the product's own components. Never stock imagery. Words inside the proof
+     are the product's own, in plain language ("Your shop is down"), not log
+     lines.
+   - **Demo first.** If anything can be tried without signing up, the
+     secondary action is "Try the live demo" and opens it directly.
+   - The **note** says what happens after the click, in about ten words
+     ("Demo needs no signup. We reply within two days.").
+3. **The signature band**: one band only this product could have. Three
+   "you get" cards (`ul.pp-gets`, each a picture, a heading, one line); the
+   product beside the obvious alternative (`.pp-compare`, below); or a band of
+   its own, such as a library of ready-made guides or the live demo itself.
+   Pick the one that answers the stranger's next question for *this* product.
+4. **How it works** (`ol.pp-how`): three numbered steps, a heading and one
+   line each.
+5. **Close** (`.pp-close`): the primary action again, with the room a form
+   needs (`.pp-panel`), and prices if any.
+6. **Footer** (`.pp-footer`): the brand and its promise, a few links, then the
+   legal line (`.pp-legal`): `© {year} Anthony Brignano. All rights
+   reserved.` and the product's Privacy and Terms links if it has them.
 
-   **Demo first.** If the product has anything a stranger can try without
-   signing up (a sample workspace, a read-only demo, a playground), the
-   secondary action is "Try the live demo" and opens it directly. Trying
-   beats reading, and it beats a form.
-3. **What you get** (`section.pp-band` with `.pp-title` and `ul.pp-gets` of
-   `.pp-get`) — three cards. Each is a small picture of the product
-   (`.pp-get-media`), a short heading naming what the reader gets, and one
-   line. The picture carries it; the words name it.
-4. **How it works** (`section.pp-band` with `.pp-title` and `ol.pp-how`) —
-   three numbered steps, a heading and one line each. Tool names (Terraform,
-   CI, AWS) belong here, not in the thesis.
-   *Optional:* one story chapter (`ol.pp-story` of one `.pp-chapter`) when a
-   single point needs a paragraph. More than one means the page is turning
-   into a case study; move it to the docs.
-5. **Close** (`.pp-close`) — the primary action again, with the room a form needs
-   (`.pp-panel`). If the product has prices, they go in the left column under the
-   subhead, as a **price list** (`dl.pp-price`, below). A short form is
-   `.pp-form` of `.pp-field` (label above the control), then the button, then a
-   `.pp-note` for the privacy line. Mark the optional fields (`.pp-optional`),
-   not the required ones. A field that fails takes `aria-invalid="true"` and a
-   `.pp-error` sentence under it; a failed send puts its error in the note
-   (`.pp-note.is-error`). On success the form gives way to `.pp-done`, a heading
-   and one line with `role="status"`, focused.
-6. **Footer** (`.pp-footer`) — the brand and a line about it, a few links, then
-   the **legal line** (`.pp-legal`): `© {year} Anthony Brignano. All rights
-   reserved.` and, if the product has them, its Privacy and Terms links
-   (`<nav aria-label="Legal">`). Leave out a link whose page doesn't exist.
+**Budgets** (`fold.mjs` enforces them): the thesis 8 words or fewer; the
+subhead one sentence of 25 or fewer; **40 words of copy on the first phone
+screen; 180 on the whole page**; 7 phone screens. Copy is what the reader has
+to read: words inside pictures, the form, the header and footer don't count.
+When a page is over, cut sentences, don't shrink type.
 
-The year is the current year **at build time**. This package is CSS and HTML,
-so the consuming site's build fills it in (a template value from
-`new Date().getFullYear()`, or a bundler `define`). Never type it by hand, where
-it goes stale every January, and never write it from client script, where it
-flashes or is missing without JavaScript.
+### 3. Make it look like this product
 
-Rules:
+Shared structure is what makes a page fast to build; shared looks is what made
+Driftwood, Guidebook and Sites read as one page with the words swapped. Each
+product makes three choices, and **no two products make all three the same**:
+
+- **A mark** (`data-mark` on `.pp`: `teal`, `violet` or `magenta`; tokens
+  `--mark-teal` and so on). It inks the product's glyph (an inline SVG in
+  `currentColor`), the hero rule above the thesis, the **stage** (a faint field
+  behind the hero proof), the clip's current step and the how-it-works
+  numerals. Like `--mark` (§3), it is never a button, link, text or state: the
+  actions stay cobalt on every product, so "you can click this" means the same
+  thing everywhere.
+- **A hero layout** (`data-layout` on `.pp-hero`): `split` (the default, proof
+  on the right), `mirror` (proof on the left, for a picture that should be
+  read first) or `stage` (centred words and actions, the proof full width
+  under them, for a wide picture such as a map). Phones stack all three the same.
+- **A frame for the proof** that matches where the product lives: bare, a
+  phone (`.pp-device`) for something used on a phone, or a browser window
+  (`.pp-browser`, with `.pp-browser-bar` and `.pp-browser-url`) for an
+  extension or web app.
+
+Then the voice: the thesis, the signature band and the close are written for
+this product's reader, not copied from the last page.
+
+### Compare
+
+`.pp-compare` holds two `<div>`s, each an `<h3>` and a `<ul>` of the same
+three rows: the obvious alternative first, then ours with `.is-ours`, which
+takes the mark on its top rule and stacks first on a phone. The rows are
+words ("Pay monthly, forever" beside "Pay once"), never ticks and crosses
+alone.
+
+### Rules
 
 - **One primary action per page.** `.pp-button` is that action, everywhere it
   appears. Anything else is `.pp-button.is-secondary` or a link.
-- **The status is a word with a dot** (`.pp-status`): "Pilot open", "In
-  development". `data-state="open"` takes `--success` (you can join now),
-  `"soon"` takes `--attention`; no attribute stays neutral. The word carries the
-  meaning on its own (§3, never colour alone).
-- **Prices sit beside the ask, not apart from it.** `dl.pp-price` holds two to
-  four options, one `<div>` each: the price as `<dt>` ("From $100"), one line
-  of condition as `<dd>`. A single price needs no list; say it in the subhead.
-  Its home is the close band, under the subhead, so the price is read right before the action.
-  Only when pricing *is* the argument (tiers the reader has to choose between)
-  does it get its own chapter, in the chapter body like `.pp-points`. An option
-  never gets its own `.pp-button`: the one primary action stays in the panel and
-  covers every option (the form can ask which). An option that needs a separate
-  way in gets a plain link in its `<dd>`. Write the price the way you'd say it;
-  no strike-through prices, "most popular" badges or highlighted tiers.
-- **Headlines are sentences.** Calm and declarative, no exclamation marks, no
-  claims the page can't back up.
-- **Write for the reader, in their words.** The thesis is what they get ("See
-  what broke, and what changed it."), not what the product is made of. A
-  thesis a person outside the field can't repeat back is too abstract.
-- **Every claim is backed or cut.** A time, a number or a superlative ("set up
-  in an afternoon", "10× faster") needs a source the page can point to: a
-  customer, a measured run, the docs. Without one it costs trust, so drop it.
-- **The ask says what happens next.** The note by the primary action tells the
-  reader what follows the click ("We reply within two working days").
-- **Scroll stays the reader's.** No scroll-jacking, pinned sections or reveals
-  the reader must scroll through to see the words: they feel slow on a phone
-  and lose skimmers. Motion lives in the hero clip, under §7 and ADR-0009.
-- **Pictures over paragraphs.** Every band after the hero leads with a picture
-  or a list, never a block of prose. The page is 7 phone screens or fewer.
-- **Restraint carries the style, the product carries the colour.** Hairlines
-  between bands, whitespace, the type scale; no gradients, no tinted section
-  backgrounds, no decorative colour. The pictures are where colour lives: a
-  red node, a green check, a diff, with the state's word beside it (§3), so
-  the eye lands on the product first.
+- **The status is a word with a dot** (`.pp-status`), shown once in the hero
+  and again in the close: "Pilot open", "Private beta". `data-state="open"`
+  takes `--success`, `"soon"` takes `--attention`; the word carries the meaning
+  on its own (§3).
+- **Every claim is backed or cut.** A time, a number or a superlative needs a
+  source the page can point to. Without one, drop it.
+- **Prices sit beside the ask.** `dl.pp-price` holds two to four options, one
+  `<div>` each: the price as `<dt>`, one line of condition as `<dd>`, in the
+  close band under its subhead. A single price goes in the subhead. No option
+  gets its own button; no strike-through prices, badges or highlighted tiers.
+- **Headlines are sentences.** Calm and declarative, no exclamation marks.
+- **Scroll stays the reader's.** No scroll-jacking, pinned sections or
+  scroll-driven reveals. Motion lives in the hero clip (§7, ADR-0009).
+- **Pictures over paragraphs.** Every band after the hero leads with a picture,
+  a list or a comparison, never prose. At most one story chapter
+  (`ol.pp-story`), and only when one point truly needs a paragraph.
+- **Restraint carries the style; the product and its mark carry the colour.**
+  Hairlines between bands, whitespace, the type scale. No gradients, no tinted
+  bands. Colour lives in the proof (a red box with its word, a diff) and in
+  the product's mark.
+- **Forms** (`.pp-form` of `.pp-field`, label above the control) mark the
+  optional fields, not the required ones. A field that fails takes
+  `aria-invalid="true"` and a `.pp-error` sentence; a failed send puts its
+  error in the note (`.pp-note.is-error`); on success the form gives way to
+  `.pp-done`, focused, with `role="status"`.
+- **The year** in the legal line is filled in at build time (a template value,
+  a bundler `define`, or the Worker as it serves the page). Never typed, and
+  never written by client script.
 
 ### Video in the proof slot
 
@@ -443,6 +482,11 @@ or inside `.pp-device`, a phone frame. `previews/product-media.html` shows both.
 - **The clip.** `<video muted loop playsinline preload="metadata">` with
   `width`/`height` set, a `poster`, and no `autoplay` attribute. Keep it under
   about 15 seconds and silent: it loops, and nobody turns sound on in a hero.
+- **Captions in the clip.** A stranger can't tell what a clip shows without
+  them. Burn a plain sentence into each beat ("You deploy an update to your
+  shop", "The shop goes down"), about three seconds each, three or four beats.
+  The first frame already shows the product and its first caption, never an
+  empty screen.
 - **The poster is the finished state.** It is what shows before the clip
   loads, without JavaScript, and under `prefers-reduced-motion`, so it has to
   make the argument on its own (§7: content is visible by default).
@@ -489,39 +533,41 @@ runs only when the reader asks for it, the same terms as ADR-0009.
 Every class starts with `.pp-`, so the file sits beside a site's own stylesheet.
 A page can change `--pp-width` (default 1160px) and `--pp-gutter` on `.pp`.
 
-Before a product page ships, check it. `scripts/fold.mjs` checks the first
-phone screen for you (Playwright, iPhone size, 390 × 844):
+### 4. Check it, then hand it to a stranger
+
+`scripts/fold.mjs` checks the first phone screen and the budgets
+(Playwright, 390 × 844):
 
 ```sh
 npm i --no-save playwright && npx playwright install chromium
 node node_modules/@brignano/design/scripts/fold.mjs https://product.example/ --shots shots
 ```
 
-- [ ] Bands in order: header, hero (head, proof, body), what you get, how it
-      works, close, footer. At most one story chapter.
-- [ ] On a phone, the first screen shows the thesis, at least 160px of the
-      proof, and the primary action (`fold.mjs`).
-- [ ] An audience line says who it's for (`fold.mjs`).
-- [ ] The thesis is 8 words or fewer and names the outcome; the hero subhead
-      is one sentence of 25 words or fewer (`fold.mjs`).
-- [ ] If anything can be tried without signing up, "Try the live demo" is
-      the secondary action.
-- [ ] The note by the primary action says what happens after the click.
+Then the **stranger test**, which no script can do. Give the first-screen shot
+from `--shots` to someone outside the field for five seconds, or to a fresh
+agent with no other context, and ask:
+
+> You're seeing this website for the first time, on a phone. In one sentence
+> each: what is it, who is it for, and what would you get? Would you tap the
+> button, and what do you expect to happen if you do?
+
+Compare the answers to the brief. If What, Who or Get doesn't match it, the
+page fails: fix the words or the proof, and test again. An agent building a
+page runs this before asking for review, and puts the answers in the PR.
+
+- [ ] `BRIEF.md` exists and was approved before the page.
+- [ ] `fold.mjs` passes: thesis, audience, proof and action on the first
+      screen; within the word budgets; 7 screens or fewer; no sideways scroll.
+- [ ] The stranger test's answers match the brief (in the PR).
+- [ ] The subhead is the Pain, then the fix.
+- [ ] If anything can be tried without signing up, "Try the live demo" is the
+      secondary action.
+- [ ] A mark, a hero layout and a proof frame chosen, not all three shared
+      with another product.
+- [ ] One signature band, then three how-it-works steps.
+- [ ] One primary action, the same everywhere; the status once in the hero.
 - [ ] Every time, number or superlative is backed, or cut.
-- [ ] The proof is the product doing the thing, not cropped on a phone
-      (`fold.mjs`).
-- [ ] Three "you get" cards, each with a picture; three how-it-works steps.
-- [ ] The page is 7 phone screens or fewer, and doesn't scroll sideways
-      (`fold.mjs`).
-- [ ] Hand it to someone outside the field for five seconds. They can say what
-      it does.
-- [ ] One primary action, the same everywhere it appears.
-- [ ] A status word with a dot, in the header and the hero.
 - [ ] A clip has a finished-state poster, a Pause / Play button, and no
       `autoplay` attribute.
-- [ ] Prices, if any, are a `.pp-price` of two to four options in the close
-      band (or one chapter), with no buttons of their own.
-- [ ] Has a copyright footer: `© {year} Anthony Brignano. All rights reserved.`,
-      the year filled in at build time, plus Privacy and Terms links for the
-      pages the product has.
+- [ ] Copyright footer with the year filled in at build time.
 - [ ] No hex outside `tokens.css` (`npm run check`).
