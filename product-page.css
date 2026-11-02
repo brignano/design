@@ -33,7 +33,7 @@
  *                          inks its glyph, the hero rule, the stage behind the
  *                          proof and the step numerals. Never a button or text.
  *   data-layout on .pp-hero  split (default) | mirror (proof on the left) |
- *                          stage (centred, the proof full width under the thesis)
+ *                          stage (centred words and actions, the proof full width under them)
  *   the proof's frame      bare, .pp-device (a phone) or .pp-browser (a window)
  *
  * The skeleton is previews/product-page.html, and a worked example is
@@ -201,15 +201,16 @@ body.pp { margin: 0; }
 
 /* Hero layouts (ADR-0011). Split is the default above. Mirror puts the proof
    on the left, for a product whose picture should be read first. Stage
-   centres the words and gives the proof the full width under the thesis, for
-   a wide picture: a map, a dashboard, a before and after. On a phone all
-   three stack the same way: head, proof, body. */
+   centres the words and the actions, then gives the proof the full width
+   under them, for a wide picture: a map, a dashboard, a before and after.
+   The actions sit above the proof so they stay on a laptop's first screen.
+   On a phone all three stack the same way: head, proof, body. */
 @media (min-width: 960px) {
   .pp-hero[data-layout="mirror"] > .pp-wrap:has(> .pp-hero-head) {
     grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); grid-template-areas: "media head" "media body";
   }
   .pp-hero[data-layout="stage"] > .pp-wrap:has(> .pp-hero-head) {
-    grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "media" "body"; grid-template-rows: auto;
+    grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "body" "media"; grid-template-rows: auto;
     gap: var(--s6); justify-items: center; text-align: center;
   }
   .pp-hero[data-layout="stage"] .pp-hero-head::before { margin-inline: auto; }

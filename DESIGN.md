@@ -421,8 +421,8 @@ product makes three choices, and **no two products make all three the same**:
   thing everywhere.
 - **A hero layout** (`data-layout` on `.pp-hero`): `split` (the default, proof
   on the right), `mirror` (proof on the left, for a picture that should be
-  read first) or `stage` (centred words, the proof full width under the
-  thesis, for a wide picture such as a map). Phones stack all three the same.
+  read first) or `stage` (centred words and actions, the proof full width
+  under them, for a wide picture such as a map). Phones stack all three the same.
 - **A frame for the proof** that matches where the product lives: bare, a
   phone (`.pp-device`) for something used on a phone, or a browser window
   (`.pp-browser`, with `.pp-browser-bar` and `.pp-browser-url`) for an
