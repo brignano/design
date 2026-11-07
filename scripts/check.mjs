@@ -13,12 +13,16 @@
 //      the previews and index.html included);
 //   6. index.html, the hosted preview site's landing page, misses a preview;
 //   7. a preview skips the shared header script, previews/_site.js lists the
-//      pages differently from the files, or index.html orders them differently.
+//      pages differently from the files, or index.html orders them differently;
+//   8. a class defined in components.css or templates/*.css appears on no
+//      preview page (DESIGN.md §14: if it isn't shown, it isn't reviewed).
+//      Their rules that set both a text colour and a background from tokens
+//      join the contrast floors in (1).
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -221,6 +225,51 @@ for (const fg of ['--i', '--success', '--attention', '--danger', '--line-control
 // Chart series: light slots 3–5 are exempt by the relief rule in tokens.chart.css.
 for (let n = 1; n <= 8; n++) floors.push([`--chart-${n}`, '--chart-surface', MARK, n >= 3 && n <= 5 ? 'dark' : null]);
 
+// Component layer (DESIGN.md §14): components.css and templates/*.css.
+const LAYER_FILES = ['components.css'];
+if (existsSync(new URL('templates/', root)))
+  for (const f of readdirSync(new URL('templates/', root))) if (f.endsWith('.css')) LAYER_FILES.push(`templates/${f}`);
+// Every rule with all its declarations, at-rule wrappers (@layer, @media,
+// @supports, @container) walked through. `@layer x;` statements are dropped.
+function rules(css) {
+  css = css.replace(/\/\*[\s\S]*?\*\//g, '').replace(/@layer\s+[\w.,\s-]+;/g, '');
+  const out = [];
+  (function walk(text) {
+    let i = 0;
+    while (i < text.length) {
+      const open = text.indexOf('{', i);
+      if (open < 0) break;
+      const selector = text.slice(i, open).trim().replace(/\s+/g, ' ');
+      let depth = 1, j = open + 1;
+      while (depth && j < text.length) {
+        if (text[j] === '{') depth++;
+        else if (text[j] === '}') depth--;
+        j++;
+      }
+      const body = text.slice(open + 1, j - 1);
+      if (/^@(layer|media|supports|container)\b/.test(selector)) walk(body);
+      else if (!selector.startsWith('@')) {
+        const decls = new Map();
+        for (const m of body.matchAll(/([\w-]+)\s*:\s*([^;]+);?/g)) decls.set(m[1], m[2].trim());
+        out.push({ selector, decls });
+      }
+      i = j;
+    }
+  })(css);
+  return out;
+}
+const layerRules = LAYER_FILES.map((f) => [f, rules(read(f))]);
+const pairKey = new Set(floors.map(([fg, bg]) => `${fg} ${bg}`));
+for (const [, rs] of layerRules)
+  for (const { decls } of rs) {
+    const fg = decls.get('color')?.match(/^var\((--[\w-]+)\)$/)?.[1];
+    const bg = (decls.get('background-color') ?? decls.get('background'))?.match(/^var\((--[\w-]+)\)$/)?.[1];
+    if (fg && bg && !pairKey.has(`${fg} ${bg}`)) {
+      pairKey.add(`${fg} ${bg}`);
+      floors.push([fg, bg, TEXT]);
+    }
+  }
+
 let checked = 0;
 for (const [theme, map] of [['light', light], ['dark', dark]]) {
   const card = resolve('var(--card)', map).rgb;
@@ -250,6 +299,7 @@ const scan = (file, text) => {
 };
 scan('tailwind.css', read('tailwind.css').replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, '')));
 scan('product-page.css', read('product-page.css'));
+for (const f of LAYER_FILES) scan(f, read(f));
 scan('previews/_preview.css', read('previews/_preview.css'));
 scan('previews/_site.css', read('previews/_site.css'));
 const previews = readdirSync(new URL('previews/', root)).filter((f) => f.endsWith('.html'));
@@ -280,9 +330,18 @@ const indexOrder = [...index.matchAll(/href="previews\/([\w-]+\.html)"/g)].map((
 if (indexOrder.join() !== pages.join())
   fail(`order: index.html links\n    ${indexOrder.join(', ')}\n  but previews/_site.js PAGES is\n    ${pages.join(', ')}`);
 
+// ── 8. Every component class is on a preview page ───────────────────────────
+const shown = new Set();
+for (const f of previews)
+  for (const m of read(`previews/${f}`).matchAll(/class="([^"]*)"/g)) for (const c of m[1].split(/\s+/)) shown.add(c);
+for (const [f, rs] of layerRules)
+  for (const { selector } of rs)
+    for (const m of selector.matchAll(/\.([a-z][\w-]*)/gi))
+      if (!shown.has(m[1]) && shown.add(m[1])) fail(`not shown: .${m[1]} (${f}) appears on no preview page`);
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown`);

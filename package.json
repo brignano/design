@@ -17,6 +17,7 @@
   "files": [
     "tokens.css",
     "tokens.chart.css",
+    "components.css",
     "product-page.css",
     "scripts/fold.mjs",
     "tailwind.css",
@@ -27,6 +28,7 @@
     "./tokens.css": "./tokens.css",
     "./tokens.chart.css": "./tokens.chart.css",
     "./tailwind.css": "./tailwind.css",
+    "./components.css": "./components.css",
     "./product-page.css": "./product-page.css"
   },
   "sideEffects": [

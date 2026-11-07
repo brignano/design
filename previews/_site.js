@@ -15,6 +15,7 @@
     ['color.html', 'Colour'],
     ['type.html', 'Type'],
     ['elevation.html', 'Elevation'],
+    ['components.html', 'Components'],
     ['buttons.html', 'Buttons & links'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],

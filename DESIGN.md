@@ -571,3 +571,33 @@ page runs this before asking for review, and puts the answers in the PR.
       `autoplay` attribute.
 - [ ] Copyright footer with the year filled in at build time.
 - [ ] No hex outside `tokens.css` (`npm run check`).
+
+## 14. Components
+
+Shared controls and patterns ship as plain CSS in
+[`components.css`](./components.css), and whole-page layouts as
+`templates/<name>.css`. Why plain CSS and not React: ADR-0012. What gets built
+and in what order: [`proposals/component-layer.md`](./proposals/component-layer.md).
+
+```css
+@import '@brignano/design/tokens.css';
+@import '@brignano/design/components.css';
+```
+
+- **One layer.** Everything is inside `@layer brignano.components`. A consumer's
+  unlayered CSS and Tailwind utilities beat it without `!important`, so a site
+  can adjust a component without fighting it.
+- **Names.** `.name` for the component, `.name-variant` for a variant
+  (`.btn`, `.btn-primary`). State is never a class: it comes from the attribute
+  that makes it true (`disabled`, `aria-invalid="true"`, `aria-current`,
+  `aria-expanded`, `[open]`), so the look can't disagree with what assistive
+  tech is told.
+- **Native first.** `<dialog>`, the `popover` attribute, `<details>` and CSS
+  anchor positioning before any script. Where a component needs JS (a toast
+  queue, tab arrow keys), its preview page documents the ARIA contract and the
+  consumer writes the script. Design ships no JS.
+- **Tokens only.** No hex, and every rule here that sets both a text colour and a
+  background is contrast-checked in both themes (`npm run check`).
+- **Every class is shown.** A class in `components.css` or a template that no
+  preview page uses fails the check: if it isn't shown, it isn't reviewed.
+

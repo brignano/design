@@ -1,0 +1,69 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Components</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<style>
+  /* Page layout only. Components themselves come from ../components.css. */
+  .doc { max-width: 780px; display: flex; flex-direction: column; gap: var(--s6); }
+  .doc h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .doc p { margin: 0 0 var(--s3); color: var(--ink-soft); }
+  .doc pre { margin: 0; padding: var(--s4); background: var(--card); border: 1px solid var(--line);
+             border-radius: var(--radius); overflow-x: auto; font-family: var(--mono);
+             font-size: var(--text-sm); line-height: 1.6; }
+  .doc ul { margin: 0; padding-left: var(--s5); color: var(--ink-soft); }
+  .doc li { margin: 0 0 var(--s1); }
+  .doc code { font-family: var(--mono); font-size: .92em; }
+  .waves { display: grid; gap: var(--s4); }
+  .wave { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+          padding: var(--s4) var(--s5); }
+  .wave h3 { font-size: var(--text-base); margin: 0 0 var(--s2); }
+  .wave p { font-size: var(--text-sm); margin: 0; }
+</style>
+</head>
+<body>
+<h1>Components</h1>
+<p class="sub">Shared controls and patterns, shipped as plain CSS. One import, any framework.</p>
+
+<div class="doc">
+  <section>
+    <h2>Use it</h2>
+    <pre>@import '@brignano/design/tokens.css';
+@import '@brignano/design/components.css';</pre>
+  </section>
+
+  <section>
+    <h2>The rules every component follows</h2>
+    <ul>
+      <li><b>One cascade layer.</b> Everything sits in <code>@layer brignano.components</code>, so your own CSS and Tailwind utilities win without <code>!important</code>.</li>
+      <li><b>Short names.</b> <code>.btn</code>, <code>.btn-primary</code>. State comes from real attributes like <code>disabled</code>, <code>aria-invalid</code> and <code>[open]</code>, never from a class.</li>
+      <li><b>Native first.</b> Dialogs are <code>&lt;dialog&gt;</code>, popovers use the <code>popover</code> attribute, and disclosures are <code>&lt;details&gt;</code>. When a component needs JavaScript, its page documents the contract and your app owns the script.</li>
+      <li><b>Tokens only.</b> No hex values. Contrast is checked in both themes on every change.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What lands here</h2>
+    <div class="waves">
+      <div class="wave">
+        <h3>Wave 1: every site rebuilds these today</h3>
+        <p>Button, text fields, checkbox and switch, message, pill, card, layout, header and footer, dialog, popover and menu, tooltip, toast, loading and empty states, icons, docs pages and content guidelines.</p>
+      </div>
+      <div class="wave">
+        <h3>Wave 2: data, navigation and page templates</h3>
+        <p>Table, key-value and stat, tabs, breadcrumb and pagination, accordion, code and avatar, prose. Templates: app shell, settings, legal, error, article and docs, changelog, email.</p>
+      </div>
+      <div class="wave">
+        <h3>Wave 3: built when a product needs it</h3>
+        <p>Combobox, date inputs, file upload, command palette, stepper, timeline, slider, calendar, share image, pricing table.</p>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
