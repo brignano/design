@@ -1,0 +1,116 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Disclosure and accordion</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Disclosure and accordion</h1>
+<p class="sub">Show more on demand. Native &lt;details&gt;, no script; the chevron turns when it opens.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <p style="margin:0 0 var(--s2);font-size:var(--text-sm);color:var(--ink-soft)">On its own</p>
+    <details class="disclosure">
+      <summary>What happens to my photos after the trip?</summary>
+      <p>They stay in your album until you delete them. Nothing is shared unless you send the link.</p>
+    </details>
+    <p style="margin:var(--s3) 0 var(--s2);font-size:var(--text-sm);color:var(--ink-soft)">Accordion, one open at a time</p>
+    <div class="accordion">
+      <details class="disclosure" name="l-faq" open>
+        <summary>Can I change the dates?</summary>
+        <p>Yes, up to 48 hours before the first booking. Bookings already paid move with the trip.</p>
+      </details>
+      <details class="disclosure" name="l-faq">
+        <summary>Who can see the itinerary?</summary>
+        <p>Only people you invite. Each invite can be view-only or can edit.</p>
+      </details>
+      <details class="disclosure" name="l-faq">
+        <summary>Does it work offline?</summary>
+        <p>The itinerary and confirmations are saved on your phone once opened.</p>
+      </details>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <p style="margin:0 0 var(--s2);font-size:var(--text-sm);color:var(--ink-soft)">On its own</p>
+    <details class="disclosure">
+      <summary>What happens to my photos after the trip?</summary>
+      <p>They stay in your album until you delete them. Nothing is shared unless you send the link.</p>
+    </details>
+    <p style="margin:var(--s3) 0 var(--s2);font-size:var(--text-sm);color:var(--ink-soft)">Accordion, one open at a time</p>
+    <div class="accordion">
+      <details class="disclosure" name="d-faq" open>
+        <summary>Can I change the dates?</summary>
+        <p>Yes, up to 48 hours before the first booking. Bookings already paid move with the trip.</p>
+      </details>
+      <details class="disclosure" name="d-faq">
+        <summary>Who can see the itinerary?</summary>
+        <p>Only people you invite. Each invite can be view-only or can edit.</p>
+      </details>
+      <details class="disclosure" name="d-faq">
+        <summary>Does it work offline?</summary>
+        <p>The itinerary and confirmations are saved on your phone once opened.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre>&lt;details class="disclosure"&gt;
+  &lt;summary&gt;What happens to my photos?&lt;/summary&gt;
+  &lt;p&gt;They stay in your album until you delete them.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;!-- An accordion: one open at a time, because they share a name --&gt;
+&lt;div class="accordion"&gt;
+  &lt;details class="disclosure" name="faq" open&gt;…&lt;/details&gt;
+  &lt;details class="disclosure" name="faq"&gt;…&lt;/details&gt;
+&lt;/div&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Use when</h2>
+      <ul>
+        <li>FAQs on a product page.</li>
+        <li>Detail most people skip, like advanced settings or the full log behind a summary.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The content is what people came for. Show it.</li>
+        <li>People switch between views of one thing. Use tabs.</li>
+        <li>It hides an error or a required field.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Behaviour</h2>
+    <ul>
+      <li>The browser does it all: click, Enter or Space on the summary opens and closes it, and find-in-page opens a closed one when it matches.</li>
+      <li>Give every <code>&lt;details&gt;</code> in a group the same <code>name</code> to allow only one open at a time. Leave <code>name</code> off to let several stay open.</li>
+      <li>Add <code>open</code> to start one expanded. The height doesn't animate; the chevron turns, and stops turning with reduced motion.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>The summary is the button: keep it short, and don't put links or other controls inside it.</li>
+      <li>Screen readers announce expanded and collapsed from <code>&lt;details&gt;</code> itself. Don't add <code>aria-expanded</code>.</li>
+      <li>The open state shows by the content appearing and the chevron, not colour.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

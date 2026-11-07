@@ -355,3 +355,58 @@
     .load-more > a { display: inline-flex; align-items: center; min-height: 44px; }
   }
 }
+
+/* ── Disclosure and accordion (#65) ───────────────────────────────────────
+   <details class="disclosure"><summary>Question</summary><p>Answer</p></details>
+   <div class="accordion">
+     <details class="disclosure" name="faq">…</details>
+     <details class="disclosure" name="faq">…</details>
+   </div>
+   Native <details> only, no JS. A shared name="…" makes the group exclusive:
+   opening one closes the rest. The height doesn't animate; only the chevron
+   turns. */
+@layer brignano.components {
+  .disclosure > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3);
+    padding: var(--s3);
+    font-weight: 500;
+    color: var(--ink);
+    list-style: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .disclosure > summary::-webkit-details-marker { display: none; }
+  .disclosure > summary::after {
+    content: '';
+    flex: none;
+    width: .5em;
+    height: .5em;
+    margin-right: .25em;
+    border-right: 2px solid var(--ink-soft);
+    border-bottom: 2px solid var(--ink-soft);
+    transform: translateY(-25%) rotate(45deg);
+    transition: transform var(--dur-fast) var(--ease);
+  }
+  .disclosure[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+  .disclosure > summary:hover { background: var(--surface-hover); }
+  .disclosure > summary:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .disclosure > :not(summary) { margin: 0; padding: 0 var(--s3) var(--s3); color: var(--ink-soft); }
+  .disclosure > :not(summary) + :not(summary) { padding-top: 0; }
+
+  .accordion { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .accordion > .disclosure + .disclosure { border-top: 1px solid var(--line); }
+  .accordion > .disclosure > summary { border-radius: 0; }
+
+  .tier-marketing .disclosure > summary { font-size: var(--text-lg); padding: var(--s4) var(--s3); }
+  @media (pointer: coarse) {
+    .disclosure > summary { min-height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .disclosure > summary,
+    .disclosure > summary::after { transition: none; }
+  }
+}
