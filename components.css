@@ -277,11 +277,13 @@
      <span class="pagination-status">Page 3 of 9</span>
      <a class="pagination-next" href="?p=4">Next</a>
    </nav>
-   Numbered pages are for tables; content lists use .load-more instead. Below
-   640px the numbers hide and "Page 3 of 9" shows. A missing previous or next
+   Numbered pages are for tables; content lists use .load-more instead. When
+   the nav itself is narrower than 34rem (a phone, a sidebar, a half-width
+   column) the numbers hide and "Page 3 of 9" shows. A missing previous or next
    is a <span aria-disabled="true">, not a dead link. */
 @layer brignano.components {
   .pagination {
+    container: pagination / inline-size;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -318,7 +320,7 @@
   .pagination-next::after { content: '→' / ''; margin-left: var(--s1); }
   .pagination [aria-disabled='true'] { color: var(--i-disabled-ink); pointer-events: none; }
   .pagination-status { display: none; color: var(--ink-soft); }
-  @media (max-width: 640px) {
+  @container pagination (max-width: 34rem) {
     .pagination-pages { display: none; }
     .pagination-status { display: block; }
   }

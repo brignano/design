@@ -3,10 +3,6 @@
 Read `DESIGN.md` (the rules) and `DECISIONS.md` (why) before changing a token.
 Before every commit: `npm run check`.
 
-Every interactive element in `components.css` (link, button, summary, tab)
-gets a `@media (pointer: coarse)` rule that makes it at least 44px tall
-(DESIGN.md §10). Inline links in running text are the only exception.
-
 ## How to release
 
 Only when Anthony says "publish X" explicitly. An npm version can never be
