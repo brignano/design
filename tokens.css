@@ -226,6 +226,23 @@
   --diff-removed-ink: var(--danger-ink);
   --diff-removed-surface: var(--danger-surface);
 
+  /* ── Code ─────────────────────────────────────────────────────────────
+     Syntax colour without a rainbow (DESIGN.md §3): keywords take the
+     interactive cobalt ink, everything else is a step of the neutral ramp,
+     and weight and italics do the rest. All aliases, so code adds no hue.
+
+       --code-surface   the block, inset one step below the card
+       --code-keyword   if, return, const — cobalt ink
+       --code-string    literals — secondary ink
+       --code-comment   comments — slate, set in italics
+       --code-highlight a highlighted line — the cobalt wash */
+  --code-surface: var(--bg);
+  --code-ink: var(--ink);
+  --code-keyword: var(--i-ink);
+  --code-string: var(--ink-soft);
+  --code-comment: var(--slate);
+  --code-highlight: var(--i-surface);
+
   /* ── Mark — identity ──────────────────────────────────────────────────
      Inks a GRAPHIC: the trail line, the A|B monogram, a hero rule. That is
      the entire permitted use.

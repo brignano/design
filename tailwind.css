@@ -61,6 +61,13 @@
   --color-diff-removed-ink: var(--diff-removed-ink);
   --color-diff-removed-surface: var(--diff-removed-surface);
 
+  --color-code-surface: var(--code-surface);
+  --color-code-ink: var(--code-ink);
+  --color-code-keyword: var(--code-keyword);
+  --color-code-string: var(--code-string);
+  --color-code-comment: var(--code-comment);
+  --color-code-highlight: var(--code-highlight);
+
   --color-mark: var(--mark);
   --color-mark-ink: var(--mark-ink);
 

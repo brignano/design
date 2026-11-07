@@ -1,0 +1,129 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Content pieces</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Content pieces</h1>
+<p class="sub">Avatars, keycaps, code and quotes. Code is neutral with cobalt keywords; no syntax rainbow.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <div style="display:flex;gap:var(--s3);align-items:center">
+      <span class="avatar avatar-lg"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='26' r='12' fill='white' fill-opacity='.75'/%3E%3Cpath d='M10 64c3-14 12-20 22-20s19 6 22 20z' fill='white' fill-opacity='.75'/%3E%3C/svg%3E" alt="Ana Ruiz"></span>
+      <span class="avatar" role="img" aria-label="Ben Okafor">BO</span>
+      <span class="avatar avatar-sm" role="img" aria-label="Chen Li">CL</span>
+    </div>
+    <p style="margin:0">Open search with <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd>, then run <code class="code">npm run check</code>.</p>
+    <figure class="code-block">
+      <figcaption class="code-block-header">
+        <span class="code-block-file">scripts/deploy.mjs</span>
+        <button type="button" class="code-block-copy">Copy</button>
+      </figcaption>
+      <pre tabindex="0" aria-label="scripts/deploy.mjs"><code><span class="tok-comment">// Ship the build if every check passed.</span>
+<span class="tok-keyword">const</span> target = process.env.TARGET ?? <span class="tok-string">'preview'</span>;
+<span class="line-highlight"><span class="tok-keyword">if</span> (!checks.every(Boolean)) <span class="tok-keyword">throw new</span> Error(<span class="tok-string">`checks failed for ${target}`</span>);</span>
+<span class="tok-keyword">await</span> deploy({ target, wait: <span class="tok-keyword">true</span>, message: <span class="tok-string">'Ship the build'</span> });</code></pre>
+    </figure>
+    <blockquote class="blockquote">
+      <p>We cut build times in half without touching a single test.</p>
+      <cite>Ana Ruiz, platform lead</cite>
+    </blockquote>
+    <figure class="figure">
+      <img style="background:var(--surface-active);width:100%" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 120'%3E%3Cpath d='M0 120 90 50l60 40 70-60 100 90z' fill-opacity='.18'/%3E%3C/svg%3E" alt="Build time chart placeholder" width="320" height="120">
+      <figcaption>Build time per commit, March to May.</figcaption>
+    </figure>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <div style="display:flex;gap:var(--s3);align-items:center">
+      <span class="avatar avatar-lg"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='26' r='12' fill='white' fill-opacity='.75'/%3E%3Cpath d='M10 64c3-14 12-20 22-20s19 6 22 20z' fill='white' fill-opacity='.75'/%3E%3C/svg%3E" alt="Ana Ruiz"></span>
+      <span class="avatar" role="img" aria-label="Ben Okafor">BO</span>
+      <span class="avatar avatar-sm" role="img" aria-label="Chen Li">CL</span>
+    </div>
+    <p style="margin:0">Open search with <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd>, then run <code class="code">npm run check</code>.</p>
+    <figure class="code-block">
+      <figcaption class="code-block-header">
+        <span class="code-block-file">scripts/deploy.mjs</span>
+        <button type="button" class="code-block-copy">Copy</button>
+      </figcaption>
+      <pre tabindex="0" aria-label="scripts/deploy.mjs"><code><span class="tok-comment">// Ship the build if every check passed.</span>
+<span class="tok-keyword">const</span> target = process.env.TARGET ?? <span class="tok-string">'preview'</span>;
+<span class="line-highlight"><span class="tok-keyword">if</span> (!checks.every(Boolean)) <span class="tok-keyword">throw new</span> Error(<span class="tok-string">`checks failed for ${target}`</span>);</span>
+<span class="tok-keyword">await</span> deploy({ target, wait: <span class="tok-keyword">true</span>, message: <span class="tok-string">'Ship the build'</span> });</code></pre>
+    </figure>
+    <blockquote class="blockquote">
+      <p>We cut build times in half without touching a single test.</p>
+      <cite>Ana Ruiz, platform lead</cite>
+    </blockquote>
+    <figure class="figure">
+      <img style="background:var(--surface-active);width:100%" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 120'%3E%3Cpath d='M0 120 90 50l60 40 70-60 100 90z' fill-opacity='.18'/%3E%3C/svg%3E" alt="Build time chart placeholder" width="320" height="120">
+      <figcaption>Build time per commit, March to May.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">&lt;span class="avatar"&gt;&lt;img src="ana.jpg" alt="Ana Ruiz"&gt;&lt;/span&gt;
+&lt;span class="avatar avatar-sm" role="img" aria-label="Ben Okafor"&gt;BO&lt;/span&gt;
+
+&lt;kbd class="kbd"&gt;⌘&lt;/kbd&gt; &lt;kbd class="kbd"&gt;K&lt;/kbd&gt;   &lt;code class="code"&gt;npm run check&lt;/code&gt;
+
+&lt;figure class="code-block"&gt;
+  &lt;figcaption class="code-block-header"&gt;
+    &lt;span class="code-block-file"&gt;deploy.mjs&lt;/span&gt;
+    &lt;button type="button" class="code-block-copy"&gt;Copy&lt;/button&gt;
+  &lt;/figcaption&gt;
+  &lt;pre tabindex="0" aria-label="deploy.mjs"&gt;&lt;code&gt;&lt;span class="tok-keyword"&gt;const&lt;/span&gt; …&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+
+&lt;blockquote class="blockquote"&gt;&lt;p&gt;…&lt;/p&gt;&lt;cite&gt;Ana Ruiz, platform lead&lt;/cite&gt;&lt;/blockquote&gt;
+&lt;figure class="figure"&gt;&lt;img src="…" alt="…"&gt;&lt;figcaption&gt;…&lt;/figcaption&gt;&lt;/figure&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Sizes and classes</h2>
+      <ul>
+        <li>Avatar: <code>.avatar-sm</code> 24px, <code>.avatar</code> 40px, <code>.avatar-lg</code> 64px.</li>
+        <li>Code tokens: <code>.tok-keyword</code>, <code>.tok-string</code>, <code>.tok-comment</code>; a highlighted line is <code>.line-highlight</code>. Everything else stays <code>--code-ink</code>.</li>
+        <li>Colours are tokens (<code>--code-*</code>) so a highlighter theme can map to them.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Don't</h2>
+      <ul>
+        <li>Colour more token types. Keywords in cobalt, comments in italics: that's enough to scan.</li>
+        <li>Use the blockquote for a callout or a warning. Use a message.</li>
+        <li>Put an avatar where the name isn't nearby or in its label.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Behaviour your script owns</h2>
+    <ul>
+      <li>The copy button copies the code's text, then says "Copied" for about two seconds. Announce it with an <code>aria-live="polite"</code> region or by changing the button's text.</li>
+      <li>Highlighting is up to your build (shiki, Prism or hand-written spans), as long as it emits the token classes or uses the <code>--code-*</code> colours.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>The code block scrolls sideways instead of wrapping, so give its <code>&lt;pre&gt;</code> <code>tabindex="0"</code> and an <code>aria-label</code>: keyboard users can then scroll it.</li>
+      <li>An initials avatar is <code>role="img"</code> with the full name as its <code>aria-label</code>; a photo needs real <code>alt</code>, or <code>alt=""</code> when the name is right beside it.</li>
+      <li>Every figure image needs <code>alt</code>; the caption doesn't replace it.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
