@@ -262,6 +262,10 @@
     /* The parent crumb's separator stands in for the hidden ones. */
     .breadcrumb li:nth-last-child(2):not(:nth-child(2))::before { content: '/ … /' / ''; }
   }
+  @media (pointer: coarse) {
+    .breadcrumb ol { row-gap: 0; }
+    .breadcrumb a:not([aria-current]) { display: inline-flex; align-items: center; min-height: 44px; }
+  }
 }
 
 /* ── Pagination (#64) ──────────────────────────────────────────────────────
@@ -273,8 +277,8 @@
      <span class="pagination-status">Page 3 of 9</span>
      <a class="pagination-next" href="?p=4">Next</a>
    </nav>
-   Numbered pages are for tables; content lists use .load-more instead. On a
-   phone the numbers hide and "Page 3 of 9" shows. A missing previous or next
+   Numbered pages are for tables; content lists use .load-more instead. Below
+   640px the numbers hide and "Page 3 of 9" shows. A missing previous or next
    is a <span aria-disabled="true">, not a dead link. */
 @layer brignano.components {
   .pagination {
@@ -308,11 +312,13 @@
   .pagination-next:focus-visible,
   .pagination-pages a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
   .pagination-pages [aria-current='page'] { color: var(--on-i); background: var(--i); font-weight: 600; }
+  .pagination-prev,
+  .pagination-next { flex-shrink: 0; white-space: nowrap; }
   .pagination-prev::before { content: '←' / ''; margin-right: var(--s1); }
   .pagination-next::after { content: '→' / ''; margin-left: var(--s1); }
   .pagination [aria-disabled='true'] { color: var(--i-disabled-ink); pointer-events: none; }
   .pagination-status { display: none; color: var(--ink-soft); }
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     .pagination-pages { display: none; }
     .pagination-status { display: block; }
   }

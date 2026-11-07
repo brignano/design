@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Breadcrumb and pagination</h1>
-<p class="sub">Where you are, and how to move through a long list. On a phone, middle crumbs and page numbers fold away.</p>
+<p class="sub">Where you are, and how to move through a long list. On a phone, middle crumbs fold away, and below 640px page numbers become "Page 3 of 9".</p>
 
 <div class="pair">
   <div class="panel light"><span class="tag">Light</span>
@@ -23,7 +23,7 @@
       <li><a href="#">Platform migration</a></li>
       <li><a href="#" aria-current="page">Cutting build times in half</a></li>
     </ol></nav>
-    <nav class="pagination" aria-label="Pages">
+    <nav class="pagination" aria-label="Pages, deployments">
       <a class="pagination-prev" href="#">Previous</a>
       <ol class="pagination-pages">
         <li><a href="#">1</a></li>
@@ -36,7 +36,7 @@
       <span class="pagination-status">Page 3 of 9</span>
       <a class="pagination-next" href="#">Next</a>
     </nav>
-    <nav class="pagination" aria-label="Pages">
+    <nav class="pagination" aria-label="Pages, archive">
       <span class="pagination-prev" aria-disabled="true">Previous</span>
       <ol class="pagination-pages">
         <li><a href="#" aria-current="page">1</a></li>
@@ -47,7 +47,7 @@
       <a class="pagination-next" href="#">Next</a>
     </nav>
     <div class="load-more">
-      <span class="load-more-count">Showing 12 of 48 posts</span>
+      <span class="load-more-count" aria-live="polite">Showing 12 of 48 posts</span>
       <button type="button">Show 12 more</button>
     </div>
   </div>
@@ -59,7 +59,7 @@
       <li><a href="#">Platform migration</a></li>
       <li><a href="#" aria-current="page">Cutting build times in half</a></li>
     </ol></nav>
-    <nav class="pagination" aria-label="Pages">
+    <nav class="pagination" aria-label="Pages, deployments">
       <a class="pagination-prev" href="#">Previous</a>
       <ol class="pagination-pages">
         <li><a href="#">1</a></li>
@@ -72,7 +72,7 @@
       <span class="pagination-status">Page 3 of 9</span>
       <a class="pagination-next" href="#">Next</a>
     </nav>
-    <nav class="pagination" aria-label="Pages">
+    <nav class="pagination" aria-label="Pages, archive">
       <span class="pagination-prev" aria-disabled="true">Previous</span>
       <ol class="pagination-pages">
         <li><a href="#" aria-current="page">1</a></li>
@@ -83,7 +83,7 @@
       <a class="pagination-next" href="#">Next</a>
     </nav>
     <div class="load-more">
-      <span class="load-more-count">Showing 12 of 48 posts</span>
+      <span class="load-more-count" aria-live="polite">Showing 12 of 48 posts</span>
       <button type="button">Show 12 more</button>
     </div>
   </div>
@@ -105,7 +105,7 @@
 &lt;/nav&gt;
 
 &lt;div class="load-more"&gt;
-  &lt;span class="load-more-count"&gt;Showing 12 of 48 posts&lt;/span&gt;
+  &lt;span class="load-more-count" aria-live="polite"&gt;Showing 12 of 48 posts&lt;/span&gt;
   &lt;button type="button"&gt;Show 12 more&lt;/button&gt;
 &lt;/div&gt;</pre>
   </section>
@@ -136,6 +136,8 @@
       <li>The current crumb and the current page carry <code>aria-current="page"</code>; the separators and arrows are drawn by CSS and not read aloud.</li>
       <li>A missing previous or next is a <code>&lt;span aria-disabled="true"&gt;</code>, not a link that goes nowhere.</li>
       <li>After load more, move focus to the first new item so keyboard users don't start over.</li>
+      <li>Put <code>aria-live="polite"</code> on <code>.load-more-count</code> and update its text, so screen readers hear "Showing 24 of 48 posts" when the new items arrive.</li>
+      <li>With more than one pagination on a page, give each its own label, like <code>aria-label="Pages, deployments"</code>, so the landmarks stay distinct.</li>
     </ul>
   </section>
 </div>
