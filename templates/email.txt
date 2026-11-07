@@ -1,0 +1,10 @@
+{{product}}
+
+{{heading}}
+
+{{body_text}}
+
+{{button_label}}: {{button_url}}
+
+--
+{{footer}}

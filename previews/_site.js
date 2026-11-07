@@ -33,6 +33,7 @@
     ['changelog.html', 'Changelog page'],
     ['legal.html', 'Legal page'],
     ['article.html', 'Article and docs page'],
+    ['email.html', 'Transactional email'],
   ];
 
   const root = document.documentElement;

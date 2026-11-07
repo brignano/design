@@ -17,12 +17,16 @@
 //   8. a class defined in components.css or templates/*.css appears on no
 //      preview page (DESIGN.md §14: if it isn't shown, it isn't reviewed).
 //      Their rules that set both a text colour and a background from tokens
-//      join the contrast floors in (1).
+//      join the contrast floors in (1);
+//   9. templates/email.html names a colour token that tokens.css can't
+//      resolve to a light-theme value, or carries a hex of its own.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { hex, toHex, resolve } from './colour.mjs';
+import { TOKEN, resolveLight } from './email-tokens.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -113,30 +117,7 @@ for (const [k, v] of tokens)
         fail(`nesting: ${k} passes a var() or light-dark() into ${fn}() — write the concrete colour (tokens.css rule 2)`);
 
 // ── Colour maths ─────────────────────────────────────────────────────────────
-function hex(h) {
-  h = h.slice(1);
-  if (h.length === 3) h = [...h].map((c) => c + c).join('');
-  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
-}
-const toHex = (rgb) => '#' + rgb.map((c) => Math.round(c).toString(16).padStart(2, '0')).join('');
-
-// Resolves a token to { rgb, alpha }. Handles hex, var() and the one
-// color-mix form the tokens use: color-mix(in srgb, X N%, transparent).
-function resolve(value, map, seen = new Set()) {
-  value = value.trim();
-  const ref = value.match(/^var\((--[\w-]+)\)$/);
-  if (ref) {
-    if (seen.has(ref[1]) || !map.has(ref[1])) throw new Error(`cannot resolve ${ref[1]}`);
-    return resolve(map.get(ref[1]), map, new Set([...seen, ref[1]]));
-  }
-  if (/^#[0-9a-f]{3,6}$/i.test(value)) return { rgb: hex(value), alpha: 1 };
-  const mix = value.match(/^color-mix\(in srgb,\s*(.+?)\s+([\d.]+)%,\s*transparent\)$/);
-  if (mix) {
-    const c = resolve(mix[1], map, seen);
-    return { rgb: c.rgb, alpha: c.alpha * (+mix[2] / 100) };
-  }
-  throw new Error(`unsupported colour value: ${value}`);
-}
+// hex, toHex and resolve live in colour.mjs, shared with email-tokens.mjs.
 const over = (fg, bg) => fg.rgb.map((c, i) => c * fg.alpha + bg[i] * (1 - fg.alpha));
 const lum = (rgb) =>
   rgb
@@ -326,6 +307,12 @@ scan('previews/_site.css', read('previews/_site.css'));
 const previews = readdirSync(new URL('previews/', root)).filter((f) => f.endsWith('.html'));
 for (const f of previews) scan(`previews/${f}`, read(`previews/${f}`));
 scan('index.html', read('index.html'));
+scan('templates/email.html', read('templates/email.html'));
+
+// ── 9. The email's colour tokens resolve ─────────────────────────────────────
+for (const [, name] of read('templates/email.html').matchAll(TOKEN)) {
+  try { resolveLight(name); } catch (e) { fail(`email: ${e.message}`); }
+}
 
 // ── 6. The hosted index links every preview ──────────────────────────────────
 // index.html is the landing page of the preview site (wrangler.jsonc); a
