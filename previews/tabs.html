@@ -1,0 +1,126 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tabs</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Tabs</h1>
+<p class="sub">Switch between views of one thing. Underline in cobalt; scrolls sideways when the tabs don't fit.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <div class="tabs" data-demo>
+      <div class="tabs-list" role="tablist" aria-label="Trip">
+        <button type="button" role="tab" id="lt0" aria-selected="true" aria-controls="lp0">Itinerary</button>
+        <button type="button" role="tab" id="lt1" aria-selected="false" aria-controls="lp1" tabindex="-1">Bookings</button>
+        <button type="button" role="tab" id="lt2" aria-selected="false" aria-controls="lp2" tabindex="-1">Packing</button>
+        <button type="button" role="tab" id="lt3" aria-selected="false" aria-controls="lp3" tabindex="-1">Notes</button>
+        <button type="button" role="tab" id="lt9" aria-selected="false" aria-disabled="true" tabindex="-1">Photos</button>
+      </div>
+      <div class="tabs-panel" role="tabpanel" id="lp0" aria-labelledby="lt0" tabindex="0"><p style="margin:0">Six days, three cities. Flights land 14 Mar 2027.</p></div>
+      <div class="tabs-panel" role="tabpanel" id="lp1" aria-labelledby="lt1" tabindex="0" hidden><p style="margin:0">Four confirmed, one waiting on a deposit.</p></div>
+      <div class="tabs-panel" role="tabpanel" id="lp2" aria-labelledby="lt2" tabindex="0" hidden><p style="margin:0">Twelve items, three left to buy.</p></div>
+      <div class="tabs-panel" role="tabpanel" id="lp3" aria-labelledby="lt3" tabindex="0" hidden><p style="margin:0">Ask about the late checkout in Porto.</p></div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <div class="tabs" data-demo>
+      <div class="tabs-list" role="tablist" aria-label="Trip">
+        <button type="button" role="tab" id="dt0" aria-selected="true" aria-controls="dp0">Itinerary</button>
+        <button type="button" role="tab" id="dt1" aria-selected="false" aria-controls="dp1" tabindex="-1">Bookings</button>
+        <button type="button" role="tab" id="dt2" aria-selected="false" aria-controls="dp2" tabindex="-1">Packing</button>
+        <button type="button" role="tab" id="dt3" aria-selected="false" aria-controls="dp3" tabindex="-1">Notes</button>
+        <button type="button" role="tab" id="dt9" aria-selected="false" aria-disabled="true" tabindex="-1">Photos</button>
+      </div>
+      <div class="tabs-panel" role="tabpanel" id="dp0" aria-labelledby="dt0" tabindex="0"><p style="margin:0">Six days, three cities. Flights land 14 Mar 2027.</p></div>
+      <div class="tabs-panel" role="tabpanel" id="dp1" aria-labelledby="dt1" tabindex="0" hidden><p style="margin:0">Four confirmed, one waiting on a deposit.</p></div>
+      <div class="tabs-panel" role="tabpanel" id="dp2" aria-labelledby="dt2" tabindex="0" hidden><p style="margin:0">Twelve items, three left to buy.</p></div>
+      <div class="tabs-panel" role="tabpanel" id="dp3" aria-labelledby="dt3" tabindex="0" hidden><p style="margin:0">Ask about the late checkout in Porto.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre>&lt;div class="tabs"&gt;
+  &lt;div class="tabs-list" role="tablist" aria-label="Trip"&gt;
+    &lt;button type="button" role="tab" id="t1" aria-selected="true" aria-controls="p1"&gt;Itinerary&lt;/button&gt;
+    &lt;button type="button" role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1"&gt;Bookings&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="tabs-panel" role="tabpanel" id="p1" aria-labelledby="t1" tabindex="0"&gt;…&lt;/div&gt;
+  &lt;div class="tabs-panel" role="tabpanel" id="p2" aria-labelledby="t2" tabindex="0" hidden&gt;…&lt;/div&gt;
+&lt;/div&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Use when</h2>
+      <ul>
+        <li>One thing has a few views people switch between, like a trip's itinerary, bookings and notes.</li>
+        <li>Two to six short labels.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The tabs go to different pages. Use the site nav with <code>aria-current="page"</code>.</li>
+        <li>People need to compare the views side by side. Show them together.</li>
+        <li>Choosing a value in a form. Use a segmented control.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Behaviour your script owns</h2>
+    <p>Design ships the look; your app writes the script. This page uses the reference version below the fold.</p>
+    <ul>
+      <li>Click or Enter/Space selects a tab: set <code>aria-selected="true"</code> on it and <code>"false"</code> on the rest, and show only its panel (<code>hidden</code> on the others).</li>
+      <li>Left and Right arrows move to the previous and next tab and select it; Home and End go to the first and last. Skip <code>aria-disabled</code> tabs.</li>
+      <li>Only the selected tab is in the tab order (<code>tabindex="0"</code>); the others are <code>tabindex="-1"</code>. Tab from the list moves into the panel.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Give the <code>tablist</code> an <code>aria-label</code> naming what the tabs switch.</li>
+      <li>Each tab's <code>aria-controls</code> names its panel; each panel's <code>aria-labelledby</code> names its tab.</li>
+      <li>The selected tab is shown by the underline and by stronger ink, not by colour alone.</li>
+    </ul>
+  </section>
+</div>
+<script>
+  // Demo only: the reference behaviour a consumer writes. Click or arrow keys
+  // select a tab; Home/End jump to the ends; disabled tabs are skipped.
+  document.querySelectorAll('[data-demo]').forEach((root) => {
+    const tabs = [...root.querySelectorAll('[role=tab]')].filter((t) => t.getAttribute('aria-disabled') !== 'true');
+    const select = (tab) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        root.querySelector('#' + t.getAttribute('aria-controls')).hidden = !on;
+      });
+      tab.focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+        if (n === undefined) return;
+        e.preventDefault();
+        select(tabs[(n + tabs.length) % tabs.length]);
+      });
+    });
+  });
+</script>
+</body>
+</html>
