@@ -18,6 +18,7 @@
     ['components.html', 'Components'],
     ['table.html', 'Table'],
     ['kv-stat.html', 'Key-value and stats'],
+    ['tabs.html', 'Tabs'],
     ['buttons.html', 'Buttons & links'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],

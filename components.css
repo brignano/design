@@ -90,6 +90,9 @@
   .table th[aria-sort='descending'] > button::after { content: '↓' / ''; color: var(--ink); }
   .table th[aria-sort='ascending'],
   .table th[aria-sort='descending'] { color: var(--ink); }
+  @media (pointer: coarse) {
+    .table th[aria-sort] > button { min-height: 44px; }
+  }
 
   /* Sticky header: .table-wrap scrolls sideways, which also makes it the
      header's scroll container, so the header only sticks when the wrap has a
@@ -168,5 +171,57 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
     gap: var(--s4);
+  }
+}
+
+/* ── Tabs (#63) ────────────────────────────────────────────────────────────
+   <div class="tabs">
+     <div class="tabs-list" role="tablist" aria-label="Trip">
+       <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Itinerary</button>
+       <button role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">Bookings</button>
+     </div>
+     <div class="tabs-panel" role="tabpanel" id="p1" aria-labelledby="t1">…</div>
+     <div class="tabs-panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>…</div>
+   </div>
+   Tabs switch views of one thing; navigation between pages is a nav, never
+   tabs. The selected tab is underlined in cobalt. The consumer's script owns
+   selection and arrow keys (contract on previews/tabs.html). */
+@layer brignano.components {
+  .tabs-list {
+    display: flex;
+    gap: var(--s1);
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Inset hairline, not a border: a border would push the tab's 2px
+       underline past the scroll box, which clips it and scrolls by 1px. */
+    box-shadow: inset 0 -1px 0 var(--line);
+  }
+  .tabs-list::-webkit-scrollbar { display: none; }
+  .tabs-list > [role='tab'] {
+    all: unset;
+    box-sizing: border-box;
+    flex: none;
+    padding: var(--s2) var(--s3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  }
+  .tabs-list > [role='tab']:hover { color: var(--ink); background: var(--surface-hover); }
+  .tabs-list > [role='tab']:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .tabs-list > [role='tab'][aria-selected='true'] { color: var(--ink); border-bottom-color: var(--i); }
+  .tabs-list > [role='tab'][aria-disabled='true'] { color: var(--i-disabled-ink); cursor: not-allowed; background: none; }
+  .tabs-panel { padding-top: var(--s4); }
+  .tabs-panel:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: var(--radius-sm); }
+  .tier-marketing .tabs-list > [role='tab'] { font-size: var(--text-base); padding: var(--s3) var(--s4); }
+  @media (pointer: coarse) {
+    .tabs-list > [role='tab'] { display: inline-flex; align-items: center; min-height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tabs-list > [role='tab'] { transition: none; }
   }
 }
