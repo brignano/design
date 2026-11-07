@@ -1,4 +1,4 @@
-Status: proposed · Tracking issue: #45
+Status: accepted · Tracking issue: #45
 
 # A shared component layer: `components.css` and page templates
 
