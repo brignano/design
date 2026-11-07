@@ -90,6 +90,15 @@ Every state ships with an **icon and a word**. Colour is the accelerant, not the
 signal — this covers colour-vision deficiency, greyscale printing, and forced-colours
 mode in one rule.
 
+### Code is the one non-interactive cobalt
+
+Syntax keywords (`--code-keyword`) and a highlighted line (`--code-highlight`)
+borrow the cobalt ink and wash, though nothing there can be acted on. It's
+deliberate and contained: inside a code block, a reader scanning for structure
+needs one accent, and cobalt is the only hue that can't be misread as a state.
+Everything else in code is neutral (§9). Nowhere outside a code block does
+cobalt mean anything but *you can act on this*.
+
 ### What does NOT get colour
 
 Event type. Six types in six colours is exactly the complication this avoids —
@@ -205,6 +214,10 @@ is thirty coloured things, and the one that is down disappears among them.
   The diff tokens alias the state hues on purpose (added is *settled*, a change is
   *informational*, a removal is the change that can lose data), so a diff adds no
   hue to the system. Health wins the fill (`-surface`); a diff only takes the edge.
+- **Code is neutral too.** `--code-keyword` is the cobalt ink; strings are
+  `--code-string` (`--ink-soft`), comments `--code-comment` (`--slate`, italic),
+  everything else `--code-ink`. A highlighted line is `--code-highlight`. No
+  syntax rainbow: a reader scanning code needs the keywords, not a palette.
 - **Selection** is the focus treatment: a 2px `--i-ink` outline, offset. Asking
   "what depends on this?" dims everything unrelated to ~30% opacity and inks the
   connecting edges in `--ink`; it never introduces a colour.

@@ -21,6 +21,7 @@
     ['tabs.html', 'Tabs'],
     ['navigation.html', 'Breadcrumb and pagination'],
     ['disclosure.html', 'Disclosure and accordion'],
+    ['content.html', 'Content pieces'],
     ['buttons.html', 'Buttons & links'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],

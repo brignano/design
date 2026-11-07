@@ -220,6 +220,10 @@ floors.push(['--ink', '--surface-sticky', TEXT], ['--ink-soft', '--surface-stick
 for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);
+// Code on a highlighted line (components.css .line-highlight). A comment there
+// takes --code-string, so --code-comment is not paired with the wash.
+for (const fg of ['--code-ink', '--code-keyword', '--code-string']) floors.push([fg, '--code-highlight', TEXT]);
+for (const fg of ['--code-ink', '--code-keyword', '--code-string', '--code-comment']) floors.push([fg, '--code-surface', TEXT]);
 for (const fg of ['--i', '--success', '--attention', '--danger', '--line-control', '--mark-teal', '--mark-violet', '--mark-magenta'])
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, MARK]);
 // Chart series: light slots 3–5 are exempt by the relief rule in tokens.chart.css.
