@@ -17,12 +17,15 @@
 //   8. a class defined in components.css or templates/*.css appears on no
 //      preview page (DESIGN.md §14: if it isn't shown, it isn't reviewed).
 //      Their rules that set both a text colour and a background from tokens
-//      join the contrast floors in (1).
+//      join the contrast floors in (1);
+//   9. templates/email.html names a colour token that tokens.css can't
+//      resolve to a light-theme value, or carries a hex of its own.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { TOKEN, resolveLight } from './email-tokens.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -326,6 +329,12 @@ scan('previews/_site.css', read('previews/_site.css'));
 const previews = readdirSync(new URL('previews/', root)).filter((f) => f.endsWith('.html'));
 for (const f of previews) scan(`previews/${f}`, read(`previews/${f}`));
 scan('index.html', read('index.html'));
+scan('templates/email.html', read('templates/email.html'));
+
+// ── 9. The email's colour tokens resolve ─────────────────────────────────────
+for (const [, name] of read('templates/email.html').matchAll(TOKEN)) {
+  try { resolveLight(name); } catch (e) { fail(`email: ${e.message}`); }
+}
 
 // ── 6. The hosted index links every preview ──────────────────────────────────
 // index.html is the landing page of the preview site (wrangler.jsonc); a

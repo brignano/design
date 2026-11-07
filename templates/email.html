@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- @brignano/design — transactional email (#74)
+     Owner notifications and auto-replies (fleet lead standard). Light only.
+     Colours are token names in double braces: run `node scripts/email-tokens.mjs` to fill them
+     from tokens.css. Content is {{name}}: your app fills it, escaping HTML.
+     Keep the plain-text twin (email.txt) in step and send both. -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="x-apple-disable-message-reformatting">
+<title>{{subject}}</title>
+<style>
+  :root { color-scheme: light only; supported-color-schemes: light; }
+  body { margin: 0; padding: 0; width: 100% !important; -webkit-text-size-adjust: 100%; }
+  a { color: {{--i-ink}}; }
+  @media (max-width: 620px) {
+    .email-card { padding: 24px 20px !important; }
+    .email-outer { padding: 16px 8px !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background-color:{{--bg}};">
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">{{preheader}}&#8203;&#847;&#8203;&#847;&#8203;&#847;&#8203;&#847;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{{--bg}}" style="background-color:{{--bg}};">
+  <tr>
+    <td class="email-outer" align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+        <tr>
+          <td style="padding:0 4px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;letter-spacing:-0.01em;color:{{--ink}};">{{product}}</td>
+        </tr>
+        <tr>
+          <td class="email-card" bgcolor="{{--card}}" style="background-color:{{--card}};border:1px solid {{--line}};border-radius:12px;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:{{--ink}};">
+            <h1 style="margin:0 0 12px;font-size:22px;line-height:1.3;font-weight:600;letter-spacing:-0.015em;color:{{--ink}};">{{heading}}</h1>
+            <div style="font-size:16px;line-height:1.6;color:{{--ink-soft}};">{{body}}</div>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 0;">
+              <tr>
+                <td bgcolor="{{--i}}" style="background-color:{{--i}};border-radius:8px;">
+                  <a href="{{button_url}}" style="display:inline-block;padding:12px 20px;font-size:15px;font-weight:600;line-height:20px;color:{{--on-i}};text-decoration:none;border-radius:8px;">{{button_label}}</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 4px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;line-height:1.5;color:{{--slate}};">{{footer}}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

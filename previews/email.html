@@ -1,0 +1,137 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transactional email</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .email-frames { display: grid; grid-template-columns: minmax(0, 1fr) 375px; gap: var(--s4); align-items: start; margin-top: var(--s5); }
+  @media (max-width: 900px) { .email-frames { grid-template-columns: minmax(0, 1fr); } }
+  .email-frames figure { margin: 0; }
+  .email-frames figcaption { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-bottom: var(--s2); }
+  .email-frames iframe { display: block; width: 100%; max-width: 100%; height: 480px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+  .email-text { margin-top: var(--s5); }
+  .email-text h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .email-text pre { margin: 0; padding: var(--s4); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; font-family: var(--mono); font-size: var(--text-sm); line-height: 1.6; white-space: pre-wrap; }
+  #light-probe { position: absolute; width: 0; height: 0; overflow: hidden; color-scheme: light; }
+</style>
+</head>
+<body>
+<h1>Transactional email</h1>
+<p class="sub">Owner notifications and auto-replies: product name, a card with a heading, the message and one button, then a footer. Light only, with a plain-text twin.</p>
+
+<div class="email-frames">
+  <figure><figcaption>Desktop</figcaption><iframe id="email-wide" title="Email at desktop width"></iframe></figure>
+  <figure><figcaption>Phone, 375px</figcaption><iframe id="email-phone" title="Email at phone width"></iframe></figure>
+</div>
+<section class="email-text">
+  <h2>Plain-text twin</h2>
+  <pre id="email-txt" tabindex="0">Loading templates/email.txt…</pre>
+</section>
+<div id="light-probe" aria-hidden="true"></div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0"># once, at build time: colours from tokens.css (light theme)
+node node_modules/@brignano/design/scripts/email-tokens.mjs \
+  node_modules/@brignano/design/templates/email.html &gt; emails/base.html
+
+# per send: fill {{product}} {{heading}} {{body}} {{button_label}}
+# {{button_url}} {{footer}} {{preheader}} {{subject}}, escaping HTML,
+# and send templates/email.txt (with {{body_text}}) as the text part.</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>When to use it</h2>
+      <ul>
+        <li>The two emails every lead form sends: the note to the owner and the auto-reply (fleet lead standard).</li>
+        <li>Receipts, sign-in links and other one-to-one messages a product sends.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>When not to</h2>
+      <ul>
+        <li>Newsletters and marketing emails: out of scope.</li>
+        <li>A second button. One action per email; anything else is a plain link in the body.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Rules</h2>
+      <ul>
+        <li>Colours are token names in double braces, never hex; <code>email-tokens.mjs</code> fills them and fails on a token it can't resolve, and <code>npm run check</code> does the same.</li>
+        <li>Light only: <code>color-scheme: light only</code>, because mail apps rewrite dark colours unpredictably.</li>
+        <li>The product name is text, not an image, so it shows with images blocked.</li>
+        <li>Always send the text part too, from <code>email.txt</code>.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Layout</h2>
+      <ul>
+        <li>Tables and inline styles, because that is what Gmail and Outlook render.</li>
+        <li>560px wide at most; under 620px the padding shrinks.</li>
+        <li>System fonts: webfonts don't load in most mail apps.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Layout tables carry <code>role="presentation"</code>, so screen readers read the content, not the grid.</li>
+      <li><code>lang</code> and a <code>&lt;title&gt;</code> are set; the heading is a real <code>&lt;h1&gt;</code>.</li>
+      <li>Every colour pair (ink, ink-soft, slate and the link on card or page ground, white on the button) is one of the checked contrast floors.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+  // The preview fills the template in the browser, from the same tokens the
+  // script reads, so this page has no hex either. Your build uses the script.
+  const SAMPLE = {
+    subject: 'Thanks, we got your message',
+    preheader: 'A person reads every message and replies within two working days.',
+    product: 'Breakeven',
+    heading: 'Thanks, we got your message',
+    body: '<p style="margin:0 0 12px;">Hi Sam,</p><p style="margin:0 0 12px;">A person reads every message and replies within two working days. Here is what you sent, so you have a copy:</p><p style="margin:0;">"Can I try the pilot with two stores?"</p>',
+    body_text: 'Hi Sam,\n\nA person reads every message and replies within two working days. Here is what you sent, so you have a copy:\n\n"Can I try the pilot with two stores?"',
+    button_label: 'See how it works',
+    button_url: 'https://example.com',
+    footer: 'You are getting this because you used the form on example.com. Reply to this email to reach a person.',
+  };
+  const probe = document.getElementById('light-probe');
+  const rgba = (s) => (s.match(/[\d.]+/g) || []).map(Number);
+  const hex = (n) => '#' + n.slice(0, 3).map((c) => Math.round(c).toString(16).padStart(2, '0')).join('');
+  const light = (name) => {
+    probe.style.color = `var(${name})`;
+    const c = rgba(getComputedStyle(probe).color);
+    probe.style.color = 'var(--card)';
+    const card = rgba(getComputedStyle(probe).color);
+    const a = c.length > 3 ? c[3] : 1;
+    return hex(c.map((v, i) => v * a + card[i] * (1 - a)));
+  };
+  const fill = (text) =>
+    text.replace(/\{\{(--[\w-]+)\}\}/g, (_, n) => light(n)).replace(/\{\{(\w+)\}\}/g, (_, k) => SAMPLE[k] ?? '');
+  const fit = (f) => { f.style.height = f.contentDocument.body.scrollHeight + 'px'; };
+  Promise.all(['../templates/email.html', '../templates/email.txt'].map((u) => fetch(u).then((r) => r.text())))
+    .then(([html, txt]) => {
+      const out = fill(html);
+      for (const id of ['email-wide', 'email-phone']) {
+        const f = document.getElementById(id);
+        f.addEventListener('load', () => fit(f), { once: true });
+        f.srcdoc = out;
+      }
+      document.getElementById('email-txt').textContent = fill(txt);
+    })
+    .catch(() => { document.getElementById('email-txt').textContent = 'Serve the repo over HTTP to see the template (file:// blocks fetch).'; });
+</script>
+</body>
+</html>
