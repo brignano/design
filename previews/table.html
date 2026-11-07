@@ -54,7 +54,7 @@
 <div class="docs">
   <section>
     <h2>Sticky header</h2>
-    <p>Add <code>.table-sticky</code>. The header sticks inside the nearest scrolling box: give <code>.table-wrap</code> a <code>max-height</code>, or let it stick to the page.</p>
+    <p>Add <code>.table-sticky</code> and give <code>.table-wrap</code> a <code>max-height</code>. The wrap is the header's scroll container (it scrolls sideways on a phone), so without a max-height the header scrolls away with the page.</p>
     <div class="pair">
       <div class="panel light"><span class="tag">Light</span>
       <div class="table-wrap" style="max-height:220px">
@@ -89,6 +89,35 @@
       <tfoot><tr><td>6 containers</td><td></td><td></td><td class="num">54.3</td><td class="num">7,554</td></tr></tfoot>
     </table>
   </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Marketing tier</h2>
+    <p>Under <code>.tier-marketing</code> the table reads at body size with roomier cells. Same markup.</p>
+    <div class="pair tier-marketing">
+      <div class="panel light"><span class="tag">Light</span>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Plan</th><th scope="col">Sites</th><th scope="col" class="num">Per month</th></tr></thead>
+          <tbody>
+            <tr><td>Starter</td><td>1</td><td class="num">$12</td></tr>
+            <tr><td>Studio</td><td>5</td><td class="num">$40</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <div class="panel dark"><span class="tag">Dark</span>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Plan</th><th scope="col">Sites</th><th scope="col" class="num">Per month</th></tr></thead>
+          <tbody>
+            <tr><td>Starter</td><td>1</td><td class="num">$12</td></tr>
+            <tr><td>Studio</td><td>5</td><td class="num">$40</td></tr>
+          </tbody>
+        </table>
+      </div>
       </div>
     </div>
   </section>

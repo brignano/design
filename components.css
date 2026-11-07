@@ -91,9 +91,10 @@
   .table th[aria-sort='ascending'],
   .table th[aria-sort='descending'] { color: var(--ink); }
 
-  /* Sticky header: sticks within the nearest scrolling ancestor. Give the
-     .table-wrap a max-height for a scrolling region, or leave it to stick
-     to the page. */
+  /* Sticky header: .table-wrap scrolls sideways, which also makes it the
+     header's scroll container, so the header only sticks when the wrap has a
+     max-height and scrolls vertically itself. Without one, it scrolls away
+     with the page. */
   .table-sticky thead th { position: sticky; top: 0; z-index: 1; background: var(--card); }
 
   .tier-marketing .table { font-size: var(--text-base); }
