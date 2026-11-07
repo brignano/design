@@ -1,0 +1,229 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Legal page</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../templates/legal.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* The preview chrome styles bare h1 without a layer, which would beat the
+     template. revert-layer hands the demo headings back to legal.css. */
+  .legal-header > h1 { all: revert-layer; }
+  .wide-demo { margin-top: var(--s6); }
+  .wide-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .wide-demo > p { margin: 0 0 var(--s3); color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<h1>Legal page</h1>
+<p class="sub">Privacy policy, terms and the like: a title, when it last changed, a contents list and the text. Design ships the layout, never the wording.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <div class="legal">
+      <header class="legal-header">
+        <h1>Privacy policy</h1>
+        <p class="legal-updated">Last updated <time datetime="2026-11-07">7 Nov 2026</time></p>
+      </header>
+      <div class="legal-body">
+        <nav class="legal-toc" aria-labelledby="l-toc">
+          <h2 class="legal-toc-title" id="l-toc">On this page</h2>
+          <ol>
+            <li><a href="#l-collect" aria-current="location">What we collect</a></li>
+            <li><a href="#l-use">How we use it</a></li>
+            <li><a href="#l-share">Who we share it with</a></li>
+            <li><a href="#l-keep">How long we keep it</a></li>
+            <li><a href="#l-rights">Your choices</a></li>
+            <li><a href="#l-contact">Contact</a></li>
+          </ol>
+        </nav>
+        <div class="prose">
+          <p>Placeholder text. Each product writes its own policy; this page only shows how it is laid out.</p>
+          <h2 id="l-collect">What we collect</h2>
+          <p>The details you type into a form, such as your name and email address, and the message you send.</p>
+          <ul>
+            <li>Form fields you fill in.</li>
+            <li>The date and time you sent them.</li>
+          </ul>
+          <h2 id="l-use">How we use it</h2>
+          <p>To reply to you, and for nothing else. We don't sell it or use it for advertising.</p>
+          <h2 id="l-share">Who we share it with</h2>
+          <p>The services that store and deliver messages for us, listed here by name, each under its own terms.</p>
+          <h3 id="l-share-email">Email delivery</h3>
+          <p>One provider sends the confirmation email you receive.</p>
+          <h2 id="l-keep">How long we keep it</h2>
+          <p>Until the conversation ends, then up to twelve months.</p>
+          <h2 id="l-rights">Your choices</h2>
+          <p>Ask us to see, correct or delete what we hold, and we will within 30 days.</p>
+          <h2 id="l-contact">Contact</h2>
+          <p>Write to the address in the footer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <div class="legal">
+      <header class="legal-header">
+        <h1>Privacy policy</h1>
+        <p class="legal-updated">Last updated <time datetime="2026-11-07">7 Nov 2026</time></p>
+      </header>
+      <div class="legal-body">
+        <nav class="legal-toc" aria-labelledby="d-toc">
+          <h2 class="legal-toc-title" id="d-toc">On this page</h2>
+          <ol>
+            <li><a href="#d-collect" aria-current="location">What we collect</a></li>
+            <li><a href="#d-use">How we use it</a></li>
+            <li><a href="#d-share">Who we share it with</a></li>
+            <li><a href="#d-keep">How long we keep it</a></li>
+            <li><a href="#d-rights">Your choices</a></li>
+            <li><a href="#d-contact">Contact</a></li>
+          </ol>
+        </nav>
+        <div class="prose">
+          <p>Placeholder text. Each product writes its own policy; this page only shows how it is laid out.</p>
+          <h2 id="d-collect">What we collect</h2>
+          <p>The details you type into a form, such as your name and email address, and the message you send.</p>
+          <ul>
+            <li>Form fields you fill in.</li>
+            <li>The date and time you sent them.</li>
+          </ul>
+          <h2 id="d-use">How we use it</h2>
+          <p>To reply to you, and for nothing else. We don't sell it or use it for advertising.</p>
+          <h2 id="d-share">Who we share it with</h2>
+          <p>The services that store and deliver messages for us, listed here by name, each under its own terms.</p>
+          <h3 id="d-share-email">Email delivery</h3>
+          <p>One provider sends the confirmation email you receive.</p>
+          <h2 id="d-keep">How long we keep it</h2>
+          <p>Until the conversation ends, then up to twelve months.</p>
+          <h2 id="d-rights">Your choices</h2>
+          <p>Ask us to see, correct or delete what we hold, and we will within 30 days.</p>
+          <h2 id="d-contact">Contact</h2>
+          <p>Write to the address in the footer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="wide-demo">
+  <h2>In a wide column</h2>
+  <p>At 52rem and wider, the contents list becomes a sticky left column.</p>
+  <div class="panel light">
+    <div class="legal">
+      <header class="legal-header">
+        <h1>Privacy policy</h1>
+        <p class="legal-updated">Last updated <time datetime="2026-11-07">7 Nov 2026</time></p>
+      </header>
+      <div class="legal-body">
+        <nav class="legal-toc" aria-labelledby="w-toc">
+          <h2 class="legal-toc-title" id="w-toc">On this page</h2>
+          <ol>
+            <li><a href="#w-collect" aria-current="location">What we collect</a></li>
+            <li><a href="#w-use">How we use it</a></li>
+            <li><a href="#w-share">Who we share it with</a></li>
+            <li><a href="#w-keep">How long we keep it</a></li>
+            <li><a href="#w-rights">Your choices</a></li>
+            <li><a href="#w-contact">Contact</a></li>
+          </ol>
+        </nav>
+        <div class="prose">
+          <p>Placeholder text. Each product writes its own policy; this page only shows how it is laid out.</p>
+          <h2 id="w-collect">What we collect</h2>
+          <p>The details you type into a form, such as your name and email address, and the message you send.</p>
+          <ul>
+            <li>Form fields you fill in.</li>
+            <li>The date and time you sent them.</li>
+          </ul>
+          <h2 id="w-use">How we use it</h2>
+          <p>To reply to you, and for nothing else. We don't sell it or use it for advertising.</p>
+          <h2 id="w-share">Who we share it with</h2>
+          <p>The services that store and deliver messages for us, listed here by name, each under its own terms.</p>
+          <h3 id="w-share-email">Email delivery</h3>
+          <p>One provider sends the confirmation email you receive.</p>
+          <h2 id="w-keep">How long we keep it</h2>
+          <p>Until the conversation ends, then up to twelve months.</p>
+          <h2 id="w-rights">Your choices</h2>
+          <p>Ask us to see, correct or delete what we hold, and we will within 30 days.</p>
+          <h2 id="w-contact">Contact</h2>
+          <p>Write to the address in the footer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">@import '@brignano/design/components.css';
+@import '@brignano/design/templates/legal.css';
+
+&lt;main class="legal"&gt;
+  &lt;header class="legal-header"&gt;
+    &lt;h1&gt;Privacy policy&lt;/h1&gt;
+    &lt;p class="legal-updated"&gt;Last updated &lt;time datetime="2026-11-07"&gt;7 Nov 2026&lt;/time&gt;&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;div class="legal-body"&gt;
+    &lt;nav class="legal-toc" aria-labelledby="toc-title"&gt;
+      &lt;h2 class="legal-toc-title" id="toc-title"&gt;On this page&lt;/h2&gt;
+      &lt;ol&gt;&lt;li&gt;&lt;a href="#collect"&gt;What we collect&lt;/a&gt;&lt;/li&gt;…&lt;/ol&gt;
+    &lt;/nav&gt;
+    &lt;div class="prose"&gt;&lt;h2 id="collect"&gt;What we collect&lt;/h2&gt;…&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/main&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>When to use it</h2>
+      <ul>
+        <li>Privacy policy, terms of service, acceptable use: any page that is mostly text and gets linked to from a footer.</li>
+        <li>Every site with a lead form needs a privacy page (fleet lead standard).</li>
+        <li>Leave the contents list out when the page has fewer than four sections.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>When not to</h2>
+      <ul>
+        <li>Articles and docs pages, which get their own template.</li>
+        <li>Release notes: use the changelog template.</li>
+        <li>Cookie banners aren't part of this; no site uses cookies that need one.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Rules</h2>
+      <ul>
+        <li>Change "Last updated" whenever the wording changes, and only then.</li>
+        <li>Plain words, short sections, one <code>h2</code> per topic. The contents list mirrors the <code>h2</code>s.</li>
+        <li>Mark the section in view with <code>aria-current="location"</code> if your app tracks it; the template doesn't need it.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Layout</h2>
+      <ul>
+        <li>Under 52rem (a phone, or a half-width panel like the ones above), the contents list is a card above the text.</li>
+        <li>From 52rem, it's a sticky column on the left.</li>
+        <li>That's a container query on <code>.legal</code>, so it follows the column, not the screen.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>The contents list is a <code>&lt;nav&gt;</code> labelled by its heading, so it shows up in landmark lists.</li>
+      <li>Headings get <code>scroll-margin-top</code>, so a jump doesn't land them against the top edge.</li>
+      <li>Contents links reach 44px on touch.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

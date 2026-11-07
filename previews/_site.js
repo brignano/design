@@ -31,6 +31,7 @@
     ['product-page-example.html', 'Product page: worked example'],
     ['product-media.html', 'Product page: video proof'],
     ['changelog.html', 'Changelog page'],
+    ['legal.html', 'Legal page'],
   ];
 
   const root = document.documentElement;
