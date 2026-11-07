@@ -1,0 +1,145 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Breadcrumb and pagination</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Breadcrumb and pagination</h1>
+<p class="sub">Where you are, and how to move through a long list. On a phone, middle crumbs fold away, and in a narrow space page numbers become "Page 3 of 9".</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><ol>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Case studies</a></li>
+      <li><a href="#">Platform migration</a></li>
+      <li><a href="#" aria-current="page">Cutting build times in half</a></li>
+    </ol></nav>
+    <nav class="pagination" aria-label="Pages, deployments">
+      <a class="pagination-prev" href="#">Previous</a>
+      <ol class="pagination-pages">
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#" aria-current="page">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><span>…</span></li>
+        <li><a href="#">9</a></li>
+      </ol>
+      <span class="pagination-status">Page 3 of 9</span>
+      <a class="pagination-next" href="#">Next</a>
+    </nav>
+    <nav class="pagination" aria-label="Pages, archive">
+      <span class="pagination-prev" aria-disabled="true">Previous</span>
+      <ol class="pagination-pages">
+        <li><a href="#" aria-current="page">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+      </ol>
+      <span class="pagination-status">Page 1 of 3</span>
+      <a class="pagination-next" href="#">Next</a>
+    </nav>
+    <div class="load-more">
+      <span class="load-more-count" aria-live="polite">Showing 12 of 48 posts</span>
+      <button type="button">Show 12 more</button>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><ol>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Case studies</a></li>
+      <li><a href="#">Platform migration</a></li>
+      <li><a href="#" aria-current="page">Cutting build times in half</a></li>
+    </ol></nav>
+    <nav class="pagination" aria-label="Pages, deployments">
+      <a class="pagination-prev" href="#">Previous</a>
+      <ol class="pagination-pages">
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#" aria-current="page">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><span>…</span></li>
+        <li><a href="#">9</a></li>
+      </ol>
+      <span class="pagination-status">Page 3 of 9</span>
+      <a class="pagination-next" href="#">Next</a>
+    </nav>
+    <nav class="pagination" aria-label="Pages, archive">
+      <span class="pagination-prev" aria-disabled="true">Previous</span>
+      <ol class="pagination-pages">
+        <li><a href="#" aria-current="page">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+      </ol>
+      <span class="pagination-status">Page 1 of 3</span>
+      <a class="pagination-next" href="#">Next</a>
+    </nav>
+    <div class="load-more">
+      <span class="load-more-count" aria-live="polite">Showing 12 of 48 posts</span>
+      <button type="button">Show 12 more</button>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre>&lt;nav class="breadcrumb" aria-label="Breadcrumb"&gt;&lt;ol&gt;
+  &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/work/x" aria-current="page"&gt;This page&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;&lt;/nav&gt;
+
+&lt;nav class="pagination" aria-label="Pages"&gt;
+  &lt;a class="pagination-prev" href="?p=2"&gt;Previous&lt;/a&gt;
+  &lt;ol class="pagination-pages"&gt;&lt;li&gt;&lt;a href="?p=3" aria-current="page"&gt;3&lt;/a&gt;&lt;/li&gt;&lt;/ol&gt;
+  &lt;span class="pagination-status"&gt;Page 3 of 9&lt;/span&gt;
+  &lt;a class="pagination-next" href="?p=4"&gt;Next&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;div class="load-more"&gt;
+  &lt;span class="load-more-count" aria-live="polite"&gt;Showing 12 of 48 posts&lt;/span&gt;
+  &lt;button type="button"&gt;Show 12 more&lt;/button&gt;
+&lt;/div&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Use when</h2>
+      <ul>
+        <li>Breadcrumb: pages sit two or more levels deep, like a case study inside Work.</li>
+        <li>Pagination: a table people page through and come back to ("page 3").</li>
+        <li>Load more: a content list people scan, like posts or photos.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Breadcrumb on a top-level page, or as the only navigation.</li>
+        <li>Numbered pages for a content list. Use load more.</li>
+        <li>Infinite scroll. It's not part of the system: people lose their place and the footer.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Both are a <code>&lt;nav&gt;</code> with an <code>aria-label</code>, so they appear in the landmarks list.</li>
+      <li>The current crumb and the current page carry <code>aria-current="page"</code>; the separators and arrows are drawn by CSS and not read aloud.</li>
+      <li>A missing previous or next is a <code>&lt;span aria-disabled="true"&gt;</code>, not a link that goes nowhere.</li>
+      <li>After load more, move focus to the first new item so keyboard users don't start over.</li>
+      <li>Put <code>aria-live="polite"</code> on <code>.load-more-count</code> and update its text, so screen readers hear "Showing 24 of 48 posts" when the new items arrive.</li>
+      <li>With more than one pagination on a page, give each its own label, like <code>aria-label="Pages, deployments"</code>, so the landmarks stay distinct.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
