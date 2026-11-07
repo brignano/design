@@ -22,6 +22,7 @@
     ['navigation.html', 'Breadcrumb and pagination'],
     ['disclosure.html', 'Disclosure and accordion'],
     ['content.html', 'Content pieces'],
+    ['prose.html', 'Prose'],
     ['buttons.html', 'Buttons & links'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],

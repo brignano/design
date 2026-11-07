@@ -451,7 +451,8 @@
    .tok-comment; a highlighted line is <span class="line-highlight">. Your
    app owns the copy button's script. */
 @layer brignano.components {
-  .kbd {
+  .kbd,
+  .prose kbd {
     display: inline-block;
     min-width: 1.6em;
     padding: .1em .4em;
@@ -465,7 +466,8 @@
     border-bottom-width: 2px;
     border-radius: var(--radius-sm);
   }
-  .code {
+  .code,
+  .prose :not(pre) > code {
     padding: .1em .35em;
     font-family: var(--mono);
     font-size: .9em;
@@ -508,8 +510,9 @@
   }
   .code-block-copy:hover { color: var(--ink); background: var(--surface-hover); }
   .code-block-copy:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
-  .code-block pre {
-    margin: 0;
+  .code-block pre { margin: 0; }
+  .code-block pre,
+  .prose > pre {
     padding: var(--s4);
     overflow-x: auto;
     font-family: var(--mono);
@@ -517,7 +520,8 @@
     line-height: 1.6;
     tab-size: 2;
   }
-  .code-block pre:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .code-block pre:focus-visible,
+  .prose > pre:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
   .code-block code { font: inherit; }
   .tok-keyword { color: var(--code-keyword); }
   .tok-string { color: var(--code-string); }
@@ -557,4 +561,106 @@
   .figure > img,
   .figure > video { display: block; max-width: 100%; height: auto; border-radius: var(--radius); }
   .figure > figcaption { margin-top: var(--s2); font-size: var(--text-sm); color: var(--slate); }
+}
+
+/* ── Prose (#67) ──────────────────────────────────────────────────────────
+   <article class="prose">…plain HTML from Markdown…</article>
+   Long-form text: blog posts, docs, legal pages. Styles the bare elements
+   a Markdown renderer emits, reusing the code, quote, figure and table
+   pieces above. Capped at the tier's --measure; spacing comes from --s*.
+   Heading anchors: <h2 id="x">Title <a class="anchor" href="#x" aria-label="Link to Title"></a></h2>. */
+@layer brignano.components {
+  .prose {
+    max-width: var(--measure);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--ink);
+    overflow-wrap: break-word;
+  }
+  .prose > * { margin: 0; }
+  .prose > * + * { margin-top: var(--s4); }
+  .prose :where(h2, h3, h4) {
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    scroll-margin-top: var(--s7);
+  }
+  .prose h2 { font-size: var(--text-xl); }
+  .prose h3 { font-size: var(--text-lg); }
+  .prose h4 { font-size: var(--text-base); }
+  .prose > * + h2 { margin-top: var(--s7); }
+  .prose > * + :where(h3, h4) { margin-top: var(--s6); }
+  .prose > :where(h2, h3, h4) + * { margin-top: var(--s2); }
+
+  /* The # follows the heading text and shows on hover or focus; on
+     devices without hover it always shows. */
+  .prose .anchor {
+    margin-left: var(--s2);
+    font-weight: 400;
+    color: var(--slate);
+    text-decoration: none;
+    opacity: 0;
+  }
+  .prose .anchor::before { content: '#'; }
+  .prose :where(h2, h3, h4):hover > .anchor,
+  .prose .anchor:focus-visible { opacity: 1; }
+  .prose .anchor:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: var(--radius-sm); }
+  @media (hover: none) {
+    .prose .anchor { opacity: 1; }
+  }
+  @media (pointer: coarse) {
+    /* A 44px hit area without moving the heading text. */
+    .prose .anchor { display: inline-block; min-width: 44px; padding: 12px; margin: -12px -12px -12px calc(var(--s2) - 12px); text-align: left; }
+  }
+
+  .prose a:not(.anchor) { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .prose a:not(.anchor):hover { color: var(--i-hover); text-decoration-thickness: 2px; }
+  .prose a:not(.anchor):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: 2px; }
+  .prose strong { font-weight: 600; }
+
+  .prose :where(ul, ol) { padding-left: var(--s5); }
+  .prose li + li { margin-top: var(--s1); }
+  .prose li > :where(ul, ol) { margin-top: var(--s1); }
+  .prose li::marker { color: var(--slate); }
+
+  .prose hr { height: 0; margin-block: var(--s7); border: 0; border-top: 1px solid var(--line); }
+
+  /* Reused pieces, applied to bare elements. Inline code, kbd and the
+     pre's type come from the #66 rules above, which list these selectors
+     too; a bare pre adds the block's frame here. */
+  .prose > pre {
+    color: var(--code-ink);
+    background: var(--code-surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .prose pre code { font: inherit; }
+  .prose > blockquote {
+    padding-left: var(--s4);
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+  }
+  .prose > blockquote > * { margin: 0; }
+  .prose > blockquote > * + * { margin-top: var(--s2); }
+  .prose > figure > :where(img, video) { display: block; max-width: 100%; height: auto; border-radius: var(--radius); }
+  .prose > figure > figcaption { margin-top: var(--s2); font-size: var(--text-sm); color: var(--slate); }
+  .prose img { max-width: 100%; height: auto; }
+  .prose > p > img { border-radius: var(--radius); }
+  .prose > :where(figure, pre, .table-wrap, .code-block) { margin-top: var(--s5); }
+  .prose > :where(figure, pre, .table-wrap, .code-block) + * { margin-top: var(--s5); }
+
+  /* Footnotes, in the shape remark-gfm and markdown-it-footnote emit. */
+  .prose sup { line-height: 0; }
+  .prose :where(.footnotes, section[data-footnotes]) {
+    margin-top: var(--s7);
+    padding-top: var(--s4);
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+  }
+  .prose :is(.footnotes, section[data-footnotes]) h2 { font-size: var(--text-sm); color: var(--ink-soft); }
+
+  .tier-marketing .prose { line-height: 1.75; }
+  .tier-marketing .prose h2 { font-size: var(--text-2xl); }
+  .tier-marketing .prose h3 { font-size: var(--text-xl); }
 }

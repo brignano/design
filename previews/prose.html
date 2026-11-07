@@ -1,0 +1,158 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prose</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Prose</h1>
+<p class="sub">Long-form text from Markdown: posts, docs and legal pages. One class on the article; the elements inside are styled for you.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+      <article class="prose">
+        <p>Our builds took fourteen minutes. Here's how we got them to six without touching a single test, and what we'd do differently.</p>
+        <h2 id="l-cause">Find the real cause <a class="anchor" href="#l-cause" aria-label="Link to Find the real cause"></a></h2>
+        <p>The pipeline rebuilt every package on every commit. A trace showed <strong>80% of the time</strong> went to packages nobody had changed.<sup><a href="#l-fn1" id="l-ref1">1</a></sup> See the <a href="#">build dashboard</a> for the raw numbers.</p>
+        <ol>
+          <li>Hash each package's inputs.</li>
+          <li>Skip the build when the hash is in the cache.
+            <ul><li>The cache lives in the same bucket as the artifacts.</li></ul>
+          </li>
+          <li>Run tests only for packages that rebuilt.</li>
+        </ol>
+        <h3 id="l-cache">The cache key <a class="anchor" href="#l-cache" aria-label="Link to The cache key"></a></h3>
+        <p>Run <code>npm run build -- --cache</code> locally, or press <kbd>⌘</kbd> <kbd>B</kbd> in the editor.</p>
+        <pre tabindex="0" aria-label="Cache key example"><code>const key = hash([lockfile, src, process.env.NODE_ENV]);
+if (await cache.has(key)) return cache.restore(key);</code></pre>
+        <blockquote><p>We cut build times in half without touching a single test.</p><p>Ana Ruiz, platform lead</p></blockquote>
+        <figure>
+          <img style="background:var(--surface-active);width:100%" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 120'%3E%3Cpath d='M0 120 90 50l60 40 70-60 100 90z' fill-opacity='.18'/%3E%3C/svg%3E" alt="Line chart: build time falls from 14 to 6 minutes over March" width="320" height="120">
+          <figcaption>Build time per commit, March.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th scope="col">Stage</th><th scope="col" class="num">Before</th><th scope="col" class="num">After</th></tr></thead>
+            <tbody>
+              <tr><td>Install</td><td class="num">2m 10s</td><td class="num">40s</td></tr>
+              <tr><td>Build</td><td class="num">9m 05s</td><td class="num">3m 50s</td></tr>
+              <tr><td>Test</td><td class="num">2m 45s</td><td class="num">1m 30s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <p>Questions? Ask in the platform channel.</p>
+        <section class="footnotes" aria-label="Footnotes">
+          <ol><li id="l-fn1"><p>Measured over 200 commits in February. <a href="#l-ref1" aria-label="Back to reference 1">↩</a></p></li></ol>
+        </section>
+      </article>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+      <article class="prose">
+        <p>Our builds took fourteen minutes. Here's how we got them to six without touching a single test, and what we'd do differently.</p>
+        <h2 id="d-cause">Find the real cause <a class="anchor" href="#d-cause" aria-label="Link to Find the real cause"></a></h2>
+        <p>The pipeline rebuilt every package on every commit. A trace showed <strong>80% of the time</strong> went to packages nobody had changed.<sup><a href="#d-fn1" id="d-ref1">1</a></sup> See the <a href="#">build dashboard</a> for the raw numbers.</p>
+        <ol>
+          <li>Hash each package's inputs.</li>
+          <li>Skip the build when the hash is in the cache.
+            <ul><li>The cache lives in the same bucket as the artifacts.</li></ul>
+          </li>
+          <li>Run tests only for packages that rebuilt.</li>
+        </ol>
+        <h3 id="d-cache">The cache key <a class="anchor" href="#d-cache" aria-label="Link to The cache key"></a></h3>
+        <p>Run <code>npm run build -- --cache</code> locally, or press <kbd>⌘</kbd> <kbd>B</kbd> in the editor.</p>
+        <pre tabindex="0" aria-label="Cache key example"><code>const key = hash([lockfile, src, process.env.NODE_ENV]);
+if (await cache.has(key)) return cache.restore(key);</code></pre>
+        <blockquote><p>We cut build times in half without touching a single test.</p><p>Ana Ruiz, platform lead</p></blockquote>
+        <figure>
+          <img style="background:var(--surface-active);width:100%" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 120'%3E%3Cpath d='M0 120 90 50l60 40 70-60 100 90z' fill-opacity='.18'/%3E%3C/svg%3E" alt="Line chart: build time falls from 14 to 6 minutes over March" width="320" height="120">
+          <figcaption>Build time per commit, March.</figcaption>
+        </figure>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th scope="col">Stage</th><th scope="col" class="num">Before</th><th scope="col" class="num">After</th></tr></thead>
+            <tbody>
+              <tr><td>Install</td><td class="num">2m 10s</td><td class="num">40s</td></tr>
+              <tr><td>Build</td><td class="num">9m 05s</td><td class="num">3m 50s</td></tr>
+              <tr><td>Test</td><td class="num">2m 45s</td><td class="num">1m 30s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <p>Questions? Ask in the platform channel.</p>
+        <section data-footnotes>
+          <h2 id="d-footnote-label">Footnotes</h2>
+          <ol><li id="d-fn1"><p>Measured over 200 commits in February. <a href="#d-ref1" data-footnote-backref aria-label="Back to reference 1">↩</a></p></li></ol>
+        </section>
+      </article>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">&lt;article class="prose"&gt;
+  &lt;h2 id="cause"&gt;Find the real cause &lt;a class="anchor" href="#cause" aria-label="Link to Find the real cause"&gt;&lt;/a&gt;&lt;/h2&gt;
+  &lt;p&gt;…whatever your Markdown renderer emits…&lt;/p&gt;
+  &lt;div class="table-wrap"&gt;&lt;table class="table"&gt;…&lt;/table&gt;&lt;/div&gt;
+&lt;/article&gt;</pre>
+  </section>
+
+  <section>
+    <h2>Marketing tier</h2>
+    <p>Under <code>.tier-marketing</code> the measure is 68ch, headings step up and lines open slightly. Same markup.</p>
+    <div class="pair tier-marketing">
+      <div class="panel light"><span class="tag">Light</span>
+        <article class="prose">
+          <h2 id="ml-why">Why it was slow <a class="anchor" href="#ml-why" aria-label="Link to Why it was slow"></a></h2>
+          <p>Every commit rebuilt all 40 packages, even when one line changed. We <a href="#">cached by content hash</a> instead.</p>
+          <ul><li>Builds dropped from 14 to 6 minutes.</li><li>No test was touched.</li></ul>
+        </article>
+      </div>
+      <div class="panel dark"><span class="tag">Dark</span>
+        <article class="prose">
+          <h2 id="md-why">Why it was slow <a class="anchor" href="#md-why" aria-label="Link to Why it was slow"></a></h2>
+          <p>Every commit rebuilt all 40 packages, even when one line changed. We <a href="#">cached by content hash</a> instead.</p>
+          <ul><li>Builds dropped from 14 to 6 minutes.</li><li>No test was touched.</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>What it covers</h2>
+      <ul>
+        <li>Headings h2 to h4 with a <code>.anchor</code> link after the text, paragraphs, links, bold, lists (nested too).</li>
+        <li>Inline <code>code</code>, <code>kbd</code>, <code>pre</code>, <code>blockquote</code>, <code>figure</code>, <code>hr</code>, and footnotes in both shapes: markdown-it's <code>.footnotes</code> (light panel) and remark-gfm's <code>section[data-footnotes]</code> with its heading (dark panel).</li>
+        <li>Images are capped at the column, including linked ones.</li>
+        <li>Tables: wrap them in <code>.table-wrap</code> with <code>.table</code>. Renderers emit a bare <code>&lt;table&gt;</code>, so add the wrapper with a renderer plugin or a component; a bare table isn't styled and won't scroll.</li>
+        <li>Width stops at the tier's <code>--measure</code>; spacing is <code>--s*</code>.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The page is an app screen: forms, dashboards, settings. Use the components directly.</li>
+        <li>You need an h1: the page template owns the title, so prose starts at h2.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Give each <code>.anchor</code> an <code>aria-label</code> naming its section; the <code>#</code> is drawn by CSS.</li>
+      <li>Code blocks scroll sideways: give the <code>&lt;pre&gt;</code> <code>tabindex="0"</code> and an <code>aria-label</code>.</li>
+      <li>Links are underlined, never colour alone. Footnote back-links need a label like "Back to reference 1".</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
