@@ -83,6 +83,9 @@ the Decisions section of its issue.
 | W1-13 | Toast | Toast region (bottom on phone, bottom-right on desktop), success/attention/danger, optional action, `role="status"` / `role="alert"` contract. | Auto-dismiss only for success, after 5s, paused on hover/focus. Errors stay until dismissed. | #58 |
 | W1-14 | Loading and empty states | Spinner, skeleton blocks (respects reduced motion), progress bar and meter (native `<progress>`/`<meter>`), empty state (icon, one line, one action). | Skeletons only for layouts known in advance; otherwise a spinner. | #59 |
 | W1-15 | Product page onto shared controls | `.pp-button` → `.btn`, `.pp-field` → `.field`, as aliases (G5). Preview pages switch to the package classes and `_preview.css` drops its copies. | No visual change; the fold check must still pass on both example pages. | #60 |
+| W1-16 | Docs site | One page per component: live example in both themes, copy-paste HTML, use when / don't use when, accessibility notes, status (stable, beta, planned); an index that also lists planned components. | Static HTML in `previews/`, no doc generator. Each component issue fills its own page. | #86 |
+| W1-17 | Icons | One curated outline set on a 24px grid, `currentColor`, `.icon` sizes tied to the type scale, icons docs page. | Copy only the needed icons from Lucide (ISC); brand logos stay out. | #87 |
+| W1-18 | Content guidelines | Voice, button labels, error messages, empty states, sentence case, date and number formats, each with a do and a don't. | A "Content" section in DESIGN.md plus a docs page. | #88 |
 
 ### Wave 2 — data, navigation and page templates (p2)
 
@@ -149,7 +152,7 @@ flowchart LR
 
 ## Cost
 
-- **Build:** wave 1 is 15 small PRs, wave 2 is 13 small and 1 medium. Wave 3
+- **Build:** wave 1 is 18 small PRs, wave 2 is 13 small and 1 medium. Wave 3
   costs nothing until a product asks.
 - **Running:** none. Static CSS in an npm package and on design.brignano.io.
 - **Maintenance:** one CSS file plus templates, gated by `npm run check`.
