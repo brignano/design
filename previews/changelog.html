@@ -10,6 +10,14 @@
 <link rel="stylesheet" href="../components.css">
 <link rel="stylesheet" href="../templates/changelog.css">
 <link rel="stylesheet" href="_docs.css">
+<style>
+  /* The preview chrome styles bare h1 without a layer, which would beat the
+     template. revert-layer hands the demo headings back to changelog.css. */
+  .changelog-header > h1 { all: revert-layer; }
+  .wide-demo { margin-top: var(--s6); }
+  .wide-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .wide-demo > p { margin: 0 0 var(--s3); color: var(--ink-soft); }
+</style>
 </head>
 <body>
 <h1>Changelog page</h1>
@@ -17,7 +25,7 @@
 
 <div class="pair">
   <div class="panel light"><span class="tag">Light</span>
-    <main class="changelog">
+    <div class="changelog">
       <header class="changelog-header">
         <h1>Changelog</h1>
         <p>What changed in @brignano/design, newest first.</p>
@@ -94,10 +102,10 @@
           </ul>
         </div>
       </article>
-    </main>
+    </div>
   </div>
   <div class="panel dark"><span class="tag">Dark</span>
-    <main class="changelog">
+    <div class="changelog">
       <header class="changelog-header">
         <h1>Changelog</h1>
         <p>What changed in @brignano/design, newest first.</p>
@@ -174,7 +182,7 @@
           </ul>
         </div>
       </article>
-    </main>
+    </div>
   </div>
 </div>
 
@@ -196,11 +204,13 @@
 &lt;/main&gt;</pre>
   </section>
 
-  <section>
+</div>
+
+<section class="wide-demo">
     <h2>In a wide column</h2>
     <p>At 44rem and wider, the version and date move into a sticky left column.</p>
     <div class="panel light">
-      <main class="changelog">
+      <div class="changelog">
         <article class="release" id="w-v0.6.0" aria-labelledby="w-v0.6.0-title">
           <header class="release-meta">
             <h2 class="release-version" id="w-v0.6.0-title"><a href="#w-v0.6.0">v0.6.0</a></h2>
@@ -215,9 +225,11 @@
             </ul>
           </div>
         </article>
-      </main>
+      </div>
     </div>
-  </section>
+</section>
+
+<div class="docs">
 
   <section class="two">
     <div>
