@@ -259,14 +259,31 @@ function rules(css) {
   return out;
 }
 const layerRules = LAYER_FILES.map((f) => [f, rules(read(f))]);
-const pairKey = new Set(floors.map(([fg, bg]) => `${fg} ${bg}`));
+// A pair registered at a lower floor (a mark or an edge at 3:1) is still
+// checked at 4.5:1 when a component uses it as text: the key carries the floor.
+const pairKey = new Set(floors.map(([fg, bg, floor]) => `${fg} ${bg} ${floor}`));
+const addFloor = (fg, bg, floor) => {
+  if (!pairKey.has(`${fg} ${bg} ${floor}`)) {
+    pairKey.add(`${fg} ${bg} ${floor}`);
+    floors.push([fg, bg, floor]);
+  }
+};
+const DIVIDERS = new Set(['--line', '--line-soft', '--line-strong']);
+const tokenOf = (v) => v?.match(/var\((--[\w-]+)\)/g)?.length === 1 ? v.match(/var\((--[\w-]+)\)/)[1] : undefined;
 for (const [, rs] of layerRules)
   for (const { decls } of rs) {
+    const bg = tokenOf(decls.get('background-color') ?? decls.get('background'));
+    if (!bg) continue;
+    // Text on its own background: 4.5:1.
     const fg = decls.get('color')?.match(/^var\((--[\w-]+)\)$/)?.[1];
-    const bg = (decls.get('background-color') ?? decls.get('background'))?.match(/^var\((--[\w-]+)\)$/)?.[1];
-    if (fg && bg && !pairKey.has(`${fg} ${bg}`)) {
-      pairKey.add(`${fg} ${bg}`);
-      floors.push([fg, bg, TEXT]);
+    if (fg) addFloor(fg, bg, TEXT);
+    // A control's edge on its own background: 3:1 (DESIGN.md §4). The divider
+    // tokens are exempt by definition: they are hairlines between surfaces,
+    // "too faint to tell you a control is there", and a control must not use
+    // them for its edge.
+    for (const prop of ['border', 'border-color', 'outline', 'outline-color']) {
+      const edge = tokenOf(decls.get(prop));
+      if (edge && !DIVIDERS.has(edge)) addFloor(edge, bg, MARK);
     }
   }
 

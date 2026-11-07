@@ -596,8 +596,11 @@ and in what order: [`proposals/component-layer.md`](./proposals/component-layer.
   anchor positioning before any script. Where a component needs JS (a toast
   queue, tab arrow keys), its preview page documents the ARIA contract and the
   consumer writes the script. Design ships no JS.
-- **Tokens only.** No hex, and every rule here that sets both a text colour and a
-  background is contrast-checked in both themes (`npm run check`).
+- **Tokens only.** No hex. Every rule here that sets a background is
+  contrast-checked in both themes (`npm run check`): its text colour at 4.5:1,
+  its border or outline at 3:1. A control's edge is `--line-control`; the
+  divider tokens (`--line`, `--line-soft`, `--line-strong`) are exempt from the
+  edge check because they are never a control's edge.
 - **Every class is shown.** A class in `components.css` or a template that no
   preview page uses fails the check: if it isn't shown, it isn't reviewed.
 
