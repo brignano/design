@@ -20,6 +20,7 @@
     ['kv-stat.html', 'Key-value and stats'],
     ['tabs.html', 'Tabs'],
     ['navigation.html', 'Breadcrumb and pagination'],
+    ['disclosure.html', 'Disclosure and accordion'],
     ['buttons.html', 'Buttons & links'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],
