@@ -522,7 +522,17 @@
   .tok-keyword { color: var(--code-keyword); }
   .tok-string { color: var(--code-string); }
   .tok-comment { color: var(--code-comment); font-style: italic; }
-  .line-highlight { display: inline-block; min-width: 100%; margin: 0 calc(var(--s4) * -1); padding: 0 var(--s4); background: var(--code-highlight); }
+  /* The band reaches into the pre's padding with side shadows, not padding,
+     so a box-sizing reset in the consuming site can't shorten it. */
+  .line-highlight {
+    display: inline-block;
+    min-width: 100%;
+    background: var(--code-highlight);
+    box-shadow: calc(var(--s4) * -1) 0 0 var(--code-highlight), var(--s4) 0 0 var(--code-highlight);
+  }
+  /* Slate falls under 4.5:1 on the cobalt wash; comments step up to the
+     string ink there and keep their italics. */
+  .line-highlight .tok-comment { color: var(--code-string); }
   @media (pointer: coarse) {
     .code-block-copy { display: inline-flex; align-items: center; min-height: 44px; }
   }

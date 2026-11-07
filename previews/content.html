@@ -29,7 +29,7 @@
       </figcaption>
       <pre tabindex="0" aria-label="scripts/deploy.mjs"><code><span class="tok-comment">// Ship the build if every check passed.</span>
 <span class="tok-keyword">const</span> target = process.env.TARGET ?? <span class="tok-string">'preview'</span>;
-<span class="line-highlight"><span class="tok-keyword">if</span> (!checks.every(Boolean)) <span class="tok-keyword">throw new</span> Error(<span class="tok-string">`checks failed for ${target}`</span>);</span>
+<span class="line-highlight"><span class="tok-keyword">if</span> (!checks.every(Boolean)) <span class="tok-keyword">throw new</span> Error(<span class="tok-string">`checks failed for ${target}`</span>); <span class="tok-comment">// fail fast</span></span>
 <span class="tok-keyword">await</span> deploy({ target, wait: <span class="tok-keyword">true</span>, message: <span class="tok-string">'Ship the build'</span> });</code></pre>
     </figure>
     <blockquote class="blockquote">
@@ -55,7 +55,7 @@
       </figcaption>
       <pre tabindex="0" aria-label="scripts/deploy.mjs"><code><span class="tok-comment">// Ship the build if every check passed.</span>
 <span class="tok-keyword">const</span> target = process.env.TARGET ?? <span class="tok-string">'preview'</span>;
-<span class="line-highlight"><span class="tok-keyword">if</span> (!checks.every(Boolean)) <span class="tok-keyword">throw new</span> Error(<span class="tok-string">`checks failed for ${target}`</span>);</span>
+<span class="line-highlight"><span class="tok-keyword">if</span> (!checks.every(Boolean)) <span class="tok-keyword">throw new</span> Error(<span class="tok-string">`checks failed for ${target}`</span>); <span class="tok-comment">// fail fast</span></span>
 <span class="tok-keyword">await</span> deploy({ target, wait: <span class="tok-keyword">true</span>, message: <span class="tok-string">'Ship the build'</span> });</code></pre>
     </figure>
     <blockquote class="blockquote">

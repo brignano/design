@@ -90,6 +90,15 @@ Every state ships with an **icon and a word**. Colour is the accelerant, not the
 signal — this covers colour-vision deficiency, greyscale printing, and forced-colours
 mode in one rule.
 
+### Code is the one non-interactive cobalt
+
+Syntax keywords (`--code-keyword`) and a highlighted line (`--code-highlight`)
+borrow the cobalt ink and wash, though nothing there can be acted on. It's
+deliberate and contained: inside a code block, a reader scanning for structure
+needs one accent, and cobalt is the only hue that can't be misread as a state.
+Everything else in code is neutral (§9). Nowhere outside a code block does
+cobalt mean anything but *you can act on this*.
+
 ### What does NOT get colour
 
 Event type. Six types in six colours is exactly the complication this avoids —
