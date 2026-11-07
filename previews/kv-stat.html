@@ -1,0 +1,92 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Key-value and stats</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Key-value and stats</h1>
+<p class="sub">Labelled facts in two columns, and headline numbers that say which way they moved in words.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <dl class="kv">
+      <dt>Confirmation</dt><dd><code>FR-8821</code></dd>
+      <dt>Booked</dt><dd>7 Nov 2026</dd>
+      <dt>Guests</dt><dd>2 adults</dd>
+      <dt>Deposit</dt><dd>$480.00, paid</dd>
+      <dt>Balance due</dt><dd>$1,120.00 by 1 Dec 2026</dd>
+    </dl>
+    <div class="stat-grid">
+      <div class="stat"><span class="stat-label">Visitors this week</span><span class="stat-value">1,284</span><span class="stat-delta" data-dir="up" data-tone="good">Up 12% from last week</span></div>
+      <div class="stat"><span class="stat-label">Error rate</span><span class="stat-value">0.8%</span><span class="stat-delta" data-dir="up" data-tone="bad">Up 0.3 points</span></div>
+      <div class="stat"><span class="stat-label">Containers</span><span class="stat-value">14</span><span class="stat-delta" data-dir="down">Down 2 since Monday</span></div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <dl class="kv">
+      <dt>Confirmation</dt><dd><code>FR-8821</code></dd>
+      <dt>Booked</dt><dd>7 Nov 2026</dd>
+      <dt>Guests</dt><dd>2 adults</dd>
+      <dt>Deposit</dt><dd>$480.00, paid</dd>
+      <dt>Balance due</dt><dd>$1,120.00 by 1 Dec 2026</dd>
+    </dl>
+    <div class="stat-grid">
+      <div class="stat"><span class="stat-label">Visitors this week</span><span class="stat-value">1,284</span><span class="stat-delta" data-dir="up" data-tone="good">Up 12% from last week</span></div>
+      <div class="stat"><span class="stat-label">Error rate</span><span class="stat-value">0.8%</span><span class="stat-delta" data-dir="up" data-tone="bad">Up 0.3 points</span></div>
+      <div class="stat"><span class="stat-label">Containers</span><span class="stat-value">14</span><span class="stat-delta" data-dir="down">Down 2 since Monday</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre>&lt;dl class="kv"&gt;
+  &lt;dt&gt;Booked&lt;/dt&gt;&lt;dd&gt;7 Nov 2026&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;div class="stat-grid"&gt;
+  &lt;div class="stat"&gt;
+    &lt;span class="stat-label"&gt;Visitors this week&lt;/span&gt;
+    &lt;span class="stat-value"&gt;1,284&lt;/span&gt;
+    &lt;span class="stat-delta" data-dir="up" data-tone="good"&gt;Up 12% from last week&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Use when</h2>
+      <ul>
+        <li>Key-value: one item's details, like a receipt, a booking or a settings summary.</li>
+        <li>Stat: a few headline numbers someone checks at a glance.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Several items share the same fields. Use a table.</li>
+        <li>The number needs a trend over time. Use a chart.</li>
+        <li>Colouring a delta whose direction isn't good or bad for the reader. Leave out <code>data-tone</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Use a real <code>&lt;dl&gt;</code> so screen readers announce terms and values as pairs.</li>
+      <li>The delta's words carry the direction ("Up 12%"); the arrow is hidden from assistive tech, and colour is never the only signal.</li>
+      <li>Put the label before the value in source order, as shown, so the number is read with its meaning.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

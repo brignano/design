@@ -103,3 +103,70 @@
   .tier-marketing .table th[aria-sort] { padding: 0; }
   .tier-marketing .table th[aria-sort] > button { padding: var(--s3) var(--s4); }
 }
+
+/* ── Key-value list (#62) ──────────────────────────────────────────────────
+   <dl class="kv"><dt>Booked</dt><dd>7 Nov 2026</dd>…</dl>
+   Two columns when there's room, stacked on a phone. A <div> may wrap each
+   dt/dd pair (valid HTML); it doesn't affect the layout. */
+@layer brignano.components {
+  .kv {
+    display: grid;
+    grid-template-columns: minmax(8rem, max-content) 1fr;
+    gap: var(--s2) var(--s5);
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+  .kv > div { display: contents; }
+  .kv dt { color: var(--ink-soft); }
+  .kv dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 0; overflow-wrap: anywhere; }
+  @media (max-width: 480px) {
+    .kv { grid-template-columns: 1fr; row-gap: 0; }
+    .kv dd { margin-bottom: var(--s3); }
+  }
+  .tier-marketing .kv { font-size: var(--text-base); }
+}
+
+/* ── Stat tile (#62) ───────────────────────────────────────────────────────
+   <div class="stat">
+     <span class="stat-label">Visitors</span>
+     <span class="stat-value">1,284</span>
+     <span class="stat-delta" data-dir="up" data-tone="good">Up 12% from last week</span>
+   </div>
+   The number is mono with tabular figures (DESIGN.md §5). A delta always says
+   its direction in words; the arrow is decoration. data-tone="good" / "bad"
+   colours it only when up or down is good or bad for the reader; without a
+   tone it stays neutral. */
+@layer brignano.components {
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+    min-width: 0;
+    padding: var(--s4) var(--s5);
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  .stat-label { font-size: var(--text-sm); color: var(--ink-soft); }
+  .stat-value {
+    font-family: var(--mono);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .stat-delta { font-size: var(--text-sm); color: var(--ink-soft); }
+  .stat-delta[data-dir]::before { margin-right: var(--s1); }
+  .stat-delta[data-dir='up']::before { content: '↑' / ''; }
+  .stat-delta[data-dir='down']::before { content: '↓' / ''; }
+  .stat-delta[data-tone='good'] { color: var(--success-ink); }
+  .stat-delta[data-tone='bad'] { color: var(--danger-ink); }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+    gap: var(--s4);
+  }
+}
