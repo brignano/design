@@ -1,0 +1,169 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Table</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Table</h1>
+<p class="sub">Tabular figures, numbers on the right, hairline rows. On a phone it scrolls sideways; it never turns into cards.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+  <div class="table-wrap">
+    <table class="table">
+      <caption>Containers on the homelab</caption>
+      <thead><tr><th scope="col">Name</th><th scope="col">Image</th><th scope="col">Uptime</th><th scope="col" class="num" aria-sort="descending"><button type="button">CPU %</button></th><th scope="col" class="num" aria-sort="none"><button type="button">Memory MB</button></th></tr></thead>
+      <tbody>
+        <tr><td>caddy</td><td><code>caddy:2.9</code></td><td>12d 4h</td><td class="num">0.4</td><td class="num">38</td></tr>
+        <tr><td>grafana</td><td><code>grafana/grafana:12.2</code></td><td>12d 4h</td><td class="num">1.9</td><td class="num">212</td></tr>
+        <tr><td>prometheus</td><td><code>prom/prometheus:3.6</code></td><td>6d 19h</td><td class="num">3.2</td><td class="num">486</td></tr>
+        <tr><td>postgres</td><td><code>postgres:17</code></td><td>12d 4h</td><td class="num">0.8</td><td class="num">164</td></tr>
+        <tr><td>open-webui</td><td><code>ghcr.io/open-webui:0.6</code></td><td>2h 11m</td><td class="num">6.7</td><td class="num">1,024</td></tr>
+        <tr><td>ollama</td><td><code>ollama/ollama:0.12</code></td><td>2h 11m</td><td class="num">41.3</td><td class="num">5,630</td></tr>
+      </tbody>
+      <tfoot><tr><td>6 containers</td><td></td><td></td><td class="num">54.3</td><td class="num">7,554</td></tr></tfoot>
+    </table>
+  </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+  <div class="table-wrap">
+    <table class="table">
+      <caption>Containers on the homelab</caption>
+      <thead><tr><th scope="col">Name</th><th scope="col">Image</th><th scope="col">Uptime</th><th scope="col" class="num" aria-sort="descending"><button type="button">CPU %</button></th><th scope="col" class="num" aria-sort="none"><button type="button">Memory MB</button></th></tr></thead>
+      <tbody>
+        <tr><td>caddy</td><td><code>caddy:2.9</code></td><td>12d 4h</td><td class="num">0.4</td><td class="num">38</td></tr>
+        <tr><td>grafana</td><td><code>grafana/grafana:12.2</code></td><td>12d 4h</td><td class="num">1.9</td><td class="num">212</td></tr>
+        <tr><td>prometheus</td><td><code>prom/prometheus:3.6</code></td><td>6d 19h</td><td class="num">3.2</td><td class="num">486</td></tr>
+        <tr><td>postgres</td><td><code>postgres:17</code></td><td>12d 4h</td><td class="num">0.8</td><td class="num">164</td></tr>
+        <tr><td>open-webui</td><td><code>ghcr.io/open-webui:0.6</code></td><td>2h 11m</td><td class="num">6.7</td><td class="num">1,024</td></tr>
+        <tr><td>ollama</td><td><code>ollama/ollama:0.12</code></td><td>2h 11m</td><td class="num">41.3</td><td class="num">5,630</td></tr>
+      </tbody>
+      <tfoot><tr><td>6 containers</td><td></td><td></td><td class="num">54.3</td><td class="num">7,554</td></tr></tfoot>
+    </table>
+  </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Sticky header</h2>
+    <p>Add <code>.table-sticky</code> and give <code>.table-wrap</code> a <code>max-height</code>. The wrap is the header's scroll container (it scrolls sideways on a phone), so without a max-height the header scrolls away with the page.</p>
+    <div class="pair">
+      <div class="panel light"><span class="tag">Light</span>
+      <div class="table-wrap" style="max-height:220px">
+    <table class="table table-sticky">
+      
+      <thead><tr><th scope="col">Name</th><th scope="col">Image</th><th scope="col">Uptime</th><th scope="col" class="num" aria-sort="descending"><button type="button">CPU %</button></th><th scope="col" class="num" aria-sort="none"><button type="button">Memory MB</button></th></tr></thead>
+      <tbody>
+        <tr><td>caddy</td><td><code>caddy:2.9</code></td><td>12d 4h</td><td class="num">0.4</td><td class="num">38</td></tr>
+        <tr><td>grafana</td><td><code>grafana/grafana:12.2</code></td><td>12d 4h</td><td class="num">1.9</td><td class="num">212</td></tr>
+        <tr><td>prometheus</td><td><code>prom/prometheus:3.6</code></td><td>6d 19h</td><td class="num">3.2</td><td class="num">486</td></tr>
+        <tr><td>postgres</td><td><code>postgres:17</code></td><td>12d 4h</td><td class="num">0.8</td><td class="num">164</td></tr>
+        <tr><td>open-webui</td><td><code>ghcr.io/open-webui:0.6</code></td><td>2h 11m</td><td class="num">6.7</td><td class="num">1,024</td></tr>
+        <tr><td>ollama</td><td><code>ollama/ollama:0.12</code></td><td>2h 11m</td><td class="num">41.3</td><td class="num">5,630</td></tr>
+      </tbody>
+      <tfoot><tr><td>6 containers</td><td></td><td></td><td class="num">54.3</td><td class="num">7,554</td></tr></tfoot>
+    </table>
+  </div>
+      </div>
+      <div class="panel dark"><span class="tag">Dark</span>
+      <div class="table-wrap" style="max-height:220px">
+    <table class="table table-sticky">
+      
+      <thead><tr><th scope="col">Name</th><th scope="col">Image</th><th scope="col">Uptime</th><th scope="col" class="num" aria-sort="descending"><button type="button">CPU %</button></th><th scope="col" class="num" aria-sort="none"><button type="button">Memory MB</button></th></tr></thead>
+      <tbody>
+        <tr><td>caddy</td><td><code>caddy:2.9</code></td><td>12d 4h</td><td class="num">0.4</td><td class="num">38</td></tr>
+        <tr><td>grafana</td><td><code>grafana/grafana:12.2</code></td><td>12d 4h</td><td class="num">1.9</td><td class="num">212</td></tr>
+        <tr><td>prometheus</td><td><code>prom/prometheus:3.6</code></td><td>6d 19h</td><td class="num">3.2</td><td class="num">486</td></tr>
+        <tr><td>postgres</td><td><code>postgres:17</code></td><td>12d 4h</td><td class="num">0.8</td><td class="num">164</td></tr>
+        <tr><td>open-webui</td><td><code>ghcr.io/open-webui:0.6</code></td><td>2h 11m</td><td class="num">6.7</td><td class="num">1,024</td></tr>
+        <tr><td>ollama</td><td><code>ollama/ollama:0.12</code></td><td>2h 11m</td><td class="num">41.3</td><td class="num">5,630</td></tr>
+      </tbody>
+      <tfoot><tr><td>6 containers</td><td></td><td></td><td class="num">54.3</td><td class="num">7,554</td></tr></tfoot>
+    </table>
+  </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Marketing tier</h2>
+    <p>Under <code>.tier-marketing</code> the table reads at body size with roomier cells. Same markup.</p>
+    <div class="pair tier-marketing">
+      <div class="panel light"><span class="tag">Light</span>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Plan</th><th scope="col">Sites</th><th scope="col" class="num">Per month</th></tr></thead>
+          <tbody>
+            <tr><td>Starter</td><td>1</td><td class="num">$12</td></tr>
+            <tr><td>Studio</td><td>5</td><td class="num">$40</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <div class="panel dark"><span class="tag">Dark</span>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Plan</th><th scope="col">Sites</th><th scope="col" class="num">Per month</th></tr></thead>
+          <tbody>
+            <tr><td>Starter</td><td>1</td><td class="num">$12</td></tr>
+            <tr><td>Studio</td><td>5</td><td class="num">$40</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Use it</h2>
+<pre>&lt;div class="table-wrap"&gt;
+  &lt;table class="table"&gt;
+    &lt;caption&gt;Containers on the homelab&lt;/caption&gt;
+    &lt;thead&gt;&lt;tr&gt;
+      &lt;th scope="col"&gt;Name&lt;/th&gt;
+      &lt;th scope="col" class="num" aria-sort="descending"&gt;
+        &lt;button type="button"&gt;CPU %&lt;/button&gt;
+      &lt;/th&gt;
+    &lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;ollama&lt;/td&gt;&lt;td class="num"&gt;41.3&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Use when</h2>
+      <ul>
+        <li>People compare values across rows: prices, sizes, counts, dates.</li>
+        <li>The columns are the same for every row.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Each item has a different shape. Use cards or a key-value list.</li>
+        <li>It's for layout. Tables are for data only.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Every header cell is a <code>&lt;th scope="col"&gt;</code>; a row header is <code>&lt;th scope="row"&gt;</code>.</li>
+      <li>Give the table a <code>&lt;caption&gt;</code>, or <code>aria-label</code> when a visible heading already names it.</li>
+      <li>Sortable: <code>aria-sort</code> goes on the <code>&lt;th&gt;</code> (<code>ascending</code>, <code>descending</code>, or <code>none</code>), and the control inside is a real <code>&lt;button&gt;</code>. Your script sorts the rows and updates <code>aria-sort</code>; the arrows follow it.</li>
+      <li>Only one column has <code>ascending</code> or <code>descending</code> at a time.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

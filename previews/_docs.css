@@ -1,0 +1,18 @@
+/* Shared layout for the documentation sections under a component preview:
+   usage snippet, when to use it, accessibility notes. Page chrome only; the
+   components themselves come from ../components.css. */
+.docs { display: flex; flex-direction: column; gap: var(--s6); margin-top: var(--s7); }
+.docs h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+.docs p { margin: 0 0 var(--s3); color: var(--ink-soft); max-width: 68ch; }
+.docs pre, .docs ul, .docs .two { max-width: 900px; }
+.docs pre { margin: 0; padding: var(--s4); background: var(--card); border: 1px solid var(--line);
+            border-radius: var(--radius); overflow-x: auto; font-family: var(--mono);
+            font-size: var(--text-sm); line-height: 1.6; }
+.docs ul { margin: 0; padding-left: var(--s5); color: var(--ink-soft); }
+.docs li { margin: 0 0 var(--s1); }
+.docs code, .pair code { font-family: var(--mono); font-size: .92em; }
+.docs .two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s5); }
+@media (max-width: 700px) { .docs .two { grid-template-columns: 1fr; } }
+/* Grid and flex children shrink below their content, so a wide table or
+   snippet scrolls inside its own box instead of widening the page. */
+.pair > .panel, .docs > section, .docs .two > div { min-width: 0; }
