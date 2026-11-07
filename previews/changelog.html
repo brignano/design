@@ -1,0 +1,262 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Changelog page</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../templates/changelog.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* The preview chrome styles bare h1 without a layer, which would beat the
+     template. revert-layer hands the demo headings back to changelog.css. */
+  .changelog-header > h1 { all: revert-layer; }
+  .wide-demo { margin-top: var(--s6); }
+  .wide-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .wide-demo > p { margin: 0 0 var(--s3); color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<h1>Changelog page</h1>
+<p class="sub">Releases newest first, each with its version, date and an anchor to itself. The notes are design's own v0.7.0.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <div class="changelog">
+      <header class="changelog-header">
+        <h1>Changelog</h1>
+        <p>What changed in @brignano/design, newest first.</p>
+      </header>
+      <article class="release" id="l-v0.7.0" aria-labelledby="l-v0.7.0-title">
+        <header class="release-meta">
+          <h2 class="release-version" id="l-v0.7.0-title"><a href="#l-v0.7.0">v0.7.0</a></h2>
+          <time class="release-date" datetime="2026-11-02">2 Nov 2026</time>
+        </header>
+        <div class="prose">
+          <p>Product pages built to be understood by a stranger on a phone in five seconds, and each product now looks like itself.</p>
+          <h3>Product pages: show, then tell</h3>
+          <p><code>product-page.css</code> has a new hero. It splits into <strong>head</strong> (status, an audience line, a thesis of 8 words or fewer), <strong>proof</strong> and <strong>body</strong> (one-sentence subhead, actions, a short note). On a phone they stack in that order, so the product shows on the first screen.</p>
+          <ul>
+          <li><strong>Bands after the hero:</strong><ul>
+          <li><strong>What you get</strong> (<code>.pp-gets</code>): three cards that each lead with a picture.</li>
+          <li><strong>Comparison</strong> (<code>.pp-compare</code>): the product beside the obvious alternative, in words.</li>
+          <li><strong>How it works</strong> (<code>.pp-how</code>): three numbered steps.</li>
+          <li>The old four-chapter story is down to at most one chapter.</li>
+          </ul>
+          </li>
+          <li><strong>A browser window frame</strong> (<code>.pp-browser</code>, with <code>.pp-browser-bar</code> and <code>.pp-browser-url</code>), alongside the existing phone frame.</li>
+          <li><strong><code>.pp-audience</code>:</strong> a line saying who the product is for, above the thesis.</li>
+          </ul>
+          <h3>Each product looks like itself</h3>
+          <p>Before this, every product page was the same page with the words swapped. Each page now makes three choices:</p>
+          <ul>
+          <li><strong>A product mark.</strong> Set <code>data-mark=&quot;teal&quot;</code>, <code>&quot;violet&quot;</code> or <code>&quot;magenta&quot;</code> on <code>.pp</code>. New tokens: <code>--mark-teal</code>, <code>--mark-violet</code>, <code>--mark-magenta</code>. The mark colours the product&#39;s glyph, a short rule above the thesis, a faint stage behind the hero proof, and the step numerals. Buttons stay cobalt on every product.</li>
+          <li><strong>A hero layout.</strong> Set <code>data-layout</code> on <code>.pp-hero</code>:<ul>
+          <li><code>split</code> (default): the proof sits on the right.</li>
+          <li><code>mirror</code>: the proof sits on the left.</li>
+          <li><code>stage</code>: words and actions are centred, with the proof full width beneath them.</li>
+          </ul>
+          </li>
+          <li><strong>A proof frame</strong> that matches where the product lives: bare, a phone, or a browser window.</li>
+          </ul>
+          <h3>Check a page before it ships</h3>
+          <p><code>scripts/fold.mjs</code> now ships in the package. It opens a page at iPhone size and fails when:</p>
+          <ul>
+          <li>the thesis, the proof or the primary action is missing from the first screen;</li>
+          <li>there are more than <strong>40 words</strong> of copy on the first screen, or more than <strong>180</strong> on the whole page;</li>
+          <li>the page runs past 7 phone screens, or scrolls sideways.</li>
+          </ul>
+          <pre tabindex="0" aria-label="Example command"><code class="language-sh">node node_modules/@brignano/design/scripts/fold.mjs https://your.product/ --shots shots
+          </code></pre>
+          <p>DESIGN.md §13 is rewritten around the order of work. Each step comes from a new ADR, ADR-0010 or ADR-0011:</p>
+          <ol>
+          <li><strong>Brief.</strong> Write five lines in <code>BRIEF.md</code>: Who, Pain, Promise, Moment, Ask.</li>
+          <li><strong>Page.</strong> Build the page from the brief.</li>
+          <li><strong><code>fold.mjs</code>.</strong> Run the check above.</li>
+          <li><strong>Stranger test.</strong> Run the fixed prompt from §13 and compare the answers to the brief.</li>
+          </ol>
+          <h3>Changed</h3>
+          <ul>
+          <li><code>.pp-audience</code> is now ink, no longer cobalt. Cobalt means &quot;you can act on this&quot;.</li>
+          <li><code>.pp-subhead</code> should read as the pain, then the fix.</li>
+          <li>The header no longer repeats the status.</li>
+          <li>The current clip step&#39;s bar takes the product mark rather than ink.</li>
+          <li>The how-it-works numerals take the product mark.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="release" id="l-v0.6.0" aria-labelledby="l-v0.6.0-title">
+        <header class="release-meta">
+          <h2 class="release-version" id="l-v0.6.0-title"><a href="#l-v0.6.0">v0.6.0</a></h2>
+          <time class="release-date" datetime="2026-10-31">31 Oct 2026</time>
+        </header>
+        <div class="prose">
+          <p>Product pages get a closing panel with prices, and video as proof.</p>
+          <ul>
+          <li><strong>Prices</strong> (<code>.pp-price</code>) in the closing panel, for products that have them.</li>
+          <li><strong>Closing panel</strong> (<code>.pp-close</code>): the primary action again, with whatever it needs.</li>
+          <li><strong>Video proof</strong>: a <code>&lt;video&gt;</code> in the proof slot, bare or in the phone frame.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <div class="changelog">
+      <header class="changelog-header">
+        <h1>Changelog</h1>
+        <p>What changed in @brignano/design, newest first.</p>
+      </header>
+      <article class="release" id="d-v0.7.0" aria-labelledby="d-v0.7.0-title">
+        <header class="release-meta">
+          <h2 class="release-version" id="d-v0.7.0-title"><a href="#d-v0.7.0">v0.7.0</a></h2>
+          <time class="release-date" datetime="2026-11-02">2 Nov 2026</time>
+        </header>
+        <div class="prose">
+          <p>Product pages built to be understood by a stranger on a phone in five seconds, and each product now looks like itself.</p>
+          <h3>Product pages: show, then tell</h3>
+          <p><code>product-page.css</code> has a new hero. It splits into <strong>head</strong> (status, an audience line, a thesis of 8 words or fewer), <strong>proof</strong> and <strong>body</strong> (one-sentence subhead, actions, a short note). On a phone they stack in that order, so the product shows on the first screen.</p>
+          <ul>
+          <li><strong>Bands after the hero:</strong><ul>
+          <li><strong>What you get</strong> (<code>.pp-gets</code>): three cards that each lead with a picture.</li>
+          <li><strong>Comparison</strong> (<code>.pp-compare</code>): the product beside the obvious alternative, in words.</li>
+          <li><strong>How it works</strong> (<code>.pp-how</code>): three numbered steps.</li>
+          <li>The old four-chapter story is down to at most one chapter.</li>
+          </ul>
+          </li>
+          <li><strong>A browser window frame</strong> (<code>.pp-browser</code>, with <code>.pp-browser-bar</code> and <code>.pp-browser-url</code>), alongside the existing phone frame.</li>
+          <li><strong><code>.pp-audience</code>:</strong> a line saying who the product is for, above the thesis.</li>
+          </ul>
+          <h3>Each product looks like itself</h3>
+          <p>Before this, every product page was the same page with the words swapped. Each page now makes three choices:</p>
+          <ul>
+          <li><strong>A product mark.</strong> Set <code>data-mark=&quot;teal&quot;</code>, <code>&quot;violet&quot;</code> or <code>&quot;magenta&quot;</code> on <code>.pp</code>. New tokens: <code>--mark-teal</code>, <code>--mark-violet</code>, <code>--mark-magenta</code>. The mark colours the product&#39;s glyph, a short rule above the thesis, a faint stage behind the hero proof, and the step numerals. Buttons stay cobalt on every product.</li>
+          <li><strong>A hero layout.</strong> Set <code>data-layout</code> on <code>.pp-hero</code>:<ul>
+          <li><code>split</code> (default): the proof sits on the right.</li>
+          <li><code>mirror</code>: the proof sits on the left.</li>
+          <li><code>stage</code>: words and actions are centred, with the proof full width beneath them.</li>
+          </ul>
+          </li>
+          <li><strong>A proof frame</strong> that matches where the product lives: bare, a phone, or a browser window.</li>
+          </ul>
+          <h3>Check a page before it ships</h3>
+          <p><code>scripts/fold.mjs</code> now ships in the package. It opens a page at iPhone size and fails when:</p>
+          <ul>
+          <li>the thesis, the proof or the primary action is missing from the first screen;</li>
+          <li>there are more than <strong>40 words</strong> of copy on the first screen, or more than <strong>180</strong> on the whole page;</li>
+          <li>the page runs past 7 phone screens, or scrolls sideways.</li>
+          </ul>
+          <pre tabindex="0" aria-label="Example command"><code class="language-sh">node node_modules/@brignano/design/scripts/fold.mjs https://your.product/ --shots shots
+          </code></pre>
+          <p>DESIGN.md §13 is rewritten around the order of work. Each step comes from a new ADR, ADR-0010 or ADR-0011:</p>
+          <ol>
+          <li><strong>Brief.</strong> Write five lines in <code>BRIEF.md</code>: Who, Pain, Promise, Moment, Ask.</li>
+          <li><strong>Page.</strong> Build the page from the brief.</li>
+          <li><strong><code>fold.mjs</code>.</strong> Run the check above.</li>
+          <li><strong>Stranger test.</strong> Run the fixed prompt from §13 and compare the answers to the brief.</li>
+          </ol>
+          <h3>Changed</h3>
+          <ul>
+          <li><code>.pp-audience</code> is now ink, no longer cobalt. Cobalt means &quot;you can act on this&quot;.</li>
+          <li><code>.pp-subhead</code> should read as the pain, then the fix.</li>
+          <li>The header no longer repeats the status.</li>
+          <li>The current clip step&#39;s bar takes the product mark rather than ink.</li>
+          <li>The how-it-works numerals take the product mark.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="release" id="d-v0.6.0" aria-labelledby="d-v0.6.0-title">
+        <header class="release-meta">
+          <h2 class="release-version" id="d-v0.6.0-title"><a href="#d-v0.6.0">v0.6.0</a></h2>
+          <time class="release-date" datetime="2026-10-31">31 Oct 2026</time>
+        </header>
+        <div class="prose">
+          <p>Product pages get a closing panel with prices, and video as proof.</p>
+          <ul>
+          <li><strong>Prices</strong> (<code>.pp-price</code>) in the closing panel, for products that have them.</li>
+          <li><strong>Closing panel</strong> (<code>.pp-close</code>): the primary action again, with whatever it needs.</li>
+          <li><strong>Video proof</strong>: a <code>&lt;video&gt;</code> in the proof slot, bare or in the phone frame.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">@import '@brignano/design/components.css';
+@import '@brignano/design/templates/changelog.css';
+
+&lt;main class="changelog"&gt;
+  &lt;header class="changelog-header"&gt;&lt;h1&gt;Changelog&lt;/h1&gt;&lt;/header&gt;
+  &lt;article class="release" id="v0.7.0" aria-labelledby="v0.7.0-title"&gt;
+    &lt;header class="release-meta"&gt;
+      &lt;h2 class="release-version" id="v0.7.0-title"&gt;&lt;a href="#v0.7.0"&gt;v0.7.0&lt;/a&gt;&lt;/h2&gt;
+      &lt;time class="release-date" datetime="2026-11-02"&gt;2 Nov 2026&lt;/time&gt;
+    &lt;/header&gt;
+    &lt;div class="prose"&gt;…releases/v0.7.0.md as HTML, headings from h3…&lt;/div&gt;
+  &lt;/article&gt;
+&lt;/main&gt;</pre>
+  </section>
+
+</div>
+
+<section class="wide-demo">
+    <h2>In a wide column</h2>
+    <p>At 44rem and wider, the version and date move into a sticky left column.</p>
+    <div class="panel light">
+      <div class="changelog">
+        <article class="release" id="w-v0.6.0" aria-labelledby="w-v0.6.0-title">
+          <header class="release-meta">
+            <h2 class="release-version" id="w-v0.6.0-title"><a href="#w-v0.6.0">v0.6.0</a></h2>
+            <time class="release-date" datetime="2026-10-31">31 Oct 2026</time>
+          </header>
+          <div class="prose">
+            <p>Product pages get a closing panel with prices, and video as proof.</p>
+            <ul>
+              <li><strong>Prices</strong> (<code>.pp-price</code>) in the closing panel, for products that have them.</li>
+              <li><strong>Closing panel</strong> (<code>.pp-close</code>): the primary action again, with whatever it needs.</li>
+              <li><strong>Video proof</strong>: a <code>&lt;video&gt;</code> in the proof slot, bare or in the phone frame.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+</section>
+
+<div class="docs">
+
+  <section class="two">
+    <div>
+      <h2>Rules</h2>
+      <ul>
+        <li>Newest first. No "Unreleased" section: notes are written when a release is cut (fleet releases standard).</li>
+        <li>The release's <code>id</code> is its version, so <code>/changelog#v0.7.0</code> links straight to it.</li>
+        <li>Notes come from <code>releases/v*.md</code>; your build turns them into HTML and shifts their headings down one level.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Layout</h2>
+      <ul>
+        <li>When the changelog is at least 44rem wide, version and date sit in a sticky left column.</li>
+        <li>Narrower (a phone, or a half-width panel like the ones above), they sit above the notes.</li>
+        <li>That's a container query on <code>.changelog</code>, so it follows the column, not the screen.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Each release is an <code>&lt;article&gt;</code> labelled by its version heading; the date is a <code>&lt;time datetime&gt;</code>.</li>
+      <li>The version link reaches 44px on touch.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
