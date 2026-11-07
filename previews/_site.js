@@ -17,6 +17,7 @@
     ['elevation.html', 'Elevation'],
     ['components.html', 'Components'],
     ['table.html', 'Table'],
+    ['kv-stat.html', 'Key-value and stats'],
     ['buttons.html', 'Buttons & links'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],
