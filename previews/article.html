@@ -1,0 +1,347 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Article and docs page</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../templates/article.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* The preview chrome styles bare h1 without a layer, which would beat the
+     template. revert-layer hands the demo headings back to article.css. */
+  .article-header > h1 { all: revert-layer; }
+  .wide-demo { margin-top: var(--s6); }
+  .wide-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .wide-demo > p { margin: 0 0 var(--s3); color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<h1>Article and docs page</h1>
+<p class="sub">One template for blog posts and product docs: title, date, reading time, the text and previous/next links. Docs mode adds a section nav and an "On this page" list.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+      <div class="article">
+        <header class="article-header">
+          <h1>Set up a new site</h1>
+          <p class="article-meta"><time datetime="2026-11-07">7 Nov 2026</time><span>3 min read</span></p>
+        </header>
+        <div class="prose">
+          <p>Every site starts from the same two files. This page shows how an article or a docs page reads with them; the words are placeholder.</p>
+          <h2 id="l-install">Install</h2>
+          <p>Add the package, then import the tokens before anything else.</p>
+          <pre tabindex="0"><code>npm install @brignano/design</code></pre>
+          <h2 id="l-import">Import the layers</h2>
+          <p>Components sit in one cascade layer, so your own CSS wins without <code>!important</code>.</p>
+          <ul>
+            <li><code>tokens.css</code> first.</li>
+            <li><code>components.css</code> next.</li>
+            <li>Templates last, only on the pages that use them.</li>
+          </ul>
+          <h3 id="l-tailwind">With Tailwind</h3>
+          <p>Import <code>tailwind.css</code> after Tailwind itself, and the tokens become utilities.</p>
+          <h2 id="l-tier">Pick a tier</h2>
+          <p>Tools stay quiet; marketing pages get more room. Add <code>.tier-marketing</code> to the page root for the second.</p>
+        </div>
+        <nav class="article-pager" aria-label="More docs">
+          <a rel="prev" href="#l-install"><span class="article-pager-label">Previous</span>Getting started</a>
+          <a rel="next" href="#l-tier"><span class="article-pager-label">Next</span>Dark mode</a>
+        </nav>
+      </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+      <div class="article">
+        <header class="article-header">
+          <h1>Set up a new site</h1>
+          <p class="article-meta"><time datetime="2026-11-07">7 Nov 2026</time><span>3 min read</span></p>
+        </header>
+        <div class="prose">
+          <p>Every site starts from the same two files. This page shows how an article or a docs page reads with them; the words are placeholder.</p>
+          <h2 id="d-install">Install</h2>
+          <p>Add the package, then import the tokens before anything else.</p>
+          <pre tabindex="0"><code>npm install @brignano/design</code></pre>
+          <h2 id="d-import">Import the layers</h2>
+          <p>Components sit in one cascade layer, so your own CSS wins without <code>!important</code>.</p>
+          <ul>
+            <li><code>tokens.css</code> first.</li>
+            <li><code>components.css</code> next.</li>
+            <li>Templates last, only on the pages that use them.</li>
+          </ul>
+          <h3 id="d-tailwind">With Tailwind</h3>
+          <p>Import <code>tailwind.css</code> after Tailwind itself, and the tokens become utilities.</p>
+          <h2 id="d-tier">Pick a tier</h2>
+          <p>Tools stay quiet; marketing pages get more room. Add <code>.tier-marketing</code> to the page root for the second.</p>
+        </div>
+        <nav class="article-pager" aria-label="More docs">
+          <a rel="prev" href="#d-install"><span class="article-pager-label">Previous</span>Getting started</a>
+          <a rel="next" href="#d-tier"><span class="article-pager-label">Next</span>Dark mode</a>
+        </nav>
+      </div>
+  </div>
+</div>
+
+<section class="wide-demo">
+  <h2>Docs mode, narrow</h2>
+  <p>Under 48rem (a phone, or these half-width panels), both navs are disclosures above the text.</p>
+  <div class="pair">
+    <div class="panel light"><span class="tag">Light</span>
+    <div class="article-docs"><div class="article-docs-layout">
+      <details class="disclosure article-nav"><summary>Docs</summary>
+        <nav aria-label="Docs">
+          <p class="article-nav-heading">Start</p>
+          <ul>
+            <li><a href="#nl-install">Getting started</a></li>
+            <li><a href="#nl-install" aria-current="page">Set up a new site</a></li>
+          </ul>
+          <p class="article-nav-heading">Guides</p>
+          <ul>
+            <li><a href="#nl-tier">Dark mode</a></li>
+            <li><a href="#nl-tier">Charts</a></li>
+            <li><a href="#nl-tier">Releases</a></li>
+          </ul>
+        </nav>
+      </details>
+      <details class="disclosure article-toc"><summary>On this page</summary>
+        <nav aria-label="On this page">
+          <ol>
+            <li><a href="#nl-install">Install</a></li>
+            <li><a href="#nl-import">Import the layers</a></li>
+            <li><a href="#nl-tier">Pick a tier</a></li>
+          </ol>
+        </nav>
+      </details>
+      <div class="article">
+        <header class="article-header">
+          <h1>Set up a new site</h1>
+          <p class="article-meta"><time datetime="2026-11-07">7 Nov 2026</time><span>3 min read</span></p>
+        </header>
+        <div class="prose">
+          <p>Every site starts from the same two files. This page shows how an article or a docs page reads with them; the words are placeholder.</p>
+          <h2 id="nl-install">Install</h2>
+          <p>Add the package, then import the tokens before anything else.</p>
+          <pre tabindex="0"><code>npm install @brignano/design</code></pre>
+          <h2 id="nl-import">Import the layers</h2>
+          <p>Components sit in one cascade layer, so your own CSS wins without <code>!important</code>.</p>
+          <ul>
+            <li><code>tokens.css</code> first.</li>
+            <li><code>components.css</code> next.</li>
+            <li>Templates last, only on the pages that use them.</li>
+          </ul>
+          <h3 id="nl-tailwind">With Tailwind</h3>
+          <p>Import <code>tailwind.css</code> after Tailwind itself, and the tokens become utilities.</p>
+          <h2 id="nl-tier">Pick a tier</h2>
+          <p>Tools stay quiet; marketing pages get more room. Add <code>.tier-marketing</code> to the page root for the second.</p>
+        </div>
+        <nav class="article-pager" aria-label="More docs">
+          <a rel="prev" href="#nl-install"><span class="article-pager-label">Previous</span>Getting started</a>
+          <a rel="next" href="#nl-tier"><span class="article-pager-label">Next</span>Dark mode</a>
+        </nav>
+      </div>
+    </div></div>
+    </div>
+    <div class="panel dark"><span class="tag">Dark</span>
+    <div class="article-docs"><div class="article-docs-layout">
+      <details class="disclosure article-nav"><summary>Docs</summary>
+        <nav aria-label="Docs">
+          <p class="article-nav-heading">Start</p>
+          <ul>
+            <li><a href="#nd-install">Getting started</a></li>
+            <li><a href="#nd-install" aria-current="page">Set up a new site</a></li>
+          </ul>
+          <p class="article-nav-heading">Guides</p>
+          <ul>
+            <li><a href="#nd-tier">Dark mode</a></li>
+            <li><a href="#nd-tier">Charts</a></li>
+            <li><a href="#nd-tier">Releases</a></li>
+          </ul>
+        </nav>
+      </details>
+      <details class="disclosure article-toc"><summary>On this page</summary>
+        <nav aria-label="On this page">
+          <ol>
+            <li><a href="#nd-install">Install</a></li>
+            <li><a href="#nd-import">Import the layers</a></li>
+            <li><a href="#nd-tier">Pick a tier</a></li>
+          </ol>
+        </nav>
+      </details>
+      <div class="article">
+        <header class="article-header">
+          <h1>Set up a new site</h1>
+          <p class="article-meta"><time datetime="2026-11-07">7 Nov 2026</time><span>3 min read</span></p>
+        </header>
+        <div class="prose">
+          <p>Every site starts from the same two files. This page shows how an article or a docs page reads with them; the words are placeholder.</p>
+          <h2 id="nd-install">Install</h2>
+          <p>Add the package, then import the tokens before anything else.</p>
+          <pre tabindex="0"><code>npm install @brignano/design</code></pre>
+          <h2 id="nd-import">Import the layers</h2>
+          <p>Components sit in one cascade layer, so your own CSS wins without <code>!important</code>.</p>
+          <ul>
+            <li><code>tokens.css</code> first.</li>
+            <li><code>components.css</code> next.</li>
+            <li>Templates last, only on the pages that use them.</li>
+          </ul>
+          <h3 id="nd-tailwind">With Tailwind</h3>
+          <p>Import <code>tailwind.css</code> after Tailwind itself, and the tokens become utilities.</p>
+          <h2 id="nd-tier">Pick a tier</h2>
+          <p>Tools stay quiet; marketing pages get more room. Add <code>.tier-marketing</code> to the page root for the second.</p>
+        </div>
+        <nav class="article-pager" aria-label="More docs">
+          <a rel="prev" href="#nd-install"><span class="article-pager-label">Previous</span>Getting started</a>
+          <a rel="next" href="#nd-tier"><span class="article-pager-label">Next</span>Dark mode</a>
+        </nav>
+      </div>
+    </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="wide-demo">
+  <h2>Docs mode, wide</h2>
+  <p>From 48rem the section nav is a sticky left column; from 60rem "On this page" is a sticky right column too.</p>
+  <div class="panel light">
+    <div class="article-docs"><div class="article-docs-layout">
+      <details class="disclosure article-nav"><summary>Docs</summary>
+        <nav aria-label="Docs">
+          <p class="article-nav-heading">Start</p>
+          <ul>
+            <li><a href="#w-install">Getting started</a></li>
+            <li><a href="#w-install" aria-current="page">Set up a new site</a></li>
+          </ul>
+          <p class="article-nav-heading">Guides</p>
+          <ul>
+            <li><a href="#w-tier">Dark mode</a></li>
+            <li><a href="#w-tier">Charts</a></li>
+            <li><a href="#w-tier">Releases</a></li>
+          </ul>
+        </nav>
+      </details>
+      <details class="disclosure article-toc"><summary>On this page</summary>
+        <nav aria-label="On this page">
+          <ol>
+            <li><a href="#w-install">Install</a></li>
+            <li><a href="#w-import">Import the layers</a></li>
+            <li><a href="#w-tier">Pick a tier</a></li>
+          </ol>
+        </nav>
+      </details>
+      <div class="article">
+        <header class="article-header">
+          <h1>Set up a new site</h1>
+          <p class="article-meta"><time datetime="2026-11-07">7 Nov 2026</time><span>3 min read</span></p>
+        </header>
+        <div class="prose">
+          <p>Every site starts from the same two files. This page shows how an article or a docs page reads with them; the words are placeholder.</p>
+          <h2 id="w-install">Install</h2>
+          <p>Add the package, then import the tokens before anything else.</p>
+          <pre tabindex="0"><code>npm install @brignano/design</code></pre>
+          <h2 id="w-import">Import the layers</h2>
+          <p>Components sit in one cascade layer, so your own CSS wins without <code>!important</code>.</p>
+          <ul>
+            <li><code>tokens.css</code> first.</li>
+            <li><code>components.css</code> next.</li>
+            <li>Templates last, only on the pages that use them.</li>
+          </ul>
+          <h3 id="w-tailwind">With Tailwind</h3>
+          <p>Import <code>tailwind.css</code> after Tailwind itself, and the tokens become utilities.</p>
+          <h2 id="w-tier">Pick a tier</h2>
+          <p>Tools stay quiet; marketing pages get more room. Add <code>.tier-marketing</code> to the page root for the second.</p>
+        </div>
+        <nav class="article-pager" aria-label="More docs">
+          <a rel="prev" href="#w-install"><span class="article-pager-label">Previous</span>Getting started</a>
+          <a rel="next" href="#w-tier"><span class="article-pager-label">Next</span>Dark mode</a>
+        </nav>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">@import '@brignano/design/components.css';
+@import '@brignano/design/templates/article.css';
+
+&lt;!-- Article --&gt;
+&lt;main class="article"&gt;
+  &lt;header class="article-header"&gt;
+    &lt;h1&gt;Title&lt;/h1&gt;
+    &lt;p class="article-meta"&gt;&lt;time datetime="2026-11-07"&gt;7 Nov 2026&lt;/time&gt;&lt;span&gt;3 min read&lt;/span&gt;&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;div class="prose"&gt;…&lt;/div&gt;
+  &lt;nav class="article-pager" aria-label="More articles"&gt;
+    &lt;a rel="prev" href="…"&gt;&lt;span class="article-pager-label"&gt;Previous&lt;/span&gt;Title&lt;/a&gt;
+    &lt;a rel="next" href="…"&gt;&lt;span class="article-pager-label"&gt;Next&lt;/span&gt;Title&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/main&gt;
+
+&lt;!-- Docs: wrap it --&gt;
+&lt;div class="article-docs"&gt;&lt;div class="article-docs-layout"&gt;
+  &lt;details class="disclosure article-nav"&gt;&lt;summary&gt;Docs&lt;/summary&gt;
+    &lt;nav aria-label="Docs"&gt;
+      &lt;p class="article-nav-heading"&gt;Guides&lt;/p&gt;
+      &lt;ul&gt;&lt;li&gt;&lt;a href="…" aria-current="page"&gt;…&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/details&gt;
+  &lt;details class="disclosure article-toc"&gt;&lt;summary&gt;On this page&lt;/summary&gt;
+    &lt;nav aria-label="On this page"&gt;&lt;ol&gt;&lt;li&gt;&lt;a href="#…"&gt;…&lt;/a&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/nav&gt;
+  &lt;/details&gt;
+  &lt;main class="article"&gt;…&lt;/main&gt;
+&lt;/div&gt;&lt;/div&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>When to use it</h2>
+      <ul>
+        <li>Blog posts and write-ups: the plain article.</li>
+        <li>Product docs with more than a couple of pages: docs mode.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>When not to</h2>
+      <ul>
+        <li>Release notes: the changelog template.</li>
+        <li>Privacy and terms: the legal template.</li>
+        <li>A blog index or search: not part of this template.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Rules</h2>
+      <ul>
+        <li>Reading time is words ÷ 200, rounded up. Leave it out under a minute.</li>
+        <li>Previous and next come from <code>rel</code>; leave either out at the ends.</li>
+        <li>Mark the current page in the section nav with <code>aria-current="page"</code>. If your app tracks the section in view, mark it in "On this page" with <code>aria-current="location"</code>.</li>
+        <li>Label each <code>&lt;nav&gt;</code> with the words its summary shows; the wide layout uses that label as the list's title.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Layout</h2>
+      <ul>
+        <li>Under 48rem, both navs are disclosures above the text.</li>
+        <li>From 48rem, the section nav is a sticky left column; from 60rem, "On this page" is a sticky right column.</li>
+        <li>Those are container queries on <code>.article-docs</code>, so they follow the column, not the screen.</li>
+        <li>Shown as columns, the disclosures stay open through <code>::details-content</code>. Browsers without it (Firefox before 143, Safari before 18.4) keep the disclosure, which still works.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Each list is a labelled <code>&lt;nav&gt;</code> and the disclosures are native <code>&lt;details&gt;</code>, so no script is needed.</li>
+      <li>In the wide layout the summaries are hidden, so there's no toggle that does nothing.</li>
+      <li>Nav links, summaries and the pager reach 44px on touch. The separator in the meta line is silent to screen readers.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
