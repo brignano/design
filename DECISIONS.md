@@ -518,7 +518,7 @@ across the projects could tell them apart.
 
 ## ADR-0012 — Shared components ship as plain CSS in a cascade layer
 
-*2026-11-07. Accepted. Proposal: `proposals/component-layer.md` (#45, #85).*
+**Status:** accepted · 2026-11-07 · proposal `proposals/component-layer.md` (#45, #85)
 
 ### Context
 
