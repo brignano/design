@@ -1,9 +1,15 @@
 <!doctype html>
 <!-- @brignano/design — transactional email (#74)
      Owner notifications and auto-replies (fleet lead standard). Light only.
-     Colours are token names in double braces: run `node scripts/email-tokens.mjs` to fill them
-     from tokens.css. Content is {{name}}: your app fills it, escaping HTML.
-     Keep the plain-text twin (email.txt) in step and send both. -->
+     Colours are token names in double braces: run scripts/email-tokens.mjs
+     once to fill them from tokens.css. Then, per send, fill the content:
+       subject, preheader, product, heading, button_label, footer: plain text,
+         HTML-escaped by your app.
+       button_url: an absolute https:// URL, attribute-escaped.
+       body: HTML your app builds from escaped text, one
+         <p style="margin:0 0 12px;"> per paragraph. Never pass a sender's
+         raw input through unescaped.
+     Send email.txt as the text part, with body_text as plain text. -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">

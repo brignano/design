@@ -25,6 +25,7 @@
 // install is a check that stops being run.
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { hex, toHex, resolve } from './colour.mjs';
 import { TOKEN, resolveLight } from './email-tokens.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -116,30 +117,7 @@ for (const [k, v] of tokens)
         fail(`nesting: ${k} passes a var() or light-dark() into ${fn}() — write the concrete colour (tokens.css rule 2)`);
 
 // ── Colour maths ─────────────────────────────────────────────────────────────
-function hex(h) {
-  h = h.slice(1);
-  if (h.length === 3) h = [...h].map((c) => c + c).join('');
-  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
-}
-const toHex = (rgb) => '#' + rgb.map((c) => Math.round(c).toString(16).padStart(2, '0')).join('');
-
-// Resolves a token to { rgb, alpha }. Handles hex, var() and the one
-// color-mix form the tokens use: color-mix(in srgb, X N%, transparent).
-function resolve(value, map, seen = new Set()) {
-  value = value.trim();
-  const ref = value.match(/^var\((--[\w-]+)\)$/);
-  if (ref) {
-    if (seen.has(ref[1]) || !map.has(ref[1])) throw new Error(`cannot resolve ${ref[1]}`);
-    return resolve(map.get(ref[1]), map, new Set([...seen, ref[1]]));
-  }
-  if (/^#[0-9a-f]{3,6}$/i.test(value)) return { rgb: hex(value), alpha: 1 };
-  const mix = value.match(/^color-mix\(in srgb,\s*(.+?)\s+([\d.]+)%,\s*transparent\)$/);
-  if (mix) {
-    const c = resolve(mix[1], map, seen);
-    return { rgb: c.rgb, alpha: c.alpha * (+mix[2] / 100) };
-  }
-  throw new Error(`unsupported colour value: ${value}`);
-}
+// hex, toHex and resolve live in colour.mjs, shared with email-tokens.mjs.
 const over = (fg, bg) => fg.rgb.map((c, i) => c * fg.alpha + bg[i] * (1 - fg.alpha));
 const lum = (rgb) =>
   rgb

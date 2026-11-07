@@ -41,9 +41,12 @@
 node node_modules/@brignano/design/scripts/email-tokens.mjs \
   node_modules/@brignano/design/templates/email.html &gt; emails/base.html
 
-# per send: fill {{product}} {{heading}} {{body}} {{button_label}}
-# {{button_url}} {{footer}} {{preheader}} {{subject}}, escaping HTML,
-# and send templates/email.txt (with {{body_text}}) as the text part.</pre>
+# per send, fill the content placeholders:
+#   subject preheader product heading button_label footer: text, HTML-escaped
+#   button_url: an absolute https:// URL
+#   body: HTML you build from escaped text, one &lt;p style="margin:0 0 12px;"&gt;
+#         per paragraph; never a sender's raw input
+# and send templates/email.txt (body_text as plain text) as the text part.</pre>
   </section>
 
   <section class="two">
@@ -108,7 +111,12 @@ node node_modules/@brignano/design/scripts/email-tokens.mjs \
     footer: 'You are getting this because you used the form on example.com. Reply to this email to reach a person.',
   };
   const probe = document.getElementById('light-probe');
-  const rgba = (s) => (s.match(/[\d.]+/g) || []).map(Number);
+  // Computed colours come back as rgb()/rgba(), or color(srgb r g b / a) for
+  // translucent ones, whose channels are 0–1.
+  const rgba = (s) => {
+    const n = (s.match(/[\d.]+/g) || []).map(Number);
+    return s.startsWith('color(') ? [...n.slice(0, 3).map((v) => v * 255), ...n.slice(3)] : n;
+  };
   const hex = (n) => '#' + n.slice(0, 3).map((c) => Math.round(c).toString(16).padStart(2, '0')).join('');
   const light = (name) => {
     probe.style.color = `var(${name})`;
