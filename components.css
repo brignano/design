@@ -1,0 +1,21 @@
+/* components.css — the shared controls and patterns every brignano surface
+   uses: buttons, fields, messages, pills, cards, dialogs and the rest.
+   DESIGN.md §14; the catalog and its order are in proposals/component-layer.md.
+
+     @import '@brignano/design/tokens.css';
+     @import '@brignano/design/components.css';
+
+   Rules for anything added here (ADR-0012):
+   - Everything sits in the `brignano.components` cascade layer, so a
+     consumer's own CSS and utilities win without !important.
+   - Short names: `.name`, `.name-variant`. State comes from real attributes
+     (disabled, aria-invalid, aria-current, aria-expanded, [open]), never from
+     a state class.
+   - Native first: <dialog>, popover, <details>. Where behaviour needs JS, the
+     component's preview page documents the ARIA contract; the consumer owns
+     the script.
+   - Tokens only. No hex, no colour that isn't a var() (npm run check).
+   - Every class here appears on a preview page, and every rule that sets both
+     a text colour and a background is contrast-checked in both themes. */
+
+@layer brignano.components;
