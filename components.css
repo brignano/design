@@ -19,3 +19,86 @@
      a text colour and a background is contrast-checked in both themes. */
 
 @layer brignano.components;
+
+/* ── Table (#61) ───────────────────────────────────────────────────────────
+   <div class="table-wrap"><table class="table">…</table></div>
+   Numbers right-aligned with .num; sortable headers carry aria-sort and a
+   <button>; .table-sticky pins the header inside a scrolling .table-wrap.
+   On a phone the table scrolls sideways inside .table-wrap; rows are never
+   stacked into cards, so columns stay comparable. No zebra stripes. */
+@layer brignano.components {
+  .table-wrap {
+    overflow-x: auto;
+    max-width: 100%;
+    /* Scroll shadows: an edge darkens only while there is more to scroll. */
+    background:
+      linear-gradient(to right, var(--card) 30%, transparent) left / 40px 100% no-repeat local,
+      linear-gradient(to left, var(--card) 30%, transparent) right / 40px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--ink) 16%, transparent), transparent) left / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--ink) 16%, transparent), transparent) right / 12px 100% no-repeat scroll;
+    background-color: var(--card);
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .table caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 600;
+    padding: 0 0 var(--s2);
+  }
+  .table th,
+  .table td {
+    padding: var(--s2) var(--s3);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  .table th {
+    font-weight: 600;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    border-bottom-color: var(--line-strong);
+  }
+  .table tbody tr:hover { background: var(--surface-hover); }
+  .table .num { text-align: right; white-space: nowrap; }
+  .table tfoot td { font-weight: 600; border-top: 1px solid var(--line-strong); border-bottom: 0; }
+
+  /* Sortable header: the <button> fills the cell; the arrow is decoration,
+     aria-sort on the <th> is what assistive tech reads. */
+  .table th[aria-sort] { padding: 0; }
+  .table th[aria-sort] > button {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: var(--s1);
+    width: 100%;
+    padding: var(--s2) var(--s3);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+  .table th.num[aria-sort] > button { justify-content: flex-end; }
+  .table th[aria-sort] > button:hover { color: var(--ink); }
+  .table th[aria-sort] > button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .table th[aria-sort] > button::after { content: '↕' / ''; color: var(--slate); }
+  .table th[aria-sort='ascending'] > button::after { content: '↑' / ''; color: var(--ink); }
+  .table th[aria-sort='descending'] > button::after { content: '↓' / ''; color: var(--ink); }
+  .table th[aria-sort='ascending'],
+  .table th[aria-sort='descending'] { color: var(--ink); }
+
+  /* Sticky header: sticks within the nearest scrolling ancestor. Give the
+     .table-wrap a max-height for a scrolling region, or leave it to stick
+     to the page. */
+  .table-sticky thead th { position: sticky; top: 0; z-index: 1; background: var(--card); }
+
+  .tier-marketing .table { font-size: var(--text-base); }
+  .tier-marketing .table th,
+  .tier-marketing .table td { padding: var(--s3) var(--s4); }
+  .tier-marketing .table th[aria-sort] { padding: 0; }
+  .tier-marketing .table th[aria-sort] > button { padding: var(--s3) var(--s4); }
+}
