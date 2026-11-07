@@ -451,7 +451,8 @@
    .tok-comment; a highlighted line is <span class="line-highlight">. Your
    app owns the copy button's script. */
 @layer brignano.components {
-  .kbd {
+  .kbd,
+  .prose kbd {
     display: inline-block;
     min-width: 1.6em;
     padding: .1em .4em;
@@ -465,7 +466,8 @@
     border-bottom-width: 2px;
     border-radius: var(--radius-sm);
   }
-  .code {
+  .code,
+  .prose :not(pre) > code {
     padding: .1em .35em;
     font-family: var(--mono);
     font-size: .9em;
@@ -508,8 +510,9 @@
   }
   .code-block-copy:hover { color: var(--ink); background: var(--surface-hover); }
   .code-block-copy:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
-  .code-block pre {
-    margin: 0;
+  .code-block pre { margin: 0; }
+  .code-block pre,
+  .prose > pre {
     padding: var(--s4);
     overflow-x: auto;
     font-family: var(--mono);
@@ -517,7 +520,8 @@
     line-height: 1.6;
     tab-size: 2;
   }
-  .code-block pre:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .code-block pre:focus-visible,
+  .prose > pre:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
   .code-block code { font: inherit; }
   .tok-keyword { color: var(--code-keyword); }
   .tok-string { color: var(--code-string); }
@@ -621,37 +625,15 @@
 
   .prose hr { height: 0; margin-block: var(--s7); border: 0; border-top: 1px solid var(--line); }
 
-  /* Reused pieces, applied to bare elements. */
-  .prose :not(pre) > code {
-    padding: .1em .35em;
-    font-family: var(--mono);
-    font-size: .9em;
-    color: var(--code-ink);
-    background: var(--surface-hover);
-    border-radius: var(--radius-sm);
-  }
-  .prose kbd {
-    padding: .1em .4em;
-    font-family: var(--mono);
-    font-size: .85em;
-    color: var(--ink);
-    background: var(--card);
-    border: 1px solid var(--line-control);
-    border-bottom-width: 2px;
-    border-radius: var(--radius-sm);
-  }
+  /* Reused pieces, applied to bare elements. Inline code, kbd and the
+     pre's type come from the #66 rules above, which list these selectors
+     too; a bare pre adds the block's frame here. */
   .prose > pre {
-    padding: var(--s4);
-    overflow-x: auto;
-    font-family: var(--mono);
-    font-size: var(--text-sm);
-    line-height: 1.6;
     color: var(--code-ink);
     background: var(--code-surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
   }
-  .prose > pre:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
   .prose pre code { font: inherit; }
   .prose > blockquote {
     padding-left: var(--s4);
@@ -662,13 +644,13 @@
   .prose > blockquote > * + * { margin-top: var(--s2); }
   .prose > figure > :where(img, video) { display: block; max-width: 100%; height: auto; border-radius: var(--radius); }
   .prose > figure > figcaption { margin-top: var(--s2); font-size: var(--text-sm); color: var(--slate); }
-  .prose > p > img { max-width: 100%; height: auto; border-radius: var(--radius); }
+  .prose img { max-width: 100%; height: auto; }
+  .prose > p > img { border-radius: var(--radius); }
   .prose > :where(figure, pre, .table-wrap, .code-block) { margin-top: var(--s5); }
   .prose > :where(figure, pre, .table-wrap, .code-block) + * { margin-top: var(--s5); }
 
   /* Footnotes, in the shape remark-gfm and markdown-it-footnote emit. */
   .prose sup { line-height: 0; }
-  .prose sup > a { text-decoration: none; }
   .prose :where(.footnotes, section[data-footnotes]) {
     margin-top: var(--s7);
     padding-top: var(--s4);
@@ -676,7 +658,7 @@
     color: var(--ink-soft);
     border-top: 1px solid var(--line);
   }
-  .prose :where(.footnotes, section[data-footnotes]) :where(h2) { font-size: var(--text-sm); color: var(--ink-soft); }
+  .prose :is(.footnotes, section[data-footnotes]) h2 { font-size: var(--text-sm); color: var(--ink-soft); }
 
   .tier-marketing .prose { line-height: 1.75; }
   .tier-marketing .prose h2 { font-size: var(--text-2xl); }

@@ -86,8 +86,9 @@ if (await cache.has(key)) return cache.restore(key);</code></pre>
         </div>
         <hr>
         <p>Questions? Ask in the platform channel.</p>
-        <section class="footnotes" aria-label="Footnotes">
-          <ol><li id="d-fn1"><p>Measured over 200 commits in February. <a href="#d-ref1" aria-label="Back to reference 1">↩</a></p></li></ol>
+        <section data-footnotes>
+          <h2 id="d-footnote-label">Footnotes</h2>
+          <ol><li id="d-fn1"><p>Measured over 200 commits in February. <a href="#d-ref1" data-footnote-backref aria-label="Back to reference 1">↩</a></p></li></ol>
         </section>
       </article>
   </div>
@@ -129,8 +130,9 @@ if (await cache.has(key)) return cache.restore(key);</code></pre>
       <h2>What it covers</h2>
       <ul>
         <li>Headings h2 to h4 with a <code>.anchor</code> link after the text, paragraphs, links, bold, lists (nested too).</li>
-        <li>Inline <code>code</code>, <code>kbd</code>, <code>pre</code>, <code>blockquote</code>, <code>figure</code>, <code>hr</code>, and footnotes in the shape remark-gfm and markdown-it emit.</li>
-        <li>Tables: wrap them in <code>.table-wrap</code> with <code>.table</code> (a renderer plugin or a component can add the classes).</li>
+        <li>Inline <code>code</code>, <code>kbd</code>, <code>pre</code>, <code>blockquote</code>, <code>figure</code>, <code>hr</code>, and footnotes in both shapes: markdown-it's <code>.footnotes</code> (light panel) and remark-gfm's <code>section[data-footnotes]</code> with its heading (dark panel).</li>
+        <li>Images are capped at the column, including linked ones.</li>
+        <li>Tables: wrap them in <code>.table-wrap</code> with <code>.table</code>. Renderers emit a bare <code>&lt;table&gt;</code>, so add the wrapper with a renderer plugin or a component; a bare table isn't styled and won't scroll.</li>
         <li>Width stops at the tier's <code>--measure</code>; spacing is <code>--s*</code>.</li>
       </ul>
     </div>
