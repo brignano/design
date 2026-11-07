@@ -225,3 +225,125 @@
     .tabs-list > [role='tab'] { transition: none; }
   }
 }
+
+/* ── Breadcrumb (#64) ──────────────────────────────────────────────────────
+   <nav class="breadcrumb" aria-label="Breadcrumb"><ol>
+     <li><a href="/">Home</a></li><li><a href="/blog">Blog</a></li>
+     <li><a href="/blog/x" aria-current="page">This post</a></li>
+   </ol></nav>
+   Separators are drawn, not typed, so they aren't read aloud. On a phone the
+   middle crumbs collapse to an ellipsis: first, parent and current stay. */
+@layer brignano.components {
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s1) var(--s2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+  }
+  .breadcrumb li { display: inline-flex; align-items: center; gap: var(--s2); min-width: 0; }
+  .breadcrumb li + li::before { content: '/' / ''; color: var(--slate); }
+  .breadcrumb a { color: var(--i-ink); text-decoration: none; border-radius: var(--radius-sm); }
+  .breadcrumb a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .breadcrumb a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .breadcrumb [aria-current='page'] {
+    color: var(--ink);
+    pointer-events: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (max-width: 480px) {
+    .breadcrumb li:not(:first-child):not(:nth-last-child(-n + 2)) { display: none; }
+    /* The parent crumb's separator stands in for the hidden ones. */
+    .breadcrumb li:nth-last-child(2):not(:nth-child(2))::before { content: '/ … /' / ''; }
+  }
+}
+
+/* ── Pagination (#64) ──────────────────────────────────────────────────────
+   <nav class="pagination" aria-label="Pages">
+     <a class="pagination-prev" href="?p=2">Previous</a>
+     <ol class="pagination-pages">
+       <li><a href="?p=1">1</a></li> <li><a href="?p=3" aria-current="page">3</a></li> …
+     </ol>
+     <span class="pagination-status">Page 3 of 9</span>
+     <a class="pagination-next" href="?p=4">Next</a>
+   </nav>
+   Numbered pages are for tables; content lists use .load-more instead. On a
+   phone the numbers hide and "Page 3 of 9" shows. A missing previous or next
+   is a <span aria-disabled="true">, not a dead link. */
+@layer brignano.components {
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s2);
+    font-size: var(--text-sm);
+  }
+  .pagination-pages { display: flex; gap: var(--s1); margin: 0; padding: 0; list-style: none; }
+  .pagination-prev,
+  .pagination-next,
+  .pagination-pages a,
+  .pagination-pages span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    padding: 0 var(--s3);
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .pagination-pages span { color: var(--slate); padding: 0; }
+  .pagination-prev:hover,
+  .pagination-next:hover,
+  .pagination-pages a:hover { background: var(--surface-hover); }
+  .pagination-prev:focus-visible,
+  .pagination-next:focus-visible,
+  .pagination-pages a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .pagination-pages [aria-current='page'] { color: var(--on-i); background: var(--i); font-weight: 600; }
+  .pagination-prev::before { content: '←' / ''; margin-right: var(--s1); }
+  .pagination-next::after { content: '→' / ''; margin-left: var(--s1); }
+  .pagination [aria-disabled='true'] { color: var(--i-disabled-ink); pointer-events: none; }
+  .pagination-status { display: none; color: var(--ink-soft); }
+  @media (max-width: 480px) {
+    .pagination-pages { display: none; }
+    .pagination-status { display: block; }
+  }
+  @media (pointer: coarse) {
+    .pagination-prev,
+    .pagination-next,
+    .pagination-pages a { min-height: 44px; min-width: 44px; }
+  }
+
+  /* Load more: the default for content lists (posts, photos, activity). */
+  .load-more { display: flex; flex-direction: column; align-items: center; gap: var(--s2); padding: var(--s5) 0; }
+  .load-more-count { font-size: var(--text-sm); color: var(--ink-soft); }
+  .load-more > button,
+  .load-more > a {
+    all: unset;
+    box-sizing: border-box;
+    padding: var(--s2) var(--s4);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .load-more > button:hover,
+  .load-more > a:hover { background: var(--surface-hover); }
+  .load-more > button:focus-visible,
+  .load-more > a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  @media (pointer: coarse) {
+    .load-more > button,
+    .load-more > a { display: inline-flex; align-items: center; min-height: 44px; }
+  }
+}
