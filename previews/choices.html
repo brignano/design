@@ -1,0 +1,207 @@
+<!-- @dsCard group="Controls" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Choices and switches</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: var(--s5); align-items: start; margin-top: var(--s3); }
+  /* .focused draws the ring on the preview; a segment shows it on its label. */
+  .segmented > label:has(.focused) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<h1>Choices and switches</h1>
+<p class="sub">Native checkboxes and radios in rows, a switch for settings that apply at once, and a segmented control for picking one of a few. Every state comes from a real attribute.</p>
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <div class="demo-grid">
+      <fieldset class="choice-group">
+        <legend>Notify me</legend>
+        <label class="choice"><input type="checkbox" name="l-n" checked><span>By email</span></label>
+        <label class="choice"><input type="checkbox" name="l-n"><span>By text message</span></label>
+        <label class="choice"><input type="checkbox" name="l-n" class="focused"><span>Focus</span></label>
+        <label class="choice"><input type="checkbox" name="l-n" disabled><span>By post (not offered)</span></label>
+        <label class="choice"><input type="checkbox" name="l-n" checked disabled><span>Account notices (always on)</span></label>
+      </fieldset>
+      <fieldset class="choice-group">
+        <legend>Delivery</legend>
+        <div class="choice">
+          <input type="radio" id="l-ship-std" name="l-ship" checked aria-describedby="l-ship-std-hint">
+          <label for="l-ship-std">Standard</label>
+          <p class="choice-hint" id="l-ship-std-hint">Three to five working days. Free.</p>
+        </div>
+        <div class="choice">
+          <input type="radio" id="l-ship-fast" name="l-ship" aria-describedby="l-ship-fast-hint">
+          <label for="l-ship-fast">Express</label>
+          <p class="choice-hint" id="l-ship-fast-hint">Two working days. $9.</p>
+        </div>
+        <div class="choice">
+          <input type="radio" id="l-ship-pick" name="l-ship" disabled>
+          <label for="l-ship-pick">Pick up in store (closed this week)</label>
+        </div>
+      </fieldset>
+      <fieldset class="choice-group">
+        <legend>Settings</legend>
+        <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Holiday decorations</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch"><span>Reduce motion</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch focused"><span>Focus</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch" disabled><span>Beta features (off, locked)</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch" checked disabled><span>Backups (on, locked)</span></label>
+      </fieldset>
+      <div class="choice-group">
+        <fieldset class="choice-group">
+          <legend>View</legend>
+          <div class="segmented">
+            <label><input type="radio" name="l-view" value="day" checked>Day</label>
+            <label><input type="radio" name="l-view" value="week">Week</label>
+            <label><input type="radio" name="l-view" value="month">Month</label>
+          </div>
+        </fieldset>
+        <fieldset class="choice-group">
+          <legend>Units</legend>
+          <div class="segmented">
+            <label><input type="radio" name="l-units" value="km">km</label>
+            <label><input type="radio" name="l-units" value="mi" checked class="focused">mi, focus</label>
+            <label><input type="radio" name="l-units" value="nm" disabled>nmi</label>
+          </div>
+        </fieldset>
+        <fieldset class="choice-group">
+          <legend>Plan (locked)</legend>
+          <div class="segmented">
+            <label><input type="radio" name="l-plan" value="m" checked disabled>Monthly</label>
+            <label><input type="radio" name="l-plan" value="y" disabled>Yearly</label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <div class="demo-grid">
+      <fieldset class="choice-group">
+        <legend>Notify me</legend>
+        <label class="choice"><input type="checkbox" name="d-n" checked><span>By email</span></label>
+        <label class="choice"><input type="checkbox" name="d-n"><span>By text message</span></label>
+        <label class="choice"><input type="checkbox" name="d-n" class="focused"><span>Focus</span></label>
+        <label class="choice"><input type="checkbox" name="d-n" disabled><span>By post (not offered)</span></label>
+        <label class="choice"><input type="checkbox" name="d-n" checked disabled><span>Account notices (always on)</span></label>
+      </fieldset>
+      <fieldset class="choice-group">
+        <legend>Delivery</legend>
+        <div class="choice">
+          <input type="radio" id="d-ship-std" name="d-ship" checked aria-describedby="d-ship-std-hint">
+          <label for="d-ship-std">Standard</label>
+          <p class="choice-hint" id="d-ship-std-hint">Three to five working days. Free.</p>
+        </div>
+        <div class="choice">
+          <input type="radio" id="d-ship-fast" name="d-ship" aria-describedby="d-ship-fast-hint">
+          <label for="d-ship-fast">Express</label>
+          <p class="choice-hint" id="d-ship-fast-hint">Two working days. $9.</p>
+        </div>
+        <div class="choice">
+          <input type="radio" id="d-ship-pick" name="d-ship" disabled>
+          <label for="d-ship-pick">Pick up in store (closed this week)</label>
+        </div>
+      </fieldset>
+      <fieldset class="choice-group">
+        <legend>Settings</legend>
+        <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Holiday decorations</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch"><span>Reduce motion</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch focused"><span>Focus</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch" disabled><span>Beta features (off, locked)</span></label>
+        <label class="choice"><input type="checkbox" role="switch" class="switch" checked disabled><span>Backups (on, locked)</span></label>
+      </fieldset>
+      <div class="choice-group">
+        <fieldset class="choice-group">
+          <legend>View</legend>
+          <div class="segmented">
+            <label><input type="radio" name="d-view" value="day" checked>Day</label>
+            <label><input type="radio" name="d-view" value="week">Week</label>
+            <label><input type="radio" name="d-view" value="month">Month</label>
+          </div>
+        </fieldset>
+        <fieldset class="choice-group">
+          <legend>Units</legend>
+          <div class="segmented">
+            <label><input type="radio" name="d-units" value="km">km</label>
+            <label><input type="radio" name="d-units" value="mi" checked class="focused">mi, focus</label>
+            <label><input type="radio" name="d-units" value="nm" disabled>nmi</label>
+          </div>
+        </fieldset>
+        <fieldset class="choice-group">
+          <legend>Plan (locked)</legend>
+          <div class="segmented">
+            <label><input type="radio" name="d-plan" value="m" checked disabled>Monthly</label>
+            <label><input type="radio" name="d-plan" value="y" disabled>Yearly</label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">&lt;fieldset class="choice-group"&gt;
+  &lt;legend&gt;Notify me&lt;/legend&gt;
+  &lt;label class="choice"&gt;&lt;input type="checkbox" name="notify" value="email"&gt;&lt;span&gt;By email&lt;/span&gt;&lt;/label&gt;
+&lt;/fieldset&gt;
+
+&lt;!-- with a hint: a div row, so the hint isn't part of the name --&gt;
+&lt;div class="choice"&gt;
+  &lt;input type="radio" id="fast" name="ship" aria-describedby="fast-hint"&gt;
+  &lt;label for="fast"&gt;Express&lt;/label&gt;
+  &lt;p class="choice-hint" id="fast-hint"&gt;Two working days.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;label class="choice"&gt;&lt;input type="checkbox" role="switch" class="switch"&gt;&lt;span&gt;Holiday decorations&lt;/span&gt;&lt;/label&gt;
+
+&lt;fieldset class="choice-group"&gt;
+  &lt;legend&gt;View&lt;/legend&gt;
+  &lt;div class="segmented"&gt;
+    &lt;label&gt;&lt;input type="radio" name="view" value="day" checked&gt;Day&lt;/label&gt;
+    &lt;label&gt;&lt;input type="radio" name="view" value="week"&gt;Week&lt;/label&gt;
+  &lt;/div&gt;
+&lt;/fieldset&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Which one</h2>
+      <ul>
+        <li><b>Checkbox</b>: any number of options, or one yes/no that is sent with a form.</li>
+        <li><b>Radio</b>: exactly one of a few options, all visible, with room for a hint each.</li>
+        <li><b>Switch</b>: a setting that takes effect the moment it flips. Never inside a form with a submit button: use a checkbox there.</li>
+        <li><b>Segmented</b>: one of two to five short options that change a view or a unit. Longer lists are radios or a select.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>States</h2>
+      <ul>
+        <li>Checkboxes and radios are native, coloured by <code>accent-color: var(--i)</code> from <code>tokens.css</code>.</li>
+        <li>The switch knob moves right when on, so the state reads without colour.</li>
+        <li>Focus is the 2px <code>--i-ink</code> ring; on a segment it rings the label.</li>
+        <li><code>disabled</code> goes neutral (<code>--i-disabled-*</code>), and the row's text dims with it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Group related choices in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>; the legend names the group.</li>
+      <li>The switch is a checkbox with <code>role="switch"</code>: screen readers say "on" and "off". Announce what changed if the effect isn't visible.</li>
+      <li>Segments are real radios: Tab reaches the group, arrow keys move the choice, and nothing needs a script.</li>
+      <li>Rows reach 44px on touch, so the whole label is the target.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

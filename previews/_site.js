@@ -25,6 +25,7 @@
     ['prose.html', 'Prose'],
     ['buttons.html', 'Buttons & links'],
     ['fields.html', 'Text fields'],
+    ['choices.html', 'Choices and switches'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],
     ['diagram.html', 'Diagram nodes'],
