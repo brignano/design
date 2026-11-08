@@ -163,11 +163,11 @@
     color: var(--ink);
     transition: border-color var(--dur-fast) var(--ease);
   }
-  .field :is(input, textarea, select) { padding: 7px 12px; font: max(1rem, var(--text-base)) / 24px var(--sans); }
+  /* At least 16px, so phones don't zoom in on focus (the tool tier's base is 15px). */
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select) { padding: 7px 12px; font: max(1rem, var(--text-base)) / 24px var(--sans); }
   .field textarea { min-height: 7em; resize: vertical; }
   .field :is(input, textarea)::placeholder { color: var(--slate); opacity: 1; }
 
-  /* At least 16px, so phones don't zoom in on focus (the tool tier's base is 15px). */
   /* Native select, no custom dropdown: the chevron is two gradients in the
      text colour, so it follows the theme and needs no image. */
   .field select {
@@ -181,8 +181,8 @@
   }
 
   /* Hover darkens the edge: --line-strong would drop it under 3:1 (DESIGN.md §4). */
-  .field :is(input, textarea, select):hover, .field-affix:hover { border-color: var(--ink-soft); }
-  .field :is(input, textarea, select):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):hover, .field-affix:hover { border-color: var(--ink-soft); }
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
   .field [aria-invalid='true'], .field [aria-invalid='true']:hover,
   .field-affix:has([aria-invalid='true']) { border-color: var(--danger); background-color: var(--card); }
@@ -190,7 +190,7 @@
   /* Disabled stays readable: a disabled field can still hold a value the
      reader needs, so its text keeps the 4.5:1 floor. The edge goes, so it
      no longer reads as something to type in. */
-  .field :is(input, textarea, select):disabled,
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):disabled,
   .field-affix:has(:disabled) { border-color: transparent; background-color: var(--surface-hover); color: var(--ink-soft); cursor: not-allowed; }
 
   /* Affix: the wrapper draws the edge and the focus ring; the control inside
@@ -213,7 +213,7 @@
   .field-affix:has(:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
   @media (pointer: coarse) {
-    .field :is(input, select), .field-affix { min-height: 44px; }
+    .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), select), .field-affix { min-height: 44px; }
     .field .field-affix > :is(input, select) { min-height: 42px; }
   }
   /* Forced colours drop the gradient chevron: give the select its native arrow back. */
@@ -221,7 +221,7 @@
     .field select { appearance: auto; background-image: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .field :is(input, textarea, select), .field-affix { transition: none; }
+    .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select), .field-affix { transition: none; }
   }
 }
 
