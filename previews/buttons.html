@@ -7,13 +7,184 @@
 <title>Buttons & links</title>
 <script src="_site.js"></script>
 <link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .states { border-collapse: collapse; font-size: var(--text-xs); }
+  .states th { font-weight: 500; color: var(--slate); text-align: left; padding: 0 var(--s2) var(--s2) 0; white-space: nowrap; }
+  .states td { padding: 0 var(--s2) var(--s2) 0; }
+  .states-wrap { overflow-x: auto; }
+  .panel > .row, .panel > .btn-block { margin-top: var(--s3); }
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .prose-line { margin: var(--s3) 0 0; font-size: var(--text-sm); }
+</style>
 </head>
 <body>
 <h1>Buttons & links</h1>
-<p class="sub">Every interaction state has a real value. Disabled is neutral, never hued.</p>
+<p class="sub">Every variant in every state, from real attributes. Disabled is neutral, never hued and never faded.</p>
 <div class="pair">
-  <div class="panel light"><span class="tag">Light</span><div class="row"><a class="btn btn-primary" href="#">Primary</a><a class="btn btn-primary" href="#" style="background:var(--i-hover)">Hover</a><a class="btn btn-primary" href="#" style="background:var(--i-pressed)">Pressed</a><a class="btn btn-primary focused" href="#">Focus</a><button type="button" class="btn btn-disabled" disabled>Disabled</button></div><div class="row"><a class="btn btn-secondary" href="#">Secondary</a><a class="btn btn-ghost" href="#">Ghost</a></div><p style="margin:0;font-size:var(--text-sm)">Prose with an <a class="link" href="#">inline link</a> in it.</p></div>
-  <div class="panel dark"><span class="tag">Dark</span><div class="row"><a class="btn btn-primary" href="#">Primary</a><a class="btn btn-primary" href="#" style="background:var(--i-hover)">Hover</a><a class="btn btn-primary" href="#" style="background:var(--i-pressed)">Pressed</a><a class="btn btn-primary focused" href="#">Focus</a><button type="button" class="btn btn-disabled" disabled>Disabled</button></div><div class="row"><a class="btn btn-secondary" href="#">Secondary</a><a class="btn btn-ghost" href="#">Ghost</a></div><p style="margin:0;font-size:var(--text-sm)">Prose with an <a class="link" href="#">inline link</a> in it.</p></div>
+  <div class="panel light"><span class="tag">Light</span>
+    <div class="states-wrap"><table class="states">
+      <thead><tr><th scope="col">Variant</th><th scope="col">Rest</th><th scope="col">Hover</th><th scope="col">Pressed</th><th scope="col">Focus</th><th scope="col">Disabled</th><th scope="col">Busy</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Primary</th>
+          <td><button type="button" class="btn btn-primary">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--i-hover)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--i-pressed)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary focused">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" disabled>Primary</button></td>
+          <td><button type="button" class="btn btn-primary" aria-busy="true">Primary</button></td>
+        </tr>
+        <tr><th scope="row">Secondary</th>
+          <td><button type="button" class="btn btn-secondary">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" style="background:var(--surface-hover)">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" style="background:var(--surface-active)">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary focused">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" disabled>Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" aria-busy="true">Secondary</button></td>
+        </tr>
+        <tr><th scope="row">Ghost</th>
+          <td><button type="button" class="btn btn-ghost">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost focused">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" disabled>Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" aria-busy="true">Ghost</button></td>
+        </tr>
+        <tr><th scope="row">Danger</th>
+          <td><button type="button" class="btn btn-danger">Danger</button></td>
+          <td><button type="button" class="btn btn-danger" style="background:var(--danger-ink)">Danger</button></td>
+          <td><button type="button" class="btn btn-danger" style="background:var(--danger-ink)">Danger</button></td>
+          <td><button type="button" class="btn btn-danger focused">Danger</button></td>
+          <td><button type="button" class="btn btn-danger" disabled>Danger</button></td>
+          <td><button type="button" class="btn btn-danger" aria-busy="true">Danger</button></td>
+        </tr>
+      </tbody>
+    </table></div>
+    <div class="row">
+      <button type="button" class="btn btn-primary btn-sm">Small</button>
+      <button type="button" class="btn btn-primary">Default</button>
+      <button type="button" class="btn btn-primary btn-lg">Large</button>
+      <button type="button" class="btn btn-secondary btn-icon" aria-label="Add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button type="button" class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>With icon</button>
+      <a class="btn btn-secondary" href="#" aria-disabled="true">Link, aria-disabled</a>
+    </div>
+    <button type="button" class="btn btn-primary btn-block">Block</button>
+    <p class="prose-line">Running text with an <a class="link" href="#">inline link</a> in it.</p>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <div class="states-wrap"><table class="states">
+      <thead><tr><th scope="col">Variant</th><th scope="col">Rest</th><th scope="col">Hover</th><th scope="col">Pressed</th><th scope="col">Focus</th><th scope="col">Disabled</th><th scope="col">Busy</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Primary</th>
+          <td><button type="button" class="btn btn-primary">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--i-hover)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--i-pressed)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary focused">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" disabled>Primary</button></td>
+          <td><button type="button" class="btn btn-primary" aria-busy="true">Primary</button></td>
+        </tr>
+        <tr><th scope="row">Secondary</th>
+          <td><button type="button" class="btn btn-secondary">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" style="background:var(--surface-hover)">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" style="background:var(--surface-active)">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary focused">Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" disabled>Secondary</button></td>
+          <td><button type="button" class="btn btn-secondary" aria-busy="true">Secondary</button></td>
+        </tr>
+        <tr><th scope="row">Ghost</th>
+          <td><button type="button" class="btn btn-ghost">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost focused">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" disabled>Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" aria-busy="true">Ghost</button></td>
+        </tr>
+        <tr><th scope="row">Danger</th>
+          <td><button type="button" class="btn btn-danger">Danger</button></td>
+          <td><button type="button" class="btn btn-danger" style="background:var(--danger-ink)">Danger</button></td>
+          <td><button type="button" class="btn btn-danger" style="background:var(--danger-ink)">Danger</button></td>
+          <td><button type="button" class="btn btn-danger focused">Danger</button></td>
+          <td><button type="button" class="btn btn-danger" disabled>Danger</button></td>
+          <td><button type="button" class="btn btn-danger" aria-busy="true">Danger</button></td>
+        </tr>
+      </tbody>
+    </table></div>
+    <div class="row">
+      <button type="button" class="btn btn-primary btn-sm">Small</button>
+      <button type="button" class="btn btn-primary">Default</button>
+      <button type="button" class="btn btn-primary btn-lg">Large</button>
+      <button type="button" class="btn btn-secondary btn-icon" aria-label="Add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button type="button" class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>With icon</button>
+      <a class="btn btn-secondary" href="#" aria-disabled="true">Link, aria-disabled</a>
+    </div>
+    <button type="button" class="btn btn-primary btn-block">Block</button>
+    <p class="prose-line">Running text with an <a class="link" href="#">inline link</a> in it.</p>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">&lt;button type="submit" class="btn btn-primary"&gt;Save&lt;/button&gt;
+&lt;a class="btn btn-secondary" href="/back"&gt;Cancel&lt;/a&gt;
+&lt;button type="button" class="btn btn-ghost btn-icon" aria-label="Close"&gt;&lt;svg …&gt;&lt;/svg&gt;&lt;/button&gt;
+
+&lt;!-- while saving: your script sets it and ignores clicks --&gt;
+&lt;button class="btn btn-primary" aria-busy="true"&gt;Save&lt;/button&gt;
+
+&lt;p&gt;Read the &lt;a class="link" href="/terms"&gt;terms&lt;/a&gt;.&lt;/p&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Variants</h2>
+      <ul>
+        <li><b>Primary</b>: the one action the view exists for. One per view.</li>
+        <li><b>Secondary</b>: everything else, and the look of a bare <code>.btn</code>.</li>
+        <li><b>Ghost</b>: low-weight actions in toolbars and next to a primary.</li>
+        <li><b>Danger</b>: deletes or loses something. The only fill that isn't cobalt; confirm before it acts.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Sizes and shapes</h2>
+      <ul>
+        <li><code>.btn-sm</code> 32px, default 40px, <code>.btn-lg</code> 48px; all reach 44px on touch.</li>
+        <li><code>.btn-icon</code> is square and needs an <code>aria-label</code>.</li>
+        <li><code>.btn-block</code> fills its row, for phone forms and dialogs.</li>
+        <li>One radius everywhere: <code>--radius</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>States</h2>
+      <ul>
+        <li>Hover and pressed swap the fill: <code>--i-hover</code>, <code>--i-pressed</code> on primary; neutral surfaces on secondary.</li>
+        <li>Focus is the 2px <code>--i-ink</code> ring, 2px out. Never removed.</li>
+        <li><code>disabled</code> on a button, <code>aria-disabled="true"</code> on a link or a button that must stay focusable (so its tooltip can explain why). Both get the neutral disabled fill; your script ignores clicks on <code>aria-disabled</code>.</li>
+        <li><code>aria-busy="true"</code> hides the label behind a spinner without changing the width.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>When not to</h2>
+      <ul>
+        <li>Navigation inside running text: use <code>.link</code>, not a button.</li>
+        <li>A choice between options: the segmented control, not a row of buttons.</li>
+        <li>Two primaries side by side: make one secondary.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Use <code>&lt;button&gt;</code> for actions and <code>&lt;a href&gt;</code> for navigation; the class is the same.</li>
+      <li>Every label passes 4.5:1 in both themes, in every state but disabled, which WCAG exempts because the control is really inactive.</li>
+      <li>Targets reach 44px on touch. The busy spinner slows under reduced motion; announce the result of the action yourself.</li>
+    </ul>
+  </section>
 </div>
 </body>
 </html>

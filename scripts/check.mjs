@@ -199,6 +199,10 @@ for (const fg of ['--ink', '--ink-soft', '--slate', '--i-ink', '--success-ink', 
 floors.push(['--slate', '--line-soft', TEXT]); // the Idea pill
 floors.push(['--ink', '--surface-sticky', TEXT], ['--ink-soft', '--surface-sticky', TEXT]); // sticky bars
 for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg, TEXT]);
+// Buttons (#47): labels on the fills a hover or press swaps in, which no
+// single rule pairs with its colour.
+for (const bg of ['--danger', '--danger-ink']) floors.push(['--on-i', bg, TEXT]);
+for (const bg of ['--surface-hover', '--surface-active']) floors.push(['--ink', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);
 // Code on a highlighted line (components.css .line-highlight). A comment there
