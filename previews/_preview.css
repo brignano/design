@@ -43,19 +43,9 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .stack { display: flex; flex-direction: column; gap: 10px; }
 
 /* ── Component specimens ── */
-.btn { font-family: inherit; line-height: inherit; font-size: var(--text-sm); font-weight: 500; padding: 9px 17px;
-       border-radius: 8px; border: 1px solid transparent; cursor: pointer;
-       text-decoration: none; display: inline-block; transition: background-color var(--dur-fast); }
-.btn-primary { background: var(--i); color: var(--on-i); }
-.btn-primary:hover { background: var(--i-hover); }
-.btn-primary:active { background: var(--i-pressed); }
-.btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-control); }
-.btn-secondary:hover { background: var(--surface-hover); }
-.btn-ghost { background: transparent; color: var(--i-ink); }
-.btn-ghost:hover { background: var(--i-surface); }
-.btn-disabled { background: var(--i-disabled-bg); color: var(--i-disabled-ink); cursor: not-allowed; }
-.btn:focus-visible, .focused { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-a.link { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; }
+/* Buttons and .link live in components.css (#47). .focused draws the focus
+   ring on a specimen so the state can be shown without tabbing to it. */
+.focused { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
 .msg { display: flex; gap: 9px; align-items: flex-start; padding: 11px 13px;
        border-radius: 9px; border: 1px solid; font-size: var(--text-sm); }

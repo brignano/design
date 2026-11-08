@@ -20,6 +20,114 @@
 
 @layer brignano.components;
 
+/* ── Button and link (#47) ────────────────────────────────────────────────
+   <button class="btn btn-primary">Save</button>
+   <a class="btn btn-secondary" href="…">Cancel</a>
+   Variants: .btn-primary (one per view), .btn-secondary (the default look of
+   a bare .btn), .btn-ghost, .btn-danger (the only non-cobalt fill). Sizes:
+   .btn-sm, default, .btn-lg. .btn-icon is square and needs aria-label;
+   .btn-block fills its row. Works the same on <button> and <a>.
+   State comes from attributes:
+   - disabled, or aria-disabled="true" on a link or a button that must stay
+     focusable: neutral --i-disabled-*, never opacity, no hover;
+   - aria-busy="true": the label hides behind a spinner and the button keeps
+     its width. Your script sets it and ignores clicks while it is set.
+   .link is the inline link for running text. */
+@layer brignano.components {
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s2);
+    min-height: 40px;
+    padding: 0 var(--s4);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink);
+    transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  }
+  .btn > svg { flex: none; width: 1.25em; height: 1.25em; }
+  .btn:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  .btn:hover, .btn-secondary:hover { background: var(--surface-hover); }
+  .btn:active, .btn-secondary:active { background: var(--surface-active); }
+  .btn-secondary { border-color: var(--line-control); background: transparent; color: var(--ink); }
+
+  .btn-primary { border-color: transparent; background: var(--i); color: var(--on-i); }
+  .btn-primary:hover { background: var(--i-hover); }
+  .btn-primary:active { background: var(--i-pressed); }
+
+  .btn-ghost { border-color: transparent; background: transparent; color: var(--i-ink); }
+  .btn-ghost:is(:hover, :active) { background: var(--i-surface); }
+
+  /* Danger has no hover/pressed tokens of its own: hover deepens to
+     --danger-ink, the same direction --i-hover takes in each theme. */
+  .btn-danger { border-color: transparent; background: var(--danger); color: var(--on-i); }
+  .btn-danger:hover, .btn-danger:active { background: var(--danger-ink); }
+
+  .btn-sm { min-height: 32px; padding: 0 var(--s3); font-size: var(--text-xs); line-height: 16px; }
+  .btn-lg { min-height: 48px; padding: 0 var(--s5); font-size: var(--text-base); line-height: 24px; }
+  .btn-icon { aspect-ratio: 1; padding: 0; }
+  .btn-block { display: flex; width: 100%; }
+
+  /* Disabled: neutral, never opacity. Its low contrast is allowed only
+     because the control is really inactive (WCAG 1.4.3, DESIGN.md §4);
+     check.mjs exempts exactly this pair on :disabled / aria-disabled rules. */
+  .btn:is(:disabled, [aria-disabled='true']) {
+    border-color: transparent;
+    background: var(--i-disabled-bg);
+    color: var(--i-disabled-ink);
+    cursor: not-allowed;
+  }
+
+  /* Busy: the text goes transparent but keeps its box, so the width holds;
+     the spinner draws in the text colour. */
+  .btn[aria-busy='true'] { -webkit-text-fill-color: transparent; cursor: progress; pointer-events: none; }
+  .btn[aria-busy='true'] > * { visibility: hidden; }
+  .btn[aria-busy='true']::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 1em;
+    height: 1em;
+    margin: auto;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.7s linear infinite;
+  }
+  @keyframes btn-spin { to { transform: rotate(1turn); } }
+
+  .link { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; border-radius: 2px; }
+  .link:hover { color: var(--i-hover); }
+  .link:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  @media (pointer: coarse) {
+    .btn:not(.btn-lg) { min-height: 44px; }
+    .btn-icon { min-width: 44px; }
+  }
+  /* Forced colours repaint the hidden label, so the busy button takes
+     system colours itself and the spinner draws on a clean face. */
+  @media (forced-colors: active) {
+    .btn[aria-busy='true'] { forced-color-adjust: none; background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+    .btn[aria-busy='true']::after { animation-duration: 2s; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a
