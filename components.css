@@ -225,6 +225,118 @@
   }
 }
 
+/* ── Checkbox, radio, switch, segmented control (#49) ─────────────────────
+   <fieldset class="choice-group">
+     <legend>Notify me</legend>
+     <label class="choice"><input type="checkbox" name="n" value="email"><span>By email</span></label>
+     <div class="choice">
+       <input type="radio" id="ship-fast" name="ship" aria-describedby="ship-fast-hint">
+       <label for="ship-fast">Express</label>
+       <p class="choice-hint" id="ship-fast-hint">Two working days.</p>
+     </div>
+   </fieldset>
+   Checkboxes and radios stay native and take accent-color from tokens.css
+   (DESIGN.md §4). .switch goes on <input type="checkbox" role="switch">,
+   only for a setting that applies at once; a form you submit uses a
+   checkbox. .segmented is a row of radios drawn as one control: keep the
+   real radios inside it, so arrow keys and the group name come for free. */
+@layer brignano.components {
+  .choice-group { display: grid; gap: var(--s2); min-width: 0; margin: 0; padding: 0; border: 0; }
+  .choice-group > legend { margin: 0 0 6px; padding: 0; font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
+
+  .choice { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s2); align-items: start; line-height: 1.5; color: var(--ink); cursor: pointer; }
+  .choice > input { grid-column: 1; font: inherit; cursor: inherit; }
+  .choice > input:not(.switch) { width: 18px; height: 18px; margin: calc((1.5em - 18px) / 2) 0 0; }
+  .choice > :not(input) { grid-column: 2; }
+  .choice > label { cursor: inherit; }
+  .choice-hint { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--ink-soft); }
+  .choice > input:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .choice:has(> input:disabled) { color: var(--i-disabled-ink); cursor: not-allowed; }
+
+  /* Switch: track and knob drawn on the input itself. The knob is a radial
+     gradient in the text colour, so on and off read by its position, not
+     by colour alone. */
+  .switch {
+    appearance: none;
+    box-sizing: border-box;
+    flex: none;
+    width: 40px;
+    height: 24px;
+    margin: 0;
+    border: 1px solid var(--line-control);
+    border-radius: 999px;
+    background-color: var(--card);
+    background-image: radial-gradient(circle, currentColor 0 7px, transparent 7.5px);
+    background-size: 22px 22px;
+    background-position: 0 50%;
+    background-repeat: no-repeat;
+    color: var(--ink-soft);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-position var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  }
+  .switch:checked { border-color: transparent; background-color: var(--i); background-position: 100% 50%; color: var(--on-i); }
+  .switch:not(:disabled):hover { border-color: var(--ink-soft); }
+  .switch:checked:not(:disabled):hover { border-color: transparent; background-color: var(--i-hover); }
+  .switch:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .switch:disabled { border-color: transparent; background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); cursor: not-allowed; }
+  /* In a .choice row the switch sits in the first column like a checkbox. */
+  .choice > .switch { margin: calc((1.5em - 24px) / 2) 0 0; }
+
+  /* Segmented: a track with the chosen option filled. The radio stays in
+     the tab order but out of sight; its label is the visible segment. */
+  .segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 2px;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius);
+    background-color: var(--card);
+  }
+  .segmented > label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 var(--s3);
+    border-radius: calc(var(--radius) - 3px);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: 20px;
+    color: var(--ink);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .segmented > label > input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+  .segmented > label:not(:has(:disabled)):hover { background-color: var(--surface-hover); }
+  .segmented > label:has(:checked), .segmented > label:has(:checked):hover { background-color: var(--i); color: var(--on-i); }
+  .segmented > label:has(:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .segmented > label:has(:disabled) { color: var(--i-disabled-ink); cursor: not-allowed; }
+  .segmented > label:has(:checked:disabled) { background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); }
+
+  @media (pointer: coarse) {
+    .choice { min-height: 44px; align-content: center; }
+    .segmented > label { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .switch { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: CanvasText; }
+    .switch:checked { border-color: Highlight; background-color: Highlight; color: HighlightText; }
+    .switch:disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
+    .segmented > label { forced-color-adjust: none; color: CanvasText; }
+    .segmented > label:has(:checked) { background-color: Highlight; color: HighlightText; }
+    .segmented > label:has(:disabled) { color: GrayText; }
+    .segmented > label:has(:focus-visible) { outline-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .switch, .segmented > label { transition: none; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a

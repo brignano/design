@@ -616,4 +616,8 @@ and in what order: [`proposals/component-layer.md`](./proposals/component-layer.
   edge check because they are never a control's edge.
 - **Every class is shown.** A class in `components.css` or a template that no
   preview page uses fails the check: if it isn't shown, it isn't reviewed.
+- **Switch or checkbox.** A switch (`.switch`, `role="switch"`) is only for a
+  setting that takes effect the moment it flips. Anything sent with a form's
+  submit button is a checkbox, because a switch promises an effect the form
+  hasn't made yet.
 
