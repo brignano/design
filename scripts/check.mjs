@@ -260,12 +260,18 @@ const addFloor = (fg, bg, floor) => {
 const DIVIDERS = new Set(['--line', '--line-soft', '--line-strong']);
 const tokenOf = (v) => v?.match(/var\((--[\w-]+)\)/g)?.length === 1 ? v.match(/var\((--[\w-]+)\)/)[1] : undefined;
 for (const [, rs] of layerRules)
-  for (const { decls } of rs) {
+  for (const { selector, decls } of rs) {
     const bg = tokenOf(decls.get('background-color') ?? decls.get('background'));
     if (!bg) continue;
-    // Text on its own background: 4.5:1.
+    // Text on its own background: 4.5:1. The one exception is a really
+    // inactive control (WCAG 1.4.3, DESIGN.md §4): a rule keyed on :disabled
+    // or aria-disabled may set exactly --i-disabled-ink on --i-disabled-bg, and
+    // nothing else escapes the floor.
     const fg = decls.get('color')?.match(/^var\((--[\w-]+)\)$/)?.[1];
-    if (fg) addFloor(fg, bg, TEXT);
+    const inactive = /:disabled|\[aria-disabled=['"]?true['"]?\]/.test(selector);
+    if (fg && inactive && fg === '--i-disabled-ink' && bg === '--i-disabled-bg') {
+      /* exempt: inactive control */
+    } else if (fg) addFloor(fg, bg, TEXT);
     // A control's edge on its own background: 3:1 (DESIGN.md §4). The divider
     // tokens are exempt by definition: they are hairlines between surfaces,
     // "too faint to tell you a control is there", and a control must not use

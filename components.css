@@ -81,16 +81,15 @@
   .btn-icon { aspect-ratio: 1; padding: 0; }
   .btn-block { display: flex; width: 100%; }
 
-  /* Disabled. Its low contrast is allowed only because the control is really
-     inactive (WCAG 1.4.3, DESIGN.md §4), so the colour and the fill are set
-     in separate rules: check.mjs pairs a rule's own colour and background at
-     4.5:1, which an inactive control is exempt from. */
+  /* Disabled: neutral, never opacity. Its low contrast is allowed only
+     because the control is really inactive (WCAG 1.4.3, DESIGN.md §4);
+     check.mjs exempts exactly this pair on :disabled / aria-disabled rules. */
   .btn:is(:disabled, [aria-disabled='true']) {
     border-color: transparent;
     background: var(--i-disabled-bg);
+    color: var(--i-disabled-ink);
     cursor: not-allowed;
   }
-  .btn:is(:disabled, [aria-disabled='true']) { color: var(--i-disabled-ink); }
 
   /* Busy: the text goes transparent but keeps its box, so the width holds;
      the spinner draws in the text colour. */
@@ -117,6 +116,11 @@
   @media (pointer: coarse) {
     .btn:not(.btn-lg) { min-height: 44px; }
     .btn-icon { min-width: 44px; }
+  }
+  /* Forced colours repaint the hidden label, so the busy button takes
+     system colours itself and the spinner draws on a clean face. */
+  @media (forced-colors: active) {
+    .btn[aria-busy='true'] { forced-color-adjust: none; background: ButtonFace; color: ButtonText; border-color: ButtonText; }
   }
   @media (prefers-reduced-motion: reduce) {
     .btn { transition: none; }
