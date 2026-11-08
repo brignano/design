@@ -212,6 +212,8 @@ for (const s of ['success', 'attention', 'danger']) {
   floors.push([`--${s}`, `--${s}-surface`, MARK]);
 }
 floors.push(['--ink-soft', '--surface-hover', TEXT], ['--i', '--surface-hover', MARK]);
+// --line-control is not paired with the washes: it is under 3:1 there, so an
+// outlined button in .msg-actions gets a --card fill (floored above).
 // Code on a highlighted line (components.css .line-highlight). A comment there
 // takes --code-string, so --code-comment is not paired with the wash.
 for (const fg of ['--code-ink', '--code-keyword', '--code-string']) floors.push([fg, '--code-highlight', TEXT]);

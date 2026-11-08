@@ -372,6 +372,10 @@
   .msg-title { margin: 0; font-weight: 600; }
   .msg-body { margin: 0; color: var(--ink-soft); }
   .msg-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); }
+  /* An outlined button's --line-control edge is under 3:1 on a status wash,
+     so in a message it sits on its own --card fill. Zero-specificity
+     :where() keeps hover, pressed and disabled winning. */
+  :where(.msg-actions) > .btn:where(:not(.btn-primary, .btn-danger, .btn-ghost)) { background-color: var(--card); }
   .msg-close { flex: none; margin: -6px -8px -6px 0; color: var(--ink-soft); }
 
   /* Banner: the same parts in a strip, edge to edge, above the header. */
