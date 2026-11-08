@@ -245,7 +245,7 @@
   .choice-group > legend { margin: 0 0 6px; padding: 0; font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
 
   .choice { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s2); align-items: start; line-height: 1.5; color: var(--ink); cursor: pointer; }
-  .choice > input { grid-column: 1; cursor: inherit; }
+  .choice > input { grid-column: 1; font: inherit; cursor: inherit; }
   .choice > input:not(.switch) { width: 18px; height: 18px; margin: calc((1.5em - 18px) / 2) 0 0; }
   .choice > :not(input) { grid-column: 2; }
   .choice > label { cursor: inherit; }
@@ -321,13 +321,16 @@
 
   @media (pointer: coarse) {
     .choice { min-height: 44px; align-content: center; }
-    .segmented > label { min-height: 40px; }
+    .segmented > label { min-height: 44px; }
   }
   @media (forced-colors: active) {
     .switch { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: CanvasText; }
     .switch:checked { border-color: Highlight; background-color: Highlight; color: HighlightText; }
     .switch:disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
-    .segmented > label:has(:checked) { outline: 2px solid Highlight; }
+    .segmented > label { forced-color-adjust: none; color: CanvasText; }
+    .segmented > label:has(:checked) { background-color: Highlight; color: HighlightText; }
+    .segmented > label:has(:disabled) { color: GrayText; }
+    .segmented > label:has(:focus-visible) { outline-color: CanvasText; }
   }
   @media (prefers-reduced-motion: reduce) {
     .switch, .segmented > label { transition: none; }
