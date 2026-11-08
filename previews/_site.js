@@ -24,6 +24,7 @@
     ['content.html', 'Content pieces'],
     ['prose.html', 'Prose'],
     ['buttons.html', 'Buttons & links'],
+    ['fields.html', 'Text fields'],
     ['feedback.html', 'Messages'],
     ['status.html', 'Pills'],
     ['diagram.html', 'Diagram nodes'],

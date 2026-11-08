@@ -1,0 +1,197 @@
+<!-- @dsCard group="Controls" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text fields</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: var(--s4); margin-top: var(--s3); }
+  .field-wide { grid-column: 1 / -1; }
+</style>
+</head>
+<body>
+<h1>Text fields</h1>
+<p class="sub">Label above, hint and error below, state from real attributes: default, focus, filled, invalid and disabled, plus a select, affixes and a textarea.</p>
+<div class="pair">
+  <div class="panel light"><span class="tag">Light</span>
+    <div class="fields">
+      <div class="field">
+        <label for="l-name">Name</label>
+        <input id="l-name" type="text" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="l-focus">Focus</label>
+        <input id="l-focus" class="focused" type="text" placeholder="Shown with the focus ring">
+      </div>
+      <div class="field">
+        <label for="l-email">Email</label>
+        <input id="l-email" type="email" value="sam@example.com" aria-describedby="l-email-hint">
+        <p class="field-hint" id="l-email-hint">We only use it to reply.</p>
+      </div>
+      <div class="field">
+        <label for="l-phone">Phone <span class="field-optional">(optional)</span></label>
+        <input id="l-phone" type="tel" value="555 01" aria-invalid="true" aria-describedby="l-phone-error">
+        <p class="field-error" id="l-phone-error"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>Enter the whole number, with the area code.</p>
+      </div>
+      <div class="field">
+        <label for="l-plan">Plan</label>
+        <select id="l-plan"><option>Pilot, two stores</option><option>Standard</option><option>Custom</option></select>
+      </div>
+      <div class="field">
+        <label for="l-ref">Reference</label>
+        <input id="l-ref" type="text" value="FR-8821" disabled>
+      </div>
+      <div class="field">
+        <label for="l-price">Price (USD)</label>
+        <div class="field-affix"><span>$</span><input id="l-price" type="text" inputmode="decimal" value="49.00"></div>
+      </div>
+      <div class="field">
+        <label for="l-weight">Weight (kg)</label>
+        <div class="field-affix"><input id="l-weight" type="text" inputmode="decimal" value="12x" aria-invalid="true" aria-describedby="l-weight-error"><span>kg</span></div>
+        <p class="field-error" id="l-weight-error"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>Use a number, like 12.5.</p>
+      </div>
+      <div class="field">
+        <label for="l-search">Search</label>
+        <div class="field-affix"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="l-search" type="search" placeholder="Orders, people, places"></div>
+      </div>
+      <div class="field">
+        <label for="l-select-off">Region</label>
+        <select id="l-select-off" disabled><option>East</option></select>
+      </div>
+      <div class="field field-wide">
+        <label for="l-msg">Message</label>
+        <textarea id="l-msg" aria-describedby="l-msg-hint">Can I try the pilot with two stores?</textarea>
+        <p class="field-hint" id="l-msg-hint">A person reads every message.</p>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="tag">Dark</span>
+    <div class="fields">
+      <div class="field">
+        <label for="d-name">Name</label>
+        <input id="d-name" type="text" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="d-focus">Focus</label>
+        <input id="d-focus" class="focused" type="text" placeholder="Shown with the focus ring">
+      </div>
+      <div class="field">
+        <label for="d-email">Email</label>
+        <input id="d-email" type="email" value="sam@example.com" aria-describedby="d-email-hint">
+        <p class="field-hint" id="d-email-hint">We only use it to reply.</p>
+      </div>
+      <div class="field">
+        <label for="d-phone">Phone <span class="field-optional">(optional)</span></label>
+        <input id="d-phone" type="tel" value="555 01" aria-invalid="true" aria-describedby="d-phone-error">
+        <p class="field-error" id="d-phone-error"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>Enter the whole number, with the area code.</p>
+      </div>
+      <div class="field">
+        <label for="d-plan">Plan</label>
+        <select id="d-plan"><option>Pilot, two stores</option><option>Standard</option><option>Custom</option></select>
+      </div>
+      <div class="field">
+        <label for="d-ref">Reference</label>
+        <input id="d-ref" type="text" value="FR-8821" disabled>
+      </div>
+      <div class="field">
+        <label for="d-price">Price (USD)</label>
+        <div class="field-affix"><span>$</span><input id="d-price" type="text" inputmode="decimal" value="49.00"></div>
+      </div>
+      <div class="field">
+        <label for="d-weight">Weight (kg)</label>
+        <div class="field-affix"><input id="d-weight" type="text" inputmode="decimal" value="12x" aria-invalid="true" aria-describedby="d-weight-error"><span>kg</span></div>
+        <p class="field-error" id="d-weight-error"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>Use a number, like 12.5.</p>
+      </div>
+      <div class="field">
+        <label for="d-search">Search</label>
+        <div class="field-affix"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="d-search" type="search" placeholder="Orders, people, places"></div>
+      </div>
+      <div class="field">
+        <label for="d-select-off">Region</label>
+        <select id="d-select-off" disabled><option>East</option></select>
+      </div>
+      <div class="field field-wide">
+        <label for="d-msg">Message</label>
+        <textarea id="d-msg" aria-describedby="d-msg-hint">Can I try the pilot with two stores?</textarea>
+        <p class="field-hint" id="d-msg-hint">A person reads every message.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">&lt;div class="field"&gt;
+  &lt;label for="phone"&gt;Phone &lt;span class="field-optional"&gt;(optional)&lt;/span&gt;&lt;/label&gt;
+  &lt;input id="phone" type="tel" aria-invalid="true"
+         aria-describedby="phone-hint phone-error"&gt;
+  &lt;p class="field-hint" id="phone-hint"&gt;Only for delivery questions.&lt;/p&gt;
+  &lt;p class="field-error" id="phone-error"&gt;&lt;svg aria-hidden="true" …&gt;&lt;/svg&gt;Enter the whole number.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="field"&gt;
+  &lt;label for="price"&gt;Price (USD)&lt;/label&gt;
+  &lt;div class="field-affix"&gt;&lt;span&gt;$&lt;/span&gt;&lt;input id="price" inputmode="decimal"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Parts</h2>
+      <ul>
+        <li><code>.field</code> stacks the label, the control, then <code>.field-hint</code> and <code>.field-error</code>.</li>
+        <li>Text-like <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code> and a native <code>&lt;select&gt;</code> are styled inside it. Checkboxes, radios and switches are a separate component.</li>
+        <li><code>.field-optional</code> holds the words "(optional)". Required fields carry no star.</li>
+        <li><code>.field-affix</code> wraps the control with a unit or an icon, before or after it.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>States</h2>
+      <ul>
+        <li>Rest is a <code>--line-control</code> edge on <code>--card</code>; hover darkens it to <code>--ink-soft</code>.</li>
+        <li>Focus is the 2px <code>--i-ink</code> ring, 2px out; on an affix it rings the whole wrapper.</li>
+        <li><code>aria-invalid="true"</code> turns the edge to <code>--danger</code>. Show <code>.field-error</code> with it; hide it with <code>hidden</code>.</li>
+        <li><code>disabled</code> drops the edge and fills with <code>--surface-hover</code>. The value stays readable at 4.5:1.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Rules</h2>
+      <ul>
+        <li>The label sits above the control. A placeholder is an example, never the label.</li>
+        <li>Mark the optional fields, not the required ones.</li>
+        <li>Name the unit in the label too ("Price (USD)"): screen readers don't read the affix as part of the field.</li>
+        <li>When to validate (on blur, on submit) is your script's call.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>When not to</h2>
+      <ul>
+        <li>Floating labels: not part of the system.</li>
+        <li>A custom dropdown: style the native <code>&lt;select&gt;</code> instead.</li>
+        <li>Dates: native date inputs wait for wave 3.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Every control has a <code>&lt;label for&gt;</code>. Point <code>aria-describedby</code> at the hint and the error, so screen readers read both after the label.</li>
+      <li>The error says what to do, and the danger icon backs up the colour, so the error doesn't rely on red alone.</li>
+      <li>Controls are 40px tall, and 44px on touch. Text inputs use the base size, so phones don't zoom in.</li>
+      <li>Under forced colours the select gets its native arrow back.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
