@@ -26,7 +26,7 @@
     ['buttons.html', 'Buttons & links'],
     ['fields.html', 'Text fields'],
     ['choices.html', 'Choices and switches'],
-    ['feedback.html', 'Messages'],
+    ['feedback.html', 'Messages and banners'],
     ['status.html', 'Pills'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],

@@ -43,23 +43,9 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .stack { display: flex; flex-direction: column; gap: 10px; }
 
 /* ── Component specimens ── */
-/* Buttons and .link live in components.css (#47). .focused draws the focus
+/* Buttons, .link and messages live in components.css (#47, #50). .focused draws the focus
    ring on a specimen so the state can be shown without tabbing to it. */
 .focused { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-
-.msg { display: flex; gap: 9px; align-items: flex-start; padding: 11px 13px;
-       border-radius: 9px; border: 1px solid; font-size: var(--text-sm); }
-.msg b { display: block; font-weight: 600; }
-.msg span { color: var(--ink-soft); }
-.msg svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
-.msg-success { background: var(--success-surface); border-color: var(--success-line); }
-.msg-success svg { color: var(--success); }
-.msg-attention { background: var(--attention-surface); border-color: var(--attention-line); }
-.msg-attention svg { color: var(--attention); }
-.msg-danger { background: var(--danger-surface); border-color: var(--danger-line); }
-.msg-danger svg { color: var(--danger); }
-.msg-info { background: var(--i-surface); border-color: var(--i-line); }
-.msg-info svg { color: var(--i); }
 
 .pill { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: .06em;
         text-transform: uppercase; padding: 3px 9px; border-radius: var(--radius-sm);

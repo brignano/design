@@ -337,6 +337,71 @@
   }
 }
 
+/* ── Message and banner (#50) ─────────────────────────────────────────────
+   <div class="msg msg-danger" role="alert">
+     <svg aria-hidden="true" …></svg>
+     <div class="msg-content">
+       <p class="msg-title">Couldn't reach WakaTime</p>
+       <p class="msg-body">Showing the last cached week.</p>
+       <div class="msg-actions"><button class="btn btn-sm">Try again</button></div>
+     </div>
+     <button class="btn btn-ghost btn-icon btn-sm msg-close" aria-label="Dismiss">…</button>
+   </div>
+   Kinds: .msg-info (neutral, cobalt icon: not a fourth hue; a bare .msg
+   looks the same), .msg-success,
+   .msg-attention, .msg-danger. Every kind carries an icon and words, never
+   colour alone. role="status" for info and success, role="alert" for
+   danger, and for attention when it needs action now. .banner is the same
+   message as a full-width strip above the site header, .banner-info and the
+   rest. The icon slot takes any inline SVG; dismissing is your script. */
+@layer brignano.components {
+  .msg {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+  }
+  .msg > svg, .banner > svg { flex: none; width: 16px; height: 16px; margin-top: 2px; color: var(--i); }
+  .msg-content { display: grid; gap: 2px; flex: 1; min-width: 0; }
+  .msg-title { margin: 0; font-weight: 600; }
+  .msg-body { margin: 0; color: var(--ink-soft); }
+  .msg-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); }
+  .msg-close { flex: none; margin: -6px -8px -6px 0; color: var(--ink-soft); }
+
+  /* Banner: the same parts in a strip, edge to edge, above the header. */
+  .banner {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px var(--s4);
+    border: 0;
+    border-bottom: 1px solid var(--line-strong);
+    background-color: var(--surface-hover);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+  }
+  /* The wash alone marks the box. Its -line token is under 3:1 on the wash,
+     so it can't be the edge (DESIGN.md §4); the border stays, transparent,
+     so every kind is the same size. */
+  .msg-success, .banner-success { border-color: transparent; background-color: var(--success-surface); color: var(--ink); }
+  .msg-attention, .banner-attention { border-color: transparent; background-color: var(--attention-surface); color: var(--ink); }
+  .msg-danger, .banner-danger { border-color: transparent; background-color: var(--danger-surface); color: var(--ink); }
+  :is(.msg-info, .banner-info) > svg { color: var(--i); }
+  :is(.msg-success, .banner-success) > svg { color: var(--success); }
+  :is(.msg-attention, .banner-attention) > svg { color: var(--attention); }
+  :is(.msg-danger, .banner-danger) > svg { color: var(--danger); }
+
+  .banner .msg-content { display: flex; flex-wrap: wrap; column-gap: var(--s2); align-items: baseline; }
+  .banner .msg-actions { margin: 0; }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a

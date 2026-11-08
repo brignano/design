@@ -205,6 +205,13 @@ for (const bg of ['--danger', '--danger-ink']) floors.push(['--on-i', bg, TEXT])
 for (const bg of ['--surface-hover', '--surface-active']) floors.push(['--ink', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);
+// Messages and banners (#50): title and body on each wash, the icon on it as a
+// mark, and the neutral info banner's strip.
+for (const s of ['success', 'attention', 'danger']) {
+  for (const fg of ['--ink', '--ink-soft']) floors.push([fg, `--${s}-surface`, TEXT]);
+  floors.push([`--${s}`, `--${s}-surface`, MARK]);
+}
+floors.push(['--ink-soft', '--surface-hover', TEXT], ['--i', '--surface-hover', MARK]);
 // Code on a highlighted line (components.css .line-highlight). A comment there
 // takes --code-string, so --code-comment is not paired with the wash.
 for (const fg of ['--code-ink', '--code-keyword', '--code-string']) floors.push([fg, '--code-highlight', TEXT]);
