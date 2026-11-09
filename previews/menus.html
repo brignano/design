@@ -39,7 +39,7 @@
           <button type="button" class="menu-item menu-item-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete trip</button>
         </div>
       </div>
-      <div class="popover" id="l-view" popover aria-labelledby="l-view-h">
+      <div class="popover" id="l-view" popover role="group" aria-labelledby="l-view-h">
         <form class="stack gap-3">
           <p class="popover-heading" id="l-view-h">Show on the map</p>
           <label class="choice"><input type="checkbox" checked> Booked stays</label>
@@ -86,7 +86,7 @@
           <button type="button" class="menu-item menu-item-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete trip</button>
         </div>
       </div>
-      <div class="popover" id="d-view" popover aria-labelledby="d-view-h">
+      <div class="popover" id="d-view" popover role="group" aria-labelledby="d-view-h">
         <form class="stack gap-3">
           <p class="popover-heading" id="d-view-h">Show on the map</p>
           <label class="choice"><input type="checkbox" checked> Booked stays</label>
@@ -135,7 +135,7 @@
   <li><b>Opening.</b> <code>popovertarget</code> on a button opens it with no script, and that button becomes its anchor. Opened any other way, give the opener <code>anchor-name: --trip</code> and the popover <code>position-anchor: --trip</code>.</li>
   <li><b>Items.</b> Each item is a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code>, never a <code>&lt;div&gt;</code>. The destructive action goes last, after a separator, with <code>.menu-item-danger</code>. A disabled item says why in its hint.</li>
   <li><b>ARIA contract.</b> With no script, leave roles off: the items are buttons and links, Tab moves through them, and Esc closes the popover. Add <code>role="menu"</code> on <code>.menu</code> and <code>role="menuitem"</code> on each item only when your script also does the rest of the menu pattern: focus moves to the first item on open, Up and Down arrows move between items (wrapping), Home and End jump to the ends, and Tab closes the menu. Give the opener <code>aria-haspopup="menu"</code> only then, too.</li>
-  <li><b>Other content.</b> A popover can hold anything short, like the map layers above. Give it <code>aria-labelledby</code> pointing at its heading. Anything longer, or that needs a Save button, is a dialog.</li>
+  <li><b>Other content.</b> A popover can hold anything short, like the map layers above. Give it <code>role="group"</code> and <code>aria-labelledby</code> pointing at its heading. Anything longer, or that needs a Save button, is a dialog.</li>
   <li><b>Without anchor positioning.</b> The browser centres the popover. To keep it under the opener, set two custom properties when it opens:
 <pre><code>pop.addEventListener('toggle', (e) =&gt; {
   if (e.newState !== 'open' || CSS.supports('position-area: block-end')) return;

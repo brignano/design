@@ -1051,7 +1051,6 @@
     min-width: 12rem;
     max-width: min(100vw - 2 * var(--s4), 22rem);
     max-height: min(100dvh - 2 * var(--s4), 28rem);
-    margin: 0;
     padding: var(--s3);
     overflow-y: auto;
     border: 1px solid var(--line);
@@ -1059,11 +1058,11 @@
     background-color: var(--card);
     color: var(--ink);
     box-shadow: var(--shadow-2);
-    opacity: 0;
-    transform: translateY(-4px);
     transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   }
-  .popover:popover-open { opacity: 1; transform: none; }
+  /* Hidden state on :not(:popover-open), so a browser without popover
+     support shows the content rather than an invisible, focusable box. */
+  .popover:not(:popover-open) { opacity: 0; transform: translateY(-4px); }
   @starting-style {
     .popover:popover-open { opacity: 0; transform: translateY(-4px); }
   }
@@ -1081,7 +1080,7 @@
   @supports (position-area: block-end) {
     .popover {
       inset: auto;
-      margin-block: var(--s1);
+      margin: var(--s1) 0;
       position-area: block-end span-inline-end;
       position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
     }
@@ -1089,7 +1088,7 @@
   @supports not (position-area: block-end) {
     .popover[style*='--popover-top'] {
       inset: var(--popover-top) auto auto var(--popover-left);
-      margin-block-start: var(--s1);
+      margin: var(--s1) 0 0;
     }
   }
 
