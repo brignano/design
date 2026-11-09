@@ -840,7 +840,8 @@
    - .sheet (with .dialog): slides in from the right on a wide screen and up
      from the bottom on a phone.
    - Open and close: a fade and a short slide over --dur-fast, from the
-     edge a sheet comes from (ADR-0013). Only opacity and transform move, and
+     edge a sheet comes from (ADR-0013), for modal dialogs only: one that is
+     open in the markup renders still. Only opacity and transform move, and
      the open state is always fully shown, so a browser without
      @starting-style just shows it at once. Instant under
      prefers-reduced-motion. */
@@ -859,28 +860,39 @@
     flex-direction: column; /* here, not on [open], so it holds while closing */
     opacity: 0;
     transform: translateY(8px);
-    transition:
-      opacity var(--dur-fast) var(--ease),
-      transform var(--dur-fast) var(--ease),
-      overlay var(--dur-fast) allow-discrete,
-      display var(--dur-fast) allow-discrete;
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   }
   /* display only while open, so the UA's display: none still hides it closed. */
   .dialog[open] { display: flex; opacity: 1; transform: none; }
   @starting-style {
-    .dialog[open] { opacity: 0; transform: translateY(8px); }
+    .dialog:modal { opacity: 0; transform: translateY(8px); }
   }
   .dialog::backdrop {
     background-color: var(--scrim);
     opacity: 0;
-    transition:
-      opacity var(--dur-fast) var(--ease),
-      overlay var(--dur-fast) allow-discrete,
-      display var(--dur-fast) allow-discrete;
+    transition: opacity var(--dur-fast) var(--ease);
   }
   .dialog[open]::backdrop { opacity: 1; }
   @starting-style {
-    .dialog[open]::backdrop { opacity: 0; }
+    .dialog:modal::backdrop { opacity: 0; }
+  }
+  /* Closing animates only where the dialog can stay in the top layer while it
+     fades (overlay). Elsewhere it would drop into the page flow, so it closes
+     at once. */
+  @supports (overlay: auto) {
+    .dialog {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        transform var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
+    .dialog::backdrop {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
   }
 
   .dialog-header {
@@ -925,7 +937,7 @@
   }
   .sheet[open] { transform: none; }
   @starting-style {
-    .sheet[open] { opacity: 1; transform: translateX(100%); }
+    .sheet:modal { opacity: 1; transform: translateX(100%); }
   }
 
   /* Phone: dialogs fill the width; a sheet comes up from the bottom. */
@@ -942,7 +954,7 @@
       transform: translateY(100%);
     }
     @starting-style {
-      .sheet[open] { transform: translateY(100%); }
+      .sheet:modal { transform: translateY(100%); }
     }
   }
 

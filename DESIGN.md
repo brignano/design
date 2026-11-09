@@ -31,7 +31,7 @@ family, motion and shape are identical; what changes is how much room things get
 | Section rhythm | `--s9` (96px) | `--s6` (32px) |
 | Measure | 68ch | 780px |
 | Display face | Silkscreen — monogram, hero eyebrows | none (aliases to `--sans`) |
-| Motion | the trail, scroll reveal | none, except an overlay opening and closing (ADR-0013) |
+| Motion | the trail, scroll reveal, overlays opening and closing (ADR-0013) | none, except overlays opening and closing (ADR-0013) |
 | Density | whitespace carries the layout | scanning beats reading |
 
 ## 3. Colour — one hue, one meaning
@@ -166,20 +166,22 @@ or is disabled is disqualified.
 and that block ships inside `tokens.css` so no surface can forget it. One easing
 curve (`--ease`), three durations, compositor-only properties.
 
-**The tool tier has one exception: motion a person asks for.** A control that
+**The tool tier has two exceptions. The first is motion a person asks for.** A control that
 walks through a sequence step by step, such as driftwood's *Trace a request*,
 may animate, because the reader started it to follow an order of events, and
 the order is the content. It runs only when clicked, never on load; it can be
 stopped at any step; every state it passes through is also listed as text; and
 under `prefers-reduced-motion` it shows the final state (the whole sequence lit)
-at once. Nothing decorative qualifies: no entrance, hover or scroll animation.
+at once. Nothing decorative qualifies: no entrance, hover or scroll animation,
+except the overlay case below.
 
-**Overlays may move as they open and close, in both tiers** (ADR-0013). A
-dialog, sheet, menu or toast that someone opened, or that answers what they
+**The second: overlays may move as they open and close, in both tiers**
+(ADR-0013). A dialog, sheet, popover, menu or toast that someone opened, or that answers what they
 just did, fades and slides a few pixels (a sheet from its own edge) over
 `--dur-fast`. Only opacity and transform move; the open state is always fully
 shown, so a browser without `@starting-style` shows it at once; and under
-`prefers-reduced-motion` it is instant, backdrop included. That is the whole
+`prefers-reduced-motion` it is instant, backdrop included. An overlay that is
+already open when the page loads doesn't animate. That is the whole
 exception: content on the page itself still never animates in.
 
 ## 8. Charts
