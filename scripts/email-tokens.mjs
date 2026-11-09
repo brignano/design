@@ -13,7 +13,7 @@
 // No dependencies; the colour maths is colour.mjs, shared with check.mjs,
 // which also imports resolveLight and TOKEN from here.
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve, split, toHex } from './colour.mjs';
 
@@ -45,7 +45,9 @@ export function fill(html, map = tokenMap()) {
   return html.replace(TOKEN, (_, name) => resolveLight(name, map));
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+// argv[1] keeps a symlinked path (pnpm, npm link, workspaces) while
+// import.meta.url is the real file, so compare real paths.
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const file = process.argv[2] ?? fileURLToPath(here('templates/email.html'));
   try {
     process.stdout.write(fill(readFileSync(file, 'utf8')));
