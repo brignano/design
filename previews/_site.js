@@ -27,7 +27,7 @@
     ['fields.html', 'Text fields'],
     ['choices.html', 'Choices and switches'],
     ['feedback.html', 'Messages and banners'],
-    ['status.html', 'Pills'],
+    ['status.html', 'Pills, badges and tags'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],

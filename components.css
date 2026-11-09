@@ -406,6 +406,119 @@
   .banner .msg-actions { margin: 0; }
 }
 
+/* ── Pill, badge and tag (#51) ────────────────────────────────────────────
+   <span class="pill pill-success">Booked</span>
+   <button class="btn btn-ghost btn-icon" aria-label="Notifications, 3 unread">
+     <svg …></svg><span class="badge" aria-hidden="true">3</span>
+   </button>
+   <span class="tag">Kayak<button type="button" class="tag-remove" aria-label="Remove Kayak"><svg …></svg></button></span>
+   .pill is a status label: neutral by default; .pill-success, -attention,
+   -danger and -info add a dot and their wash. Status always carries a word,
+   and categories stay neutral (no new hues). Domain names (booked, overdue)
+   belong to the consumer: map them onto these kinds. .badge is a count on
+   an icon button; put the count in the button's name too. .tag is a
+   removable filter chip; your script removes it. */
+@layer brignano.components {
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background-color: var(--surface-hover);
+    color: var(--ink-soft);
+    font-family: var(--mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .pill-success { background-color: var(--success-surface); color: var(--success-ink); }
+  .pill-attention { background-color: var(--attention-surface); color: var(--attention-ink); }
+  .pill-danger { background-color: var(--danger-surface); color: var(--danger-ink); }
+  .pill-info { background-color: var(--info-surface); color: var(--info-ink); }
+  :is(.pill-success, .pill-attention, .pill-danger, .pill-info)::before {
+    content: '';
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+  .pill-success::before { background-color: var(--success); }
+  .pill-attention::before { background-color: var(--attention); }
+  .pill-danger::before { background-color: var(--danger); }
+  .pill-info::before { background-color: var(--info); }
+
+  /* Badge: a count pinned to the corner of an icon button (.btn is
+     position: relative). The ring in the card colour lifts it off the icon. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background-color: var(--i);
+    color: var(--on-i);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .btn > .badge { position: absolute; top: -6px; right: -6px; box-shadow: 0 0 0 2px var(--card); }
+
+  /* Tag: a filter chip with a remove button. The button is 24px, and 44px
+     of hit area on touch through an invisible ::before. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 28px;
+    padding: 0 2px 0 10px;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--card);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    line-height: 20px;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .tag-remove {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: calc(var(--radius-sm) - 2px);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .tag-remove > svg { width: 14px; height: 14px; }
+  .tag-remove:hover { background-color: var(--surface-hover); color: var(--ink); }
+  .tag-remove:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 1px; }
+
+  @media (pointer: coarse) {
+    .tag-remove::before { content: ''; position: absolute; inset: -10px; }
+  }
+  @media (forced-colors: active) {
+    :is(.pill-success, .pill-attention, .pill-danger, .pill-info)::before { background-color: CanvasText; }
+    .pill, .badge { border-color: CanvasText; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a
