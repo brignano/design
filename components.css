@@ -1235,7 +1235,11 @@
 }
 
 /* ── Toast (#58) ───────────────────────────────────────────────────────────
-   <div class="toast-region" role="status" aria-label="Notifications">
+   <section class="toast-region" aria-label="Notifications">
+     <div class="toast-list" role="status"></div>   ← success and attention
+     <div class="toast-list" role="alert"></div>    ← danger
+   </section>
+   …and what your script adds to a list:
      <div class="toast toast-success">
        <svg aria-hidden="true" …></svg>
        <div class="toast-content">
@@ -1245,22 +1249,23 @@
        <button class="btn btn-ghost btn-sm toast-action">Undo</button>
        <button class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss">…</button>
      </div>
-   </div>
    A short note that something happened. Kinds: .toast-success,
    .toast-attention, .toast-danger, each with its icon, an edge in its colour
    and a title that says in words what happened, never colour alone. There's
    no info toast: use a .msg on the page.
-   - The region is in the page from the start and empty, role="status" (a
-     polite live region). A danger toast carries role="alert" itself. Newest
-     at the bottom; bottom-centre on a phone, bottom-right from 40rem.
-   - Script is yours (design ships none): add toasts to the region; remove a
+   - The region and both lists are in the page from the start, empty. Two
+     live regions, never nested: role="status" (polite) for success and
+     attention, role="alert" for danger, which sits below them. Newest at the
+     bottom of each; bottom-centre on a phone, bottom-right from 40rem.
+   - Script is yours (design ships none): add toasts to a list; remove a
      success toast after 5s, pausing while it's hovered or has focus; leave
      attention and danger until dismissed. To remove one, set data-leaving,
-     then take it out on transitionend (or after 200ms, whichever is first).
-     The transition still runs, in 0.01ms, under reduced motion, so
-     transitionend always fires.
-   - To show over a modal dialog, give the region popover="manual" and call
-     showPopover() once: it then sits in the top layer.
+     then take it out on its own transitionend (or after 200ms, whichever is
+     first). The transition still runs, in 0.01ms, under reduced motion, so
+     transitionend always fires. If focus was inside it, move focus to the
+     next toast, or back to where it was before.
+   - While a modal dialog is open, everything outside it is inert, toasts
+     included: report inside the dialog with a .msg instead.
    - Enter and leave: a fade and an 8px slide over --dur-fast (ADR-0013).
      Instant under prefers-reduced-motion. */
 @layer brignano.components {
@@ -1268,25 +1273,23 @@
     position: fixed;
     z-index: 40;
     inset: auto var(--s4) var(--s4);
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--s2);
-    width: auto;
-    height: auto;
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    border: 0;
-    background: none;
-    color: inherit;
     pointer-events: none;
   }
-  .toast-region:empty { display: none; }
-  .toast-region[popover]:popover-open { display: flex; }
-  .toast-region > * { pointer-events: auto; }
+  /* A flex column, not display: contents, which some browsers still drop
+     from the accessibility tree, live region and all. Never display: none
+     either: a hidden live region misses what's added as it appears. */
+  .toast-list {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    align-self: stretch;
+    gap: var(--s2);
+  }
+  .toast-list:not(:empty) ~ .toast-list:not(:empty) { margin-top: var(--s2); }
+  .toast-region .toast { pointer-events: auto; }
   @media (min-width: 40rem) {
     .toast-region { inset: auto var(--s5) var(--s5) auto; align-items: flex-end; }
   }
