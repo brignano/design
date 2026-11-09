@@ -109,6 +109,7 @@
   .tip-spec > i { display: block; width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--surface-hover); border: 1px solid var(--line-strong); }
   .toast-spec { display: flex; justify-content: space-between; gap: 12px; width: 190px; padding: 10px 12px; border: 1px solid var(--line); border-inline-start: 3px solid var(--success); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-2); font-size: var(--text-xs); }
   .toast-spec > span { color: var(--i-ink); font-weight: 600; }
+  .loading-spec { display: flex; align-items: center; gap: 10px; width: 180px; }
   .layout-spec { width: 200px; --grid-min: 3rem; }
   .layout-spec i { display: block; height: 18px; min-width: 40px; border-radius: var(--radius-sm); background: var(--surface-hover); border: 1px solid var(--line-strong); }
   .frame { display: grid; gap: 7px; width: 70%; }
@@ -278,6 +279,10 @@
     <li><a class="gallery-card" href="previews/toasts.html">
       <div class="spec" aria-hidden="true"><div class="toast-spec"><b>Trip saved</b><span>Undo</span></div></div>
       <div class="txt"><b>Toast</b><span>Success, attention and danger notes at the bottom of the screen, with the timing contract.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/loading.html">
+      <div class="spec" aria-hidden="true"><div class="loading-spec"><span class="spinner spinner-sm"></span><progress class="progress" value="60" max="100"></progress></div></div>
+      <div class="txt"><b>Loading and empty states</b><span>Spinner, skeleton, progress, meter and an empty state with one action.</span><span class="go">View →</span></div>
     </a></li>
     <li><a class="gallery-card" href="previews/diagram.html">
       <div class="spec" aria-hidden="true"><div class="node node-added"><span class="dtag dtag-added">+ added</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><div><b>orders-api</b><small>aws_ecs_service</small></div></div></div>

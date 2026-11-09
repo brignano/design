@@ -1,0 +1,156 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loading and empty states</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .panel.light, .panel.dark { background: var(--bg); }
+  .group-h { margin: 0; font-family: var(--mono); font-size: var(--text-xs); font-weight: 400; color: var(--ink-soft); }
+  .row { margin: 0; align-items: center; font-size: var(--text-sm); }
+  .skel-card { width: min(100%, 22rem); padding: var(--s3); border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+  .skel-row { margin-top: var(--s3); flex-wrap: nowrap; }
+  .skel-lines { flex: 1; }
+  .bars { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 20rem); gap: var(--s3) var(--s4); align-items: center; font-size: var(--text-sm); }
+  @media (max-width: 40rem) { .bars { grid-template-columns: minmax(0, 1fr); gap: var(--s1); } .bars > .progress, .bars > .meter { margin-bottom: var(--s3); } }
+  .empty-frame { border: 1px dashed var(--line-strong); border-radius: var(--radius); }
+</style>
+</head>
+<body>
+<h1>Loading and empty states</h1>
+<p class="sub">A spinner when you don't know the layout yet, a skeleton when you do. Progress and meter are the native elements, drawn from tokens. An empty state says what will be here and offers one way to fill it. With reduced motion the spinner and shimmer hold still.</p>
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light</span>
+    <div class="stack gap-6">
+      <div class="stack gap-3">
+        <h2 class="group-h" id="l-spin-h">Spinner</h2>
+        <div class="cluster gap-4">
+          <p class="cluster gap-2 row"><span class="spinner spinner-sm" aria-hidden="true"></span> Checking prices…</p>
+          <p class="cluster gap-2 row"><span class="spinner" aria-hidden="true"></span> Loading trips…</p>
+          <button type="button" class="btn btn-primary" aria-busy="true">Save trip</button>
+        </div>
+      </div>
+      <div class="stack gap-3">
+        <h2 class="group-h" id="l-skel-h">Skeleton</h2>
+        <div class="skel-card" role="group" aria-busy="true" aria-label="Loading trip">
+          <span class="skeleton skeleton-rect" aria-hidden="true"></span>
+          <div class="cluster gap-3 skel-row">
+            <span class="skeleton skeleton-circle" aria-hidden="true"></span>
+            <div class="skel-lines">
+              <span class="skeleton skeleton-text" aria-hidden="true"></span>
+              <span class="skeleton skeleton-text" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="stack gap-3">
+        <h2 class="group-h" id="l-prog-h">Progress and meter</h2>
+        <div class="bars">
+          <label for="l-up">Uploading photos, 40%</label><progress class="progress" id="l-up" value="40" max="100">40%</progress>
+          <label for="l-done">Itinerary checked</label><progress class="progress" id="l-done" value="100" max="100">100%</progress>
+          <label for="l-wait">Waiting for the airline</label><progress class="progress" id="l-wait">Waiting</progress>
+          <label for="l-m1">Budget used, 20%</label><meter class="meter" id="l-m1" value="0.2" low="0.5" high="0.75" optimum="0.1">20%</meter>
+          <label for="l-m2">Budget used, 65%</label><meter class="meter" id="l-m2" value="0.65" low="0.5" high="0.75" optimum="0.1">65%</meter>
+          <label for="l-m3">Budget used, 92%</label><meter class="meter" id="l-m3" value="0.92" low="0.5" high="0.75" optimum="0.1">92%</meter>
+        </div>
+      </div>
+      <div class="stack gap-3">
+        <h2 class="group-h" id="l-empty-h">Empty state</h2>
+        <div class="empty-frame">
+          <div class="empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>
+            <p class="empty-title">No trips yet</p>
+            <p class="empty-body">Trips you save show up here, newest first.</p>
+            <a class="btn btn-primary" href="#l-empty-h">Plan a trip</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+    <div class="stack gap-6">
+      <div class="stack gap-3">
+        <h2 class="group-h" id="d-spin-h">Spinner</h2>
+        <div class="cluster gap-4">
+          <p class="cluster gap-2 row"><span class="spinner spinner-sm" aria-hidden="true"></span> Checking prices…</p>
+          <p class="cluster gap-2 row"><span class="spinner" aria-hidden="true"></span> Loading trips…</p>
+          <button type="button" class="btn btn-primary" aria-busy="true">Save trip</button>
+        </div>
+      </div>
+      <div class="stack gap-3">
+        <h2 class="group-h" id="d-skel-h">Skeleton</h2>
+        <div class="skel-card" role="group" aria-busy="true" aria-label="Loading trip">
+          <span class="skeleton skeleton-rect" aria-hidden="true"></span>
+          <div class="cluster gap-3 skel-row">
+            <span class="skeleton skeleton-circle" aria-hidden="true"></span>
+            <div class="skel-lines">
+              <span class="skeleton skeleton-text" aria-hidden="true"></span>
+              <span class="skeleton skeleton-text" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="stack gap-3">
+        <h2 class="group-h" id="d-prog-h">Progress and meter</h2>
+        <div class="bars">
+          <label for="d-up">Uploading photos, 40%</label><progress class="progress" id="d-up" value="40" max="100">40%</progress>
+          <label for="d-done">Itinerary checked</label><progress class="progress" id="d-done" value="100" max="100">100%</progress>
+          <label for="d-wait">Waiting for the airline</label><progress class="progress" id="d-wait">Waiting</progress>
+          <label for="d-m1">Budget used, 20%</label><meter class="meter" id="d-m1" value="0.2" low="0.5" high="0.75" optimum="0.1">20%</meter>
+          <label for="d-m2">Budget used, 65%</label><meter class="meter" id="d-m2" value="0.65" low="0.5" high="0.75" optimum="0.1">65%</meter>
+          <label for="d-m3">Budget used, 92%</label><meter class="meter" id="d-m3" value="0.92" low="0.5" high="0.75" optimum="0.1">92%</meter>
+        </div>
+      </div>
+      <div class="stack gap-3">
+        <h2 class="group-h" id="d-empty-h">Empty state</h2>
+        <div class="empty-frame">
+          <div class="empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>
+            <p class="empty-title">No trips yet</p>
+            <p class="empty-body">Trips you save show up here, newest first.</p>
+            <a class="btn btn-primary" href="#d-empty-h">Plan a trip</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+<h2>Use</h2>
+<pre><code>&lt;p class="cluster gap-2"&gt;&lt;span class="spinner" aria-hidden="true"&gt;&lt;/span&gt; Loading trips…&lt;/p&gt;
+
+&lt;div role="group" aria-busy="true" aria-label="Loading trip"&gt;
+  &lt;span class="skeleton skeleton-circle" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;span class="skeleton skeleton-text" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;span class="skeleton skeleton-text" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;label for="up"&gt;Uploading photos&lt;/label&gt;
+&lt;progress class="progress" id="up" value="40" max="100"&gt;40%&lt;/progress&gt;
+
+&lt;label for="budget"&gt;Budget used&lt;/label&gt;
+&lt;meter class="meter" id="budget" value="0.65" low="0.5" high="0.75" optimum="0.1"&gt;65%&lt;/meter&gt;
+
+&lt;div class="empty"&gt;
+  &lt;svg aria-hidden="true" …&gt;&lt;/svg&gt;
+  &lt;p class="empty-title"&gt;No trips yet&lt;/p&gt;
+  &lt;p class="empty-body"&gt;Trips you save show up here.&lt;/p&gt;
+  &lt;a class="btn btn-primary" href="/plan"&gt;Plan a trip&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+<ul>
+  <li><b>Spinner or skeleton.</b> A skeleton only when you know the layout that's coming; otherwise a spinner. A spinner always has words beside it, or <code>role="img" aria-label="Loading"</code> where there's no room.</li>
+  <li><b>Busy regions.</b> Put <code>aria-busy="true"</code> on the container that's loading and remove it when the content lands. Skeleton blocks are <code>aria-hidden</code>.</li>
+  <li><b>Progress and meter.</b> Progress is how far a task has got; leave out <code>value</code> when you can't say, and it slides. Meter is a level in a known range: its fill is cobalt in the <code>optimum</code> range, attention one range away and danger two away. Always label them. Without the class they stay native.</li>
+  <li><b>Empty states.</b> One line saying what will be here, at most one action, an icon and no illustration. If there's nothing the reader can do, leave the button out.</li>
+  <li><b>Reduced motion.</b> The spinner shows a still arc, the shimmer and the sliding stripe stop. The words and <code>aria-busy</code> carry the meaning.</li>
+</ul>
+</div>
+</body>
+</html>
