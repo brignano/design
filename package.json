@@ -19,7 +19,10 @@
     "tokens.chart.css",
     "components.css",
     "product-page.css",
+    "templates/",
     "scripts/fold.mjs",
+    "scripts/email-tokens.mjs",
+    "scripts/colour.mjs",
     "tailwind.css",
     "DESIGN.md",
     "DECISIONS.md"
@@ -29,7 +32,9 @@
     "./tokens.chart.css": "./tokens.chart.css",
     "./tailwind.css": "./tailwind.css",
     "./components.css": "./components.css",
-    "./product-page.css": "./product-page.css"
+    "./product-page.css": "./product-page.css",
+    "./templates/*": "./templates/*",
+    "./scripts/email-tokens.mjs": "./scripts/email-tokens.mjs"
   },
   "sideEffects": [
     "*.css"
