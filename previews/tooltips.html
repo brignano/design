@@ -1,0 +1,96 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tooltip</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .panel.light, .panel.dark { background: var(--bg); }
+  .panel .stack { padding-top: var(--s6); }
+  .name { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin: 0; }
+  /* Preview only: copies shown in the flow, as if open. */
+  .specimens { display: flex; flex-wrap: wrap; gap: var(--s4); align-items: flex-start; }
+  .specimens > .tooltip { position: relative; inset: auto; translate: none; margin: 0; opacity: 1; visibility: visible; }
+</style>
+</head>
+<body>
+<h1>Tooltip</h1>
+<p class="sub">A short name for an icon button, shown on hover and keyboard focus after 300ms and gone the moment you leave. Never the only place something is said: touch users don't hover.</p>
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light</span>
+    <div class="stack gap-5">
+      <div class="cluster gap-1" role="group" aria-label="Trip tools (light)">
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="l-tip-share" aria-labelledby="l-tip-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v12M7 8l5-5 5 5"/></svg></button>
+          <span class="tooltip" id="l-tip-share" popover="hint" role="tooltip">Share trip</span>
+        </span>
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="l-tip-copy" aria-labelledby="l-tip-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button>
+          <span class="tooltip" id="l-tip-copy" popover="hint" role="tooltip">Duplicate</span>
+        </span>
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="l-tip-print" aria-labelledby="l-tip-print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg></button>
+          <span class="tooltip" id="l-tip-print" popover="hint" role="tooltip">Print itinerary</span>
+        </span>
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="l-tip-delete" aria-labelledby="l-tip-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+          <span class="tooltip" id="l-tip-delete" popover="hint" role="tooltip">Delete trip</span>
+        </span>
+      </div>
+      <p class="name">Shown open, in place</p>
+      <div class="specimens">
+        <span class="tooltip" aria-hidden="true">Share trip</span>
+        <span class="tooltip" aria-hidden="true">Print itinerary</span>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+    <div class="stack gap-5">
+      <div class="cluster gap-1" role="group" aria-label="Trip tools (dark)">
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="d-tip-share" aria-labelledby="d-tip-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v12M7 8l5-5 5 5"/></svg></button>
+          <span class="tooltip" id="d-tip-share" popover="hint" role="tooltip">Share trip</span>
+        </span>
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="d-tip-copy" aria-labelledby="d-tip-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button>
+          <span class="tooltip" id="d-tip-copy" popover="hint" role="tooltip">Duplicate</span>
+        </span>
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="d-tip-print" aria-labelledby="d-tip-print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg></button>
+          <span class="tooltip" id="d-tip-print" popover="hint" role="tooltip">Print itinerary</span>
+        </span>
+        <span class="tooltip-wrap">
+          <button type="button" class="btn btn-ghost btn-icon" interestfor="d-tip-delete" aria-labelledby="d-tip-delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+          <span class="tooltip" id="d-tip-delete" popover="hint" role="tooltip">Delete trip</span>
+        </span>
+      </div>
+      <p class="name">Shown open, in place</p>
+      <div class="specimens">
+        <span class="tooltip" aria-hidden="true">Share trip</span>
+        <span class="tooltip" aria-hidden="true">Print itinerary</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+<h2>Use</h2>
+<pre><code>&lt;span class="tooltip-wrap"&gt;
+  &lt;button class="btn btn-ghost btn-icon" interestfor="tip-share" aria-labelledby="tip-share"&gt;…&lt;/button&gt;
+  &lt;span class="tooltip" id="tip-share" popover="hint" role="tooltip"&gt;Share trip&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+<ul>
+  <li><b>Names only.</b> One short phrase that names what the button does. A sentence, a link or anything the reader must know goes in a popover or on the page.</li>
+  <li><b>The name comes from the tooltip.</b> <code>aria-labelledby</code> on the trigger points at the tooltip, so screen readers hear the same words people see, with or without hover.</li>
+  <li><b>Where it opens.</b> With <code>interestfor</code> support, the browser opens it as a hint popover above the trigger (below if there's no room) and Esc dismisses it. Elsewhere, <code>.tooltip-wrap</code> shows it on hover and focus. No script either way. That fallback can't close on Esc or flip at the top of the viewport, and a parent with <code>overflow: hidden</code> clips it.</li>
+  <li><b>Timing.</b> 300ms in, nothing out. It stays open while the pointer is on it, so someone using a magnifier can move onto it to read it. With reduced motion there's no fade, but the delay stays.</li>
+</ul>
+</div>
+</body>
+</html>

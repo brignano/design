@@ -34,6 +34,7 @@
     ['site-chrome.html', 'Site header, nav and footer'],
     ['dialogs.html', 'Dialog and sheet'],
     ['menus.html', 'Popover and menu'],
+    ['tooltips.html', 'Tooltip'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],
