@@ -32,6 +32,7 @@
     ['cards.html', 'Cards'],
     ['layout.html', 'Layout'],
     ['site-chrome.html', 'Site header, nav and footer'],
+    ['dialogs.html', 'Dialog and sheet'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],
