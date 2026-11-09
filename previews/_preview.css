@@ -37,24 +37,15 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 }
 .panel.light { color-scheme: light; }
 .panel.dark { color-scheme: dark; }
-.tag { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em;
+.panel-label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em;
        text-transform: uppercase; color: var(--slate); }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .stack { display: flex; flex-direction: column; gap: 10px; }
 
 /* ── Component specimens ── */
-/* Buttons, .link and messages live in components.css (#47, #50). .focused draws the focus
+/* Buttons, .link, messages and pills live in components.css (#47, #50, #51). .focused draws the focus
    ring on a specimen so the state can be shown without tabbing to it. */
 .focused { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-
-.pill { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: .06em;
-        text-transform: uppercase; padding: 3px 9px; border-radius: var(--radius-sm);
-        white-space: nowrap; border: 1px solid transparent; }
-.pill-booked { background: var(--success-surface); color: var(--success-ink); }
-.pill-active { background: var(--attention-surface); color: var(--attention-ink); font-weight: 600; }
-.pill-overdue { background: var(--danger-surface); color: var(--danger-ink); }
-.pill-idea { background: var(--line-soft); color: var(--slate); }
-.pill-parked { background: transparent; border: 1px dashed var(--line-strong); color: var(--slate); }
 
 .ramp { display: grid; grid-template-columns: repeat(12, 1fr); border-radius: 8px;
         overflow: hidden; border: 1px solid var(--line); }
