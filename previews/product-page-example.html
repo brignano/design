@@ -48,10 +48,10 @@
   .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 6px 10px;
     border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--card); }
   .row b { font-weight: 600; }
-  .pill { font: 600 var(--text-xs) / 1 var(--mono); padding: 3px 6px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
-  .pill.down { color: var(--danger-ink); background: var(--danger-surface); border-color: var(--danger-line); }
-  .pill.deg { color: var(--attention-ink); background: var(--attention-surface); border-color: var(--attention-line); }
-  .pill.ok { color: var(--success-ink); background: var(--success-surface); border-color: var(--success-line); }
+  .shot-pill { font: 600 var(--text-xs) / 1 var(--mono); padding: 3px 6px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+  .shot-pill.down { color: var(--danger-ink); background: var(--danger-surface); border-color: var(--danger-line); }
+  .shot-pill.deg { color: var(--attention-ink); background: var(--attention-surface); border-color: var(--attention-line); }
+  .shot-pill.ok { color: var(--success-ink); background: var(--success-surface); border-color: var(--success-line); }
 </style>
 </head>
 <!-- Brief:
@@ -121,9 +121,9 @@
         </li>
         <li class="pp-get">
           <figure class="pp-get-media"><div class="mini" aria-hidden="true">
-            <div class="row"><b>storefront</b><span class="pill down">✕ down</span></div>
-            <div class="row"><b>payments</b><span class="pill deg">▲ degraded</span></div>
-            <div class="row"><b>orders-api</b><span class="pill ok">✓ healthy</span></div>
+            <div class="row"><b>storefront</b><span class="shot-pill down">✕ down</span></div>
+            <div class="row"><b>payments</b><span class="shot-pill deg">▲ degraded</span></div>
+            <div class="row"><b>orders-api</b><span class="shot-pill ok">✓ healthy</span></div>
           </div></figure>
           <h3>Why it broke</h3><p>AWS's own reason, next to each box.</p>
         </li>

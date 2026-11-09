@@ -32,9 +32,12 @@
      focusable: neutral --i-disabled-*, never opacity, no hover;
    - aria-busy="true": the label hides behind a spinner and the button keeps
      its width. Your script sets it and ignores clicks while it is set.
-   .link is the inline link for running text. */
+   .link is the inline link for running text.
+   product-page.css's .pp-button shares these rules as a deprecated alias
+   (#60): a bare .pp-button is .btn-primary, .is-secondary the default
+   look. The alias goes at 1.0; its size stays in product-page.css. */
 @layer brignano.components {
-  .btn {
+  .btn, .pp-button {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -57,16 +60,16 @@
     color: var(--ink);
     transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
   }
-  .btn > svg { flex: none; width: 1.25em; height: 1.25em; }
-  .btn:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .btn > svg, .pp-button > svg { flex: none; width: 1.25em; height: 1.25em; }
+  .btn:focus-visible, .pp-button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
-  .btn:hover, .btn-secondary:hover { background: var(--surface-hover); }
-  .btn:active, .btn-secondary:active { background: var(--surface-active); }
+  .btn:hover, .btn-secondary:hover, .pp-button:hover { background: var(--surface-hover); }
+  .btn:active, .btn-secondary:active, .pp-button:active { background: var(--surface-active); }
   .btn-secondary { border-color: var(--line-control); background: transparent; color: var(--ink); }
 
-  .btn-primary { border-color: transparent; background: var(--i); color: var(--on-i); }
-  .btn-primary:hover { background: var(--i-hover); }
-  .btn-primary:active { background: var(--i-pressed); }
+  .btn-primary, .pp-button:where(:not(.is-secondary)) { border-color: transparent; background: var(--i); color: var(--on-i); }
+  .btn-primary:hover, .pp-button:where(:not(.is-secondary)):hover { background: var(--i-hover); }
+  .btn-primary:active, .pp-button:where(:not(.is-secondary)):active { background: var(--i-pressed); }
 
   .btn-ghost { border-color: transparent; background: transparent; color: var(--i-ink); }
   .btn-ghost:is(:hover, :active) { background: var(--i-surface); }
@@ -84,7 +87,8 @@
   /* Disabled: neutral, never opacity. Its low contrast is allowed only
      because the control is really inactive (WCAG 1.4.3, DESIGN.md §4);
      check.mjs exempts exactly this pair on :disabled / aria-disabled rules. */
-  .btn:is(:disabled, [aria-disabled='true']) {
+  .btn:is(:disabled, [aria-disabled='true']),
+  .pp-button:is(:disabled, [aria-disabled='true']) {
     border-color: transparent;
     background: var(--i-disabled-bg);
     color: var(--i-disabled-ink);
@@ -93,9 +97,9 @@
 
   /* Busy: the text goes transparent but keeps its box, so the width holds;
      the spinner draws in the text colour. */
-  .btn[aria-busy='true'] { -webkit-text-fill-color: transparent; cursor: progress; pointer-events: none; }
-  .btn[aria-busy='true'] > * { visibility: hidden; }
-  .btn[aria-busy='true']::after {
+  :is(.btn, .pp-button)[aria-busy='true'] { -webkit-text-fill-color: transparent; cursor: progress; pointer-events: none; }
+  :is(.btn, .pp-button)[aria-busy='true'] > * { visibility: hidden; }
+  :is(.btn, .pp-button)[aria-busy='true']::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -121,12 +125,12 @@
   /* Forced colours repaint the hidden label, so the busy button takes
      system colours itself and the spinner draws on a clean face. */
   @media (forced-colors: active) {
-    .btn[aria-busy='true'] { forced-color-adjust: none; background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+    :is(.btn, .pp-button)[aria-busy='true'] { forced-color-adjust: none; background: ButtonFace; color: ButtonText; border-color: ButtonText; }
   }
   /* Under reduced motion tokens.css stops the spin: a still arc, and
      aria-busy still says the button is working. */
   @media (prefers-reduced-motion: reduce) {
-    .btn { transition: none; }
+    .btn, .pp-button { transition: none; }
   }
 }
 
@@ -142,17 +146,19 @@
    native <select> are styled inside .field. State comes from attributes:
    aria-invalid="true" turns the edge to --danger, disabled goes neutral.
    .field-affix wraps a control with a prefix or suffix (a unit or an icon);
-   name the unit in the label too. When to validate is your script's call. */
+   name the unit in the label too. When to validate is your script's call.
+   product-page.css's .pp-field shares these rules as a deprecated alias
+   (#60), with its taller control kept there. The alias goes at 1.0. */
 @layer brignano.components {
-  .field { display: grid; align-content: start; gap: 6px; min-width: 0; }
-  .field > label { font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
+  .field, .pp-field { display: grid; align-content: start; gap: 6px; min-width: 0; }
+  :is(.field, .pp-field) > label { font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
   .field-optional { font-weight: 400; color: var(--ink-soft); }
   .field-hint { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--ink-soft); }
   .field-error { display: flex; gap: 6px; align-items: flex-start; margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--danger-ink); }
   .field-error > svg { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--danger); }
   .field-error[hidden] { display: none; }
 
-  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select),
+  :is(.field, .pp-field) :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select),
   .field-affix {
     box-sizing: border-box;
     width: 100%;
@@ -166,9 +172,9 @@
     transition: border-color var(--dur-fast) var(--ease);
   }
   /* At least 16px, so phones don't zoom in on focus (the tool tier's base is 15px). */
-  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select) { padding: 7px 12px; font: max(1rem, var(--text-base)) / 24px var(--sans); }
-  .field textarea { min-height: 7em; resize: vertical; }
-  .field :is(input, textarea)::placeholder { color: var(--slate); opacity: 1; }
+  :is(.field, .pp-field) :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select) { padding: 7px 12px; font: max(1rem, var(--text-base)) / 24px var(--sans); }
+  :is(.field, .pp-field) textarea { min-height: 7em; resize: vertical; }
+  :is(.field, .pp-field) :is(input, textarea)::placeholder { color: var(--slate); opacity: 1; }
 
   /* Native select, no custom dropdown: the chevron is two gradients in the
      text colour, so it follows the theme and needs no image. */
@@ -183,16 +189,16 @@
   }
 
   /* Hover darkens the edge: --line-strong would drop it under 3:1 (DESIGN.md §4). */
-  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):hover, .field-affix:hover { border-color: var(--ink-soft); }
-  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  :is(.field, .pp-field) :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):hover, .field-affix:hover { border-color: var(--ink-soft); }
+  :is(.field, .pp-field) :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
-  .field [aria-invalid='true'], .field [aria-invalid='true']:hover,
+  :is(.field, .pp-field) [aria-invalid='true'], :is(.field, .pp-field) [aria-invalid='true']:hover,
   .field-affix:has([aria-invalid='true']) { border-color: var(--danger); background-color: var(--card); }
 
   /* Disabled stays readable: a disabled field can still hold a value the
      reader needs, so its text keeps the 4.5:1 floor. The edge goes, so it
      no longer reads as something to type in. */
-  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):disabled,
+  :is(.field, .pp-field) :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):disabled,
   .field-affix:has(:disabled) { border-color: transparent; background-color: var(--surface-hover); color: var(--ink-soft); cursor: not-allowed; }
 
   /* Affix: the wrapper draws the edge and the focus ring; the control inside
@@ -215,7 +221,7 @@
   .field-affix:has(:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
   @media (pointer: coarse) {
-    .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), select), .field-affix { min-height: 44px; }
+    :is(.field, .pp-field) :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), select), .field-affix { min-height: 44px; }
     .field .field-affix > :is(input, select) { min-height: 42px; }
   }
   /* Forced colours drop the gradient chevron: give the select its native arrow back. */
@@ -223,7 +229,7 @@
     .field select { appearance: auto; background-image: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select), .field-affix { transition: none; }
+    :is(.field, .pp-field) :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select), .field-affix { transition: none; }
   }
 }
 
@@ -709,7 +715,10 @@
      when it opens, and focus goes back to the menu button when it closes.
    - aria-current="page" marks the current link: ink text, a cobalt underline.
    - .site-footer: .site-footer-columns of link lists, each under a
-     .site-footer-heading, then .site-footer-legal and .site-footer-small. */
+     .site-footer-heading, then .site-footer-legal and .site-footer-small.
+   - product-page.css's .pp-header and .pp-footer share the outer bar rules
+     as deprecated aliases (#60); their insides keep their own classes. The
+     aliases go at 1.0. */
 @layer brignano.components {
   .skip-link {
     position: absolute;
@@ -726,7 +735,7 @@
   }
   .skip-link:focus { transform: none; outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
-  .site-header {
+  .site-header, .pp-header {
     container: site-header / inline-size;
     position: sticky;
     top: 0;
@@ -831,7 +840,7 @@
     .site-nav a { min-height: 44px; }
   }
 
-  .site-footer {
+  .site-footer, .pp-footer {
     padding-block: var(--s6) var(--s7);
     border-top: 1px solid var(--line);
     color: var(--ink-soft);

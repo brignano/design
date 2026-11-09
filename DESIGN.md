@@ -392,6 +392,20 @@ tokens, put `tier-marketing` on `<html>` and `pp` on `<body>`.
 @import '@brignano/design/product-page.css';
 ```
 
+`product-page.css` imports `components.css`, so every shared component
+(`.btn`, `.field`, `.msg`, `.pill`, …) is available on a product page too.
+Two consequences:
+
+- **The `.pp-` controls are deprecated aliases.** `.pp-button`, `.pp-field`,
+  `.pp-header` and `.pp-footer` share the rules of `.btn .btn-primary`,
+  `.field`, `.site-header` and `.site-footer`; only the product page's larger
+  button and field sizes live in `product-page.css`. They keep working until
+  1.0, when they go. New pages can use the shared classes directly.
+- **Give a page's own classes a prefix.** A mock in the proof that calls its
+  own class `.pill` or `.card` picks up the shared component's rules for
+  anything it doesn't set itself (the worked example's status chips are
+  `.shot-pill` for this reason).
+
 The bands, in order:
 
 1. **Header** (`.pp-header`): brand, two or three in-page links, the primary

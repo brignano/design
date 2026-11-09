@@ -4,6 +4,11 @@
  *   @import '@brignano/design/product-page.css';
  *   <html class="tier-marketing">
  *
+ * It brings components.css with it, so a product page can use any shared
+ * component (.btn, .field, .msg, …). .pp-button, .pp-field, .pp-header and
+ * .pp-footer are deprecated aliases that share those components' rules
+ * (DESIGN.md §13); they keep working until 1.0.
+ *
  * Show, then tell. A stranger glancing at a phone gets what the product is,
  * what it does for them, and the one thing to do, from the first screen and
  * without reading a paragraph. Write the five-line brief first (DESIGN.md
@@ -53,6 +58,8 @@
  * Colours are tokens only; widths are --pp-width / --pp-gutter, which a page
  * may override on .pp. */
 
+@import './components.css';
+
 .pp {
   --pp-width: 1160px;
   --pp-gutter: var(--s5);
@@ -83,11 +90,7 @@ body.pp { margin: 0; }
 .pp-skip:focus { top: var(--s3); }
 
 /* ── Header ────────────────────────────────────────────────────────────── */
-.pp-header {
-  position: sticky; top: 0; z-index: 10;
-  background: var(--surface-sticky); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
-}
+/* The bar itself (sticky, blurred, ruled) is .site-header's, in components.css. */
 .pp-header > .pp-wrap { display: flex; align-items: center; gap: var(--s5); min-height: 64px; }
 .pp-brand {
   display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none;
@@ -124,22 +127,13 @@ body.pp { margin: 0; }
 
 /* ── Buttons ───────────────────────────────────────────────────────────
    .pp-button is the page's one primary action. .is-secondary is everything
-   else. Works on <a> and <button>. */
-.pp-button {
-  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); box-sizing: border-box;
-  font: 600 var(--text-base) / 1.2 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer;
-  padding: 13px 22px; border-radius: 8px; border: 1px solid var(--i);
-  background: var(--i); color: var(--on-i);
-  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
-}
-.pp-button:hover { background: var(--i-hover); border-color: var(--i-hover); color: var(--on-i); }
-.pp-button:active { background: var(--i-pressed); border-color: var(--i-pressed); }
-.pp-button.is-secondary { background: transparent; color: var(--ink); border-color: var(--line-control); font-weight: 500; }
-.pp-button.is-secondary:hover { background: var(--surface-hover); color: var(--ink); }
-.pp-button.is-secondary:active { background: var(--surface-active); }
+   else. Works on <a> and <button>. Deprecated: it is an alias of .btn
+   (colours, states, focus, disabled, busy all come from components.css), and
+   only the product page's larger size lives here. New pages use
+   .btn .btn-primary .btn-lg. */
+.pp-button { box-sizing: border-box; min-height: 0; font: 600 var(--text-base) / 1.2 var(--sans); padding: 13px 22px; border-radius: 8px; }
+.pp-button.is-secondary { font-weight: 500; }
 .pp-button.is-small { font-size: var(--text-sm); padding: 8px 14px; }
-.pp-button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-.pp-button:disabled { background: var(--i-disabled-bg); border-color: transparent; color: var(--i-disabled-ink); cursor: not-allowed; }
 /* The 44px touch target includes padding and border (border-box above), so
    a small header button stays 44px tall rather than growing to 62px. */
 @media (pointer: coarse) { .pp-button { min-height: 44px; } }
@@ -427,24 +421,10 @@ body.pp { margin: 0; }
 .pp-form .pp-actions { margin-top: var(--s2); }
 /* [hidden] is how the form gives way to .pp-done; display: grid would beat it. */
 .pp-form[hidden], .pp-error[hidden], .pp-done[hidden] { display: none; }
-.pp-field { display: grid; gap: 6px; min-width: 0; }
-.pp-field > label { font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
+/* .pp-field is a deprecated alias of .field (components.css); only its
+   taller control lives here. New pages use .field. */
 .pp-optional { font-weight: 400; color: var(--ink-soft); }
-.pp-field input, .pp-field textarea {
-  box-sizing: border-box; width: 100%; margin: 0; min-width: 0;
-  font: var(--text-base) / 1.5 var(--sans); color: var(--ink);
-  background: var(--card); border: 1px solid var(--line-control); border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  transition: border-color var(--dur-fast) var(--ease);
-}
-.pp-field textarea { min-height: 7em; resize: vertical; }
-.pp-field input::placeholder, .pp-field textarea::placeholder { color: var(--slate); opacity: 1; }
-/* Hover darkens the edge rather than lightening it: --line-strong would drop
-   the boundary under 3:1 (DESIGN.md §4). */
-.pp-field input:hover, .pp-field textarea:hover { border-color: var(--ink-soft); }
-.pp-field input:focus-visible, .pp-field textarea:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-.pp-field input:disabled, .pp-field textarea:disabled { background: var(--surface-hover); color: var(--ink-soft); cursor: not-allowed; }
-.pp-field [aria-invalid="true"], .pp-field [aria-invalid="true"]:hover { border-color: var(--danger); }
+.pp-field :is(input, textarea) { padding: 10px 12px; font: var(--text-base) / 1.5 var(--sans); }
 .pp-error { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--danger-ink); }
 /* A send error reuses the note under the button. */
 .pp-note.is-error { color: var(--danger-ink); }
@@ -467,7 +447,7 @@ body.pp { margin: 0; }
 .pp-price dd a { color: var(--i-ink); }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
-.pp-footer { border-top: 1px solid var(--line); padding: var(--s6) 0 var(--s7); color: var(--ink-soft); font-size: var(--text-sm); }
+/* The bar (rule, padding, quiet text) is .site-footer's, in components.css. */
 .pp-footer > .pp-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4) var(--s6); }
 .pp-footer p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
 .pp-footer .pp-brand { font-size: var(--text-base); }
