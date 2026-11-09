@@ -120,8 +120,10 @@ The part that makes an interface feel built rather than styled.
   `--surface-active`, not from opacity tricks.
 - A control's own edge — an input, a secondary button — is `--line-control`
   (≥ 3:1). `--line-strong` is a divider, too faint to tell you a control is there.
-- Native checkboxes, radios and ranges inherit `accent-color: var(--i)` from
-  `tokens.css`; don't restyle them just to recolour them.
+- Checkboxes and radios in a `.choice` row are drawn from tokens
+  (`components.css`), so they look the same on every OS. Bare ones, ranges and
+  progress bars stay native and inherit `accent-color: var(--i)` from
+  `tokens.css`; don't restyle those just to recolour them.
 
 ## 5. Type
 

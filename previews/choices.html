@@ -26,6 +26,7 @@
         <legend>Notify me</legend>
         <label class="choice"><input type="checkbox" name="l-n" checked><span>By email</span></label>
         <label class="choice"><input type="checkbox" name="l-n"><span>By text message</span></label>
+        <label class="choice"><input type="checkbox" name="l-n" data-indeterminate><span>Weekly digest (some trips, mixed)</span></label>
         <label class="choice"><input type="checkbox" name="l-n" class="focused"><span>Focus</span></label>
         <label class="choice"><input type="checkbox" name="l-n" disabled><span>By post (not offered)</span></label>
         <label class="choice"><input type="checkbox" name="l-n" checked disabled><span>Account notices (always on)</span></label>
@@ -88,6 +89,7 @@
         <legend>Notify me</legend>
         <label class="choice"><input type="checkbox" name="d-n" checked><span>By email</span></label>
         <label class="choice"><input type="checkbox" name="d-n"><span>By text message</span></label>
+        <label class="choice"><input type="checkbox" name="d-n" data-indeterminate><span>Weekly digest (some trips, mixed)</span></label>
         <label class="choice"><input type="checkbox" name="d-n" class="focused"><span>Focus</span></label>
         <label class="choice"><input type="checkbox" name="d-n" disabled><span>By post (not offered)</span></label>
         <label class="choice"><input type="checkbox" name="d-n" checked disabled><span>Account notices (always on)</span></label>
@@ -203,5 +205,9 @@
     </ul>
   </section>
 </div>
+<script>
+  // Preview only: indeterminate can only be set from script.
+  document.querySelectorAll('[data-indeterminate]').forEach((el) => { el.indeterminate = true; });
+</script>
 </body>
 </html>

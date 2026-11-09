@@ -235,8 +235,11 @@
        <p class="choice-hint" id="ship-fast-hint">Two working days.</p>
      </div>
    </fieldset>
-   Checkboxes and radios stay native and take accent-color from tokens.css
-   (DESIGN.md §4). .switch goes on <input type="checkbox" role="switch">,
+   Inside .choice, checkboxes and radios are drawn from tokens (issue 118): an
+   --line-control box on --card, filled --i with an --on-i mark when
+   checked, a dash when indeterminate. The tick is the row's ::before laid
+   over the box, because an <input> can't reliably hold a pseudo-element.
+   Outside .choice they stay native and take accent-color (DESIGN.md §4). .switch goes on <input type="checkbox" role="switch">,
    only for a setting that applies at once; a form you submit uses a
    checkbox. .segmented is a row of radios drawn as one control: keep the
    real radios inside it, so arrow keys and the group name come for free. */
@@ -247,6 +250,41 @@
   .choice { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s2); align-items: start; line-height: 1.5; color: var(--ink); cursor: pointer; }
   .choice > input { grid-column: 1; font: inherit; cursor: inherit; }
   .choice > input:not(.switch) { width: 18px; height: 18px; margin: calc((1.5em - 18px) / 2) 0 0; }
+  .choice > input:is([type='checkbox'], [type='radio']):not(.switch) {
+    appearance: none;
+    box-sizing: border-box;
+    grid-area: 1 / 1;
+    flex: none;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--card);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .choice > input[type='radio'] { border-radius: 50%; }
+  .choice > input:is([type='checkbox'], [type='radio']):not(.switch):not(:disabled):hover { border-color: var(--ink-soft); }
+  .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch) {
+    border-color: transparent;
+    background-color: var(--i);
+    color: var(--on-i);
+  }
+  .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch):not(:disabled):hover { background-color: var(--i-hover); }
+  .choice > input[type='radio']:checked { background-image: radial-gradient(circle, currentColor 0 3.5px, transparent 4px); }
+  .choice > input[type='checkbox']:indeterminate { background-image: linear-gradient(currentColor, currentColor); background-size: 10px 2px; }
+  .choice > input:is([type='checkbox'], [type='radio']):not(.switch):disabled { border-color: transparent; background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); cursor: not-allowed; }
+  /* The tick: the row's ::before sits in the box's grid cell, masked to a check. */
+  .choice:has(> input[type='checkbox']:checked:not(:indeterminate, .switch))::before {
+    content: '';
+    grid-area: 1 / 1;
+    width: 18px;
+    height: 18px;
+    margin: calc((1.5em - 18px) / 2) 0 0;
+    background-color: var(--on-i);
+    pointer-events: none;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9.5l3 3 6-7' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9.5l3 3 6-7' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+  }
+  .choice:has(> input[type='checkbox']:checked:disabled)::before { background-color: var(--i-disabled-ink); }
   .choice > :not(input) { grid-column: 2; }
   .choice > label { cursor: inherit; }
   .choice-hint { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--ink-soft); }
@@ -327,6 +365,11 @@
     .switch { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: CanvasText; }
     .switch:checked { border-color: Highlight; background-color: Highlight; color: HighlightText; }
     .switch:disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
+    .choice > input:is([type='checkbox'], [type='radio']):not(.switch) { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: HighlightText; }
+    .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch) { border-color: Highlight; background-color: Highlight; }
+    .choice > input:is([type='checkbox'], [type='radio']):not(.switch):disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
+    .choice:has(> input[type='checkbox']:checked:not(:indeterminate, .switch))::before { forced-color-adjust: none; background-color: HighlightText; }
+    .choice:has(> input[type='checkbox']:checked:disabled)::before { background-color: GrayText; }
     .segmented > label { forced-color-adjust: none; color: CanvasText; }
     .segmented > label:has(:checked) { background-color: Highlight; color: HighlightText; }
     .segmented > label:has(:disabled) { color: GrayText; }
