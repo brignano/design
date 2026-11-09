@@ -820,6 +820,134 @@
   }
 }
 
+/* ── Dialog and sheet (#55) ───────────────────────────────────────────────
+   <dialog class="dialog" id="rename" aria-labelledby="rename-title">
+     <div class="dialog-header">
+       <h2 class="dialog-title" id="rename-title">Rename trip</h2>
+       <form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close">…</button></form>
+     </div>
+     <div class="dialog-body">…</div>
+     <div class="dialog-footer">…actions, primary last…</div>
+   </dialog>
+   Open it with dialog.showModal(), or with no script at all where
+   <button commandfor="rename" command="show-modal"> is supported. Native
+   <dialog> only: the browser traps focus, Esc closes it, and focus goes back
+   to the opener. Never open a dialog on top of a dialog. Use <div>s for the
+   header and footer: a <header> or <footer> inside a dialog reads as the
+   page's banner or footer landmark.
+   - .dialog-confirm: a narrow confirm. The destructive button names the
+     action ("Delete trip"), never "OK".
+   - .sheet (with .dialog): slides in from the right on a wide screen and up
+     from the bottom on a phone.
+   - Opening and closing fade and slide in --dur-fast; under
+     prefers-reduced-motion it is instant. */
+@layer brignano.components {
+  .dialog {
+    box-sizing: border-box;
+    width: min(100% - 2 * var(--s4), 32rem);
+    max-width: none;
+    max-height: min(100dvh - 2 * var(--s4), 44rem);
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-3);
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease),
+      overlay var(--dur-fast) allow-discrete,
+      display var(--dur-fast) allow-discrete;
+  }
+  .dialog[open] { display: flex; flex-direction: column; opacity: 1; transform: none; }
+  @starting-style {
+    .dialog[open] { opacity: 0; transform: translateY(8px); }
+  }
+  .dialog::backdrop {
+    background-color: var(--scrim);
+    opacity: 0;
+    transition:
+      opacity var(--dur-fast) var(--ease),
+      overlay var(--dur-fast) allow-discrete,
+      display var(--dur-fast) allow-discrete;
+  }
+  .dialog[open]::backdrop { opacity: 1; }
+  @starting-style {
+    .dialog[open]::backdrop { opacity: 0; }
+  }
+
+  .dialog-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s3);
+    padding: var(--s5) var(--s5) 0;
+  }
+  .dialog-title { margin: 0; padding-top: 2px; font-size: var(--text-lg); font-weight: 600; line-height: 1.4; }
+  .dialog-header > form { display: contents; }
+  .dialog-close { flex: none; margin: -6px -8px 0 auto; }
+  .dialog-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: var(--s3) var(--s5);
+    overflow-y: auto;
+    color: var(--ink-soft);
+  }
+  .dialog-body > :first-child { margin-top: 0; }
+  .dialog-body > :last-child { margin-bottom: 0; }
+  .dialog-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--s2);
+    padding: var(--s4) var(--s5) var(--s5);
+  }
+  .dialog-footer > form { display: contents; }
+
+  .dialog-confirm { width: min(100% - 2 * var(--s4), 26rem); }
+
+  /* Sheet: from the right on a wide screen. */
+  .sheet {
+    width: min(100%, 28rem);
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0 0 0 auto;
+    border-width: 0 0 0 1px;
+    border-radius: 0;
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  .sheet[open] { transform: none; }
+  @starting-style {
+    .sheet[open] { transform: translateX(100%); opacity: 1; }
+  }
+
+  /* Phone: dialogs fill the width; a sheet comes up from the bottom. */
+  @media (max-width: 40rem) {
+    .dialog-footer > :is(.btn, form > .btn) { flex: 1 1 auto; }
+    .sheet {
+      width: 100%;
+      height: fit-content; /* auto would stretch between inset 0 and 0 */
+      max-height: 85dvh;
+      margin: auto 0 0;
+      border-width: 1px 0 0;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+    }
+    @starting-style {
+      .sheet[open] { transform: translateY(100%); }
+    }
+  }
+
+  @media (forced-colors: active) {
+    .dialog { border-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dialog, .dialog::backdrop { transition: none; transform: none; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a

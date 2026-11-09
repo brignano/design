@@ -96,6 +96,9 @@
   .chrome-spec .chrome-brand { width: 40px; margin-right: auto; background: var(--ink); }
   .chrome-link { width: 26px; }
   .chrome-spec .chrome-current { box-shadow: 0 6px 0 -4px var(--i); background: var(--ink-soft); }
+  .dialog-spec { display: grid; gap: 6px; width: 210px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-3); font-size: var(--text-sm); }
+  .dialog-spec > span { color: var(--ink-soft); font-size: var(--text-xs); }
+  .dialog-spec .cluster { justify-content: flex-end; margin-top: 4px; }
   .layout-spec { width: 200px; --grid-min: 3rem; }
   .layout-spec i { display: block; height: 18px; min-width: 40px; border-radius: var(--radius-sm); background: var(--surface-hover); border: 1px solid var(--line-strong); }
   .frame { display: grid; gap: 7px; width: 70%; }
@@ -249,6 +252,10 @@
     <li><a class="gallery-card" href="previews/site-chrome.html">
       <div class="spec" aria-hidden="true"><div class="chrome-spec"><span class="chrome-brand"></span><span class="chrome-link chrome-current"></span><span class="chrome-link"></span><span class="chrome-link"></span></div></div>
       <div class="txt"><b>Site header, nav and footer</b><span>A sticky header, a phone menu that needs no script, a skip link and a footer.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/dialogs.html">
+      <div class="spec" aria-hidden="true"><div class="dialog-spec"><b>Delete trip?</b><span>This can't be undone.</span><div class="cluster gap-2"><span class="btn btn-sm">Keep</span><span class="btn btn-sm btn-danger">Delete trip</span></div></div></div>
+      <div class="txt"><b>Dialog and sheet</b><span>Native &lt;dialog&gt; with a confirm pattern and a sheet that comes up from the bottom on a phone.</span><span class="go">View →</span></div>
     </a></li>
     <li><a class="gallery-card" href="previews/diagram.html">
       <div class="spec" aria-hidden="true"><div class="node node-added"><span class="dtag dtag-added">+ added</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><div><b>orders-api</b><small>aws_ecs_service</small></div></div></div>
