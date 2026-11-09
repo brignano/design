@@ -123,7 +123,9 @@ The part that makes an interface feel built rather than styled.
 - Checkboxes and radios in a `.choice` row are drawn from tokens
   (`components.css`), so they look the same on every OS. Bare ones, ranges and
   progress bars stay native and inherit `accent-color: var(--i)` from
-  `tokens.css`; don't restyle those just to recolour them.
+  `tokens.css`; don't restyle those just to recolour them. `.progress` and
+  `.meter` on a native `<progress>` or `<meter>` draw it from tokens, for
+  when a bar must look the same everywhere.
 
 ## 5. Type
 

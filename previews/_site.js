@@ -36,6 +36,7 @@
     ['menus.html', 'Popover and menu'],
     ['tooltips.html', 'Tooltip'],
     ['toasts.html', 'Toast'],
+    ['loading.html', 'Loading and empty states'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],

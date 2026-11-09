@@ -105,9 +105,10 @@
     border: 2px solid currentColor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: btn-spin 0.7s linear infinite;
+    animation: spinner-spin 0.7s linear infinite;
   }
-  @keyframes btn-spin { to { transform: rotate(1turn); } }
+  /* Shared with .spinner (#59). */
+  @keyframes spinner-spin { to { transform: rotate(1turn); } }
 
   .link { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; border-radius: 2px; }
   .link:hover { color: var(--i-hover); }
@@ -122,9 +123,10 @@
   @media (forced-colors: active) {
     .btn[aria-busy='true'] { forced-color-adjust: none; background: ButtonFace; color: ButtonText; border-color: ButtonText; }
   }
+  /* Under reduced motion tokens.css stops the spin: a still arc, and
+     aria-busy still says the button is working. */
   @media (prefers-reduced-motion: reduce) {
     .btn { transition: none; }
-    .btn[aria-busy='true']::after { animation-duration: 2s; }
   }
 }
 
@@ -1336,6 +1338,142 @@
      firing for the script that removes a leaving toast; no slide either. */
   @media (prefers-reduced-motion: reduce) {
     .toast, .toast[data-leaving] { transform: none; }
+  }
+}
+
+/* ── Loading and empty states (#59) ─────────────────────────────────────────
+   Spinner, for a wait whose layout isn't known yet:
+     <p class="cluster"><span class="spinner" aria-hidden="true"></span> Loading trips…</p>
+     Sizes: .spinner-sm (16px), default (24px). Always with words beside it,
+     or role="img" aria-label="Loading" when there's no room for any. Under
+     reduced motion it holds still (tokens.css stops animations); the words
+     carry the meaning. .btn[aria-busy='true'] draws the same ring.
+   Skeleton, only when the layout is known ahead:
+     <div role="group" aria-busy="true" aria-label="Loading trip">
+       <span class="skeleton skeleton-circle" aria-hidden="true"></span>
+       <span class="skeleton skeleton-text" aria-hidden="true"></span>
+     </div>
+     .skeleton-text (a line of text; the last in a run is shorter),
+     .skeleton-circle (an avatar), .skeleton-rect (media, 16:9). The shimmer
+     stops under reduced motion.
+   Progress and meter: native elements, drawn from tokens.
+     <progress class="progress" value="40" max="100">40%</progress>
+     <meter class="meter" value="0.8" low="0.5" high="0.75" optimum="0.2">80%</meter>
+     Label them (<label for>, or aria-label). With no value, a progress bar is
+     indeterminate and shows a pulsing centre segment. A meter's fill is cobalt when
+     its value is in the optimum range, --attention one range off and --danger
+     two off. Bare <progress> and <meter> stay native (DESIGN.md §4).
+   Empty state: an icon, one line, at most one action, no illustration.
+     <div class="empty">
+       <svg aria-hidden="true" …></svg>
+       <p class="empty-title">No trips yet</p>
+       <p class="empty-body">Trips you save show up here.</p>
+       <a class="btn btn-primary" href="…">Plan a trip</a>
+     </div> */
+@layer brignano.components {
+  .spinner {
+    display: inline-block;
+    flex: none;
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    color: var(--i);
+    vertical-align: middle;
+    animation: spinner-spin 0.7s linear infinite;
+  }
+  .spinner-sm { width: 16px; height: 16px; border-width: 2px; }
+
+  /* The shimmer is a transformed ::after (compositor only, DESIGN.md §7).
+     At rest it sits off the block, so under reduced motion, where
+     tokens.css ends the animation at once, nothing is left showing. */
+  .skeleton {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background-color: var(--surface-hover);
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, transparent 0, var(--surface-active) 50%, transparent 100%);
+    transform: translateX(-100%);
+    animation: skeleton-shimmer 1.4s var(--ease) infinite;
+  }
+  @keyframes skeleton-shimmer { to { transform: translateX(100%); } }
+  .skeleton-text { height: 0.75em; margin-block: 0.4em; }
+  .skeleton-text:last-child:not(:first-child) { width: 60%; }
+  .skeleton-circle { width: 40px; height: 40px; flex: none; border-radius: 50%; }
+  .skeleton-rect { width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius); }
+
+  .progress, .meter {
+    appearance: none;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--surface-active);
+  }
+  .progress::-webkit-progress-bar { border-radius: inherit; background-color: var(--surface-active); }
+  .progress::-webkit-progress-value { border-radius: inherit; background-color: var(--i); }
+  .progress::-moz-progress-bar { border-radius: inherit; background-color: var(--i); }
+  /* Indeterminate: a centred segment that can't be read as an amount, which
+     pulses (opacity only, DESIGN.md §7). Under reduced motion it holds
+     still at full strength. */
+  .progress:indeterminate {
+    background-image: linear-gradient(90deg, transparent 35%, var(--i) 35% 65%, transparent 65%);
+    animation: progress-pulse 1.4s var(--ease) infinite alternate;
+  }
+  .progress:indeterminate::-webkit-progress-bar { background-color: transparent; }
+  .progress:indeterminate::-moz-progress-bar { background-color: transparent; }
+  @keyframes progress-pulse { to { opacity: 0.45; } }
+
+  .meter::-webkit-meter-bar { height: 8px; border: 0; border-radius: inherit; background: var(--surface-active); }
+  .meter::-webkit-meter-optimum-value { border-radius: inherit; background: var(--i); }
+  .meter::-webkit-meter-suboptimum-value { border-radius: inherit; background: var(--attention); }
+  .meter::-webkit-meter-even-less-good-value { border-radius: inherit; background: var(--danger); }
+  .meter::-moz-meter-bar { border-radius: inherit; background: var(--i); }
+  .meter:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--attention); }
+  .meter:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--danger); }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s2);
+    padding: var(--s7) var(--s4);
+    text-align: center;
+  }
+  .empty > svg { width: 32px; height: 32px; margin-bottom: var(--s2); color: var(--ink-soft); }
+  .empty-title { margin: 0; font-size: var(--text-base); font-weight: 600; color: var(--ink); }
+  .empty-body { max-width: 32ch; margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
+  .empty > .btn { margin-top: var(--s3); }
+
+  /* Vendor pseudo-elements each get their own rule: one unknown selector in
+     a list drops the whole rule in the other engine. */
+  @media (forced-colors: active) {
+    .spinner { forced-color-adjust: none; border-color: CanvasText; border-right-color: transparent; }
+    .skeleton { background: GrayText; }
+    .skeleton::after { display: none; }
+    .progress, .meter { forced-color-adjust: none; border: 1px solid CanvasText; background: Canvas; }
+    .progress::-webkit-progress-bar { background: Canvas; }
+    .meter::-webkit-meter-bar { background: Canvas; }
+    .progress::-webkit-progress-value { background: Highlight; }
+    .progress::-moz-progress-bar { background: Highlight; }
+    .meter::-webkit-meter-optimum-value { background: Highlight; }
+    .meter::-webkit-meter-suboptimum-value { background: Highlight; }
+    .meter::-webkit-meter-even-less-good-value { background: Highlight; }
+    .meter::-moz-meter-bar { background: Highlight; }
+    .progress:indeterminate { background-image: linear-gradient(90deg, transparent 35%, Highlight 35% 65%, transparent 65%); }
+    .progress:indeterminate::-webkit-progress-bar { background: transparent; }
   }
 }
 
