@@ -198,6 +198,7 @@ for (const fg of ['--ink', '--ink-soft', '--slate', '--i-ink', '--success-ink', 
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, TEXT]);
 floors.push(['--slate', '--line-soft', TEXT]); // the Idea pill
 floors.push(['--ink', '--surface-sticky', TEXT], ['--ink-soft', '--surface-sticky', TEXT]); // sticky bars
+floors.push(['--i', '--surface-sticky', MARK], ['--i-ink', '--surface-sticky', MARK]); // aria-current underline, ghost icon and focus ring on the site header
 for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg, TEXT]);
 // Buttons (#47): labels on the fills a hover or press swaps in, which no
 // single rule pairs with its colour.

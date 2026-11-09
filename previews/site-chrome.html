@@ -165,6 +165,7 @@
 <ul>
   <li>The phone menu needs no script. The <code>popover</code> attribute gives you Esc and click-outside to close. The <code>autofocus</code> close button takes focus when the menu opens, and focus goes back to the menu button when it closes.</li>
   <li>The collapse follows the header's own width (a container query at 45rem), not the window, so it works in a narrow frame too.</li>
+  <li>A popover doesn't trap focus. Tabbing past the last link leaves the sheet open and moves on to the page behind it, so keep the sheet short.</li>
   <li>Mark the current page with <code>aria-current="page"</code>, never a class.</li>
   <li>The sheet opens across the top of the window. On this preview page it spans the whole window even from the 375px frame.</li>
 </ul>
