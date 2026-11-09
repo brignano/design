@@ -1,0 +1,116 @@
+<!-- @dsCard group="Content" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .panel.light, .panel.dark { background: var(--bg); }
+  /* Preview only: boxes that make the gaps visible. */
+  .box { padding: var(--s2) var(--s3); border: 1px dashed var(--line-strong); border-radius: var(--radius-sm);
+         background: var(--card); font-size: var(--text-sm); color: var(--ink-soft); }
+  .demo-container { border-inline: 1px dashed var(--line-strong); }
+  .demo-container > .box { border-style: solid; }
+  .name { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin: 0; }
+</style>
+</head>
+<body>
+<h1>Layout</h1>
+<p class="sub">Five primitives, all gap-based, so no child needs a margin. The measure and section rhythm come from the tier: 780px and 32px on the tool tier, 68ch and 96px on marketing.</p>
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light · tool tier</span>
+    <div class="stack gap-5">
+      <div class="stack gap-2">
+        <p class="name">.container (780px measure, --s4 gutters)</p>
+        <div class="container demo-container"><div class="box">Content stays at the tier's measure and centres.</div></div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.container.container-wide (1160px)</p>
+        <div class="container container-wide demo-container"><div class="box">For dashboards and the product page width.</div></div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.stack (default --s4) · .stack.gap-2</p>
+        <div class="cluster gap-6">
+          <div class="stack"><div class="box">One</div><div class="box">Two</div><div class="box">Three</div></div>
+          <div class="stack gap-2"><div class="box">One</div><div class="box">Two</div><div class="box">Three</div></div>
+        </div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.cluster (wrapping row, default --s2)</p>
+        <div class="cluster"><span class="pill">Draft</span><span class="pill pill-success">Booked</span><span class="pill pill-attention">Deposit due</span><button type="button" class="btn btn-sm">Edit</button><button type="button" class="btn btn-sm btn-ghost">Share</button></div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.grid (auto-fit, each column at least --grid-min: 16rem by default)</p>
+        <div class="grid"><div class="box">Column</div><div class="box">Column</div><div class="box">Column</div></div>
+        <p class="name">.grid.gap-3 with --grid-min: 8rem</p>
+        <div class="grid gap-3" style="--grid-min: 8rem"><div class="box">1</div><div class="box">2</div><div class="box">3</div><div class="box">4</div><div class="box">5</div><div class="box">6</div></div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.section · .divider · .section (two sections share one gap)</p>
+        <div class="demo-container">
+          <section class="section"><div class="box">Section one</div></section>
+          <hr class="divider">
+          <section class="section"><div class="box">Section two, after a divider</div></section>
+          <section class="section"><div class="box">Section three, straight after: no doubled gap</div></section>
+        </div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.gap-2 · .gap-3 · .gap-4 · .gap-5 · .gap-6</p>
+        <div class="stack gap-3">
+          <div class="cluster gap-2"><div class="box">gap-2</div><div class="box">8px</div></div>
+          <div class="cluster gap-3"><div class="box">gap-3</div><div class="box">12px</div></div>
+          <div class="cluster gap-4"><div class="box">gap-4</div><div class="box">16px</div></div>
+          <div class="cluster gap-5"><div class="box">gap-5</div><div class="box">24px</div></div>
+          <div class="cluster gap-6"><div class="box">gap-6</div><div class="box">32px</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark tier-marketing"><span class="panel-label">Dark · marketing tier</span>
+    <div class="stack gap-5">
+      <div class="stack gap-2">
+        <p class="name">.container (68ch measure)</p>
+        <div class="container demo-container"><div class="box">On the marketing tier the measure is 68 characters of body text, so a paragraph reads at a comfortable line length whatever the screen.</div></div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.section (96px rhythm) · .divider</p>
+        <div class="demo-container">
+          <section class="section"><div class="box">Section one</div></section>
+          <hr class="divider">
+          <section class="section"><div class="box">Section two</div></section>
+        </div>
+      </div>
+      <div class="stack gap-2">
+        <p class="name">.grid · .cluster</p>
+        <div class="grid"><div class="box">Column</div><div class="box">Column</div><div class="box">Column</div></div>
+        <div class="cluster"><span class="pill">Draft</span><span class="pill pill-success">Booked</span><button type="button" class="btn btn-sm">Edit</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+<h2>Use</h2>
+<pre><code>&lt;main class="container"&gt;
+  &lt;section class="section stack gap-5"&gt;
+    &lt;h2&gt;Trips&lt;/h2&gt;
+    &lt;div class="grid"&gt;…cards…&lt;/div&gt;
+  &lt;/section&gt;
+  &lt;hr class="divider"&gt;
+  &lt;section class="section stack"&gt;…&lt;/section&gt;
+&lt;/main&gt;</code></pre>
+<ul>
+  <li>Space between children is always the parent's <code>gap</code>. Don't add margins to children.</li>
+  <li><code>.grid</code> never overflows: a column is at least <code>--grid-min</code> or the whole row, whichever is smaller. Set <code>--grid-min</code> on the element to change it.</li>
+  <li>The gap modifiers beat any component's own gap, so <code>.card.gap-2</code> tightens a card.</li>
+  <li>Tailwind sites keep Tailwind's own layout utilities. These are for plain-CSS sites.</li>
+</ul>
+</div>
+</body>
+</html>

@@ -581,6 +581,58 @@
   }
 }
 
+/* ── Layout primitives (#53) ──────────────────────────────────────────────
+   <main class="container"><section class="section stack gap-5">…</section></main>
+   Gap-based only: no margins between children, no 12-column grid.
+   - .container: the tier's measure (780px tool, 68ch marketing) plus an --s4
+     gutter each side. .container-wide: 1160px, the product page width.
+   - .stack: a column. .cluster: a wrapping row. .grid: auto-fit columns,
+     each at least --grid-min (default 16rem) and never wider than the row,
+     so it can't overflow a phone. Set --grid-min on the element to change it.
+   - .gap-2 … .gap-6 set the gap from the --s* scale on any of them. They
+     sit at the end of this file so they beat any component's own gap.
+   - .section: the tier's section rhythm (--section-gap) above and below; two
+     sections in a row share one gap. .divider: a hairline on <hr>. */
+@layer brignano.components {
+  /* The measure is the text width; the gutters sit outside it. width: 100%
+     keeps it full width inside a flex column, where auto margins would
+     otherwise shrink it to its content. */
+  .container {
+    --container-max: var(--measure);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: calc(var(--container-max) + 2 * var(--s4));
+    margin-inline: auto;
+    padding-inline: var(--s4);
+  }
+  .container-wide { --container-max: 1160px; }
+
+  .stack { display: flex; flex-direction: column; gap: var(--s4); }
+  .cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min, 16rem)), 1fr));
+    gap: var(--s4);
+  }
+  /* Children of a stack or grid can't push it wider than its parent. */
+  :where(.stack, .grid) > * { min-width: 0; }
+
+  .section { padding-block: var(--section-gap); }
+  .section + .section { padding-block-start: 0; }
+
+  .divider {
+    width: 100%;
+    height: 0;
+    margin: 0;
+    border: 0;
+    border-block-start: 1px solid var(--line);
+  }
+
+  @media (forced-colors: active) {
+    .divider { border-block-start-color: CanvasText; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a
@@ -1224,4 +1276,15 @@
   .tier-marketing .prose { line-height: 1.75; }
   .tier-marketing .prose h2 { font-size: var(--text-2xl); }
   .tier-marketing .prose h3 { font-size: var(--text-xl); }
+}
+
+/* ── Gap modifiers (#53) ──────────────────────────────────────────────────
+   Keep this block LAST in the file: equal specificity, so it wins by order
+   over every component's own gap. */
+@layer brignano.components {
+  .gap-2 { gap: var(--s2); }
+  .gap-3 { gap: var(--s3); }
+  .gap-4 { gap: var(--s4); }
+  .gap-5 { gap: var(--s5); }
+  .gap-6 { gap: var(--s6); }
 }

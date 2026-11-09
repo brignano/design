@@ -40,7 +40,6 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .panel-label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em;
        text-transform: uppercase; color: var(--slate); }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.stack { display: flex; flex-direction: column; gap: 10px; }
 
 /* ── Component specimens ── */
 /* Buttons, .link, messages and pills live in components.css (#47, #50, #51). .focused draws the focus
