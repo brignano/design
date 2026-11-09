@@ -213,6 +213,8 @@ for (const s of ['success', 'attention', 'danger']) {
   floors.push([`--${s}`, `--${s}-surface`, MARK]);
 }
 floors.push(['--ink-soft', '--surface-hover', TEXT], ['--i', '--surface-hover', MARK]);
+// Tooltip (#57): the inverted chip.
+floors.push(['--card', '--ink', TEXT]);
 // Pills (#51): the info pill's dot on its wash.
 floors.push(['--i', '--i-surface', MARK]);
 // --line-control is not paired with the washes: it is under 3:1 there, so an
