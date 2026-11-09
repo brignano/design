@@ -105,10 +105,10 @@
     border: 2px solid currentColor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: spin 0.7s linear infinite;
+    animation: spinner-spin 0.7s linear infinite;
   }
   /* Shared with .spinner (#59). */
-  @keyframes spin { to { transform: rotate(1turn); } }
+  @keyframes spinner-spin { to { transform: rotate(1turn); } }
 
   .link { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; border-radius: 2px; }
   .link:hover { color: var(--i-hover); }
@@ -1360,7 +1360,7 @@
      <progress class="progress" value="40" max="100">40%</progress>
      <meter class="meter" value="0.8" low="0.5" high="0.75" optimum="0.2">80%</meter>
      Label them (<label for>, or aria-label). With no value, a progress bar is
-     indeterminate and shows a sliding stripe. A meter's fill is cobalt when
+     indeterminate and shows a pulsing centre segment. A meter's fill is cobalt when
      its value is in the optimum range, --attention one range off and --danger
      two off. Bare <progress> and <meter> stay native (DESIGN.md §4).
    Empty state: an icon, one line, at most one action, no illustration.
@@ -1382,21 +1382,29 @@
     border-radius: 50%;
     color: var(--i);
     vertical-align: middle;
-    animation: spin 0.7s linear infinite;
+    animation: spinner-spin 0.7s linear infinite;
   }
   .spinner-sm { width: 16px; height: 16px; border-width: 2px; }
 
+  /* The shimmer is a transformed ::after (compositor only, DESIGN.md §7).
+     At rest it sits off the block, so under reduced motion, where
+     tokens.css ends the animation at once, nothing is left showing. */
   .skeleton {
+    position: relative;
     display: block;
+    overflow: hidden;
     border-radius: var(--radius-sm);
     background-color: var(--surface-hover);
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     background-image: linear-gradient(90deg, transparent 0, var(--surface-active) 50%, transparent 100%);
-    background-size: 200% 100%;
-    background-repeat: no-repeat;
-    background-position: 150% 0;
+    transform: translateX(-100%);
     animation: skeleton-shimmer 1.4s var(--ease) infinite;
   }
-  @keyframes skeleton-shimmer { to { background-position: -50% 0; } }
+  @keyframes skeleton-shimmer { to { transform: translateX(100%); } }
   .skeleton-text { height: 0.75em; margin-block: 0.4em; }
   .skeleton-text:last-child:not(:first-child) { width: 60%; }
   .skeleton-circle { width: 40px; height: 40px; flex: none; border-radius: 50%; }
@@ -1414,17 +1422,18 @@
     background-color: var(--surface-active);
   }
   .progress::-webkit-progress-bar { border-radius: inherit; background-color: var(--surface-active); }
-  .progress::-webkit-progress-value { border-radius: inherit; background-color: var(--i); transition: inline-size var(--dur) var(--ease); }
+  .progress::-webkit-progress-value { border-radius: inherit; background-color: var(--i); }
   .progress::-moz-progress-bar { border-radius: inherit; background-color: var(--i); }
+  /* Indeterminate: a centred segment that can't be read as an amount, which
+     pulses (opacity only, DESIGN.md §7). Under reduced motion it holds
+     still at full strength. */
   .progress:indeterminate {
-    background-image: linear-gradient(90deg, transparent 0, var(--i) 0 40%, transparent 40%);
-    background-size: 250% 100%;
-    background-repeat: no-repeat;
-    animation: progress-slide 1.4s var(--ease) infinite;
+    background-image: linear-gradient(90deg, transparent 35%, var(--i) 35% 65%, transparent 65%);
+    animation: progress-pulse 1.4s var(--ease) infinite alternate;
   }
   .progress:indeterminate::-webkit-progress-bar { background-color: transparent; }
   .progress:indeterminate::-moz-progress-bar { background-color: transparent; }
-  @keyframes progress-slide { from { background-position: 166% 0; } to { background-position: -66% 0; } }
+  @keyframes progress-pulse { to { opacity: 0.45; } }
 
   .meter::-webkit-meter-bar { height: 8px; border: 0; border-radius: inherit; background: var(--surface-active); }
   .meter::-webkit-meter-optimum-value { border-radius: inherit; background: var(--i); }
@@ -1453,6 +1462,7 @@
   @media (forced-colors: active) {
     .spinner { forced-color-adjust: none; border-color: CanvasText; border-right-color: transparent; }
     .skeleton { background: GrayText; }
+    .skeleton::after { display: none; }
     .progress, .meter { forced-color-adjust: none; border: 1px solid CanvasText; background: Canvas; }
     .progress::-webkit-progress-bar { background: Canvas; }
     .meter::-webkit-meter-bar { background: Canvas; }
@@ -1462,7 +1472,7 @@
     .meter::-webkit-meter-suboptimum-value { background: Highlight; }
     .meter::-webkit-meter-even-less-good-value { background: Highlight; }
     .meter::-moz-meter-bar { background: Highlight; }
-    .progress:indeterminate { background-image: linear-gradient(90deg, transparent 0, Highlight 0 40%, transparent 40%); }
+    .progress:indeterminate { background-image: linear-gradient(90deg, transparent 35%, Highlight 35% 65%, transparent 65%); }
     .progress:indeterminate::-webkit-progress-bar { background: transparent; }
   }
 }

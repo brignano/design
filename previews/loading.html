@@ -147,9 +147,9 @@
 <ul>
   <li><b>Spinner or skeleton.</b> A skeleton only when you know the layout that's coming; otherwise a spinner. A spinner always has words beside it, or <code>role="img" aria-label="Loading"</code> where there's no room.</li>
   <li><b>Busy regions.</b> Put <code>aria-busy="true"</code> on the container that's loading and remove it when the content lands. Skeleton blocks are <code>aria-hidden</code>.</li>
-  <li><b>Progress and meter.</b> Progress is how far a task has got; leave out <code>value</code> when you can't say, and it slides. Meter is a level in a known range: its fill is cobalt in the <code>optimum</code> range, attention one range away and danger two away. Always label them. Without the class they stay native.</li>
+  <li><b>Progress and meter.</b> Progress is how far a task has got; leave out <code>value</code> when you can't say, and it shows a pulsing segment in the middle, which can't be read as an amount. Meter is a level in a known range: its fill is cobalt in the <code>optimum</code> range, attention one range away and danger two away. Always label them. Without the class they stay native.</li>
   <li><b>Empty states.</b> One line saying what will be here, at most one action, an icon and no illustration. If there's nothing the reader can do, leave the button out.</li>
-  <li><b>Reduced motion.</b> The spinner shows a still arc, the shimmer and the sliding stripe stop. The words and <code>aria-busy</code> carry the meaning.</li>
+  <li><b>Reduced motion.</b> The spinner shows a still arc, the shimmer stops and leaves a plain block, and an indeterminate bar holds still as its centre segment. The words and <code>aria-busy</code> carry the meaning.</li>
 </ul>
 </div>
 </body>
