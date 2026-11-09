@@ -1,0 +1,121 @@
+<!-- @dsCard group="Content" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cards</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  /* Cards sit on the page ground, so the panel shows it rather than a card surface. */
+  .panel.light, .panel.dark { background: var(--bg); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--s4); }
+  /* Preview only: shows the focus ring without tabbing to the card. */
+  .card-link:has(.focus-demo) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<h1>Cards</h1>
+<p class="sub">A surface for one thing: a hairline and a shadow in light, a lighter surface in dark. A link card is one target with one focus ring.</p>
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light</span>
+    <div class="cards">
+      <article class="card">
+        <header class="card-header"><h2 class="card-title">Static card</h2><p class="card-meta">Header, body, footer</p></header>
+        <div class="card-body"><p>A surface for a group of related content. Nothing here is a link, so the card isn't either.</p></div>
+        <footer class="card-footer"><span class="pill">Draft</span><button type="button" class="btn btn-sm">Edit</button></footer>
+      </article>
+      <article class="card card-link">
+        <div class="card-media"><svg viewBox="0 0 320 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" style="fill:var(--i-surface)"/><circle cx="250" cy="40" r="18" style="fill:var(--attention)"/><path d="M0 150 L80 90 L140 130 L210 70 L320 140 V180 H0Z" style="fill:var(--i)"/><path d="M0 165 L90 125 L170 160 L260 120 L320 150 V180 H0Z" style="fill:var(--i-ink);opacity:.5"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#l-lisbon">Lisbon, 4 days</a></h2><p class="card-meta">12–15 Mar · 2 people</p></header>
+        <div class="card-body"><p>The whole card opens the trip. Tab to it: one ring goes round the card.</p></div>
+        <footer class="card-footer"><span class="pill pill-success">Booked</span></footer>
+      </article>
+      <article class="card card-link">
+        <header class="card-header"><h2 class="card-title"><a href="#l-porto" class="focus-demo">Porto, 2 days</a></h2><p class="card-meta">Shown focused</p></header>
+        <div class="card-body"><p>A link card can still hold its own button; it sits above the stretched link.</p></div>
+        <footer class="card-footer"><span class="pill pill-attention">Deposit due</span><button type="button" class="btn btn-sm btn-ghost">Pay deposit</button></footer>
+      </article>
+    </div>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+    <div class="cards">
+      <article class="card">
+        <header class="card-header"><h2 class="card-title">Static card</h2><p class="card-meta">Header, body, footer</p></header>
+        <div class="card-body"><p>A surface for a group of related content. Nothing here is a link, so the card isn't either.</p></div>
+        <footer class="card-footer"><span class="pill">Draft</span><button type="button" class="btn btn-sm">Edit</button></footer>
+      </article>
+      <article class="card card-link">
+        <div class="card-media"><svg viewBox="0 0 320 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" style="fill:var(--i-surface)"/><circle cx="250" cy="40" r="18" style="fill:var(--attention)"/><path d="M0 150 L80 90 L140 130 L210 70 L320 140 V180 H0Z" style="fill:var(--i)"/><path d="M0 165 L90 125 L170 160 L260 120 L320 150 V180 H0Z" style="fill:var(--i-ink);opacity:.5"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#d-lisbon">Lisbon, 4 days</a></h2><p class="card-meta">12–15 Mar · 2 people</p></header>
+        <div class="card-body"><p>The whole card opens the trip. Tab to it: one ring goes round the card.</p></div>
+        <footer class="card-footer"><span class="pill pill-success">Booked</span></footer>
+      </article>
+      <article class="card card-link">
+        <header class="card-header"><h2 class="card-title"><a href="#d-porto" class="focus-demo">Porto, 2 days</a></h2><p class="card-meta">Shown focused</p></header>
+        <div class="card-body"><p>A link card can still hold its own button; it sits above the stretched link.</p></div>
+        <footer class="card-footer"><span class="pill pill-attention">Deposit due</span><button type="button" class="btn btn-sm btn-ghost">Pay deposit</button></footer>
+      </article>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section>
+    <h2>Use it</h2>
+<pre tabindex="0">&lt;article class="card card-link"&gt;
+  &lt;div class="card-media"&gt;&lt;img src="lisbon.jpg" alt=""&gt;&lt;/div&gt;
+  &lt;header class="card-header"&gt;
+    &lt;h3 class="card-title"&gt;&lt;a href="/trips/lisbon"&gt;Lisbon, 4 days&lt;/a&gt;&lt;/h3&gt;
+    &lt;p class="card-meta"&gt;12–15 Mar · 2 people&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;div class="card-body"&gt;&lt;p&gt;…&lt;/p&gt;&lt;/div&gt;
+  &lt;footer class="card-footer"&gt;&lt;span class="pill pill-success"&gt;Booked&lt;/span&gt;&lt;/footer&gt;
+&lt;/article&gt;</pre>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Parts</h2>
+      <ul>
+        <li><code>.card-header</code> holds <code>.card-title</code> and <code>.card-meta</code>; <code>.card-body</code> and <code>.card-footer</code> follow. Every part is optional.</li>
+        <li><code>.card-media</code> goes first and runs edge to edge at 16:9.</li>
+        <li>The footer sits at the bottom, so cards in a row line up.</li>
+        <li>Radius <code>--radius</code>; the grid of cards is the layout's job.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Link cards</h2>
+      <ul>
+        <li><code>.card-link</code> stretches the title link over the card with <code>::after</code>. Don't wrap the card in an <code>&lt;a&gt;</code>: screen readers would read the whole card as the link name.</li>
+        <li>Hover fills with <code>--surface-hover</code> and underlines the title.</li>
+        <li>Buttons and links inside still work on their own.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="two">
+    <div>
+      <h2>Accessibility</h2>
+      <ul>
+        <li>The link's name is the title, so it says where it goes.</li>
+        <li>Focus shows once, round the whole card.</li>
+        <li>Decorative media takes <code>alt=""</code>; media that carries meaning gets real alt text.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>When not to</h2>
+      <ul>
+        <li>A card inside a card: use a divider or a list instead.</li>
+        <li>A single fact: use a stat tile or a key-value list.</li>
+        <li>A whole page section: use the layout primitives.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+</body>
+</html>
