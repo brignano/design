@@ -1,0 +1,155 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Toast</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .panel.light, .panel.dark { background: var(--bg); }
+  .name { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin: 0; }
+  /* Preview only: a region in the flow, so every kind can be seen at once. */
+  .specimens.toast-region { position: static; inset: auto; align-items: flex-start; }
+</style>
+</head>
+<body>
+<h1>Toast</h1>
+<p class="sub">A short note that something happened, at the bottom of the screen. Success goes by itself after 5 seconds; anything that needs you stays until you dismiss it. The buttons below run the script this page documents.</p>
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light</span>
+    <div class="stack gap-5">
+      <div class="cluster">
+        <button type="button" class="btn" data-demo="success">Save trip</button>
+        <button type="button" class="btn" data-demo="attention">Show a reminder</button>
+        <button type="button" class="btn" data-demo="danger">Fail to share</button>
+      </div>
+      <p class="name">Shown in place (a real danger toast also has role="alert")</p>
+      <div class="specimens toast-region">
+        <div class="toast toast-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+          <div class="toast-content"><p class="toast-title">Trip saved</p><p class="toast-body">Lisbon, 4 days is in your list.</p></div>
+          <button type="button" class="btn btn-ghost btn-sm toast-action">Undo</button>
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="toast toast-attention">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/></svg>
+          <div class="toast-content"><p class="toast-title">Deposit due Friday</p><p class="toast-body">Pay by 14 March to keep the room.</p></div>
+          <button type="button" class="btn btn-ghost btn-sm toast-action">Pay now</button>
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="toast toast-danger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
+          <div class="toast-content"><p class="toast-title">Couldn't share the trip</p><p class="toast-body">Check your connection and try again.</p></div>
+          <button type="button" class="btn btn-ghost btn-sm toast-action">Try again</button>
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="toast toast-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+          <div class="toast-content"><p class="toast-title">Copied link</p></div>
+          
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+    <div class="stack gap-5">
+      <div class="cluster">
+        <button type="button" class="btn" data-demo="success">Save trip</button>
+        <button type="button" class="btn" data-demo="attention">Show a reminder</button>
+        <button type="button" class="btn" data-demo="danger">Fail to share</button>
+      </div>
+      <p class="name">Shown in place (a real danger toast also has role="alert")</p>
+      <div class="specimens toast-region">
+        <div class="toast toast-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+          <div class="toast-content"><p class="toast-title">Trip saved</p><p class="toast-body">Lisbon, 4 days is in your list.</p></div>
+          <button type="button" class="btn btn-ghost btn-sm toast-action">Undo</button>
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="toast toast-attention">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17.5v.01"/></svg>
+          <div class="toast-content"><p class="toast-title">Deposit due Friday</p><p class="toast-body">Pay by 14 March to keep the room.</p></div>
+          <button type="button" class="btn btn-ghost btn-sm toast-action">Pay now</button>
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="toast toast-danger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
+          <div class="toast-content"><p class="toast-title">Couldn't share the trip</p><p class="toast-body">Check your connection and try again.</p></div>
+          <button type="button" class="btn btn-ghost btn-sm toast-action">Try again</button>
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="toast toast-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+          <div class="toast-content"><p class="toast-title">Copied link</p></div>
+          
+          <button type="button" class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-region" role="status" aria-label="Notifications" id="toasts"></div>
+
+<div class="docs">
+<h2>Use</h2>
+<pre><code>&lt;!-- In the page from the start, empty --&gt;
+&lt;div class="toast-region" role="status" aria-label="Notifications"&gt;&lt;/div&gt;
+
+&lt;!-- What your script adds --&gt;
+&lt;div class="toast toast-success"&gt;
+  &lt;svg aria-hidden="true" …&gt;&lt;/svg&gt;
+  &lt;div class="toast-content"&gt;
+    &lt;p class="toast-title"&gt;Trip saved&lt;/p&gt;
+    &lt;p class="toast-body"&gt;Lisbon, 4 days is in your list.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;button class="btn btn-ghost btn-sm toast-action"&gt;Undo&lt;/button&gt;
+  &lt;button class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss"&gt;…&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+<ul>
+  <li><b>Kinds.</b> <code>.toast-success</code>, <code>.toast-attention</code>, <code>.toast-danger</code>. The title says in words what happened; the icon and edge repeat it. No info toast: put a <code>.msg</code> on the page instead.</li>
+  <li><b>The region.</b> One per page, in the HTML from the start and empty, with <code>role="status"</code> so screen readers announce what's added without interrupting. A danger toast also carries <code>role="alert"</code>, which interrupts. Newest goes at the bottom.</li>
+  <li><b>Timing.</b> Remove a success toast after 5 seconds, and pause that timer while the pointer is on it or focus is inside it. Attention and danger toasts stay until dismissed, because they ask for something.</li>
+  <li><b>Leaving.</b> Set <code>data-leaving</code> on the toast, then remove it on <code>transitionend</code> (or after 200ms, whichever comes first). With reduced motion the transition still runs, in 0.01ms, so <code>transitionend</code> still fires.</li>
+  <li><b>Over a dialog.</b> A modal dialog sits in the top layer, above any z-index. To show toasts over one, give the region <code>popover="manual"</code> and call <code>showPopover()</code> once.</li>
+  <li><b>No script in design.</b> The queue and timers are yours. The one this page runs is below.</li>
+</ul>
+<pre tabindex="0" aria-label="The preview script"><code id="script-src"></code></pre>
+</div>
+<script id="demo">
+  // Preview only: the contract above, as this page runs it.
+  const region = document.getElementById('toasts');
+  function leave(t) {
+    if (t.dataset.leaving != null) return;
+    t.dataset.leaving = '';
+    const done = () => t.remove();
+    t.addEventListener('transitionend', done, { once: true });
+    setTimeout(done, 200);
+  }
+  function show(template) {
+    const t = template.cloneNode(true);
+    if (t.classList.contains('toast-danger')) t.setAttribute('role', 'alert');
+    region.append(t);
+    t.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => leave(t)));
+    if (t.classList.contains('toast-success')) {
+      let left = 5000, start = Date.now(), timer = setTimeout(() => leave(t), left);
+      const pause = () => { clearTimeout(timer); left -= Date.now() - start; };
+      const resume = () => { if (t.matches(':hover, :focus-within')) return; start = Date.now(); timer = setTimeout(() => leave(t), left); };
+      t.addEventListener('pointerenter', pause); t.addEventListener('focusin', pause);
+      t.addEventListener('pointerleave', resume); t.addEventListener('focusout', () => setTimeout(resume));
+    }
+  }
+  document.querySelectorAll('[data-demo]').forEach((b) => b.addEventListener('click', () => {
+    const panel = b.closest('.panel');
+    show(panel.querySelector('.specimens .toast-' + b.dataset.demo));
+  }));
+  document.getElementById('script-src').textContent = document.getElementById('demo').textContent.trim();
+</script>
+</body>
+</html>
