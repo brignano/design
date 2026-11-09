@@ -1,11 +1,12 @@
 // _site.js — the one shared script every preview page loads from <head>.
 //
-// It owns four things so no page has to:
+// It owns these so no page has to:
 //   1. the page order (PAGES below; it must match index.html, and
 //      `npm run check` fails when it doesn't);
 //   2. the saved theme, applied the moment the script runs so there is no flash;
 //   3. the small header: a link home, previous / next, and the theme switch;
-//   4. Google Analytics, on design.brignano.io only (see below).
+//   4. Google Analytics, on design.brignano.io only (see below);
+//   5. the tab icon (favicon.svg at the repo root).
 //
 // On index.html, an element marked [data-site-toggle] receives the theme switch
 // and nothing else is added. Inside an iframe (a design-tool card) no header is
@@ -75,12 +76,20 @@
     window.gtag('config', GA_MEASUREMENT_ID);
   }
 
-  // ── Stylesheet, resolved from this script's own URL ───────────────────────
+  // ── Stylesheet and tab icon, resolved from this script's own URL ──────────
   if (script && script.src) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = new URL('_site.css', script.src).href;
     document.head.appendChild(link);
+
+    // The brignano.io mark as the tab icon (../favicon.svg; favicon.ico at the
+    // root covers browsers without SVG favicons).
+    const icon = document.createElement('link');
+    icon.rel = 'icon';
+    icon.type = 'image/svg+xml';
+    icon.href = new URL('../favicon.svg', script.src).href;
+    document.head.appendChild(icon);
   }
 
   // ── Theme switch: System → Light → Dark → System ──────────────────────────
