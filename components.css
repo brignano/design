@@ -565,11 +565,13 @@
   /* Link card: the title link stretches over the card. */
   .card-link { transition: background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
   .card-link .card-title a::after { content: ''; position: absolute; inset: 0; z-index: 0; }
-  .card-link :is(a, button, input, select, textarea, label):not(.card-title a) { position: relative; z-index: 1; }
+  /* Zero-specificity so components that position their own parts (for example .segmented) still win. */
+  :where(.card-link :is(a, button, input, select, textarea, label):not(.card-title a)) { position: relative; z-index: 1; }
   .card-link:hover { background-color: var(--surface-hover); box-shadow: var(--shadow-2); }
   .card-link:hover .card-title a { text-decoration: underline; text-underline-offset: 3px; }
-  .card-link .card-title a:focus-visible { outline: none; }
+  /* The ring moves to the card only where :has() works; elsewhere the link keeps its own ring. */
   .card-link:has(.card-title a:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .card-link:has(.card-title a:focus-visible) .card-title a { outline: none; }
 
   @media (forced-colors: active) {
     .card { border-color: CanvasText; }
