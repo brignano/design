@@ -28,6 +28,7 @@
     ['choices.html', 'Choices and switches'],
     ['feedback.html', 'Messages and banners'],
     ['status.html', 'Pills, badges and tags'],
+    ['cards.html', 'Cards'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],

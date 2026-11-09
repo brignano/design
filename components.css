@@ -520,6 +520,67 @@
   }
 }
 
+/* ── Card (#52) ───────────────────────────────────────────────────────────
+   <article class="card card-link">
+     <div class="card-media"><img src="…" alt=""></div>
+     <header class="card-header">
+       <h3 class="card-title"><a href="/trips/lisbon">Lisbon, 4 days</a></h3>
+       <p class="card-meta">12–15 Mar · 2 people</p>
+     </header>
+     <div class="card-body"><p>…</p></div>
+     <footer class="card-footer"><span class="pill pill-success">Booked</span></footer>
+   </article>
+   .card is a static surface; every part is optional. .card-link makes the
+   whole card one target through the title link's ::after (a stretched
+   link), so the markup stays a heading and a link, not a link wrapped
+   round blocks. One focus ring goes round the card. Other buttons and
+   links inside a .card-link still work: they sit above the stretched area.
+   .card-media goes first and runs edge to edge. No cards inside cards. */
+@layer brignano.components {
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    min-width: 0;
+    padding: var(--s5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+  }
+  .card-media { margin: calc(-1 * var(--s5)) calc(-1 * var(--s5)) 0; }
+  .card-media > :is(img, video, picture, svg) { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .card-header { display: grid; gap: var(--s1); }
+  .card-title { margin: 0; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+  .card-title a { color: inherit; text-decoration: none; }
+  .card-meta { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
+  .card-body { color: var(--ink-soft); }
+  .card-body > :first-child { margin-top: 0; }
+  .card-body > :last-child { margin-bottom: 0; }
+  .card-footer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: auto; }
+
+  /* Link card: the title link stretches over the card. */
+  .card-link { transition: background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+  .card-link .card-title a::after { content: ''; position: absolute; inset: 0; z-index: 0; }
+  /* Zero-specificity so components that position their own parts (for example .segmented) still win. */
+  :where(.card-link :is(a, button, input, select, textarea, label):not(.card-title a)) { position: relative; z-index: 1; }
+  .card-link:hover { background-color: var(--surface-hover); box-shadow: var(--shadow-2); }
+  .card-link:hover .card-title a { text-decoration: underline; text-underline-offset: 3px; }
+  /* The ring moves to the card only where :has() works; elsewhere the link keeps its own ring. */
+  .card-link:has(.card-title a:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .card-link:has(.card-title a:focus-visible) .card-title a { outline: none; }
+
+  @media (forced-colors: active) {
+    .card { border-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-link { transition: none; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a

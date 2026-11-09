@@ -57,13 +57,13 @@
   /* Gallery: each card is one link with a live specimen above its words. */
   .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s4);
           grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-  .card { display: flex; flex-direction: column; height: 100%; text-decoration: none;
+  .gallery-card { display: flex; flex-direction: column; height: 100%; text-decoration: none;
           color: var(--ink); background: var(--card); border: 1px solid var(--line);
           border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-1);
           transition: box-shadow var(--dur-fast), border-color var(--dur-fast); }
-  .card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-2); }
-  .card:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-  @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+  .gallery-card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-2); }
+  .gallery-card:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .gallery-card { transition: none; } }
   .spec { height: 132px; display: flex; align-items: center; justify-content: center; gap: 8px;
           flex-wrap: wrap; align-content: center; padding: var(--s4); background: var(--bg);
           border-bottom: 1px solid var(--line); overflow: hidden; }
@@ -157,18 +157,18 @@
   <p class="label">01 / Foundations</p>
   <h2 id="foundations">The values everything else is made of.</h2>
   <ul class="grid">
-    <li><a class="card" href="previews/color.html">
+    <li><a class="gallery-card" href="previews/color.html">
       <div class="spec" aria-hidden="true">
         <div class="mini-ramp"><i style="background:var(--n-0)"></i><i style="background:var(--n-25)"></i><i style="background:var(--n-50)"></i><i style="background:var(--n-100)"></i><i style="background:var(--n-200)"></i><i style="background:var(--n-300)"></i><i style="background:var(--n-400)"></i><i style="background:var(--n-500)"></i><i style="background:var(--n-600)"></i><i style="background:var(--n-700)"></i><i style="background:var(--n-800)"></i><i style="background:var(--n-900)"></i></div>
         <div class="dots"><i style="background:var(--i)"></i><i style="background:var(--success)"></i><i style="background:var(--attention)"></i><i style="background:var(--danger)"></i></div>
       </div>
       <div class="txt"><b>Colour</b><span>Neutral ramp and the semantic hues, light and dark.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/type.html">
+    <li><a class="gallery-card" href="previews/type.html">
       <div class="spec" aria-hidden="true"><span class="aa">Aa</span><span class="aa-mono">FR-8821 · 09:15 · 64%</span></div>
       <div class="txt"><b>Type</b><span>Geist for everything, IBM Plex Mono for data that must read precise.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/elevation.html">
+    <li><a class="gallery-card" href="previews/elevation.html">
       <div class="spec split" aria-hidden="true"><div class="elev" data-theme="light"><i class="e1"></i><i class="e2"></i><i class="e3"></i></div><div class="elev" data-theme="dark"><i class="e1"></i><i class="e2"></i><i class="e3"></i></div></div>
       <div class="txt"><b>Elevation</b><span>Three steps: shadows in light, lighter surfaces in dark.</span><span class="go">View →</span></div>
     </a></li>
@@ -179,59 +179,63 @@
   <p class="label">02 / Components</p>
   <h2 id="components">Every state has a real value.</h2>
   <ul class="grid">
-    <li><a class="card" href="previews/components.html">
+    <li><a class="gallery-card" href="previews/components.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">@layer brignano.components</span></div>
       <div class="txt"><b>Components</b><span>One CSS import for every shared control, and the rules each one follows.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/table.html">
+    <li><a class="gallery-card" href="previews/table.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">CPU % ↓ · 41.3 · 6.7 · 3.2</span></div>
       <div class="txt"><b>Table</b><span>Numbers on the right, sortable headers, scrolls sideways on a phone.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/kv-stat.html">
+    <li><a class="gallery-card" href="previews/kv-stat.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">1,284 · ↑ Up 12%</span></div>
       <div class="txt"><b>Key-value and stats</b><span>Labelled facts in two columns, and headline numbers with their direction in words.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/tabs.html">
+    <li><a class="gallery-card" href="previews/tabs.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">Itinerary · Bookings · Notes</span></div>
       <div class="txt"><b>Tabs</b><span>Views of one thing, underlined in cobalt, with the keyboard contract.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/navigation.html">
+    <li><a class="gallery-card" href="previews/navigation.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">Home / Work / … · ← 1 2 3 →</span></div>
       <div class="txt"><b>Breadcrumb and pagination</b><span>Where you are, how to page through a table, and load more for lists.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/disclosure.html">
+    <li><a class="gallery-card" href="previews/disclosure.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">Can I change the dates? ⌄</span></div>
       <div class="txt"><b>Disclosure and accordion</b><span>FAQs and extra detail on native details, one open at a time if you want.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/content.html">
+    <li><a class="gallery-card" href="previews/content.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">AR · ⌘ K · const x = 'y'</span></div>
       <div class="txt"><b>Content pieces</b><span>Avatars, keycaps, inline code, code blocks, quotes and figures.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/prose.html">
+    <li><a class="gallery-card" href="previews/prose.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">## Find the real cause #</span></div>
       <div class="txt"><b>Prose</b><span>Long-form posts, docs and legal pages from Markdown, at the tier's measure.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/buttons.html">
+    <li><a class="gallery-card" href="previews/buttons.html">
       <div class="spec" aria-hidden="true"><span class="btn btn-primary">Primary</span><span class="btn btn-secondary">Secondary</span><span class="btn btn-ghost">Ghost</span></div>
       <div class="txt"><b>Buttons &amp; links</b><span>Every interaction state, including disabled and focus.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/fields.html">
+    <li><a class="gallery-card" href="previews/fields.html">
       <div class="spec" aria-hidden="true"><div class="field"><span class="field-hint">Email</span><div class="field-affix"><span>@</span><span>sam@example.com</span></div></div></div>
       <div class="txt"><b>Text fields</b><span>Label above, hint and error below; inputs, selects, textareas and affixes.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/choices.html">
+    <li><a class="gallery-card" href="previews/choices.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">☑ Email · ◉ Express · [ Day | Week ]</span></div>
       <div class="txt"><b>Choices and switches</b><span>Checkboxes, radios, a switch for instant settings and a segmented control.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/feedback.html">
+    <li><a class="gallery-card" href="previews/feedback.html">
       <div class="spec" aria-hidden="true"><div class="msg msg-success"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><div class="msg-content"><p class="msg-title">Booked</p><p class="msg-body">Confirmation FR-8821 saved.</p></div></div></div>
       <div class="txt"><b>Messages and banners</b><span>Info, success, attention and danger, each with an icon and words.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/status.html">
+    <li><a class="gallery-card" href="previews/status.html">
       <div class="spec" aria-hidden="true"><span class="pill pill-success">Booked</span><span class="pill pill-attention">Due</span><span class="pill pill-danger">Overdue</span><span class="pill">Idea</span></div>
       <div class="txt"><b>Pills, badges and tags</b><span>Status in a word, counts on icons, and removable filter chips.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/diagram.html">
+    <li><a class="gallery-card" href="previews/cards.html">
+      <div class="spec" aria-hidden="true"><div class="card"><p class="card-title">Lisbon, 4 days</p><p class="card-meta">12–15 Mar</p></div></div>
+      <div class="txt"><b>Cards</b><span>Static and link cards with media, header, body and footer.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/diagram.html">
       <div class="spec" aria-hidden="true"><div class="node node-added"><span class="dtag dtag-added">+ added</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><div><b>orders-api</b><small>aws_ecs_service</small></div></div></div>
       <div class="txt"><b>Diagram nodes</b><span>Neutral by default. Colour only for health and for what a change did.</span><span class="go">View →</span></div>
     </a></li>
@@ -242,31 +246,31 @@
   <p class="label">03 / Templates</p>
   <h2 id="templates">One argument and one ask.</h2>
   <ul class="grid">
-    <li><a class="card" href="previews/product-page.html">
+    <li><a class="gallery-card" href="previews/product-page.html">
       <div class="spec" aria-hidden="true"><div class="frame"><i class="bar"></i><i style="width:80%"></i><i style="width:55%"></i><i class="cta"></i></div></div>
       <div class="txt"><b>Product page</b><span>The skeleton: thesis, proof, what you get, how it works, ask.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/product-page-example.html">
+    <li><a class="gallery-card" href="previews/product-page-example.html">
       <div class="spec" aria-hidden="true"><div class="frame"><i class="bar"></i><i style="width:70%"></i><i class="cta"></i></div></div>
       <div class="txt"><b>Product page: worked example</b><span>Show, then tell, filled in for a real product.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/product-media.html">
+    <li><a class="gallery-card" href="previews/product-media.html">
       <div class="spec" aria-hidden="true"><div class="phone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></div></div>
       <div class="txt"><b>Product page: video proof</b><span>Phone frame, steps and play button.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/changelog.html">
+    <li><a class="gallery-card" href="previews/changelog.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">v0.7.0 · 2 Nov 2026</span></div>
       <div class="txt"><b>Changelog page</b><span>Releases newest first, version and date in mono, notes in prose.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/legal.html">
+    <li><a class="gallery-card" href="previews/legal.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">Last updated 7 Nov 2026</span></div>
       <div class="txt"><b>Legal page</b><span>Privacy and terms: title, last updated, contents list, text.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/article.html">
+    <li><a class="gallery-card" href="previews/article.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">7 Nov 2026 · 3 min read</span></div>
       <div class="txt"><b>Article and docs page</b><span>Posts and docs: meta line, prose, previous and next, section nav.</span><span class="go">View →</span></div>
     </a></li>
-    <li><a class="card" href="previews/email.html">
+    <li><a class="gallery-card" href="previews/email.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">{{heading}} · one button</span></div>
       <div class="txt"><b>Transactional email</b><span>Owner notes and auto-replies, light only, with a text twin.</span><span class="go">View →</span></div>
     </a></li>
