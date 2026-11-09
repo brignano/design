@@ -1,0 +1,163 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Popover and menu</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .panel.light, .panel.dark { background: var(--bg); }
+  .name { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin: 0; }
+  .popover-heading { margin: 0; font-size: var(--text-sm); font-weight: 600; }
+  /* Preview only: closed copies shown in the flow, as if open. */
+  .specimens { display: flex; flex-wrap: wrap; gap: var(--s5); align-items: flex-start; }
+  .specimens > .popover { display: block; position: static; inset: auto; opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<h1>Popover and menu</h1>
+<p class="sub">The native popover attribute: Esc or a click outside closes it, and it opens below the button that opened it with CSS anchor positioning, flipping when there's no room. A .menu inside it lists actions or links. Opening and closing take 150ms, and are instant with reduced motion (ADR-0013).</p>
+<div class="pair">
+  <div class="panel light" id="l-top"><span class="panel-label">Light</span>
+    <div class="stack gap-5">
+      <div class="cluster">
+        <button type="button" class="btn btn-icon" popovertarget="l-menu" aria-label="Trip actions"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+        <button type="button" class="btn" popovertarget="l-view">Map layers</button>
+      </div>
+      <div class="popover" id="l-menu" popover>
+        <div class="menu">
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Rename<span class="menu-item-hint">R</span></button>
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Duplicate</button>
+          <a class="menu-item" href="#l-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>Open itinerary</a>
+          <button type="button" class="menu-item" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11h14V8M10 12h4"/></svg>Archive<span class="menu-item-hint">Booked trips only</span></button>
+          <hr class="menu-separator">
+          <button type="button" class="menu-item menu-item-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete trip</button>
+        </div>
+      </div>
+      <div class="popover" id="l-view" popover aria-labelledby="l-view-h">
+        <form class="stack gap-3">
+          <p class="popover-heading" id="l-view-h">Show on the map</p>
+          <label class="choice"><input type="checkbox" checked> Booked stays</label>
+          <label class="choice"><input type="checkbox" checked> Activities</label>
+          <label class="choice"><input type="checkbox"> Saved places</label>
+        </form>
+      </div>
+      <p class="name">Shown open, in place</p>
+      <div class="specimens">
+        <div class="popover" popover>
+        <div class="menu">
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Rename<span class="menu-item-hint">R</span></button>
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Duplicate</button>
+          <a class="menu-item" href="#l-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>Open itinerary</a>
+          <button type="button" class="menu-item" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11h14V8M10 12h4"/></svg>Archive<span class="menu-item-hint">Booked trips only</span></button>
+          <hr class="menu-separator">
+          <button type="button" class="menu-item menu-item-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete trip</button>
+        </div>
+        </div>
+        <div class="popover" popover>
+        <form class="stack gap-3">
+          <p class="popover-heading" id="ls-view-h">Show on the map</p>
+          <label class="choice"><input type="checkbox" checked> Booked stays</label>
+          <label class="choice"><input type="checkbox" checked> Activities</label>
+          <label class="choice"><input type="checkbox"> Saved places</label>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel dark" id="d-top"><span class="panel-label">Dark</span>
+    <div class="stack gap-5">
+      <div class="cluster">
+        <button type="button" class="btn btn-icon" popovertarget="d-menu" aria-label="Trip actions"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+        <button type="button" class="btn" popovertarget="d-view">Map layers</button>
+      </div>
+      <div class="popover" id="d-menu" popover>
+        <div class="menu">
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Rename<span class="menu-item-hint">R</span></button>
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Duplicate</button>
+          <a class="menu-item" href="#d-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>Open itinerary</a>
+          <button type="button" class="menu-item" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11h14V8M10 12h4"/></svg>Archive<span class="menu-item-hint">Booked trips only</span></button>
+          <hr class="menu-separator">
+          <button type="button" class="menu-item menu-item-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete trip</button>
+        </div>
+      </div>
+      <div class="popover" id="d-view" popover aria-labelledby="d-view-h">
+        <form class="stack gap-3">
+          <p class="popover-heading" id="d-view-h">Show on the map</p>
+          <label class="choice"><input type="checkbox" checked> Booked stays</label>
+          <label class="choice"><input type="checkbox" checked> Activities</label>
+          <label class="choice"><input type="checkbox"> Saved places</label>
+        </form>
+      </div>
+      <p class="name">Shown open, in place</p>
+      <div class="specimens">
+        <div class="popover" popover>
+        <div class="menu">
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Rename<span class="menu-item-hint">R</span></button>
+          <button type="button" class="menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Duplicate</button>
+          <a class="menu-item" href="#d-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>Open itinerary</a>
+          <button type="button" class="menu-item" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11h14V8M10 12h4"/></svg>Archive<span class="menu-item-hint">Booked trips only</span></button>
+          <hr class="menu-separator">
+          <button type="button" class="menu-item menu-item-danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete trip</button>
+        </div>
+        </div>
+        <div class="popover" popover>
+        <form class="stack gap-3">
+          <p class="popover-heading" id="ds-view-h">Show on the map</p>
+          <label class="choice"><input type="checkbox" checked> Booked stays</label>
+          <label class="choice"><input type="checkbox" checked> Activities</label>
+          <label class="choice"><input type="checkbox"> Saved places</label>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+<h2>Use</h2>
+<pre><code>&lt;button class="btn btn-icon" popovertarget="trip-menu" aria-label="Trip actions"&gt;…&lt;/button&gt;
+
+&lt;div class="popover" id="trip-menu" popover&gt;
+  &lt;div class="menu"&gt;
+    &lt;button class="menu-item"&gt;Rename &lt;span class="menu-item-hint"&gt;R&lt;/span&gt;&lt;/button&gt;
+    &lt;a class="menu-item" href="/trips/lisbon"&gt;Open itinerary&lt;/a&gt;
+    &lt;hr class="menu-separator"&gt;
+    &lt;button class="menu-item menu-item-danger"&gt;Delete trip&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<ul>
+  <li><b>Opening.</b> <code>popovertarget</code> on a button opens it with no script, and that button becomes its anchor. Opened any other way, give the opener <code>anchor-name: --trip</code> and the popover <code>position-anchor: --trip</code>.</li>
+  <li><b>Items.</b> Each item is a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code>, never a <code>&lt;div&gt;</code>. The destructive action goes last, after a separator, with <code>.menu-item-danger</code>. A disabled item says why in its hint.</li>
+  <li><b>ARIA contract.</b> With no script, leave roles off: the items are buttons and links, Tab moves through them, and Esc closes the popover. Add <code>role="menu"</code> on <code>.menu</code> and <code>role="menuitem"</code> on each item only when your script also does the rest of the menu pattern: focus moves to the first item on open, Up and Down arrows move between items (wrapping), Home and End jump to the ends, and Tab closes the menu. Give the opener <code>aria-haspopup="menu"</code> only then, too.</li>
+  <li><b>Other content.</b> A popover can hold anything short, like the map layers above. Give it <code>aria-labelledby</code> pointing at its heading. Anything longer, or that needs a Save button, is a dialog.</li>
+  <li><b>Without anchor positioning.</b> The browser centres the popover. To keep it under the opener, set two custom properties when it opens:
+<pre><code>pop.addEventListener('toggle', (e) =&gt; {
+  if (e.newState !== 'open' || CSS.supports('position-area: block-end')) return;
+  const r = opener.getBoundingClientRect();
+  pop.style.setProperty('--popover-top', r.bottom + 'px');
+  pop.style.setProperty('--popover-left', r.left + 'px');
+});</code></pre></li>
+</ul>
+</div>
+<script>
+  // Preview only: the fallback above, for browsers without anchor positioning.
+  if (!CSS.supports('position-area: block-end')) {
+    document.querySelectorAll('[popovertarget]').forEach((opener) => {
+      const pop = document.getElementById(opener.getAttribute('popovertarget'));
+      pop.addEventListener('toggle', (e) => {
+        if (e.newState !== 'open') return;
+        const r = opener.getBoundingClientRect();
+        pop.style.setProperty('--popover-top', r.bottom + 'px');
+        pop.style.setProperty('--popover-left', r.left + 'px');
+      });
+    });
+  }
+</script>
+</body>
+</html>

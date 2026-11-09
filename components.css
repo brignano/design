@@ -1016,6 +1016,140 @@
   }
 }
 
+/* ── Popover and menu (#56) ───────────────────────────────────────────────
+   <button class="btn" popovertarget="trip-menu">Trip</button>
+   <div class="popover" id="trip-menu" popover>
+     <div class="menu">
+       <button class="menu-item">Rename</button>
+       <a class="menu-item" href="…">Open itinerary</a>
+       <hr class="menu-separator">
+       <button class="menu-item menu-item-danger">Delete trip</button>
+     </div>
+   </div>
+   The popover attribute (popover="auto") gives light dismiss: Esc or a click
+   outside closes it, and opening another one closes this one. Content of any
+   kind can sit in a .popover; .menu is for a list of actions or links.
+   - Position: below the button that opened it, lined up with its start edge,
+     with CSS anchor positioning. The opener is the anchor when it opens the
+     popover with popovertarget (or commandfor); otherwise set anchor-name on
+     the opener and position-anchor on the popover. Flips above or to the other
+     side when there's no room. Without anchor positioning, set --popover-top
+     and --popover-left from the opener's box on the toggle event (the preview
+     page has the four lines); with neither, the browser centres it.
+   - Menu items are <button> or <a>, never a <div>. .menu-item-danger is for
+     the destructive action, last and after a separator. .menu-item-hint
+     holds a shortcut or count at the end of the row.
+   - ARIA: without a script, leave roles off. The items are plain buttons and
+     links that Tab moves through, which needs nothing more. role="menu" and
+     role="menuitem" promise arrow keys, Home/End and focus moving into the
+     menu on open, so add them only with a script that does all of that.
+   - Open and close: a fade and a 4px slide over --dur-fast (ADR-0013).
+     Instant under prefers-reduced-motion. */
+@layer brignano.components {
+  .popover {
+    box-sizing: border-box;
+    min-width: 12rem;
+    max-width: min(100vw - 2 * var(--s4), 22rem);
+    max-height: min(100dvh - 2 * var(--s4), 28rem);
+    margin: 0;
+    padding: var(--s3);
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  .popover:popover-open { opacity: 1; transform: none; }
+  @starting-style {
+    .popover:popover-open { opacity: 0; transform: translateY(-4px); }
+  }
+  @supports (overlay: auto) {
+    .popover {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        transform var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
+  }
+  .popover:has(> .menu) { padding: var(--s1); }
+
+  @supports (position-area: block-end) {
+    .popover {
+      inset: auto;
+      margin-block: var(--s1);
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+    }
+  }
+  @supports not (position-area: block-end) {
+    .popover[style*='--popover-top'] {
+      inset: var(--popover-top) auto auto var(--popover-left);
+      margin-block-start: var(--s1);
+    }
+  }
+
+  .menu { display: flex; flex-direction: column; gap: 1px; }
+  .menu-item {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    width: 100%;
+    min-height: 36px;
+    padding: var(--s2) var(--s3);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    line-height: 1.4;
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .menu-item > svg { flex: none; width: 16px; height: 16px; color: var(--ink-soft); }
+  .menu-item:hover, .menu-item:focus-visible { background-color: var(--surface-hover); color: var(--ink); }
+  .menu-item:active { background-color: var(--surface-active); color: var(--ink); }
+  .menu-item:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .menu-item-hint { margin-inline-start: auto; padding-inline-start: var(--s3); color: var(--ink-soft); font-size: var(--text-xs); }
+  .menu-item-danger, .menu-item-danger > svg { color: var(--danger-ink); }
+  .menu-item-danger:is(:hover, :focus-visible, :active) { background-color: var(--danger-surface); color: var(--danger-ink); }
+  .menu-item:is(:disabled, [aria-disabled='true']) { background-color: transparent; color: var(--i-disabled-ink); cursor: not-allowed; }
+  .menu-item:is(:disabled, [aria-disabled='true']) > svg { color: inherit; }
+  .menu-separator {
+    height: 0;
+    margin: var(--s1) calc(-1 * var(--s1));
+    border: 0;
+    border-block-start: 1px solid var(--line);
+  }
+
+  @media (pointer: coarse) {
+    .menu-item { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .popover { border-color: CanvasText; }
+    /* forced-color-adjust: none, or the text backplate (Canvas) hides
+       HighlightText on the Highlight row. */
+    .menu-item:not(:disabled, [aria-disabled='true']):is(:hover, :focus-visible) {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+    .menu-item:not(:disabled, [aria-disabled='true']):is(:hover, :focus-visible) > * { color: inherit; }
+    .menu-item:focus-visible { outline-color: CanvasText; }
+    .menu-item:is(:disabled, [aria-disabled='true']) { background-color: Canvas; color: GrayText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .popover { transition: none; transform: none; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a
