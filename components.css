@@ -261,7 +261,7 @@
     background-repeat: no-repeat;
     background-position: center;
   }
-  .choice > input[type='radio'] { border-radius: 50%; }
+  .choice > input[type='radio']:not(.switch) { border-radius: 50%; } /* (0,3,1), after the base rule */
   .choice > input:is([type='checkbox'], [type='radio']):not(.switch):not(:disabled):hover { border-color: var(--ink-soft); }
   .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch) {
     border-color: transparent;
@@ -370,6 +370,12 @@
     .choice > input:is([type='checkbox'], [type='radio']):not(.switch):disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
     .choice:has(> input[type='checkbox']:checked:not(:indeterminate, .switch))::before { forced-color-adjust: none; background-color: HighlightText; }
     .choice:has(> input[type='checkbox']:checked:disabled)::before { background-color: GrayText; }
+    /* Hover and focus keep system colours too (forced-color-adjust: none stops the browser doing it). */
+    .choice > input:is([type='checkbox'], [type='radio']):not(.switch):not(:disabled):hover { border-color: CanvasText; }
+    .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch):not(:disabled):hover { border-color: Highlight; background-color: Highlight; }
+    .choice > input:focus-visible, .switch:focus-visible { outline-color: CanvasText; }
+    .switch:not(:disabled):hover { border-color: CanvasText; }
+    .switch:checked:not(:disabled):hover { border-color: Highlight; background-color: Highlight; }
     .segmented > label { forced-color-adjust: none; color: CanvasText; }
     .segmented > label:has(:checked) { background-color: Highlight; color: HighlightText; }
     .segmented > label:has(:disabled) { color: GrayText; }
