@@ -839,7 +839,12 @@
      action ("Delete trip"), never "OK".
    - .sheet (with .dialog): slides in from the right on a wide screen and up
      from the bottom on a phone.
-   - No open or close motion: the tool tier has none (DESIGN.md §7). */
+   - Open and close: a fade and a short slide over --dur-fast, from the
+     edge a sheet comes from (ADR-0013), for modal dialogs only: one that is
+     open in the markup renders still. Only opacity and transform move, and
+     the open state is always fully shown, so a browser without
+     @starting-style just shows it at once. Instant under
+     prefers-reduced-motion. */
 @layer brignano.components {
   .dialog {
     box-sizing: border-box;
@@ -852,11 +857,43 @@
     background-color: var(--card);
     color: var(--ink);
     box-shadow: var(--shadow-3);
-    flex-direction: column;
+    flex-direction: column; /* here, not on [open], so it holds while closing */
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   }
   /* display only while open, so the UA's display: none still hides it closed. */
-  .dialog[open] { display: flex; }
-  .dialog::backdrop { background-color: var(--scrim); }
+  .dialog[open] { display: flex; opacity: 1; transform: none; }
+  @starting-style {
+    .dialog:modal { opacity: 0; transform: translateY(8px); }
+  }
+  .dialog::backdrop {
+    background-color: var(--scrim);
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease);
+  }
+  .dialog[open]::backdrop { opacity: 1; }
+  @starting-style {
+    .dialog:modal::backdrop { opacity: 0; }
+  }
+  /* Closing animates only where the dialog can stay in the top layer while it
+     fades (overlay). Elsewhere it would drop into the page flow, so it closes
+     at once. */
+  @supports (overlay: auto) {
+    .dialog {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        transform var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
+    .dialog::backdrop {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
+  }
 
   .dialog-header {
     display: flex;
@@ -895,6 +932,12 @@
     margin: 0 0 0 auto;
     border-width: 0 0 0 1px;
     border-radius: 0;
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  .sheet[open] { transform: none; }
+  @starting-style {
+    .sheet:modal { opacity: 1; transform: translateX(100%); }
   }
 
   /* Phone: dialogs fill the width; a sheet comes up from the bottom. */
@@ -908,11 +951,19 @@
       margin: auto 0 0;
       border-width: 1px 0 0;
       border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+    }
+    @starting-style {
+      .sheet:modal { transform: translateY(100%); }
     }
   }
 
   @media (forced-colors: active) {
     .dialog { border-color: CanvasText; }
+  }
+  /* tokens.css stops transitions for *, ::before and ::after, not ::backdrop. */
+  @media (prefers-reduced-motion: reduce) {
+    .dialog, .dialog::backdrop { transition: none; transform: none; }
   }
 }
 
