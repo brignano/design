@@ -16,7 +16,7 @@
   .name { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin: 0; }
   /* Preview only: copies shown in the flow, as if open. */
   .specimens { display: flex; flex-wrap: wrap; gap: var(--s4); align-items: flex-start; }
-  .specimens > .tooltip { position: static; inset: auto; translate: none; margin: 0; opacity: 1; visibility: visible; }
+  .specimens > .tooltip { position: relative; inset: auto; translate: none; margin: 0; opacity: 1; visibility: visible; }
 </style>
 </head>
 <body>
@@ -25,7 +25,7 @@
 <div class="pair">
   <div class="panel light"><span class="panel-label">Light</span>
     <div class="stack gap-5">
-      <div class="cluster gap-1" role="toolbar" aria-label="Trip tools (light)">
+      <div class="cluster gap-1" role="group" aria-label="Trip tools (light)">
         <span class="tooltip-wrap">
           <button type="button" class="btn btn-ghost btn-icon" interestfor="l-tip-share" aria-labelledby="l-tip-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v12M7 8l5-5 5 5"/></svg></button>
           <span class="tooltip" id="l-tip-share" popover="hint" role="tooltip">Share trip</span>
@@ -52,7 +52,7 @@
   </div>
   <div class="panel dark"><span class="panel-label">Dark</span>
     <div class="stack gap-5">
-      <div class="cluster gap-1" role="toolbar" aria-label="Trip tools (dark)">
+      <div class="cluster gap-1" role="group" aria-label="Trip tools (dark)">
         <span class="tooltip-wrap">
           <button type="button" class="btn btn-ghost btn-icon" interestfor="d-tip-share" aria-labelledby="d-tip-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 3v12M7 8l5-5 5 5"/></svg></button>
           <span class="tooltip" id="d-tip-share" popover="hint" role="tooltip">Share trip</span>
@@ -88,8 +88,8 @@
 <ul>
   <li><b>Names only.</b> One short phrase that names what the button does. A sentence, a link or anything the reader must know goes in a popover or on the page.</li>
   <li><b>The name comes from the tooltip.</b> <code>aria-labelledby</code> on the trigger points at the tooltip, so screen readers hear the same words people see, with or without hover.</li>
-  <li><b>Where it opens.</b> With <code>interestfor</code> support, the browser opens it as a hint popover above the trigger (below if there's no room) and Esc dismisses it. Elsewhere, <code>.tooltip-wrap</code> shows it on hover and focus. No script either way.</li>
-  <li><b>Timing.</b> 300ms in, nothing out. With reduced motion there's no fade, but the delay stays.</li>
+  <li><b>Where it opens.</b> With <code>interestfor</code> support, the browser opens it as a hint popover above the trigger (below if there's no room) and Esc dismisses it. Elsewhere, <code>.tooltip-wrap</code> shows it on hover and focus. No script either way. That fallback can't close on Esc or flip at the top of the viewport, and a parent with <code>overflow: hidden</code> clips it.</li>
+  <li><b>Timing.</b> 300ms in, nothing out. It stays open while the pointer is on it, so someone using a magnifier can move onto it to read it. With reduced motion there's no fade, but the delay stays.</li>
 </ul>
 </div>
 </body>
