@@ -91,6 +91,11 @@
   .elev[data-theme="dark"] i.e3 { background: var(--n-200); }
   .spec .msg { width: 100%; max-width: 280px; }
   .spec .node { width: 210px; }
+  .chrome-spec { display: flex; align-items: center; gap: 10px; width: 220px; height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-sticky); }
+  .chrome-spec span { display: block; height: 8px; border-radius: 4px; background: var(--line-strong); }
+  .chrome-spec .chrome-brand { width: 40px; margin-right: auto; background: var(--ink); }
+  .chrome-link { width: 26px; }
+  .chrome-spec .chrome-current { box-shadow: 0 6px 0 -4px var(--i); background: var(--ink-soft); }
   .layout-spec { width: 200px; --grid-min: 3rem; }
   .layout-spec i { display: block; height: 18px; min-width: 40px; border-radius: var(--radius-sm); background: var(--surface-hover); border: 1px solid var(--line-strong); }
   .frame { display: grid; gap: 7px; width: 70%; }
@@ -240,6 +245,10 @@
     <li><a class="gallery-card" href="previews/layout.html">
       <div class="spec" aria-hidden="true"><div class="stack gap-2 layout-spec"><div class="cluster"><i></i><i></i><i></i></div><div class="grid gap-2"><i></i><i></i><i></i></div></div></div>
       <div class="txt"><b>Layout</b><span>Container, stack, cluster, grid and section, all from the spacing scale.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/site-chrome.html">
+      <div class="spec" aria-hidden="true"><div class="chrome-spec"><span class="chrome-brand"></span><span class="chrome-link chrome-current"></span><span class="chrome-link"></span><span class="chrome-link"></span></div></div>
+      <div class="txt"><b>Site header, nav and footer</b><span>A sticky header, a phone menu that needs no script, a skip link and a footer.</span><span class="go">View →</span></div>
     </a></li>
     <li><a class="gallery-card" href="previews/diagram.html">
       <div class="spec" aria-hidden="true"><div class="node node-added"><span class="dtag dtag-added">+ added</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><div><b>orders-api</b><small>aws_ecs_service</small></div></div></div>

@@ -30,6 +30,7 @@
     ['status.html', 'Pills, badges and tags'],
     ['cards.html', 'Cards'],
     ['layout.html', 'Layout'],
+    ['site-chrome.html', 'Site header, nav and footer'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],
