@@ -633,6 +633,193 @@
   }
 }
 
+/* ── Site header, nav and footer (#54) ────────────────────────────────────
+   <a class="skip-link" href="#main">Skip to content</a>
+   <header class="site-header">
+     <div class="site-header-inner container container-wide">
+       <a class="site-brand" href="/">…</a>
+       <nav class="site-nav" id="site-menu" popover aria-label="Main">
+         <button type="button" class="btn btn-ghost btn-icon site-menu-close"
+                 popovertarget="site-menu" popovertargetaction="hide"
+                 aria-label="Close menu" autofocus>…</button>
+         <ul><li><a href="/" aria-current="page">Home</a></li>…</ul>
+       </nav>
+       <div class="site-actions">…</div>
+       <button type="button" class="btn btn-ghost btn-icon site-menu-button"
+               popovertarget="site-menu" aria-label="Menu">…</button>
+     </div>
+   </header>
+   - The header is sticky on --surface-sticky with an 8px blur (DESIGN.md §6).
+     One header for both tiers; the marketing tier only makes it taller.
+   - The nav is a popover. Wide, it is shown inline and the popover is never
+     opened. When the header is narrower than 45rem the links hide behind the
+     menu button, which opens the nav as a sheet from the top, with no script:
+     Esc or a click outside closes it, the autofocus close button takes focus
+     when it opens, and focus goes back to the menu button when it closes.
+   - aria-current="page" marks the current link: ink text, a cobalt underline.
+   - .site-footer: .site-footer-columns of link lists, each under a
+     .site-footer-heading, then .site-footer-legal and .site-footer-small. */
+@layer brignano.components {
+  .skip-link {
+    position: absolute;
+    top: var(--s3);
+    left: var(--s4);
+    z-index: 30;
+    padding: var(--s2) var(--s3);
+    border-radius: var(--radius-sm);
+    background-color: var(--card);
+    color: var(--ink);
+    font-weight: 500;
+    box-shadow: var(--shadow-2);
+    transform: translateY(calc(-100% - var(--s5)));
+  }
+  .skip-link:focus { transform: none; outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  .site-header {
+    container: site-header / inline-size;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--line);
+    background-color: var(--surface-sticky);
+    color: var(--ink);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .site-header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    min-height: 56px;
+  }
+  .tier-marketing .site-header-inner { min-height: 72px; gap: var(--s5); }
+
+  .site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    min-height: 40px;
+    margin-inline-end: auto; /* pushes the nav and actions to the end */
+    color: var(--ink);
+    font-weight: 600;
+    font-size: var(--text-lg);
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  .site-brand > :is(img, svg) { flex: none; width: 24px; height: 24px; }
+
+  /* Wide: the popover is shown in the flow, never opened. */
+  .site-nav[popover] {
+    display: block;
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    background: none;
+    color: inherit;
+  }
+  .site-nav ul { display: flex; align-items: center; gap: var(--s1); margin: 0; padding: 0; list-style: none; }
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 var(--s3);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .site-nav a:hover { color: var(--ink); }
+  .site-nav a[aria-current='page'] {
+    color: var(--ink);
+    text-decoration: underline 2px var(--i);
+    text-underline-offset: 6px;
+  }
+  .site-nav a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  .site-actions { display: flex; align-items: center; gap: var(--s2); }
+  .site-menu-button, .site-menu-close { display: none; }
+
+  /* Narrow: the links move into a sheet behind the menu button. */
+  @container site-header (max-width: 45rem) {
+    .site-header .site-header-inner { gap: var(--s2); } /* beats the marketing gap */
+    .site-brand { min-width: 0; }
+    .site-menu-button { display: inline-flex; }
+    .site-nav[popover]:not(:popover-open) { display: none; }
+  }
+
+  /* The open sheet, at any width, so it stays usable if the header widens
+     while it is open (a rotated tablet, a resized window). */
+  .site-nav[popover]:popover-open {
+    position: fixed;
+    inset: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+    width: 100%;
+    max-height: 100dvh;
+    box-sizing: border-box;
+    padding: var(--s3) var(--s4) var(--s5);
+    overflow-y: auto;
+    border-bottom: 1px solid var(--line);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-3);
+  }
+  .site-nav[popover]::backdrop { background-color: var(--scrim); }
+  .site-nav:popover-open .site-menu-close { display: inline-flex; align-self: flex-end; }
+  .site-nav:popover-open ul { flex-direction: column; align-items: stretch; }
+  .site-nav:popover-open a { width: 100%; min-height: 44px; font-size: var(--text-base); }
+
+  @media (pointer: coarse) {
+    .site-nav a { min-height: 44px; }
+  }
+
+  .site-footer {
+    padding-block: var(--s6) var(--s7);
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+  }
+  .site-footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    gap: var(--s5);
+  }
+  .site-footer-heading { margin: 0 0 var(--s2); color: var(--ink); font-size: var(--text-sm); font-weight: 600; }
+  .site-footer ul { display: grid; gap: var(--s1); margin: 0; padding: 0; list-style: none; }
+  .site-footer a { color: var(--ink-soft); text-decoration: none; }
+  .site-footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .site-footer ul a { display: inline-flex; align-items: center; min-height: 28px; }
+  .site-footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s2) var(--s4);
+    margin: var(--s6) 0 0;
+    padding-top: var(--s4);
+    border-top: 1px solid var(--line-soft);
+  }
+  .site-footer-small { margin: var(--s2) 0 0; font-size: var(--text-xs); }
+
+  @media (pointer: coarse) {
+    .site-footer ul a { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .site-header { border-bottom-color: CanvasText; }
+    .site-nav a[aria-current='page'] { text-decoration-color: CanvasText; }
+    .site-nav[popover]:popover-open { border: 1px solid CanvasText; }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .site-header { background-color: var(--card); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a
