@@ -35,6 +35,7 @@
     ['dialogs.html', 'Dialog and sheet'],
     ['menus.html', 'Popover and menu'],
     ['tooltips.html', 'Tooltip'],
+    ['toasts.html', 'Toast'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],

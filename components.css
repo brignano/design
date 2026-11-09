@@ -1234,6 +1234,111 @@
   }
 }
 
+/* ── Toast (#58) ───────────────────────────────────────────────────────────
+   <section class="toast-region" aria-label="Notifications">
+     <div class="toast-list" role="status"></div>   ← success and attention
+     <div class="toast-list" role="alert"></div>    ← danger
+   </section>
+   …and what your script adds to a list:
+     <div class="toast toast-success">
+       <svg aria-hidden="true" …></svg>
+       <div class="toast-content">
+         <p class="toast-title">Trip saved</p>
+         <p class="toast-body">Lisbon, 4 days is in your list.</p>
+       </div>
+       <button class="btn btn-ghost btn-sm toast-action">Undo</button>
+       <button class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss">…</button>
+     </div>
+   A short note that something happened. Kinds: .toast-success,
+   .toast-attention, .toast-danger, each with its icon, an edge in its colour
+   and a title that says in words what happened, never colour alone. There's
+   no info toast: use a .msg on the page.
+   - The region and both lists are in the page from the start, empty. Two
+     live regions, never nested: role="status" (polite) for success and
+     attention, role="alert" for danger, which sits below them. Newest at the
+     bottom of each; bottom-centre on a phone, bottom-right from 40rem.
+   - Script is yours (design ships none): add toasts to a list; remove a
+     success toast after 5s, pausing while it's hovered or has focus; leave
+     attention and danger until dismissed. To remove one, set data-leaving,
+     then take it out on its own transitionend (or after 200ms, whichever is
+     first). The transition still runs, in 0.01ms, under reduced motion, so
+     transitionend always fires. If focus was inside it, move focus to the
+     next toast, or back to where it was before.
+   - While a modal dialog is open, everything outside it is inert, toasts
+     included: report inside the dialog with a .msg instead.
+   - Enter and leave: a fade and an 8px slide over --dur-fast (ADR-0013).
+     Instant under prefers-reduced-motion. */
+@layer brignano.components {
+  .toast-region {
+    position: fixed;
+    z-index: 40;
+    inset: auto var(--s4) var(--s4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+  /* A flex column, not display: contents, which some browsers still drop
+     from the accessibility tree, live region and all. Never display: none
+     either: a hidden live region misses what's added as it appears. */
+  .toast-list {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    align-self: stretch;
+    gap: var(--s2);
+  }
+  .toast-list:not(:empty) ~ .toast-list:not(:empty) { margin-top: var(--s2); }
+  .toast-region .toast { pointer-events: auto; }
+  @media (min-width: 40rem) {
+    .toast-region { inset: auto var(--s5) var(--s5) auto; align-items: flex-end; }
+  }
+
+  .toast {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: min(100%, 24rem);
+    padding: 12px 10px 12px 14px;
+    border: 1px solid var(--line);
+    border-inline-start: 3px solid var(--line-control);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  @starting-style {
+    .toast { opacity: 0; transform: translateY(8px); }
+  }
+  .toast[data-leaving] { opacity: 0; transform: translateY(8px); }
+  .toast > svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
+  .toast-content { display: grid; gap: 2px; flex: 1; min-width: 0; }
+  .toast-title { margin: 0; font-weight: 600; }
+  .toast-body { margin: 0; color: var(--ink-soft); }
+  .toast-action { flex: none; margin: -4px 0; }
+  .toast-close { flex: none; margin: -4px -2px -4px 0; color: var(--ink-soft); }
+
+  .toast-success { border-inline-start-color: var(--success); }
+  .toast-attention { border-inline-start-color: var(--attention); }
+  .toast-danger { border-inline-start-color: var(--danger); }
+  .toast-success > svg { color: var(--success); }
+  .toast-attention > svg { color: var(--attention); }
+  .toast-danger > svg { color: var(--danger); }
+
+  @media (forced-colors: active) {
+    .toast { border-color: CanvasText; }
+  }
+  /* tokens.css cuts the transition to 0.01ms, which keeps transitionend
+     firing for the script that removes a leaving toast; no slide either. */
+  @media (prefers-reduced-motion: reduce) {
+    .toast, .toast[data-leaving] { transform: none; }
+  }
+}
+
 /* ── Table (#61) ───────────────────────────────────────────────────────────
    <div class="table-wrap"><table class="table">…</table></div>
    Numbers right-aligned with .num; sortable headers carry aria-sort and a
