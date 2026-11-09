@@ -30,6 +30,7 @@
     ['feedback.html', 'Messages and banners'],
     ['status.html', 'Pills, badges and tags'],
     ['cards.html', 'Cards'],
+    ['layout.html', 'Layout'],
     ['diagram.html', 'Diagram nodes'],
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],
