@@ -24,8 +24,10 @@
 //      data-status on <html>, and .docs sections tagged data-doc="usage"
 //      (with a snippet), "use-when", "dont-use" and "a11y"; or its card on
 //      index.html shows a different status;
-//  11. icons/ and the icon list on previews/icons.html disagree, or an icon
-//      carries a colour of its own instead of currentColor.
+//  11. icons/ and the icon list on previews/icons.html disagree, an icon's
+//      name isn't lower-case kebab, or an icon leaves the set's shape: a
+//      fill or stroke other than none or currentColor, any style= or color=,
+//      any hex, a stroke-width other than 2, or a size other than 24.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -431,9 +433,16 @@ if ([...iconList].sort().join() !== iconFiles.join())
 if (!existsSync(new URL('icons/LICENSE', root))) fail('icons/LICENSE is missing');
 for (const n of iconFiles) {
   const svg = read(`icons/${n}.svg`);
-  for (const m of svg.matchAll(/\b(fill|stroke)="([^"]+)"/g))
-    if (!['none', 'currentColor'].includes(m[2])) fail(`icons/${n}.svg: ${m[1]}="${m[2]}"; icons take currentColor`);
-  if (!/viewBox="0 0 24 24"/.test(svg)) fail(`icons/${n}.svg: not on the 24px grid`);
+  const head = svg.match(/<svg\b[^>]*>/)?.[0] ?? '';
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(n)) fail(`icons/${n}.svg: names are lower-case kebab, as Lucide's are`);
+  for (const m of svg.matchAll(/\b(fill|stroke)\s*=\s*(["'])(.*?)\2/g))
+    if (!['none', 'currentColor'].includes(m[3])) fail(`icons/${n}.svg: ${m[1]}="${m[3]}"; icons take currentColor`);
+  if (/\s(style|color)\s*=/.test(svg)) fail(`icons/${n}.svg: carries style= or color=; icons take currentColor from the text`);
+  if (/#[0-9a-fA-F]{3,8}\b/.test(svg)) fail(`icons/${n}.svg: carries a hex colour`);
+  if (!/viewBox="0 0 24 24"/.test(head)) fail(`icons/${n}.svg: not on the 24px grid`);
+  if (!/\swidth="24"/.test(head) || !/\sheight="24"/.test(head)) fail(`icons/${n}.svg: must be width="24" height="24"`);
+  if ([...svg.matchAll(/stroke-width\s*=\s*["']([^"']*)["']/g)].some((m) => m[1] !== '2') || !/stroke-width="2"/.test(head))
+    fail(`icons/${n}.svg: one stroke width, 2`);
 }
 
 if (failures.length) {

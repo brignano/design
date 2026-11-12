@@ -30,8 +30,8 @@
   .icon-tile svg { width: 24px; height: 24px; }
   .icon-tile[hidden] { display: none; }
   @media (prefers-reduced-motion: reduce) { .icon-tile { transition: none; } }
-  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  @media (pointer: coarse) { .icon-tile { min-height: 6rem; } }
+  .icon-sizes .base { font-size: var(--text-base); }
+  .icon-copied { margin: 0; color: var(--ink-soft); font-size: var(--text-sm); min-height: 1lh; }
 </style>
 </head>
 <body>
@@ -42,14 +42,14 @@
   <div class="panel light"><span class="panel-label">Light</span>
     <p class="icon-sizes">
       <span class="sm"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/> <path d="m16 9-5.5 5.5L8 12"/> </svg>Small</span>
-      <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m21 21-4.34-4.34"/> <circle cx="11" cy="11" r="8"/> </svg>Body</span>
+      <span class="base"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m21 21-4.34-4.34"/> <circle cx="11" cy="11" r="8"/> </svg>Body</span>
       <span class="lg"><svg class="icon icon-lg" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M15 3h6v6"/> <path d="M10 14 21 3"/> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/> </svg>Large</span>
     </p>
   </div>
   <div class="panel dark"><span class="panel-label">Dark</span>
     <p class="icon-sizes">
       <span class="sm"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"/> <path d="m16 9-5.5 5.5L8 12"/> </svg>Small</span>
-      <span><svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m21 21-4.34-4.34"/> <circle cx="11" cy="11" r="8"/> </svg>Body</span>
+      <span class="base"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="m21 21-4.34-4.34"/> <circle cx="11" cy="11" r="8"/> </svg>Body</span>
       <span class="lg"><svg class="icon icon-lg" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M15 3h6v6"/> <path d="M10 14 21 3"/> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/> </svg>Large</span>
     </p>
   </div>
@@ -63,16 +63,13 @@
   <p class="icon-count" id="icon-count" aria-live="polite"></p>
 </div>
 <ul class="icon-grid" id="icon-grid" aria-label="Icons"></ul>
-<p class="visually-hidden" role="status" id="icon-copied"></p>
+<p class="icon-copied" role="status" id="icon-copied"></p>
 
 <div class="docs">
   <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;!-- paste the file's &lt;svg&gt;, then add the class and aria-hidden --&gt;
 &lt;svg class="icon" aria-hidden="true" viewBox="0 0 24 24" …&gt;…&lt;/svg&gt;
-
-&lt;!-- or reference the file from the package --&gt;
-&lt;img class="icon" src="/node_modules/@brignano/design/icons/search.svg" alt=""&gt;
 
 &lt;!-- an icon alone in a button: the button carries the name --&gt;
 &lt;button class="btn btn-ghost btn-icon" aria-label="Close"&gt;&lt;svg class="icon" aria-hidden="true" …&gt;…&lt;/svg&gt;&lt;/button&gt;</pre>
@@ -102,7 +99,7 @@
     <h2>Sizes and colour</h2>
     <ul>
       <li><code>.icon-sm</code>, <code>.icon</code> and <code>.icon-lg</code> are 1.25 times <code>--text-sm</code>, the body size and <code>--text-lg</code>, so they track the tier. Inside <code>.btn</code> an svg sizes itself the same way.</li>
-      <li>Every icon strokes in <code>currentColor</code>: set the colour on the text, never on the icon.</li>
+      <li>Every icon strokes in <code>currentColor</code>: set the colour on the text, never on the icon. That only works inline: an svg loaded through <code>&lt;img&gt;</code> or a CSS <code>url()</code> draws black, so paste the markup.</li>
       <li>The files keep Lucide's names. The licence is in <code>icons/LICENSE</code> and ships with the package.</li>
     </ul>
   </section>
@@ -110,7 +107,7 @@
   <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
-      <li>A decorative icon next to its word takes <code>aria-hidden="true"</code> (inline svg) or <code>alt=""</code> (img), so it isn't read twice.</li>
+      <li>A decorative icon next to its word takes <code>aria-hidden="true"</code>, so it isn't read twice.</li>
       <li>An icon-only button or link needs an <code>aria-label</code> that says what it does, not what it shows: "Close", not "X".</li>
       <li>Icons inherit the text colour, so they meet the same contrast as the words beside them, and forced colours repaint them with the text.</li>
     </ul>
@@ -146,6 +143,7 @@
   Promise.all(ICONS.map((name) => fetch(`../icons/${name}.svg`).then((r) => r.text()).then((text) => [name, text])))
     .then((files) => {
       for (const [name, text] of files) {
+        const licence = (text.match(/<!--[\s\S]*?-->/) || [''])[0];
         const svg = text.replace(/<!--[\s\S]*?-->\s*/, '').trim();
         const li = document.createElement('li');
         li.dataset.name = name;
@@ -156,7 +154,8 @@
         button.innerHTML = svg.replace('<svg', '<svg aria-hidden="true"');
         button.append(name);
         button.addEventListener('click', () => {
-          const markup = svg.replace('<svg', '<svg class="icon" aria-hidden="true"');
+          const markup = `${licence}\n${svg.replace('<svg', '<svg class="icon" aria-hidden="true"')}`.trim();
+          copied.textContent = '';
           navigator.clipboard.writeText(markup).then(
             () => { copied.textContent = `Copied ${name}`; },
             () => { copied.textContent = `Couldn't copy ${name}`; });

@@ -642,7 +642,8 @@ and in what order: [`proposals/component-layer.md`](./proposals/component-layer.
   link to their issue.
 - **One icon set.** `icons/` holds the only icons a surface uses: outline
   icons from Lucide (ISC, `icons/LICENSE`) on a 24px grid at a 2px stroke, in
-  `currentColor`, so they take their text's colour. Size them with `.icon-sm`,
+  `currentColor`, so pasted inline they take their text's colour (through
+  `<img>` they draw black). Size them with `.icon-sm`,
   `.icon` or `.icon-lg` (1.25× the text beside them). Decorative icons are
   `aria-hidden`; an icon-only button carries an `aria-label`. Need one that
   isn't there? Add it from Lucide in a PR; don't draw one or pull in another
