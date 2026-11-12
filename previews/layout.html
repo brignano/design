@@ -1,6 +1,6 @@
 <!-- @dsCard group="Content" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -96,8 +96,9 @@
 </div>
 
 <div class="docs">
-<h2>Use</h2>
-<pre><code>&lt;main class="container"&gt;
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;main class="container"&gt;
   &lt;section class="section stack gap-5"&gt;
     &lt;h2&gt;Trips&lt;/h2&gt;
     &lt;div class="grid"&gt;…cards…&lt;/div&gt;
@@ -105,12 +106,45 @@
   &lt;hr class="divider"&gt;
   &lt;section class="section stack"&gt;…&lt;/section&gt;
 &lt;/main&gt;</code></pre>
-<ul>
-  <li>Space between children is always the parent's <code>gap</code>. Don't add margins to children.</li>
-  <li><code>.grid</code> never overflows: a column is at least <code>--grid-min</code> or the whole row, whichever is smaller. Set <code>--grid-min</code> on the element to change it.</li>
-  <li>The gap modifiers beat any component's own gap, so <code>.card.gap-2</code> tightens a card.</li>
-  <li>Tailwind sites keep Tailwind's own layout utilities. These are for plain-CSS sites.</li>
-</ul>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A plain-CSS site needs a page width, a column, a row or a grid of cards.</li>
+        <li>Spacing between siblings should come from one <code>gap</code> on the parent.</li>
+        <li>Sections should follow the tier's rhythm, with a <code>.divider</code> where a hairline helps.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The site uses Tailwind. Tailwind sites keep Tailwind's own layout utilities. These are for plain-CSS sites.</li>
+        <li>You want to space one child differently. Change the parent's gap, don't add margins to children.</li>
+        <li>The content is a table of data. Use the table component.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Rules</h2>
+    <ul>
+      <li>Space between children is always the parent's <code>gap</code>. Don't add margins to children.</li>
+      <li><code>.grid</code> never overflows: a column is at least <code>--grid-min</code> or the whole row, whichever is smaller. Set <code>--grid-min</code> on the element to change it.</li>
+      <li>The gap modifiers beat any component's own gap, so <code>.card.gap-2</code> tightens a card.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>These classes only place things. Use the right elements underneath: <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code> with a heading, <code>&lt;hr&gt;</code> for a divider.</li>
+      <li>Layout changes the visual order only by wrapping, never by reordering, so reading and tab order match what people see.</li>
+      <li>The container keeps text to a readable measure, and the grid reflows to one column on a phone with no sideways scroll.</li>
+      <li>In forced colours the divider keeps a visible line.</li>
+    </ul>
+  </section>
 </div>
 </body>
 </html>

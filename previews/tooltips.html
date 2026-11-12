@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="beta">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -80,17 +80,52 @@
 </div>
 
 <div class="docs">
-<h2>Use</h2>
-<pre><code>&lt;span class="tooltip-wrap"&gt;
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;span class="tooltip-wrap"&gt;
   &lt;button class="btn btn-ghost btn-icon" interestfor="tip-share" aria-labelledby="tip-share"&gt;…&lt;/button&gt;
   &lt;span class="tooltip" id="tip-share" popover="hint" role="tooltip"&gt;Share trip&lt;/span&gt;
 &lt;/span&gt;</code></pre>
-<ul>
-  <li><b>Names only.</b> One short phrase that names what the button does. A sentence, a link or anything the reader must know goes in a popover or on the page.</li>
-  <li><b>The name comes from the tooltip.</b> <code>aria-labelledby</code> on the trigger points at the tooltip, so screen readers hear the same words people see, with or without hover.</li>
-  <li><b>Where it opens.</b> With <code>interestfor</code> support, the browser opens it as a hint popover above the trigger (below if there's no room) and Esc dismisses it. Elsewhere, <code>.tooltip-wrap</code> shows it on hover and focus. No script either way. That fallback can't close on Esc or flip at the top of the viewport, and a parent with <code>overflow: hidden</code> clips it.</li>
-  <li><b>Timing.</b> 300ms in, nothing out. It stays open while the pointer is on it, so someone using a magnifier can move onto it to read it. With reduced motion there's no fade, but the delay stays.</li>
-</ul>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>An icon button needs a visible name on hover and focus, like the trip tools above.</li>
+        <li><b>Names only.</b> One short phrase that names what the button does.</li>
+        <li>You can live with a beta: only Chromium ships <code>interestfor</code>, so other browsers get the CSS fallback described below.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>It says a sentence, holds a link, or says something the reader must know. Use a popover, or put it on the page.</li>
+        <li>It would be the only place something is said. Touch users don't hover.</li>
+        <li>The button already has a visible text label. A tooltip only repeats it.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Where it opens</h2>
+    <p>With <code>interestfor</code> support, the browser opens it as a hint popover above the trigger (below if there's no room) and Esc dismisses it. Only Chromium ships <code>interestfor</code> today, which is why this component is in beta. Elsewhere, <code>.tooltip-wrap</code> shows it on hover and focus. No script either way. That fallback can't close on Esc or flip at the top of the viewport, and a parent with <code>overflow: hidden</code> clips it.</p>
+  </section>
+
+  <section>
+    <h2>Timing</h2>
+    <p>300ms in, nothing out. It stays open while the pointer is on it, so someone using a magnifier can move onto it to read it. With reduced motion there's no fade, but the delay stays.</p>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li><b>The name comes from the tooltip.</b> <code>aria-labelledby</code> on the trigger points at the tooltip, so screen readers hear the same words people see, with or without hover.</li>
+      <li>Give the tooltip <code>role="tooltip"</code> and <code>popover="hint"</code>. It opens on keyboard focus as well as hover.</li>
+      <li>Esc dismisses it only in browsers with <code>interestfor</code> (Chromium today). In the CSS fallback it closes when focus or the pointer leaves.</li>
+      <li>It stays open while the pointer is on it, so it can be read with a magnifier. In forced colours it keeps a visible border.</li>
+    </ul>
+  </section>
 </div>
 </body>
 </html>

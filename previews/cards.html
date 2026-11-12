@@ -1,6 +1,6 @@
 <!-- @dsCard group="Content" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -65,7 +65,7 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;article class="card card-link"&gt;
   &lt;div class="card-media"&gt;&lt;img src="lisbon.jpg" alt=""&gt;&lt;/div&gt;
@@ -78,8 +78,27 @@
 &lt;/article&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A list of things of the same kind, each with a title and a few details, like trips or posts.</li>
+        <li>Each item leads to its own page: add <code>.card-link</code>.</li>
+        <li>Items sit in a grid and should line up, footers included.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>A card inside a card: use a divider or a list instead.</li>
+        <li>A single fact: use a stat tile or a key-value list.</li>
+        <li>A whole page section: use the layout primitives.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="two">
+    <section>
       <h2>Parts</h2>
       <ul>
         <li><code>.card-header</code> holds <code>.card-title</code> and <code>.card-meta</code>; <code>.card-body</code> and <code>.card-footer</code> follow. Every part is optional.</li>
@@ -87,34 +106,24 @@
         <li>The footer sits at the bottom, so cards in a row line up.</li>
         <li>Radius <code>--radius</code>; the grid of cards is the layout's job.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section>
       <h2>Link cards</h2>
       <ul>
         <li><code>.card-link</code> stretches the title link over the card with <code>::after</code>. Don't wrap the card in an <code>&lt;a&gt;</code>: screen readers would read the whole card as the link name.</li>
         <li>Hover fills with <code>--surface-hover</code> and underlines the title.</li>
         <li>Buttons and links inside still work on their own.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section class="two">
-    <div>
-      <h2>Accessibility</h2>
-      <ul>
-        <li>The link's name is the title, so it says where it goes.</li>
-        <li>Focus shows once, round the whole card.</li>
-        <li>Decorative media takes <code>alt=""</code>; media that carries meaning gets real alt text.</li>
-      </ul>
-    </div>
-    <div>
-      <h2>When not to</h2>
-      <ul>
-        <li>A card inside a card: use a divider or a list instead.</li>
-        <li>A single fact: use a stat tile or a key-value list.</li>
-        <li>A whole page section: use the layout primitives.</li>
-      </ul>
-    </div>
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>The link's name is the title, so it says where it goes.</li>
+      <li>Focus shows once, round the whole card.</li>
+      <li>Decorative media takes <code>alt=""</code>; media that carries meaning gets real alt text.</li>
+    </ul>
   </section>
 </div>
 </body>

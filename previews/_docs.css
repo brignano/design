@@ -15,4 +15,4 @@
 @media (max-width: 700px) { .docs .two { grid-template-columns: 1fr; } }
 /* Grid and flex children shrink below their content, so a wide table or
    snippet scrolls inside its own box instead of widening the page. */
-.pair > .panel, .docs > section, .docs .two > div { min-width: 0; }
+.pair > .panel, .docs > section, .docs .two > * { min-width: 0; }

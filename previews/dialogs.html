@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -115,8 +115,9 @@
 </div>
 
 <div class="docs">
-<h2>Use</h2>
-<pre><code>&lt;button class="btn" commandfor="rename" command="show-modal"&gt;Rename&lt;/button&gt;
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;button class="btn" commandfor="rename" command="show-modal"&gt;Rename&lt;/button&gt;
 
 &lt;dialog class="dialog" id="rename" aria-labelledby="rename-title"&gt;
   &lt;div class="dialog-header"&gt;
@@ -131,13 +132,49 @@
     &lt;form method="dialog"&gt;&lt;button class="btn btn-primary" value="save"&gt;Save name&lt;/button&gt;&lt;/form&gt;
   &lt;/div&gt;
 &lt;/dialog&gt;</code></pre>
-<ul>
-  <li>Open with <code>dialog.showModal()</code>. Where the browser supports <code>commandfor</code> and <code>command="show-modal"</code>, a button opens it with no script; this page adds a three-line fallback for browsers that don't.</li>
-  <li>Close with a button inside <code>&lt;form method="dialog"&gt;</code> or with Esc. The close button in the header is always there.</li>
-  <li>A confirm names the action on its destructive button (“Delete trip”), never “OK”, and puts <code>autofocus</code> on the safe choice.</li>
-  <li>Never open a dialog on top of a dialog. Close the first, or put the second step inside it.</li>
-  <li>Scroll locking is what <code>showModal()</code> gives: the page behind can't be interacted with. Locking the page's scroll as well is up to you.</li>
-</ul>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A short task needs the person's full attention before they go on, like renaming a trip.</li>
+        <li>A destructive action needs a confirm, like deleting a trip. Use <code>.dialog-confirm</code>.</li>
+        <li>A set of filters or options is too long for the page. Use <code>.sheet</code>.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The content is short and needs no Save button. Use a popover.</li>
+        <li>You only need to say something happened. Use a toast.</li>
+        <li>The task is long or has many steps. Give it its own page.</li>
+        <li>A dialog is already open. Close the first, or put the second step inside it.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Behaviour</h2>
+    <ul>
+      <li>Open with <code>dialog.showModal()</code>. Where the browser supports <code>commandfor</code> and <code>command="show-modal"</code>, a button opens it with no script; this page adds a three-line fallback for browsers that don't.</li>
+      <li>Close with a button inside <code>&lt;form method="dialog"&gt;</code> or with Esc. The close button in the header is always there.</li>
+      <li>A confirm names the action on its destructive button (“Delete trip”), never “OK”, and puts <code>autofocus</code> on the safe choice.</li>
+      <li>Never open a dialog on top of a dialog. Close the first, or put the second step inside it.</li>
+      <li>Scroll locking is what <code>showModal()</code> gives: the page behind can't be interacted with. Locking the page's scroll as well is up to you.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Use the native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: the browser traps focus, Esc closes it, and focus goes back to the button that opened it.</li>
+      <li>Point <code>aria-labelledby</code> at the <code>.dialog-title</code>, so screen readers announce the title when it opens.</li>
+      <li>The icon-only close button needs <code>aria-label="Close"</code>.</li>
+      <li>Use <code>&lt;div&gt;</code>s for the header and footer. A <code>&lt;header&gt;</code> or <code>&lt;footer&gt;</code> inside a dialog reads as the page's banner or footer landmark.</li>
+      <li>Opening and closing are instant with reduced motion. In forced colours the dialog keeps a visible border.</li>
+    </ul>
+  </section>
 </div>
 <script>
   // Preview only: open dialogs where the browser lacks commandfor / command.

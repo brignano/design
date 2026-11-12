@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -120,8 +120,9 @@
 </div>
 
 <div class="docs">
-<h2>Use</h2>
-<pre><code>&lt;button class="btn btn-icon" popovertarget="trip-menu" aria-label="Trip actions"&gt;…&lt;/button&gt;
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;button class="btn btn-icon" popovertarget="trip-menu" aria-label="Trip actions"&gt;…&lt;/button&gt;
 
 &lt;div class="popover" id="trip-menu" popover&gt;
   &lt;div class="menu"&gt;
@@ -131,19 +132,62 @@
     &lt;button class="menu-item menu-item-danger"&gt;Delete trip&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
-<ul>
-  <li><b>Opening.</b> <code>popovertarget</code> on a button opens it with no script, and that button becomes its anchor. Opened any other way, give the opener <code>anchor-name: --trip</code> and the popover <code>position-anchor: --trip</code>.</li>
-  <li><b>Items.</b> Each item is a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code>, never a <code>&lt;div&gt;</code>. The destructive action goes last, after a separator, with <code>.menu-item-danger</code>. A disabled item says why in its hint.</li>
-  <li><b>ARIA contract.</b> With no script, leave roles off: the items are buttons and links, Tab moves through them, and Esc closes the popover. Add <code>role="menu"</code> on <code>.menu</code> and <code>role="menuitem"</code> on each item only when your script also does the rest of the menu pattern: focus moves to the first item on open, Up and Down arrows move between items (wrapping), Home and End jump to the ends, and Tab closes the menu. Give the opener <code>aria-haspopup="menu"</code> only then, too.</li>
-  <li><b>Other content.</b> A popover can hold anything short, like the map layers above. Give it <code>role="group"</code> and <code>aria-labelledby</code> pointing at its heading. Anything longer, or that needs a Save button, is a dialog.</li>
-  <li><b>Without anchor positioning.</b> The browser centres the popover. To keep it under the opener, set two custom properties when it opens:
-<pre><code>pop.addEventListener('toggle', (e) =&gt; {
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A button opens a short list of actions or links, like a trip's overflow menu.</li>
+        <li>A small control needs a little room of its own, like the map layers above.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The content is long or needs a Save button. Use a dialog.</li>
+        <li>It only names an icon button. Use a tooltip.</li>
+        <li>People pick a value in a form. Use a select or a choice group.</li>
+        <li>There are only one or two actions. Show them as buttons.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Opening</h2>
+    <p><code>popovertarget</code> on a button opens it with no script, and that button becomes its anchor. Opened any other way, give the opener <code>anchor-name: --trip</code> and the popover <code>position-anchor: --trip</code>.</p>
+  </section>
+
+  <section>
+    <h2>Items</h2>
+    <p>Each item is a <code>&lt;button&gt;</code> or an <code>&lt;a&gt;</code>, never a <code>&lt;div&gt;</code>. The destructive action goes last, after a separator, with <code>.menu-item-danger</code>. A disabled item says why in its hint.</p>
+  </section>
+
+  <section>
+    <h2>Other content</h2>
+    <p>A popover can hold anything short, like the map layers above. Give it <code>role="group"</code> and <code>aria-labelledby</code> pointing at its heading. Anything longer, or that needs a Save button, is a dialog.</p>
+  </section>
+
+  <section>
+    <h2>Without anchor positioning</h2>
+    <p>The browser centres the popover. To keep it under the opener, set two custom properties when it opens:</p>
+<pre tabindex="0"><code>pop.addEventListener('toggle', (e) =&gt; {
   if (e.newState !== 'open' || CSS.supports('position-area: block-end')) return;
   const r = opener.getBoundingClientRect();
   pop.style.setProperty('--popover-top', r.bottom + 'px');
   pop.style.setProperty('--popover-left', r.left + 'px');
-});</code></pre></li>
-</ul>
+});</code></pre>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li><b>ARIA contract.</b> With no script, leave roles off: the items are buttons and links, Tab moves through them, and Esc closes the popover. Add <code>role="menu"</code> on <code>.menu</code> and <code>role="menuitem"</code> on each item only when your script also does the rest of the menu pattern: focus moves to the first item on open, Up and Down arrows move between items (wrapping), Home and End jump to the ends, and Tab closes the menu. Give the opener <code>aria-haspopup="menu"</code> only then, too.</li>
+      <li>An icon-only opener needs an <code>aria-label</code>, like "Trip actions".</li>
+      <li>Items are at least 44px tall on touch screens. In forced colours the focused item takes the system highlight.</li>
+      <li>Opening and closing are instant with reduced motion.</li>
+    </ul>
+  </section>
 </div>
 <script>
   // Preview only: the fallback above, for browsers without anchor positioning.

@@ -49,3 +49,26 @@
 @media (prefers-reduced-motion: reduce) {
   .site-theme { transition: none; }
 }
+
+/* Status badge (#86): stable, beta or planned. _site.js puts one after each
+   page's h1 from <html data-status>; index.html cards carry the same badge,
+   and npm run check keeps the two in step. The word carries the meaning;
+   the wash only repeats it. */
+.site-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font: 500 var(--text-xs) / 16px var(--mono);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: var(--surface-hover);
+  color: var(--ink-soft);
+}
+.site-status[data-status="stable"] { background-color: var(--success-surface); color: var(--success-ink); }
+.site-status[data-status="beta"] { background-color: var(--attention-surface); color: var(--attention-ink); }
+.site-status-line { margin: 0 0 var(--s3); }
+@media (forced-colors: active) { .site-status { border: 1px solid CanvasText; } }

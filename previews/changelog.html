@@ -1,6 +1,6 @@
 <!-- @dsCard group="Templates" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -186,26 +186,6 @@
   </div>
 </div>
 
-<div class="docs">
-  <section>
-    <h2>Use it</h2>
-<pre tabindex="0">@import '@brignano/design/components.css';
-@import '@brignano/design/templates/changelog.css';
-
-&lt;main class="changelog"&gt;
-  &lt;header class="changelog-header"&gt;&lt;h1&gt;Changelog&lt;/h1&gt;&lt;/header&gt;
-  &lt;article class="release" id="v0.7.0" aria-labelledby="v0.7.0-title"&gt;
-    &lt;header class="release-meta"&gt;
-      &lt;h2 class="release-version" id="v0.7.0-title"&gt;&lt;a href="#v0.7.0"&gt;v0.7.0&lt;/a&gt;&lt;/h2&gt;
-      &lt;time class="release-date" datetime="2026-11-02"&gt;2 Nov 2026&lt;/time&gt;
-    &lt;/header&gt;
-    &lt;div class="prose"&gt;…releases/v0.7.0.md as HTML, headings from h3…&lt;/div&gt;
-  &lt;/article&gt;
-&lt;/main&gt;</pre>
-  </section>
-
-</div>
-
 <section class="wide-demo">
     <h2>In a wide column</h2>
     <p>At 44rem and wider, the version and date move into a sticky left column.</p>
@@ -230,6 +210,39 @@
 </section>
 
 <div class="docs">
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0">@import '@brignano/design/components.css';
+@import '@brignano/design/templates/changelog.css';
+
+&lt;main class="changelog"&gt;
+  &lt;header class="changelog-header"&gt;&lt;h1&gt;Changelog&lt;/h1&gt;&lt;/header&gt;
+  &lt;article class="release" id="v0.7.0" aria-labelledby="v0.7.0-title"&gt;
+    &lt;header class="release-meta"&gt;
+      &lt;h2 class="release-version" id="v0.7.0-title"&gt;&lt;a href="#v0.7.0"&gt;v0.7.0&lt;/a&gt;&lt;/h2&gt;
+      &lt;time class="release-date" datetime="2026-11-02"&gt;2 Nov 2026&lt;/time&gt;
+    &lt;/header&gt;
+    &lt;div class="prose"&gt;…releases/v0.7.0.md as HTML, headings from h3…&lt;/div&gt;
+  &lt;/article&gt;
+&lt;/main&gt;</pre>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>Release notes for a product or a package, newest first.</li>
+        <li>Each release needs its own link that people can share.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>It's a blog post or a write-up. Use the article template.</li>
+        <li>It's a privacy policy or terms. Use the legal template.</li>
+      </ul>
+    </section>
+  </div>
 
   <section class="two">
     <div>
@@ -250,7 +263,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Each release is an <code>&lt;article&gt;</code> labelled by its version heading; the date is a <code>&lt;time datetime&gt;</code>.</li>

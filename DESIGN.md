@@ -630,6 +630,16 @@ and in what order: [`proposals/component-layer.md`](./proposals/component-layer.
   edge check because they are never a control's edge.
 - **Every class is shown.** A class in `components.css` or a template that no
   preview page uses fails the check: if it isn't shown, it isn't reviewed.
+- **Every preview is its docs page.** A component or template page carries
+  `data-status` on `<html>` (`stable`, `beta` or `planned`; the header shows it
+  and the index card repeats it) and, under its live examples, a `.docs` block
+  with four sections tagged `data-doc`: **Use it** (`usage`, a copy-paste
+  snippet), **Use when** (`use-when`), **Don't use when** (`dont-use`, naming
+  the better choice) and **Accessibility** (`a11y`: keyboard, screen reader,
+  required attributes). Other sections (variants, states, behaviour your script
+  owns) sit between them. `npm run check` fails on a missing section or a status
+  the index disagrees with. Planned components are listed on the index with a
+  link to their issue.
 - **Switch or checkbox.** A switch (`.switch`, `role="switch"`) is only for a
   setting that takes effect the moment it flips. Anything sent with a form's
   submit button is a checkbox, because a switch promises an effect the form

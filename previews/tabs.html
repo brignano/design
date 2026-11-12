@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -48,9 +48,9 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
-<pre>&lt;div class="tabs"&gt;
+<pre tabindex="0">&lt;div class="tabs"&gt;
   &lt;div class="tabs-list" role="tablist" aria-label="Trip"&gt;
     &lt;button type="button" role="tab" id="t1" aria-selected="true" aria-controls="p1"&gt;Itinerary&lt;/button&gt;
     &lt;button type="button" role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1"&gt;Bookings&lt;/button&gt;
@@ -60,23 +60,23 @@
 &lt;/div&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
       <h2>Use when</h2>
       <ul>
         <li>One thing has a few views people switch between, like a trip's itinerary, bookings and notes.</li>
         <li>Two to six short labels.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section data-doc="dont-use">
       <h2>Don't use when</h2>
       <ul>
         <li>The tabs go to different pages. Use the site nav with <code>aria-current="page"</code>.</li>
         <li>People need to compare the views side by side. Show them together.</li>
         <li>Choosing a value in a form. Use a segmented control.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section>
     <h2>Behaviour your script owns</h2>
@@ -88,7 +88,7 @@
     </ul>
   </section>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Give the <code>tablist</code> an <code>aria-label</code> naming what the tabs switch.</li>

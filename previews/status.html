@@ -1,6 +1,6 @@
 <!-- @dsCard group="Status" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -38,7 +38,7 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;span class="pill pill-success"&gt;Booked&lt;/span&gt;
 
@@ -49,8 +49,27 @@
 &lt;span class="tag"&gt;Kayak&lt;button type="button" class="tag-remove" aria-label="Remove Kayak"&gt;&lt;svg …&gt;&lt;/svg&gt;&lt;/button&gt;&lt;/span&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A row or a card needs its state in one or two words: <code>.pill</code>.</li>
+        <li>A button needs an unread count on it: <code>.badge</code>.</li>
+        <li>A list shows the filters applied, each removable: <code>.tag</code>.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>A sentence of status: use a message.</li>
+        <li>A choice between filters: use checkboxes or the segmented control; tags only show the ones applied.</li>
+        <li>A count that is the whole point of the view: use a stat tile.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="two">
+    <section>
       <h2>Pills</h2>
       <ul>
         <li>A bare <code>.pill</code> is neutral: drafts, categories, anything that asks nothing of the reader.</li>
@@ -58,34 +77,24 @@
         <li>Map your own states onto these: booked is success, deposit due is attention, overdue is danger. Don't add a hue for a category.</li>
         <li>Always a word. The dot backs up the word; it never replaces it.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section>
       <h2>Badges and tags</h2>
       <ul>
         <li><code>.badge</code> pins a count to the corner of a <code>.btn</code>. Over 99, show "99+".</li>
         <li>The badge is <code>aria-hidden</code>: put the count in the button's name ("Notifications, 3 unread") and update it with the count.</li>
         <li><code>.tag</code> is a filter chip; <code>.tag-remove</code> names what it removes. Your script removes the tag and moves focus to the next one, or to the filter input.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section class="two">
-    <div>
-      <h2>Accessibility</h2>
-      <ul>
-        <li>Pill text passes 4.5:1 on its wash in both themes; the dot passes 3:1.</li>
-        <li>The remove button is 24px, with 44px of hit area on touch.</li>
-        <li>Under forced colours the dot and the edges take the text colour.</li>
-      </ul>
-    </div>
-    <div>
-      <h2>When not to</h2>
-      <ul>
-        <li>A sentence of status: use a message.</li>
-        <li>A choice between filters: use checkboxes or the segmented control; tags only show the ones applied.</li>
-        <li>A count that is the whole point of the view: use a stat tile.</li>
-      </ul>
-    </div>
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Pill text passes 4.5:1 on its wash in both themes; the dot passes 3:1.</li>
+      <li>The remove button is 24px, with 44px of hit area on touch.</li>
+      <li>Under forced colours the dot and the edges take the text colour.</li>
+    </ul>
   </section>
 </div>
 </body>

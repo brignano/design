@@ -1,6 +1,6 @@
 <!-- @dsCard group="Controls" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -126,7 +126,7 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;div class="field"&gt;
   &lt;label for="phone"&gt;Phone &lt;span class="field-optional"&gt;(optional)&lt;/span&gt;&lt;/label&gt;
@@ -142,8 +142,28 @@
 &lt;/div&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>Someone types a value: a name, an email, a number, a message.</li>
+        <li>Someone picks one of many options from a native <code>&lt;select&gt;</code>.</li>
+        <li>A value needs a unit or an icon beside it: wrap it in <code>.field-affix</code>.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Floating labels: not part of the system.</li>
+        <li>A custom dropdown: style the native <code>&lt;select&gt;</code> instead.</li>
+        <li>Dates: native date inputs wait for wave 3.</li>
+        <li>A yes/no or one of a few options: use a checkbox, radios or a switch.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="two">
+    <section>
       <h2>Parts</h2>
       <ul>
         <li><code>.field</code> stacks the label, the control, then <code>.field-hint</code> and <code>.field-error</code>.</li>
@@ -151,8 +171,8 @@
         <li><code>.field-optional</code> holds the words "(optional)". Required fields carry no star.</li>
         <li><code>.field-affix</code> wraps the control with a unit or an icon, before or after it.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section>
       <h2>States</h2>
       <ul>
         <li>Rest is a <code>--line-control</code> edge on <code>--card</code>; hover darkens it to <code>--ink-soft</code>.</li>
@@ -160,30 +180,20 @@
         <li><code>aria-invalid="true"</code> turns the edge to <code>--danger</code>. Show <code>.field-error</code> with it; hide it with <code>hidden</code>.</li>
         <li><code>disabled</code> drops the edge and fills with <code>--surface-hover</code>. The value stays readable at 4.5:1.</li>
       </ul>
-    </div>
-  </section>
-
-  <section class="two">
-    <div>
-      <h2>Rules</h2>
-      <ul>
-        <li>The label sits above the control. A placeholder is an example, never the label.</li>
-        <li>Mark the optional fields, not the required ones.</li>
-        <li>Name the unit in the label too ("Price (USD)"): screen readers don't read the affix as part of the field.</li>
-        <li>When to validate (on blur, on submit) is your script's call.</li>
-      </ul>
-    </div>
-    <div>
-      <h2>When not to</h2>
-      <ul>
-        <li>Floating labels: not part of the system.</li>
-        <li>A custom dropdown: style the native <code>&lt;select&gt;</code> instead.</li>
-        <li>Dates: native date inputs wait for wave 3.</li>
-      </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section>
+    <h2>Rules</h2>
+    <ul>
+      <li>The label sits above the control. A placeholder is an example, never the label.</li>
+      <li>Mark the optional fields, not the required ones.</li>
+      <li>Name the unit in the label too ("Price (USD)"): screen readers don't read the affix as part of the field.</li>
+      <li>When to validate (on blur, on submit) is your script's call.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Every control has a <code>&lt;label for&gt;</code>. Point <code>aria-describedby</code> at the hint and the error, so screen readers read both after the label.</li>

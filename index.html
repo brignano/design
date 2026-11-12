@@ -70,6 +70,12 @@
   .txt { padding: var(--s4) var(--s5) var(--s5); }
   .txt b { display: block; font-size: var(--text-lg); font-weight: 600; margin: 0 0 2px; }
   .txt span { display: block; font-size: var(--text-sm); color: var(--ink-soft); }
+  .txt .site-status { margin: 0 0 var(--s2); }
+  /* Planned components: a link to the issue that will build each one (#86). */
+  .planned-title { font-size: var(--text-sm); font-weight: 600; margin: var(--s5) 0 var(--s2); }
+  .planned { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); font-size: var(--text-sm); }
+  .planned li { display: inline-flex; align-items: center; gap: var(--s2); }
+  @media (pointer: coarse) { .planned a { display: inline-flex; align-items: center; min-height: 44px; } }
   .txt .go { color: var(--i-ink); font-weight: 500; margin-top: var(--s2); }
 
   /* Specimen bits that the previews don't already provide. */
@@ -194,106 +200,159 @@
       <div class="spec split" aria-hidden="true"><div class="elev" data-theme="light"><i class="e1"></i><i class="e2"></i><i class="e3"></i></div><div class="elev" data-theme="dark"><i class="e1"></i><i class="e2"></i><i class="e3"></i></div></div>
       <div class="txt"><b>Elevation</b><span>Three steps: shadows in light, lighter surfaces in dark.</span><span class="go">View →</span></div>
     </a></li>
-  </ul>
-</section>
-
-<section aria-labelledby="components">
-  <p class="label">02 / Components</p>
-  <h2 id="components">Every state has a real value.</h2>
-  <ul class="gallery-grid">
-    <li><a class="gallery-card" href="previews/components.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">@layer brignano.components</span></div>
-      <div class="txt"><b>Components</b><span>One CSS import for every shared control, and the rules each one follows.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/table.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">CPU % ↓ · 41.3 · 6.7 · 3.2</span></div>
-      <div class="txt"><b>Table</b><span>Numbers on the right, sortable headers, scrolls sideways on a phone.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/kv-stat.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">1,284 · ↑ Up 12%</span></div>
-      <div class="txt"><b>Key-value and stats</b><span>Labelled facts in two columns, and headline numbers with their direction in words.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/tabs.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">Itinerary · Bookings · Notes</span></div>
-      <div class="txt"><b>Tabs</b><span>Views of one thing, underlined in cobalt, with the keyboard contract.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/navigation.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">Home / Work / … · ← 1 2 3 →</span></div>
-      <div class="txt"><b>Breadcrumb and pagination</b><span>Where you are, how to page through a table, and load more for lists.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/disclosure.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">Can I change the dates? ⌄</span></div>
-      <div class="txt"><b>Disclosure and accordion</b><span>FAQs and extra detail on native details, one open at a time if you want.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/content.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">AR · ⌘ K · const x = 'y'</span></div>
-      <div class="txt"><b>Content pieces</b><span>Avatars, keycaps, inline code, code blocks, quotes and figures.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/prose.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">## Find the real cause #</span></div>
-      <div class="txt"><b>Prose</b><span>Long-form posts, docs and legal pages from Markdown, at the tier's measure.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/buttons.html">
-      <div class="spec" aria-hidden="true"><span class="btn btn-primary">Primary</span><span class="btn btn-secondary">Secondary</span><span class="btn btn-ghost">Ghost</span></div>
-      <div class="txt"><b>Buttons &amp; links</b><span>Every interaction state, including disabled and focus.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/fields.html">
-      <div class="spec" aria-hidden="true"><div class="field"><span class="field-hint">Email</span><div class="field-affix"><span>@</span><span>sam@example.com</span></div></div></div>
-      <div class="txt"><b>Text fields</b><span>Label above, hint and error below; inputs, selects, textareas and affixes.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/choices.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">☑ Email · ◉ Express · [ Day | Week ]</span></div>
-      <div class="txt"><b>Choices and switches</b><span>Checkboxes, radios, a switch for instant settings and a segmented control.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/feedback.html">
-      <div class="spec" aria-hidden="true"><div class="msg msg-success"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><div class="msg-content"><p class="msg-title">Booked</p><p class="msg-body">Confirmation FR-8821 saved.</p></div></div></div>
-      <div class="txt"><b>Messages and banners</b><span>Info, success, attention and danger, each with an icon and words.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/status.html">
-      <div class="spec" aria-hidden="true"><span class="pill pill-success">Booked</span><span class="pill pill-attention">Due</span><span class="pill pill-danger">Overdue</span><span class="pill">Idea</span></div>
-      <div class="txt"><b>Pills, badges and tags</b><span>Status in a word, counts on icons, and removable filter chips.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/cards.html">
-      <div class="spec" aria-hidden="true"><div class="card"><p class="card-title">Lisbon, 4 days</p><p class="card-meta">12–15 Mar</p></div></div>
-      <div class="txt"><b>Cards</b><span>Static and link cards with media, header, body and footer.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/layout.html">
-      <div class="spec" aria-hidden="true"><div class="stack gap-2 layout-spec"><div class="cluster"><i></i><i></i><i></i></div><div class="grid gap-2"><i></i><i></i><i></i></div></div></div>
-      <div class="txt"><b>Layout</b><span>Container, stack, cluster, grid and section, all from the spacing scale.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/site-chrome.html">
-      <div class="spec" aria-hidden="true"><div class="chrome-spec"><span class="chrome-brand"></span><span class="chrome-link chrome-current"></span><span class="chrome-link"></span><span class="chrome-link"></span></div></div>
-      <div class="txt"><b>Site header, nav and footer</b><span>A sticky header, a phone menu that needs no script, a skip link and a footer.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/dialogs.html">
-      <div class="spec" aria-hidden="true"><div class="dialog-spec"><b>Delete trip?</b><span>This can't be undone.</span><div class="cluster gap-2"><span class="btn btn-sm">Keep</span><span class="btn btn-sm btn-danger">Delete trip</span></div></div></div>
-      <div class="txt"><b>Dialog and sheet</b><span>Native &lt;dialog&gt; with a confirm pattern and a sheet that comes up from the bottom on a phone.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/menus.html">
-      <div class="spec" aria-hidden="true"><div class="menu-spec"><span>Rename</span><span>Duplicate</span><i></i><span class="menu-spec-danger">Delete trip</span></div></div>
-      <div class="txt"><b>Popover and menu</b><span>Native popovers that open under their button, with an action menu inside.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/tooltips.html">
-      <div class="spec" aria-hidden="true"><div class="tip-spec"><span class="tooltip">Share trip</span><i></i></div></div>
-      <div class="txt"><b>Tooltip</b><span>A short name for an icon button on hover and focus, with no script.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/toasts.html">
-      <div class="spec" aria-hidden="true"><div class="toast-spec"><b>Trip saved</b><span>Undo</span></div></div>
-      <div class="txt"><b>Toast</b><span>Success, attention and danger notes at the bottom of the screen, with the timing contract.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/loading.html">
-      <div class="spec" aria-hidden="true"><div class="loading-spec"><span class="spinner spinner-sm"></span><progress class="progress" value="60" max="100"></progress></div></div>
-      <div class="txt"><b>Loading and empty states</b><span>Spinner, skeleton, progress, meter and an empty state with one action.</span><span class="go">View →</span></div>
-    </a></li>
     <li><a class="gallery-card" href="previews/diagram.html">
       <div class="spec" aria-hidden="true"><div class="node node-added"><span class="dtag dtag-added">+ added</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><div><b>orders-api</b><small>aws_ecs_service</small></div></div></div>
       <div class="txt"><b>Diagram nodes</b><span>Neutral by default. Colour only for health and for what a change did.</span><span class="go">View →</span></div>
     </a></li>
+    <li><a class="gallery-card" href="previews/components.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">@layer brignano.components</span></div>
+      <div class="txt"><b>Components</b><span>One CSS import for every shared control, and the rules each one follows.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/layout.html">
+      <div class="spec" aria-hidden="true"><div class="stack gap-2 layout-spec"><div class="cluster"><i></i><i></i><i></i></div><div class="grid gap-2"><i></i><i></i><i></i></div></div></div>
+      <div class="txt"><b>Layout</b><small class="site-status" data-status="stable">stable</small><span>Container, stack, cluster, grid and section, all from the spacing scale.</span><span class="go">View →</span></div>
+    </a></li>
+  </ul>
+  <h3 class="planned-title" id="foundations-planned">Planned</h3>
+  <ul class="planned" aria-labelledby="foundations-planned">
+    <li><a class="link" href="https://github.com/brignano/design/issues/87">Icons</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/88">Content guidelines</a> <small class="site-status" data-status="planned">planned</small></li>
+  </ul>
+</section>
+
+<section aria-labelledby="controls">
+  <p class="label">02 / Controls</p>
+  <h2 id="controls">Every state has a real value.</h2>
+  <ul class="gallery-grid">
+    <li><a class="gallery-card" href="previews/buttons.html">
+      <div class="spec" aria-hidden="true"><span class="btn btn-primary">Primary</span><span class="btn btn-secondary">Secondary</span><span class="btn btn-ghost">Ghost</span></div>
+      <div class="txt"><b>Buttons &amp; links</b><small class="site-status" data-status="stable">stable</small><span>Every interaction state, including disabled and focus.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/fields.html">
+      <div class="spec" aria-hidden="true"><div class="field"><span class="field-hint">Email</span><div class="field-affix"><span>@</span><span>sam@example.com</span></div></div></div>
+      <div class="txt"><b>Text fields</b><small class="site-status" data-status="stable">stable</small><span>Label above, hint and error below; inputs, selects, textareas and affixes.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/choices.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">☑ Email · ◉ Express · [ Day | Week ]</span></div>
+      <div class="txt"><b>Choices and switches</b><small class="site-status" data-status="stable">stable</small><span>Checkboxes, radios, a switch for instant settings and a segmented control.</span><span class="go">View →</span></div>
+    </a></li>
+  </ul>
+  <h3 class="planned-title" id="controls-planned">Planned</h3>
+  <ul class="planned" aria-labelledby="controls-planned">
+    <li><a class="link" href="https://github.com/brignano/design/issues/75">Combobox and autocomplete</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/76">Date and time inputs</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/77">File upload</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/81">Range slider</a> <small class="site-status" data-status="planned">planned</small></li>
+  </ul>
+</section>
+
+<section aria-labelledby="feedback">
+  <p class="label">03 / Feedback</p>
+  <h2 id="feedback">State in a word, never colour alone.</h2>
+  <ul class="gallery-grid">
+    <li><a class="gallery-card" href="previews/feedback.html">
+      <div class="spec" aria-hidden="true"><div class="msg msg-success"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/></svg><div class="msg-content"><p class="msg-title">Booked</p><p class="msg-body">Confirmation FR-8821 saved.</p></div></div></div>
+      <div class="txt"><b>Messages and banners</b><small class="site-status" data-status="stable">stable</small><span>Info, success, attention and danger, each with an icon and words.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/status.html">
+      <div class="spec" aria-hidden="true"><span class="pill pill-success">Booked</span><span class="pill pill-attention">Due</span><span class="pill pill-danger">Overdue</span><span class="pill">Idea</span></div>
+      <div class="txt"><b>Pills, badges and tags</b><small class="site-status" data-status="stable">stable</small><span>Status in a word, counts on icons, and removable filter chips.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/toasts.html">
+      <div class="spec" aria-hidden="true"><div class="toast-spec"><b>Trip saved</b><span>Undo</span></div></div>
+      <div class="txt"><b>Toast</b><small class="site-status" data-status="stable">stable</small><span>Success, attention and danger notes at the bottom of the screen, with the timing contract.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/loading.html">
+      <div class="spec" aria-hidden="true"><div class="loading-spec"><span class="spinner spinner-sm"></span><progress class="progress" value="60" max="100"></progress></div></div>
+      <div class="txt"><b>Loading and empty states</b><small class="site-status" data-status="stable">stable</small><span>Spinner, skeleton, progress, meter and an empty state with one action.</span><span class="go">View →</span></div>
+    </a></li>
+  </ul>
+</section>
+
+<section aria-labelledby="overlays">
+  <p class="label">04 / Overlays</p>
+  <h2 id="overlays">On top, briefly, and easy to leave.</h2>
+  <ul class="gallery-grid">
+    <li><a class="gallery-card" href="previews/dialogs.html">
+      <div class="spec" aria-hidden="true"><div class="dialog-spec"><b>Delete trip?</b><span>This can't be undone.</span><div class="cluster gap-2"><span class="btn btn-sm">Keep</span><span class="btn btn-sm btn-danger">Delete trip</span></div></div></div>
+      <div class="txt"><b>Dialog and sheet</b><small class="site-status" data-status="stable">stable</small><span>Native &lt;dialog&gt; with a confirm pattern and a sheet that comes up from the bottom on a phone.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/menus.html">
+      <div class="spec" aria-hidden="true"><div class="menu-spec"><span>Rename</span><span>Duplicate</span><i></i><span class="menu-spec-danger">Delete trip</span></div></div>
+      <div class="txt"><b>Popover and menu</b><small class="site-status" data-status="stable">stable</small><span>Native popovers that open under their button, with an action menu inside.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/tooltips.html">
+      <div class="spec" aria-hidden="true"><div class="tip-spec"><span class="tooltip">Share trip</span><i></i></div></div>
+      <div class="txt"><b>Tooltip</b><small class="site-status" data-status="beta">beta</small><span>A short name for an icon button on hover and focus, with no script.</span><span class="go">View →</span></div>
+    </a></li>
+  </ul>
+  <h3 class="planned-title" id="overlays-planned">Planned</h3>
+  <ul class="planned" aria-labelledby="overlays-planned">
+    <li><a class="link" href="https://github.com/brignano/design/issues/78">Command palette</a> <small class="site-status" data-status="planned">planned</small></li>
+  </ul>
+</section>
+
+<section aria-labelledby="data">
+  <p class="label">05 / Data</p>
+  <h2 id="data">Numbers that read precise.</h2>
+  <ul class="gallery-grid">
+    <li><a class="gallery-card" href="previews/table.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">CPU % ↓ · 41.3 · 6.7 · 3.2</span></div>
+      <div class="txt"><b>Table</b><small class="site-status" data-status="stable">stable</small><span>Numbers on the right, sortable headers, scrolls sideways on a phone.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/kv-stat.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">1,284 · ↑ Up 12%</span></div>
+      <div class="txt"><b>Key-value and stats</b><small class="site-status" data-status="stable">stable</small><span>Labelled facts in two columns, and headline numbers with their direction in words.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/cards.html">
+      <div class="spec" aria-hidden="true"><div class="card"><p class="card-title">Lisbon, 4 days</p><p class="card-meta">12–15 Mar</p></div></div>
+      <div class="txt"><b>Cards</b><small class="site-status" data-status="stable">stable</small><span>Static and link cards with media, header, body and footer.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/content.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">AR · ⌘ K · const x = 'y'</span></div>
+      <div class="txt"><b>Content pieces</b><small class="site-status" data-status="stable">stable</small><span>Avatars, keycaps, inline code, code blocks, quotes and figures.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/prose.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">## Find the real cause #</span></div>
+      <div class="txt"><b>Prose</b><small class="site-status" data-status="stable">stable</small><span>Long-form posts, docs and legal pages from Markdown, at the tier's measure.</span><span class="go">View →</span></div>
+    </a></li>
+  </ul>
+  <h3 class="planned-title" id="data-planned">Planned</h3>
+  <ul class="planned" aria-labelledby="data-planned">
+    <li><a class="link" href="https://github.com/brignano/design/issues/80">Timeline and activity feed</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/82">Calendar and agenda</a> <small class="site-status" data-status="planned">planned</small></li>
+  </ul>
+</section>
+
+<section aria-labelledby="navigation">
+  <p class="label">06 / Navigation</p>
+  <h2 id="navigation">Where you are, and where you can go.</h2>
+  <ul class="gallery-grid">
+    <li><a class="gallery-card" href="previews/site-chrome.html">
+      <div class="spec" aria-hidden="true"><div class="chrome-spec"><span class="chrome-brand"></span><span class="chrome-link chrome-current"></span><span class="chrome-link"></span><span class="chrome-link"></span></div></div>
+      <div class="txt"><b>Site header, nav and footer</b><small class="site-status" data-status="stable">stable</small><span>A sticky header, a phone menu that needs no script, a skip link and a footer.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/tabs.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">Itinerary · Bookings · Notes</span></div>
+      <div class="txt"><b>Tabs</b><small class="site-status" data-status="stable">stable</small><span>Views of one thing, underlined in cobalt, with the keyboard contract.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/navigation.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">Home / Work / … · ← 1 2 3 →</span></div>
+      <div class="txt"><b>Breadcrumb and pagination</b><small class="site-status" data-status="stable">stable</small><span>Where you are, how to page through a table, and load more for lists.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/disclosure.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">Can I change the dates? ⌄</span></div>
+      <div class="txt"><b>Disclosure and accordion</b><small class="site-status" data-status="stable">stable</small><span>FAQs and extra detail on native details, one open at a time if you want.</span><span class="go">View →</span></div>
+    </a></li>
+  </ul>
+  <h3 class="planned-title" id="navigation-planned">Planned</h3>
+  <ul class="planned" aria-labelledby="navigation-planned">
+    <li><a class="link" href="https://github.com/brignano/design/issues/79">Stepper and multi-step form</a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
 
 <section aria-labelledby="templates">
-  <p class="label">03 / Templates</p>
+  <p class="label">07 / Templates</p>
   <h2 id="templates">One argument and one ask.</h2>
   <ul class="gallery-grid">
     <li><a class="gallery-card" href="previews/product-page.html">
@@ -308,22 +367,30 @@
       <div class="spec" aria-hidden="true"><div class="phone"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></div></div>
       <div class="txt"><b>Product page: video proof</b><span>Phone frame, steps and play button.</span><span class="go">View →</span></div>
     </a></li>
+    <li><a class="gallery-card" href="previews/article.html">
+      <div class="spec" aria-hidden="true"><span class="aa-mono">7 Nov 2026 · 3 min read</span></div>
+      <div class="txt"><b>Article and docs page</b><small class="site-status" data-status="stable">stable</small><span>Posts and docs: meta line, prose, previous and next, section nav.</span><span class="go">View →</span></div>
+    </a></li>
     <li><a class="gallery-card" href="previews/changelog.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">v0.7.0 · 2 Nov 2026</span></div>
-      <div class="txt"><b>Changelog page</b><span>Releases newest first, version and date in mono, notes in prose.</span><span class="go">View →</span></div>
+      <div class="txt"><b>Changelog page</b><small class="site-status" data-status="stable">stable</small><span>Releases newest first, version and date in mono, notes in prose.</span><span class="go">View →</span></div>
     </a></li>
     <li><a class="gallery-card" href="previews/legal.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">Last updated 7 Nov 2026</span></div>
-      <div class="txt"><b>Legal page</b><span>Privacy and terms: title, last updated, contents list, text.</span><span class="go">View →</span></div>
-    </a></li>
-    <li><a class="gallery-card" href="previews/article.html">
-      <div class="spec" aria-hidden="true"><span class="aa-mono">7 Nov 2026 · 3 min read</span></div>
-      <div class="txt"><b>Article and docs page</b><span>Posts and docs: meta line, prose, previous and next, section nav.</span><span class="go">View →</span></div>
+      <div class="txt"><b>Legal page</b><small class="site-status" data-status="stable">stable</small><span>Privacy and terms: title, last updated, contents list, text.</span><span class="go">View →</span></div>
     </a></li>
     <li><a class="gallery-card" href="previews/email.html">
       <div class="spec" aria-hidden="true"><span class="aa-mono">{{heading}} · one button</span></div>
-      <div class="txt"><b>Transactional email</b><span>Owner notes and auto-replies, light only, with a text twin.</span><span class="go">View →</span></div>
+      <div class="txt"><b>Transactional email</b><small class="site-status" data-status="beta">beta</small><span>Owner notes and auto-replies, light only, with a text twin.</span><span class="go">View →</span></div>
     </a></li>
+  </ul>
+  <h3 class="planned-title" id="templates-planned">Planned</h3>
+  <ul class="planned" aria-labelledby="templates-planned">
+    <li><a class="link" href="https://github.com/brignano/design/issues/68">App shell</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/69">Settings page</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/71">Error pages</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/83">Social share image</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/84">Pricing table</a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
 </main>

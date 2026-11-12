@@ -6,44 +6,53 @@
 //   2. the saved theme, applied the moment the script runs so there is no flash;
 //   3. the small header: a link home, previous / next, and the theme switch;
 //   4. Google Analytics, on design.brignano.io only (see below);
-//   5. the tab icon (favicon.svg at the repo root).
+//   5. the tab icon (favicon.svg at the repo root);
+//   6. the status badge after the page's h1, from <html data-status>
+//      (stable, beta or planned; #86).
 //
 // On index.html, an element marked [data-site-toggle] receives the theme switch
 // and nothing else is added. Inside an iframe (a design-tool card) no header is
 // added. Plain ES2020, no dependencies, no build.
 (() => {
   const PAGES = [
+    // Foundations
     ['color.html', 'Colour'],
     ['type.html', 'Type'],
     ['elevation.html', 'Elevation'],
+    ['diagram.html', 'Diagram nodes'],
     ['components.html', 'Components'],
-    ['table.html', 'Table'],
-    ['kv-stat.html', 'Key-value and stats'],
-    ['tabs.html', 'Tabs'],
-    ['navigation.html', 'Breadcrumb and pagination'],
-    ['disclosure.html', 'Disclosure and accordion'],
-    ['content.html', 'Content pieces'],
-    ['prose.html', 'Prose'],
+    ['layout.html', 'Layout'],
+    // Controls
     ['buttons.html', 'Buttons & links'],
     ['fields.html', 'Text fields'],
     ['choices.html', 'Choices and switches'],
+    // Feedback
     ['feedback.html', 'Messages and banners'],
     ['status.html', 'Pills, badges and tags'],
-    ['cards.html', 'Cards'],
-    ['layout.html', 'Layout'],
-    ['site-chrome.html', 'Site header, nav and footer'],
+    ['toasts.html', 'Toast'],
+    ['loading.html', 'Loading and empty states'],
+    // Overlays
     ['dialogs.html', 'Dialog and sheet'],
     ['menus.html', 'Popover and menu'],
     ['tooltips.html', 'Tooltip'],
-    ['toasts.html', 'Toast'],
-    ['loading.html', 'Loading and empty states'],
-    ['diagram.html', 'Diagram nodes'],
+    // Data
+    ['table.html', 'Table'],
+    ['kv-stat.html', 'Key-value and stats'],
+    ['cards.html', 'Cards'],
+    ['content.html', 'Content pieces'],
+    ['prose.html', 'Prose'],
+    // Navigation
+    ['site-chrome.html', 'Site header, nav and footer'],
+    ['tabs.html', 'Tabs'],
+    ['navigation.html', 'Breadcrumb and pagination'],
+    ['disclosure.html', 'Disclosure and accordion'],
+    // Templates
     ['product-page.html', 'Product page'],
     ['product-page-example.html', 'Product page: worked example'],
     ['product-media.html', 'Product page: video proof'],
+    ['article.html', 'Article and docs page'],
     ['changelog.html', 'Changelog page'],
     ['legal.html', 'Legal page'],
-    ['article.html', 'Article and docs page'],
     ['email.html', 'Transactional email'],
   ];
 
@@ -160,6 +169,23 @@
     nav.appendChild(themeSwitch());
     header.appendChild(nav);
     document.body.prepend(header);
+
+    const status = root.dataset.status;
+    const h1 = document.querySelector('h1');
+    if (status && h1) {
+      const line = document.createElement('p');
+      line.className = 'site-status-line';
+      line.append(statusBadge(status));
+      h1.after(line);
+    }
+  }
+
+  function statusBadge(status) {
+    const badge = document.createElement('span');
+    badge.className = 'site-status';
+    badge.dataset.status = status;
+    badge.textContent = status;
+    return badge;
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);

@@ -1,6 +1,6 @@
 <!-- @dsCard group="Templates" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="beta">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -35,7 +35,7 @@
 <div id="light-probe" aria-hidden="true"></div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0"># once, at build time: colours from tokens.css (light theme)
 node node_modules/@brignano/design/scripts/email-tokens.mjs \
@@ -49,22 +49,22 @@ node node_modules/@brignano/design/scripts/email-tokens.mjs \
 # and send templates/email.txt (body_text as plain text) as the text part.</pre>
   </section>
 
-  <section class="two">
-    <div>
-      <h2>When to use it</h2>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
       <ul>
         <li>The two emails every lead form sends: the note to the owner and the auto-reply (fleet lead standard).</li>
         <li>Receipts, sign-in links and other one-to-one messages a product sends.</li>
       </ul>
-    </div>
-    <div>
-      <h2>When not to</h2>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
       <ul>
         <li>Newsletters and marketing emails: out of scope.</li>
-        <li>A second button. One action per email; anything else is a plain link in the body.</li>
+        <li>You need a second button. One action per email; anything else is a plain link in the body.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section class="two">
     <div>
@@ -86,7 +86,7 @@ node node_modules/@brignano/design/scripts/email-tokens.mjs \
     </div>
   </section>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Layout tables carry <code>role="presentation"</code>, so screen readers read the content, not the grid.</li>

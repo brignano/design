@@ -1,6 +1,6 @@
 <!-- @dsCard group="Templates" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -262,7 +262,7 @@
 </section>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">@import '@brignano/design/components.css';
 @import '@brignano/design/templates/article.css';
@@ -295,23 +295,23 @@
 &lt;/div&gt;&lt;/div&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
-      <h2>When to use it</h2>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
       <ul>
         <li>Blog posts and write-ups: the plain article.</li>
         <li>Product docs with more than a couple of pages: docs mode.</li>
       </ul>
-    </div>
-    <div>
-      <h2>When not to</h2>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
       <ul>
         <li>Release notes: the changelog template.</li>
         <li>Privacy and terms: the legal template.</li>
         <li>A blog index or search: not part of this template.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section class="two">
     <div>
@@ -334,7 +334,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Each list is a labelled <code>&lt;nav&gt;</code> and the disclosures are native <code>&lt;details&gt;</code>, so no script is needed.</li>
