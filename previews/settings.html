@@ -1,0 +1,298 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en" data-status="stable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings page</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../templates/settings.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* Preview chrome only. */
+  .wide-demo { margin-top: var(--s6); }
+  .wide-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .wide-demo > p { margin: 0 0 var(--s3); color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<h1>Settings page</h1>
+<p class="sub">One section per topic: what it's for on the left, its controls on the right. Fields save per section, switches apply at once, and the danger zone asks first.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="panel-label" id="l-where">Light, with unsaved changes</span>
+    <div class="settings">
+      <p class="settings-title">Settings</p>
+      <form class="settings-section" aria-labelledby="l-profile-h l-where" data-save-section>
+        <div class="settings-intro">
+          <h2 id="l-profile-h" tabindex="-1">Profile</h2>
+          <p>How other people see you on shared trips.</p>
+        </div>
+        <div class="settings-fields">
+          <div class="field"><label for="l-name">Name</label><input id="l-name" name="name" value="Sam Rivera" autocomplete="name"></div>
+          <div class="field"><label for="l-email">Email</label><input id="l-email" name="email" type="email" value="sam@example.com" autocomplete="email" aria-describedby="l-email-hint"><p class="field-hint" id="l-email-hint">Booking updates go here.</p></div>
+        </div>
+        <div class="settings-save">
+          <p class="settings-save-note" role="status">Unsaved changes</p>
+          <div class="settings-save-actions">
+            <button type="reset" class="btn">Discard</button>
+            <button class="btn btn-primary">Save profile</button>
+          </div>
+        </div>
+      </form>
+      <section class="settings-section" aria-labelledby="l-notify-h l-where">
+        <div class="settings-intro">
+          <h2 id="l-notify-h">Notifications</h2>
+          <p>These apply as soon as you switch them.</p>
+        </div>
+        <div class="settings-fields">
+          <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Email me when a trip changes</span></label>
+          <label class="choice"><input type="checkbox" role="switch" class="switch"><span>Weekly summary</span></label>
+        </div>
+      </section>
+      <section class="settings-section settings-danger" aria-labelledby="l-danger-h l-where">
+        <div class="settings-intro">
+          <h2 id="l-danger-h">Danger zone</h2>
+          <p>Each of these asks first, because none can be undone.</p>
+        </div>
+        <div class="settings-fields">
+          <div class="settings-danger-row">
+            <p>Delete the workspace, with every trip and photo in it.</p>
+            <button type="button" class="btn btn-danger" commandfor="l-confirm" command="show-modal">Delete workspace…</button>
+          </div>
+        </div>
+        <dialog class="dialog dialog-confirm" id="l-confirm" aria-labelledby="l-confirm-t" aria-describedby="l-confirm-d">
+          <div class="dialog-header"><h2 class="dialog-title" id="l-confirm-t">Delete this workspace?</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></form></div>
+          <div class="dialog-body"><p id="l-confirm-d">Its 14 trips and 2,310 photos go with it. This can't be undone.</p></div>
+          <div class="dialog-footer"><form method="dialog"><button class="btn" autofocus>Keep workspace</button></form><form method="dialog"><button class="btn btn-danger" value="delete">Delete workspace</button></form></div>
+        </dialog>
+      </section>
+    </div>
+  </div>
+  <div class="panel dark"><span class="panel-label" id="d-where">Dark, with unsaved changes</span>
+    <div class="settings">
+      <p class="settings-title">Settings</p>
+      <form class="settings-section" aria-labelledby="d-profile-h d-where" data-save-section>
+        <div class="settings-intro">
+          <h2 id="d-profile-h" tabindex="-1">Profile</h2>
+          <p>How other people see you on shared trips.</p>
+        </div>
+        <div class="settings-fields">
+          <div class="field"><label for="d-name">Name</label><input id="d-name" name="name" value="Sam Rivera" autocomplete="name"></div>
+          <div class="field"><label for="d-email">Email</label><input id="d-email" name="email" type="email" value="sam@example.com" autocomplete="email" aria-describedby="d-email-hint"><p class="field-hint" id="d-email-hint">Booking updates go here.</p></div>
+        </div>
+        <div class="settings-save">
+          <p class="settings-save-note" role="status">Unsaved changes</p>
+          <div class="settings-save-actions">
+            <button type="reset" class="btn">Discard</button>
+            <button class="btn btn-primary">Save profile</button>
+          </div>
+        </div>
+      </form>
+      <section class="settings-section" aria-labelledby="d-notify-h d-where">
+        <div class="settings-intro">
+          <h2 id="d-notify-h">Notifications</h2>
+          <p>These apply as soon as you switch them.</p>
+        </div>
+        <div class="settings-fields">
+          <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Email me when a trip changes</span></label>
+          <label class="choice"><input type="checkbox" role="switch" class="switch"><span>Weekly summary</span></label>
+        </div>
+      </section>
+      <section class="settings-section settings-danger" aria-labelledby="d-danger-h d-where">
+        <div class="settings-intro">
+          <h2 id="d-danger-h">Danger zone</h2>
+          <p>Each of these asks first, because none can be undone.</p>
+        </div>
+        <div class="settings-fields">
+          <div class="settings-danger-row">
+            <p>Delete the workspace, with every trip and photo in it.</p>
+            <button type="button" class="btn btn-danger" commandfor="d-confirm" command="show-modal">Delete workspace…</button>
+          </div>
+        </div>
+        <dialog class="dialog dialog-confirm" id="d-confirm" aria-labelledby="d-confirm-t" aria-describedby="d-confirm-d">
+          <div class="dialog-header"><h2 class="dialog-title" id="d-confirm-t">Delete this workspace?</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></form></div>
+          <div class="dialog-body"><p id="d-confirm-d">Its 14 trips and 2,310 photos go with it. This can't be undone.</p></div>
+          <div class="dialog-footer"><form method="dialog"><button class="btn" autofocus>Keep workspace</button></form><form method="dialog"><button class="btn btn-danger" value="delete">Delete workspace</button></form></div>
+        </dialog>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="wide-demo">
+  <h2 id="w-where">In a wide column</h2>
+  <p>From 48rem the sections go to two columns. Edit a field and the save bar appears. Discard or Save hides it again.</p>
+  <div class="settings">
+      <p class="settings-title">Settings</p>
+      <form class="settings-section" aria-labelledby="w-profile-h w-where" data-save-section>
+        <div class="settings-intro">
+          <h2 id="w-profile-h" tabindex="-1">Profile</h2>
+          <p>How other people see you on shared trips.</p>
+        </div>
+        <div class="settings-fields">
+          <div class="field"><label for="w-name">Name</label><input id="w-name" name="name" value="Sam Rivera" autocomplete="name"></div>
+          <div class="field"><label for="w-email">Email</label><input id="w-email" name="email" type="email" value="sam@example.com" autocomplete="email" aria-describedby="w-email-hint"><p class="field-hint" id="w-email-hint">Booking updates go here.</p></div>
+        </div>
+        <div class="settings-save">
+          <p class="settings-save-note" role="status"></p>
+          <div class="settings-save-actions" hidden>
+            <button type="reset" class="btn">Discard</button>
+            <button class="btn btn-primary">Save profile</button>
+          </div>
+        </div>
+      </form>
+      <section class="settings-section" aria-labelledby="w-notify-h w-where">
+        <div class="settings-intro">
+          <h2 id="w-notify-h">Notifications</h2>
+          <p>These apply as soon as you switch them.</p>
+        </div>
+        <div class="settings-fields">
+          <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Email me when a trip changes</span></label>
+          <label class="choice"><input type="checkbox" role="switch" class="switch"><span>Weekly summary</span></label>
+        </div>
+      </section>
+      <section class="settings-section settings-danger" aria-labelledby="w-danger-h w-where">
+        <div class="settings-intro">
+          <h2 id="w-danger-h">Danger zone</h2>
+          <p>Each of these asks first, because none can be undone.</p>
+        </div>
+        <div class="settings-fields">
+          <div class="settings-danger-row">
+            <p>Delete the workspace, with every trip and photo in it.</p>
+            <button type="button" class="btn btn-danger" commandfor="w-confirm" command="show-modal">Delete workspace…</button>
+          </div>
+        </div>
+        <dialog class="dialog dialog-confirm" id="w-confirm" aria-labelledby="w-confirm-t" aria-describedby="w-confirm-d">
+          <div class="dialog-header"><h2 class="dialog-title" id="w-confirm-t">Delete this workspace?</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></form></div>
+          <div class="dialog-body"><p id="w-confirm-d">Its 14 trips and 2,310 photos go with it. This can't be undone.</p></div>
+          <div class="dialog-footer"><form method="dialog"><button class="btn" autofocus>Keep workspace</button></form><form method="dialog"><button class="btn btn-danger" value="delete">Delete workspace</button></form></div>
+        </dialog>
+      </section>
+    </div>
+</div>
+
+<div class="docs">
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0">@import '@brignano/design/tokens.css';
+@import '@brignano/design/components.css';
+@import '@brignano/design/templates/settings.css';
+
+&lt;main class="settings"&gt;
+  &lt;h1 class="settings-title"&gt;Settings&lt;/h1&gt;
+  &lt;form class="settings-section" aria-labelledby="profile-h"&gt;
+    &lt;div class="settings-intro"&gt;
+      &lt;h2 id="profile-h"&gt;Profile&lt;/h2&gt;
+      &lt;p&gt;How other people see you on shared trips.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="settings-fields"&gt;&lt;div class="field"&gt;…&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="settings-save"&gt;
+      &lt;p class="settings-save-note" role="status"&gt;&lt;/p&gt;
+      &lt;div class="settings-save-actions" hidden&gt;
+        &lt;button type="reset" class="btn"&gt;Discard&lt;/button&gt;
+        &lt;button class="btn btn-primary"&gt;Save profile&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/main&gt;
+
+// your script, per section form
+const note = form.querySelector('.settings-save-note');
+const actions = form.querySelector('.settings-save-actions');
+const heading = form.querySelector('h2'); // has tabindex="-1"
+const done = (text) =&gt; { heading.focus(); actions.hidden = true; note.textContent = text; };
+form.addEventListener('input', () =&gt; {
+  if (!actions.hidden) return;              // write the note once, not per keystroke
+  note.textContent = 'Unsaved changes';
+  actions.hidden = false;
+});
+form.addEventListener('reset', () =&gt; done(''));
+form.addEventListener('submit', async (e) =&gt; {
+  e.preventDefault();
+  await save(new FormData(form));          // on error: mark the fields, keep the bar
+  for (const el of form.elements) {         // so Discard can't undo the save
+    if ('defaultValue' in el) el.defaultValue = el.value;
+    if ('defaultChecked' in el) el.defaultChecked = el.checked;
+    if (el.options) for (const o of el.options) o.defaultSelected = o.selected;
+  }
+  done('Profile saved');
+});</pre>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A tool app needs a settings screen: profile, preferences, notifications, workspace.</li>
+        <li>Fields that are sent together go in one <code>&lt;form&gt;</code> section with its own save bar.</li>
+        <li>A setting that takes effect the moment it flips is a switch, in a section with no save bar.</li>
+        <li>For the words, follow <a class="link" href="writing.html#buttons-and-links">Buttons and links</a> and <a class="link" href="writing.html#confirmations">Confirmations</a> in the content guidelines.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Sign-in, sign-up or account recovery. Cloudflare Access owns sign-in.</li>
+        <li>One Save for the whole page. Save each section, so a change in one isn't lost to an error in another.</li>
+        <li>A single preference. A switch in a menu is enough.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>The save bar</h2>
+    <ul>
+      <li>Its buttons carry <code>hidden</code> until the section changes. Its note is always rendered and starts empty; your script writes "Unsaved changes" into it on the form's first <code>input</code> event.</li>
+      <li>Discard is a <code>type="reset"</code> button, which puts back each field's default value. So after a save, copy every value into its default (<code>defaultValue</code>, <code>defaultChecked</code>, <code>defaultSelected</code>), or Discard would quietly undo the save.</li>
+      <li>After a save, the note says so ("Profile saved") and the buttons hide. After an error, mark the fields as the text field page shows and keep the buttons up.</li>
+      <li>It sits right under the section's fields, so keep sections short enough that the bar is in view while you edit them. Split a long one in two.</li>
+      <li>The save button names the section ("Save profile").</li>
+      <li><code>.settings</code> is a size container, so give its wrapper a definite width. Inside a box that sizes to its content, it collapses.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Each section is a <code>&lt;form&gt;</code> or <code>&lt;section&gt;</code> labelled by its heading (<code>aria-labelledby</code>), so a screen reader can jump between them.</li>
+      <li>The note is a <code>role="status"</code> that is always rendered and starts empty, so "Unsaved changes" and "Profile saved" are announced as they're written, without moving focus.</li>
+      <li>Save and Discard hide themselves, so move focus to the section's heading (<code>tabindex="-1"</code>) before hiding them. Otherwise focus drops to the page.</li>
+      <li>Switches keep <code>role="switch"</code> and their label. The change itself is the feedback.</li>
+      <li>A danger action opens a <code>.dialog-confirm</code> whose safe button has <code>autofocus</code>. Esc closes it and focus goes back to the button.</li>
+    </ul>
+  </section>
+</div>
+<script>
+  // Preview only: open dialogs where the browser lacks commandfor / command,
+  // and run the save-bar contract on the wide demo.
+  if (!('command' in HTMLButtonElement.prototype)) {
+    document.querySelectorAll('button[command="show-modal"]').forEach((b) =>
+      b.addEventListener('click', () => document.getElementById(b.getAttribute('commandfor')).showModal()));
+  }
+  document.querySelectorAll('.wide-demo form[data-save-section]').forEach((form) => {
+    const note = form.querySelector('.settings-save-note');
+    const actions = form.querySelector('.settings-save-actions');
+    const heading = form.querySelector('h2');
+    const done = (text) => { heading.focus(); actions.hidden = true; note.textContent = text; };
+    form.addEventListener('input', () => {
+      if (!actions.hidden) return;
+      note.textContent = 'Unsaved changes';
+      actions.hidden = false;
+    });
+    form.addEventListener('reset', () => done(''));
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      for (const el of form.elements) {
+        if ('defaultValue' in el) el.defaultValue = el.value;
+        if ('defaultChecked' in el) el.defaultChecked = el.checked;
+        if (el.options) for (const o of el.options) o.defaultSelected = o.selected;
+      }
+      done('Profile saved');
+    });
+  });
+</script>
+</body>
+</html>
