@@ -27,7 +27,7 @@
       <p class="settings-title">Settings</p>
       <form class="settings-section" aria-labelledby="l-profile-h l-where" data-save-section>
         <div class="settings-intro">
-          <h2 id="l-profile-h">Profile</h2>
+          <h2 id="l-profile-h" tabindex="-1">Profile</h2>
           <p>How other people see you on shared trips.</p>
         </div>
         <div class="settings-fields">
@@ -36,8 +36,10 @@
         </div>
         <div class="settings-save">
           <p class="settings-save-note" role="status">Unsaved changes</p>
-          <button type="reset" class="btn">Discard</button>
-          <button class="btn btn-primary">Save profile</button>
+          <div class="settings-save-actions">
+            <button type="reset" class="btn">Discard</button>
+            <button class="btn btn-primary">Save profile</button>
+          </div>
         </div>
       </form>
       <section class="settings-section" aria-labelledby="l-notify-h l-where">
@@ -74,7 +76,7 @@
       <p class="settings-title">Settings</p>
       <form class="settings-section" aria-labelledby="d-profile-h d-where" data-save-section>
         <div class="settings-intro">
-          <h2 id="d-profile-h">Profile</h2>
+          <h2 id="d-profile-h" tabindex="-1">Profile</h2>
           <p>How other people see you on shared trips.</p>
         </div>
         <div class="settings-fields">
@@ -83,8 +85,10 @@
         </div>
         <div class="settings-save">
           <p class="settings-save-note" role="status">Unsaved changes</p>
-          <button type="reset" class="btn">Discard</button>
-          <button class="btn btn-primary">Save profile</button>
+          <div class="settings-save-actions">
+            <button type="reset" class="btn">Discard</button>
+            <button class="btn btn-primary">Save profile</button>
+          </div>
         </div>
       </form>
       <section class="settings-section" aria-labelledby="d-notify-h d-where">
@@ -125,17 +129,19 @@
       <p class="settings-title">Settings</p>
       <form class="settings-section" aria-labelledby="w-profile-h w-where" data-save-section>
         <div class="settings-intro">
-          <h2 id="w-profile-h">Profile</h2>
+          <h2 id="w-profile-h" tabindex="-1">Profile</h2>
           <p>How other people see you on shared trips.</p>
         </div>
         <div class="settings-fields">
           <div class="field"><label for="w-name">Name</label><input id="w-name" name="name" value="Sam Rivera" autocomplete="name"></div>
           <div class="field"><label for="w-email">Email</label><input id="w-email" name="email" type="email" value="sam@example.com" autocomplete="email" aria-describedby="w-email-hint"><p class="field-hint" id="w-email-hint">Booking updates go here.</p></div>
         </div>
-        <div class="settings-save" hidden>
-          <p class="settings-save-note" role="status">Unsaved changes</p>
-          <button type="reset" class="btn">Discard</button>
-          <button class="btn btn-primary">Save profile</button>
+        <div class="settings-save">
+          <p class="settings-save-note" role="status"></p>
+          <div class="settings-save-actions" hidden>
+            <button type="reset" class="btn">Discard</button>
+            <button class="btn btn-primary">Save profile</button>
+          </div>
         </div>
       </form>
       <section class="settings-section" aria-labelledby="w-notify-h w-where">
@@ -183,17 +189,32 @@
       &lt;p&gt;How other people see you on shared trips.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="settings-fields"&gt;&lt;div class="field"&gt;…&lt;/div&gt;&lt;/div&gt;
-    &lt;div class="settings-save" hidden&gt;
-      &lt;p class="settings-save-note" role="status"&gt;Unsaved changes&lt;/p&gt;
-      &lt;button type="reset" class="btn"&gt;Discard&lt;/button&gt;
-      &lt;button class="btn btn-primary"&gt;Save profile&lt;/button&gt;
+    &lt;div class="settings-save"&gt;
+      &lt;p class="settings-save-note" role="status"&gt;&lt;/p&gt;
+      &lt;div class="settings-save-actions" hidden&gt;
+        &lt;button type="reset" class="btn"&gt;Discard&lt;/button&gt;
+        &lt;button class="btn btn-primary"&gt;Save profile&lt;/button&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/form&gt;
 &lt;/main&gt;
 
-// your script: show the bar on the first change, hide it after save or reset
-form.addEventListener('input', () =&gt; { bar.hidden = false; });
-form.addEventListener('reset', () =&gt; { bar.hidden = true; });</pre>
+// your script, per section form
+const note = form.querySelector('.settings-save-note');
+const actions = form.querySelector('.settings-save-actions');
+const heading = form.querySelector('h2'); // has tabindex="-1"
+const done = (text) =&gt; { heading.focus(); actions.hidden = true; note.textContent = text; };
+form.addEventListener('input', () =&gt; { note.textContent = 'Unsaved changes'; actions.hidden = false; });
+form.addEventListener('reset', () =&gt; done(''));
+form.addEventListener('submit', async (e) =&gt; {
+  e.preventDefault();
+  await save(new FormData(form));          // on error: mark the fields, keep the bar
+  for (const el of form.elements) {         // so Discard can't undo the save
+    if ('defaultValue' in el) el.defaultValue = el.value;
+    if ('defaultChecked' in el) el.defaultChecked = el.checked;
+  }
+  done('Profile saved');
+});</pre>
   </section>
 
   <div class="two">
@@ -219,10 +240,12 @@ form.addEventListener('reset', () =&gt; { bar.hidden = true; });</pre>
   <section>
     <h2>The save bar</h2>
     <ul>
-      <li>It's hidden with the <code>hidden</code> attribute until the section changes. Your script removes it on the form's first <code>input</code> event and sets it again after a successful save or a reset.</li>
+      <li>Its buttons carry <code>hidden</code> until the section changes. Its note is always rendered and starts empty; your script writes "Unsaved changes" into it on the form's first <code>input</code> event.</li>
+      <li>Discard is a <code>type="reset"</code> button, which puts back each field's default value. So after a save, copy every value into its default (<code>defaultValue</code>, <code>defaultChecked</code>, <code>defaultSelected</code>), or Discard would quietly undo the save.</li>
+      <li>After a save, the note says so ("Profile saved") and the buttons hide. After an error, mark the fields as the text field page shows and keep the buttons up.</li>
       <li>It sits right under the section's fields, so keep sections short enough that the bar is in view while you edit them. Split a long one in two.</li>
-      <li>The save button names the section ("Save profile"). Discard is a <code>type="reset"</code> button, so restoring the values needs no script.</li>
-      <li>After a save, show a short success line or toast ("Profile saved"). After an error, mark the fields as the text field page shows and keep the bar up.</li>
+      <li>The save button names the section ("Save profile").</li>
+      <li><code>.settings</code> is a size container, so give its wrapper a definite width. Inside a box that sizes to its content, it collapses.</li>
     </ul>
   </section>
 
@@ -230,7 +253,8 @@ form.addEventListener('reset', () =&gt; { bar.hidden = true; });</pre>
     <h2>Accessibility</h2>
     <ul>
       <li>Each section is a <code>&lt;form&gt;</code> or <code>&lt;section&gt;</code> labelled by its heading (<code>aria-labelledby</code>), so a screen reader can jump between them.</li>
-      <li>"Unsaved changes" is a <code>role="status"</code>, so it's announced when the bar appears, without moving focus.</li>
+      <li>The note is a <code>role="status"</code> that is always rendered and starts empty, so "Unsaved changes" and "Profile saved" are announced as they're written, without moving focus.</li>
+      <li>Save and Discard hide themselves, so move focus to the section's heading (<code>tabindex="-1"</code>) before hiding them. Otherwise focus drops to the page.</li>
       <li>Switches keep <code>role="switch"</code> and their label. The change itself is the feedback.</li>
       <li>A danger action opens a <code>.dialog-confirm</code> whose safe button has <code>autofocus</code>. Esc closes it and focus goes back to the button.</li>
     </ul>
@@ -244,10 +268,20 @@ form.addEventListener('reset', () =&gt; { bar.hidden = true; });</pre>
       b.addEventListener('click', () => document.getElementById(b.getAttribute('commandfor')).showModal()));
   }
   document.querySelectorAll('.wide-demo form[data-save-section]').forEach((form) => {
-    const bar = form.querySelector('.settings-save');
-    form.addEventListener('input', () => { bar.hidden = false; });
-    form.addEventListener('reset', () => { bar.hidden = true; });
-    form.addEventListener('submit', (e) => { e.preventDefault(); bar.hidden = true; });
+    const note = form.querySelector('.settings-save-note');
+    const actions = form.querySelector('.settings-save-actions');
+    const heading = form.querySelector('h2');
+    const done = (text) => { heading.focus(); actions.hidden = true; note.textContent = text; };
+    form.addEventListener('input', () => { note.textContent = 'Unsaved changes'; actions.hidden = false; });
+    form.addEventListener('reset', () => done(''));
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      for (const el of form.elements) {
+        if ('defaultValue' in el) el.defaultValue = el.value;
+        if ('defaultChecked' in el) el.defaultChecked = el.checked;
+      }
+      done('Profile saved');
+    });
   });
 </script>
 </body>
