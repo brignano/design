@@ -28,6 +28,11 @@
 //      name isn't lower-case kebab, or an icon leaves the set's shape: a
 //      fill or stroke other than none or currentColor, any style= or color=,
 //      any hex, a stroke-width other than 2, or a size other than 24.
+//  12. DESIGN.md §15 (Content) and previews/writing.html disagree: a rule
+//      without exactly one "- Do:" and one "- Don't:" line; a rule with no
+//      section of the same name, or a section with no rule; a duplicate; a
+//      different order; a section without one Do and one Don't panel, or a
+//      panel that doesn't show the quoted examples from its rule.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -385,7 +390,7 @@ for (const [f, rs] of layerRules)
 // asks of the consumer. Foundations are specimens, and the product page
 // skeleton and its examples are documented in DESIGN.md §13.
 const NOT_DOCS = new Set(['color.html', 'type.html', 'elevation.html', 'components.html',
-  'diagram.html', 'product-page.html', 'product-page-example.html', 'product-media.html']);
+  'diagram.html', 'product-page.html', 'product-page-example.html', 'product-media.html', 'writing.html']);
 const STATUSES = ['stable', 'beta', 'planned'];
 const DOCS = { usage: 'Use it', 'use-when': 'Use when', 'dont-use': "Don't use when", a11y: 'Accessibility' };
 const cardStatus = new Map(
@@ -445,9 +450,50 @@ for (const n of iconFiles) {
     fail(`icons/${n}.svg: one stroke width, 2`);
 }
 
+// ── 12. One set of content rules, written once and shown once ──────────────
+const design = read('DESIGN.md');
+const content = design.match(/\n## 15\. Content\n([\s\S]*?)(?=\n## |$)/)?.[1];
+if (!content) fail('DESIGN.md: no "## 15. Content" section');
+else {
+  const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const quotes = (line) => [...line.matchAll(/"([^"]+)"|`([^`]+)`/g)].map((m) => m[1] ?? m[2]);
+  const rules = content.split(/\n### /).slice(1).map((r) => {
+    const title = r.split('\n')[0].trim();
+    const dos = r.match(/^\s*[-*] Do: .*$/gm) || [];
+    const donts = r.match(/^\s*[-*] Don't: .*$/gm) || [];
+    return { title, slug: slug(title), dos, donts };
+  });
+  const page = read('previews/writing.html');
+  const text = (h) => h.replace(/\splaceholder="([^"]*)"/g, '>$1<').replace(/<[^>]+>/g, ' ')
+    .replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&').replace(/\s+/g, ' ');
+  const shown = [...page.matchAll(/<section class="rule"[^>]*>([\s\S]*?)<\/section>/g)].map(([, body]) => {
+    const h = body.match(/<h2[^>]*\sid="([\w-]+)"[^>]*>([^<]+)<\/h2>/);
+    const part = (cls) => [...body.matchAll(new RegExp(`<div class="ex ${cls}">`, 'g'))].length;
+    const panel = (cls) => body.split(`<div class="ex ${cls}">`)[1]?.split('<div class="ex ')[0] ?? '';
+    return { id: h?.[1], title: h?.[2].trim(), dos: part('ex-do'), donts: part('ex-dont'), doText: text(panel('ex-do')), dontText: text(panel('ex-dont')) };
+  });
+  const sections = (page.match(/<section\b/g) || []).length;
+  if (sections !== shown.length) fail(`previews/writing.html: ${sections} sections, ${shown.length} of them <section class="rule">; every section is a rule`);
+  const dup = (xs) => xs.filter((x, i) => xs.indexOf(x) !== i);
+  for (const d of dup(rules.map((r) => r.slug))) fail(`DESIGN.md §15: rule "${d}" appears twice`);
+  for (const d of dup(shown.map((h) => h.id))) fail(`previews/writing.html: section "${d}" appears twice`);
+  for (const r of rules) {
+    if (r.dos.length !== 1 || r.donts.length !== 1) fail(`DESIGN.md §15 "${r.title}": needs exactly one "- Do:" and one "- Don't:" (has ${r.dos.length} and ${r.donts.length})`);
+    const h = shown.find((x) => x.id === r.slug);
+    if (!h || h.title !== r.title) { fail(`previews/writing.html: no <h2 id="${r.slug}">${r.title}</h2> for DESIGN.md §15`); continue; }
+    if (h.dos !== 1 || h.donts !== 1) fail(`previews/writing.html "${r.title}": needs exactly one .ex-do and one .ex-dont panel`);
+    for (const q of quotes(r.dos.join(' '))) if (!h.doText.includes(q)) fail(`previews/writing.html "${r.title}": the Do panel doesn't show "${q}"`);
+    for (const q of quotes(r.donts.join(' '))) if (!h.dontText.includes(q)) fail(`previews/writing.html "${r.title}": the Don't panel doesn't show "${q}"`);
+  }
+  for (const h of shown) if (!h.id || !rules.some((r) => r.slug === h.id)) fail(`previews/writing.html: section "${h.title ?? h.id ?? '?'}" has no rule in DESIGN.md §15`);
+  if (rules.map((r) => r.slug).join() !== shown.map((h) => h.id).join())
+    fail('previews/writing.html: the rules must run in the same order as DESIGN.md §15');
+}
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules`);

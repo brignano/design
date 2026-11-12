@@ -23,6 +23,7 @@
     ['components.html', 'Components'],
     ['layout.html', 'Layout'],
     ['icons.html', 'Icons'],
+    ['writing.html', 'Content guidelines'],
     // Controls
     ['buttons.html', 'Buttons & links'],
     ['fields.html', 'Text fields'],

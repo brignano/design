@@ -653,3 +653,136 @@ and in what order: [`proposals/component-layer.md`](./proposals/component-layer.
   submit button is a checkbox, because a switch promises an effect the form
   hasn't made yet.
 
+
+## 15. Content
+
+Words are part of the interface. A product that labels one button "Save" and
+the next "Submit changes" reads as inconsistent as one with two greys. These
+rules cover the words inside a product: controls, messages, data. Marketing copy
+follows the brief in §13. English only for now.
+
+Each rule has one do and one don't. The live page is
+[`previews/writing.html`](./previews/writing.html); `npm run check` fails when
+a rule here has no section there.
+
+### Voice
+
+Competent, calm, plain words. Say what happened and what to do next, the way a
+colleague who knows the system would. No hype, no jokes, no apology theatre.
+
+- Do: "Changes saved."
+- Don't: "Awesome! Your changes have been successfully saved!"
+
+### Sentence case
+
+Everything is in sentence case: buttons, headings, labels, menu items, tabs,
+page titles. Capitalise only the first word and proper nouns. An eyebrow can be
+uppercase through CSS, but it is written in sentence case.
+
+- Do: "Account settings", "Sign in with GitHub"
+- Don't: "Account Settings", "SIGN IN"
+
+### Buttons and links
+
+A button is a verb and its object, so it still makes sense read on its own. A
+link names where it goes. The button that confirms an action repeats that
+action's verb.
+
+- Do: "Delete trip", "Read the release notes"
+- Don't: "OK", "Click here"
+
+### Form labels
+
+A label is a short noun phrase above its field, never a placeholder. Mark the
+optional fields with "(optional)", not the required ones, and put formats in
+the hint below.
+
+- Do: "Phone (optional)", with the hint "We only call about bookings."
+- Don't: "Phone*", or "Please enter your phone number" as the placeholder
+
+### Errors
+
+Say what happened and how to fix it, in that order, next to the thing that
+went wrong. Name the field or the action, never the person. No codes unless
+someone will search for them, and then in mono after the words.
+
+- Do: "That date has passed. Pick today or later."
+- Don't: "Invalid input.", "You entered a wrong date."
+
+### Empty states
+
+Say what will be here and give the one action that fills it. If the person
+can't fill it (no results, nothing assigned yet), say why it's empty and what
+would change that.
+
+- Do: "No trips yet", then "Plan one and it shows up here." and a "Plan a trip" button
+- Don't: "Nothing to see here!"
+
+### Confirmations
+
+Ask only before something that can't be undone. The title names the action and
+the object, the body says what goes with it, and the buttons are the verb and
+a way out ("Cancel", or "Keep trip" when that reads better). Where an action
+can be undone, do it and offer Undo instead of asking.
+
+- Do: "Delete Lisbon 2027?" / "Its 12 photos go with it. This can't be undone." / "Delete trip", "Keep trip"
+- Don't: "Are you sure?" / "Yes", "No"
+
+### Success messages
+
+Past tense, the object first, and Undo when there is one. A success message
+is quiet: a toast or an inline line, never a dialog.
+
+- Do: "Trip deleted", with Undo
+- Don't: "Success!"
+
+### Dates
+
+In the interface a date is day, short month, year: "7 Nov 2026", with the
+weekday first when it helps planning ("Sat 7 Nov 2026"). Drop the year inside
+the current year when nothing is ambiguous. Data a person might copy, sort or
+search (logs, IDs, exports, timestamps in a table) uses ISO 8601 in `--mono`.
+
+- Do: "7 Nov 2026" in a sentence, `2026-11-07` in a log row
+- Don't: "11/07/2026", "November 7th, 2026"
+
+### Times
+
+Twelve-hour, with a space and capital AM or PM; drop ":00" on the hour in prose.
+Add the zone when the reader might be elsewhere. 24-hour time is not used,
+except inside ISO 8601 data in mono (`2026-11-07T21:30Z` in a log). For
+something in the last day, a relative time ("5 min ago") is fine, with the full
+date and time in a tooltip or `title`.
+
+- Do: "9:30 AM", "3 PM ET", "2–3 AM UTC"
+- Don't: "21:30", "9:30am"
+
+### Numbers
+
+Numerals for every number, a comma every three digits, and a space before a
+unit except %. Compact durations in tables and mono data ("2h 11m", "150ms")
+can drop the space. Words a person typed, like a quoted message, stay as
+written. Figures that line up in a column use tabular figures, which the
+type tokens already set.
+
+- Do: "3 trips · 10,482 photos · 64 GB · 64%"
+- Don't: "three trips · 10482 photos · 64GB · 64 %"
+
+### Currency
+
+The symbol before the number with no space. Whole amounts drop ".00" in prose;
+a table of prices shows two decimals on every row so they line up. Name the
+currency ("US$", "€") only when the reader could mistake it.
+
+- Do: "$1,240", "$12.50"
+- Don't: "$1240.00", "12.5 USD"
+
+### What never appears
+
+These don't appear in a product's interface: exclamation marks; "simply",
+"just" or "easy" when they play a task down (they blame the person when it
+isn't); "Oops" or "Uh-oh"; emoji as words; ALL CAPS typed into the text; and,
+on marketing pages, jargon the reader has to look up.
+
+- Do: "Couldn't load your trips. Try again."
+- Don't: "Oops! Something went wrong!! Simply refresh."
