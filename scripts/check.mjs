@@ -28,6 +28,9 @@
 //      name isn't lower-case kebab, or an icon leaves the set's shape: a
 //      fill or stroke other than none or currentColor, any style= or color=,
 //      any hex, a stroke-width other than 2, or a size other than 24.
+//  12. DESIGN.md §15 (Content) and previews/writing.html disagree: a rule
+//      without exactly one "- Do:" and one "- Don't:" line, or a rule with no
+//      section of the same name on the page, or a page section with no rule.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -385,7 +388,7 @@ for (const [f, rs] of layerRules)
 // asks of the consumer. Foundations are specimens, and the product page
 // skeleton and its examples are documented in DESIGN.md §13.
 const NOT_DOCS = new Set(['color.html', 'type.html', 'elevation.html', 'components.html',
-  'diagram.html', 'product-page.html', 'product-page-example.html', 'product-media.html']);
+  'diagram.html', 'product-page.html', 'product-page-example.html', 'product-media.html', 'writing.html']);
 const STATUSES = ['stable', 'beta', 'planned'];
 const DOCS = { usage: 'Use it', 'use-when': 'Use when', 'dont-use': "Don't use when", a11y: 'Accessibility' };
 const cardStatus = new Map(
@@ -445,9 +448,30 @@ for (const n of iconFiles) {
     fail(`icons/${n}.svg: one stroke width, 2`);
 }
 
+// ── 12. One set of content rules, written once and shown once ──────────────
+const design = read('DESIGN.md');
+const content = design.match(/\n## 15\. Content\n([\s\S]*?)(?=\n## |$)/)?.[1];
+if (!content) fail('DESIGN.md: no "## 15. Content" section');
+else {
+  const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const rules = content.split(/\n### /).slice(1).map((r) => {
+    const title = r.split('\n')[0].trim();
+    return { title, slug: slug(title), dos: (r.match(/^- Do: /gm) || []).length, donts: (r.match(/^- Don't: /gm) || []).length };
+  });
+  const page = read('previews/writing.html');
+  const shown = [...page.matchAll(/<h2 id="([\w-]+)">([^<]+)<\/h2>/g)].map((m) => ({ id: m[1], title: m[2].trim() }));
+  for (const r of rules) {
+    if (r.dos !== 1 || r.donts !== 1) fail(`DESIGN.md §15 "${r.title}": needs exactly one "- Do:" and one "- Don't:" (has ${r.dos} and ${r.donts})`);
+    if (!shown.some((h) => h.id === r.slug && h.title === r.title)) fail(`previews/writing.html: no <h2 id="${r.slug}">${r.title}</h2> for DESIGN.md §15`);
+  }
+  for (const h of shown) if (!rules.some((r) => r.slug === h.id)) fail(`previews/writing.html: "${h.title}" has no rule in DESIGN.md §15`);
+  if (rules.map((r) => r.slug).join() !== shown.map((h) => h.id).join() && rules.length === shown.length)
+    fail('previews/writing.html: the rules must run in the same order as DESIGN.md §15');
+}
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules`);
