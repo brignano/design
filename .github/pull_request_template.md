@@ -6,10 +6,9 @@
 Closes #
 
 ## UI changes
-<!-- DESIGN.md §16. Tick one. -->
-- [ ] No visible change, or a small tweak or fix (exempt from wireframes)
-- [ ] Substantial UI/UX change: wireframes (phone + desktop) approved by Anthony before building: <!-- link to previews/wireframes/<slug>.html and the approval -->
-- [ ] Before/after screenshots attached (phone first, light and dark), checked against the approved wireframe
+<!-- Fleet rule "Wireframes before build" (brignano/ai-tools fleet/README.md). Tick one. -->
+- [ ] Not a substantial UI/UX change (exempt)
+- [ ] Wireframes approved before building: <!-- link to previews/wireframes/<slug>.html and the approval -->
 
 ## Release
 Impact: none / patch / minor / major
