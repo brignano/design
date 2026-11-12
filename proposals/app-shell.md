@@ -11,6 +11,13 @@ behaviour. #68 ships that frame as `templates/app-shell.css`. Before building
 it, four choices need Anthony's call. Each has a recommendation, and accepting
 this proposal accepts all four unless he says otherwise.
 
+## Wireframe
+
+[`app-shell-wireframe.html`](app-shell-wireframe.html) is interactive. Pick a
+width or drag the frame, collapse the sidebar, open the phone menu, and select a
+host to see where its details go at each width. Accept the wireframe before the
+build starts.
+
 ## What a consumer writes
 
 ```html
@@ -62,8 +69,10 @@ current page with `aria-current="page"`.
 | A3 | The detail panel between phone and desktop (48–75rem) | **It becomes a sheet** (`.dialog.sheet`, already in `components.css`) opened by whatever selects the item; at 75rem and up it's a third column. The main content keeps its width when it needs it most. | A narrow third column: main gets squeezed below a readable width at 64rem. Pushing the panel under main: the detail scrolls out of sight of the list it belongs to. |
 | A4 | The sidebar on a phone (below 48rem) | **A sheet from the inline start**, a `<dialog>` opened from a menu button in the header with `command="show-modal"`. It is modal, so the page behind goes inert, Esc closes it, and focus returns to the button. The same nav markup is used; the shell CSS moves it, so there is one list of links. | The header's existing no-script phone menu (a drop-down list): fine for five marketing links, cramped for sectioned app nav with icons. A bottom tab bar: only fits four or five destinations and a second nav for the rest. |
 
-All breakpoints are container queries on `.app-shell`, so the shell behaves the
-same inside a preview panel or an embedded view as it does full screen.
+All breakpoints are container queries, so the shell behaves the same inside a
+preview panel or an embedded view as it does full screen. An element can't
+query its own size, so the container is a wrapper around the grid
+(`.app-shell` holds `.app-shell-grid`), as the wireframe's frame does.
 
 ## What else ships with it
 
