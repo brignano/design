@@ -73,8 +73,6 @@
     border-top: 1px solid var(--line);
   }
   .settings-save:has(> .settings-save-actions[hidden]) { padding-top: 0; border-top: 0; }
-  /* An empty bar takes no room, but stays rendered so its live region keeps working. */
-  .settings-save:has(> .settings-save-actions[hidden]):has(> .settings-save-note:empty) { margin-top: calc(-1 * var(--s4)); }
   .settings-save-note { margin: 0 auto 0 0; font-size: var(--text-sm); color: var(--ink-soft); }
   .settings-save-actions { display: flex; flex-wrap: wrap; gap: var(--s3); }
   .settings-save-actions[hidden] { display: none; }
