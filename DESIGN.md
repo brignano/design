@@ -180,8 +180,8 @@ No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
   `A|B` monogram at the same weight, spaced open (`--tracking-caps`) so the bar
   doesn't read as an I, for a footer or an about page. This is the
   display treatment, in both tiers. It is the one use of a weight above 600,
-  and at most once a screen. `.rule` is the short bar in `--mark` above a hero
-  heading. (`--display` still names Silkscreen on the marketing tier until
+  and at most once a screen. `.rule` is the short bar in the mark in force (`--mark-current`, §3)
+  above a hero heading. (`--display` still names Silkscreen on the marketing tier until
   #142 removes it.)
 
 Sizes change with the tier (`--text-xs` … `--text-4xl`); weight, leading and
