@@ -3,6 +3,12 @@
 Read `DESIGN.md` (the rules) and `DECISIONS.md` (why) before changing a token.
 Before every commit: `npm run check`.
 
+## Wireframes before UI work
+
+The fleet rule applies ("Wireframes before build" in brignano/ai-tools
+`fleet/README.md`). In this repo, wireframes go in `previews/wireframes/`:
+see its README and `_template.html`.
+
 ## How to release
 
 Only when Anthony says "publish X" explicitly. An npm version can never be
