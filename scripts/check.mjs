@@ -437,7 +437,7 @@ for (const n of iconFiles) {
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(n)) fail(`icons/${n}.svg: names are lower-case kebab, as Lucide's are`);
   for (const m of svg.matchAll(/\b(fill|stroke)\s*=\s*(["'])(.*?)\2/g))
     if (!['none', 'currentColor'].includes(m[3])) fail(`icons/${n}.svg: ${m[1]}="${m[3]}"; icons take currentColor`);
-  if (/\s(style|color)\s*=/.test(svg)) fail(`icons/${n}.svg: carries style= or color=; icons take currentColor from the text`);
+  if (/\s(style|color)\s*=|<style\b/.test(svg)) fail(`icons/${n}.svg: carries style= or color=; icons take currentColor from the text`);
   if (/#[0-9a-fA-F]{3,8}\b/.test(svg)) fail(`icons/${n}.svg: carries a hex colour`);
   if (!/viewBox="0 0 24 24"/.test(head)) fail(`icons/${n}.svg: not on the 24px grid`);
   if (!/\swidth="24"/.test(head) || !/\sheight="24"/.test(head)) fail(`icons/${n}.svg: must be width="24" height="24"`);
