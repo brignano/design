@@ -22,6 +22,7 @@
     ['diagram.html', 'Diagram nodes'],
     ['components.html', 'Components'],
     ['layout.html', 'Layout'],
+    ['icons.html', 'Icons'],
     // Controls
     ['buttons.html', 'Buttons & links'],
     ['fields.html', 'Text fields'],
