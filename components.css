@@ -2178,20 +2178,20 @@
     text-transform: uppercase;
     color: var(--ink-soft);
   }
-  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; } /* a date never breaks in two */
   .display {
     margin: 0;
     font-family: var(--sans);
     font-size: var(--text-4xl);
     font-weight: var(--weight-heavy);
-    line-height: 1;
-    letter-spacing: -0.05em;
+    line-height: var(--leading-display);
+    letter-spacing: calc(var(--tracking-display) * 2);
     color: var(--ink);
   }
   .stamp {
     font-family: var(--sans);
     font-weight: var(--weight-heavy);
-    letter-spacing: -0.04em;
+    letter-spacing: var(--tracking-caps); /* open, not tight: closed up, the heavy bar reads as an I */
     white-space: nowrap;
     color: var(--ink);
   }
