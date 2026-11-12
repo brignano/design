@@ -20,6 +20,7 @@
     "components.css",
     "product-page.css",
     "templates/",
+    "icons/",
     "scripts/fold.mjs",
     "scripts/email-tokens.mjs",
     "scripts/colour.mjs",
@@ -34,6 +35,7 @@
     "./components.css": "./components.css",
     "./product-page.css": "./product-page.css",
     "./templates/*": "./templates/*",
+    "./icons/*": "./icons/*",
     "./scripts/email-tokens.mjs": "./scripts/email-tokens.mjs"
   },
   "sideEffects": [

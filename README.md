@@ -12,6 +12,7 @@ The shared design system for every brignano surface — `brignano.io`, `life`,
 | [`components.css`](./components.css) | Shared controls and patterns as plain CSS in `@layer brignano.components`: one import, any framework. DESIGN.md §14; catalog in `proposals/component-layer.md`; preview in `previews/components.html`. |
 | [`product-page.css`](./product-page.css) | The structure of a product's marketing page, built from a five-line brief: thesis and proof on the first phone screen, one signature band, how it works, closing ask; a product mark, hero layout and proof frame so each product looks like itself. DESIGN.md §13; skeleton in `previews/product-page.html`, worked example in `previews/product-page-example.html`, first-screen check in `scripts/fold.mjs`. |
 | [`templates/`](./templates) | Page templates built on `components.css`: `article.css` (posts and docs), `changelog.css`, `legal.css`, and a transactional email (`email.html` + `email.txt`, filled from the tokens by `scripts/email-tokens.mjs`). Import as `@brignano/design/templates/<name>.css`. |
+| [`icons/`](./icons) | One curated outline icon set (Lucide, ISC; `icons/LICENSE`) on a 24px grid in `currentColor`. Size with `.icon-sm`, `.icon`, `.icon-lg` from `components.css`; browse and copy in `previews/icons.html`. Import as `@brignano/design/icons/<name>.svg`. |
 | [`previews/`](./previews) | Live swatches. Open one in a browser to see the tokens render. |
 
 ## The shape of it

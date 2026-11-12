@@ -632,6 +632,27 @@
   }
 }
 
+/* ── Icon (#87) ────────────────────────────────────────────────────────────
+   <svg class="icon" aria-hidden="true">…</svg>   paste from icons/<name>.svg
+   One curated set (Lucide, ISC: icons/LICENSE), drawn on a 24px grid at a
+   2px stroke in currentColor, so an icon takes its text's colour. Sizes
+   follow the type scale at 1.25× the text they sit beside, the same ratio
+   .btn gives an svg: .icon-sm beside --text-sm, .icon beside body text,
+   .icon-lg beside --text-lg. Decorative icons take aria-hidden="true"; an
+   icon alone in a button needs the button's aria-label. A state icon never
+   stands in for its word (DESIGN.md §3). */
+@layer brignano.components {
+  .icon {
+    flex: none;
+    display: inline-block;
+    width: calc(var(--text-base) * 1.25);
+    height: calc(var(--text-base) * 1.25);
+    vertical-align: -0.25em;
+  }
+  .icon-sm { width: calc(var(--text-sm) * 1.25); height: calc(var(--text-sm) * 1.25); }
+  .icon-lg { width: calc(var(--text-lg) * 1.25); height: calc(var(--text-lg) * 1.25); }
+}
+
 /* ── Layout primitives (#53) ──────────────────────────────────────────────
    <main class="container"><section class="section stack gap-5">…</section></main>
    Gap-based only: no margins between children, no 12-column grid.

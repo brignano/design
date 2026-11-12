@@ -23,7 +23,9 @@
 //  10. a component or template page misses part of the docs shape (#86):
 //      data-status on <html>, and .docs sections tagged data-doc="usage"
 //      (with a snippet), "use-when", "dont-use" and "a11y"; or its card on
-//      index.html shows a different status.
+//      index.html shows a different status;
+//  11. icons/ and the icon list on previews/icons.html disagree, or an icon
+//      carries a colour of its own instead of currentColor.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -419,9 +421,24 @@ for (const f of previews) {
     fail(`previews/${f}: the docs sections must run Use it, Use when, Don't use when, Accessibility`);
 }
 
+// ── 11. One icon set, all of it shown, all of it in currentColor ────────────
+const iconFiles = readdirSync(new URL('icons/', root)).filter((f) => f.endsWith('.svg')).map((f) => f.slice(0, -4)).sort();
+const iconPage = read('previews/icons.html').match(/const ICONS = \[([\s\S]*?)\];/);
+const iconList = iconPage ? [...iconPage[1].matchAll(/'([\w-]+)'/g)].map((m) => m[1]) : [];
+if (!iconPage) fail('previews/icons.html: no ICONS list');
+if ([...iconList].sort().join() !== iconFiles.join())
+  fail(`icons: previews/icons.html lists ${iconList.length}, icons/ holds ${iconFiles.length}; they must match`);
+if (!existsSync(new URL('icons/LICENSE', root))) fail('icons/LICENSE is missing');
+for (const n of iconFiles) {
+  const svg = read(`icons/${n}.svg`);
+  for (const m of svg.matchAll(/\b(fill|stroke)="([^"]+)"/g))
+    if (!['none', 'currentColor'].includes(m[2])) fail(`icons/${n}.svg: ${m[1]}="${m[2]}"; icons take currentColor`);
+  if (!/viewBox="0 0 24 24"/.test(svg)) fail(`icons/${n}.svg: not on the 24px grid`);
+}
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set`);

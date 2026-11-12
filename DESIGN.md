@@ -640,6 +640,13 @@ and in what order: [`proposals/component-layer.md`](./proposals/component-layer.
   owns) sit between them. `npm run check` fails on a missing section or a status
   the index disagrees with. Planned components are listed on the index with a
   link to their issue.
+- **One icon set.** `icons/` holds the only icons a surface uses: outline
+  icons from Lucide (ISC, `icons/LICENSE`) on a 24px grid at a 2px stroke, in
+  `currentColor`, so they take their text's colour. Size them with `.icon-sm`,
+  `.icon` or `.icon-lg` (1.25× the text beside them). Decorative icons are
+  `aria-hidden`; an icon-only button carries an `aria-label`. Need one that
+  isn't there? Add it from Lucide in a PR; don't draw one or pull in another
+  set. Brand logos are the exception and stay with their brands.
 - **Switch or checkbox.** A switch (`.switch`, `role="switch"`) is only for a
   setting that takes effect the moment it flips. Anything sent with a form's
   submit button is a checkbox, because a switch promises an effect the form
