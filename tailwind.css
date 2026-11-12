@@ -75,6 +75,21 @@
   --font-mono: var(--mono);
   --font-display: var(--display);
 
+  /* Weights match Tailwind's own, so font-medium and font-semibold are
+     unchanged. Leading and tracking are named by role, not tight/snug/…,
+     so they ADD leading-display, tracking-title and the rest and leave
+     Tailwind's leading-tight, tracking-tight and friends as they were. */
+  --font-weight-normal: var(--weight-regular);
+  --font-weight-medium: var(--weight-medium);
+  --font-weight-semibold: var(--weight-semibold);
+  --leading-display: var(--leading-display);
+  --leading-title: var(--leading-title);
+  --leading-ui: var(--leading-ui);
+  --leading-body: var(--leading-body);
+  --tracking-title: var(--tracking-title);
+  --tracking-display: var(--tracking-display);
+  --tracking-caps: var(--tracking-caps);
+
   --radius-sm: var(--radius-sm);
   --radius: var(--radius);
   --radius-lg: var(--radius-lg);

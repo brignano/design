@@ -25,7 +25,7 @@
     margin-inline: auto;
   }
   .changelog-header { margin-bottom: var(--s7); }
-  .changelog-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+  .changelog-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-display); text-wrap: balance; }
   .changelog-header > p { margin: var(--s2) 0 0; color: var(--ink-soft); }
 
   .release {
@@ -37,7 +37,7 @@
     scroll-margin-top: var(--s5);
   }
   .release-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s3); }
-  .release-version { margin: 0; font-family: var(--mono); font-size: var(--text-lg); font-weight: 600; }
+  .release-version { margin: 0; font-family: var(--mono); font-size: var(--text-lg); font-weight: var(--weight-semibold); }
   .release-version > a { color: var(--ink); text-decoration: none; border-radius: var(--radius-sm); }
   .release-version > a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .release-version > a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }

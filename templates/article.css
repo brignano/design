@@ -37,7 +37,7 @@
 @layer brignano.components {
   .article { container: article / inline-size; width: 100%; max-width: var(--measure); margin-inline: auto; }
   .article-header { margin-bottom: var(--s6); }
-  .article-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+  .article-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-display); text-wrap: balance; }
   .article-meta {
     display: flex;
     flex-wrap: wrap;
@@ -65,7 +65,7 @@
     gap: var(--s1);
     padding: var(--s3) var(--s4);
     color: var(--ink);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     text-decoration: none;
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -74,7 +74,7 @@
   .article-pager > a[rel~='next'] { text-align: right; grid-column: -2; }
   .article-pager > a:hover { background: var(--surface-hover); }
   .article-pager > a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-  .article-pager-label { font-size: var(--text-sm); font-weight: 400; color: var(--ink-soft); }
+  .article-pager-label { font-size: var(--text-sm); font-weight: var(--weight-regular); color: var(--ink-soft); }
   @container article (min-width: 36rem) {
     .article-pager { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
@@ -102,7 +102,7 @@
     margin: var(--s3) 0 var(--s1);
     padding-inline: var(--s2);
     font-size: var(--text-xs);
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--slate);
@@ -118,8 +118,8 @@
   }
   .article-nav a:hover, .article-toc a:hover { color: var(--ink); background: var(--surface-hover); }
   .article-nav a:focus-visible, .article-toc a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
-  .article-nav a[aria-current='page'] { color: var(--ink); font-weight: 600; box-shadow: inset 2px 0 0 var(--i-ink); }
-  .article-toc a[aria-current] { color: var(--ink); font-weight: 600; }
+  .article-nav a[aria-current='page'] { color: var(--ink); font-weight: var(--weight-semibold); box-shadow: inset 2px 0 0 var(--i-ink); }
+  .article-toc a[aria-current] { color: var(--ink); font-weight: var(--weight-semibold); }
 
   @container article-docs (min-width: 48rem) {
     .article-docs-layout {
@@ -149,7 +149,7 @@
         display: block;
         padding: 0 var(--s2) var(--s2);
         font-size: var(--text-sm);
-        font-weight: 600;
+        font-weight: var(--weight-semibold);
         color: var(--ink);
       }
       .article-docs-layout > .article-toc::details-content { content-visibility: visible; }

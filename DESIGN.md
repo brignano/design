@@ -142,6 +142,27 @@ Three roles, no more:
 
 No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
 
+Sizes change with the tier (`--text-xs` … `--text-4xl`); weight, leading and
+tracking don't:
+
+| Token | Value | For |
+|---|---|---|
+| `--weight-regular` / `-medium` / `-semibold` | 400 / 500 / 600 | text / controls and labels / headings. Nothing lighter or bolder. |
+| `--leading-display` | 1.15 | display headings |
+| `--leading-title` | 1.3 | titles |
+| `--leading-ui` | 1.4 | interface text |
+| `--leading-body` | 1.6 | paragraphs |
+| `--tracking-title` / `--tracking-display` | -0.01em / -0.025em | headings / large display headings |
+| `--tracking-caps` | 0.08em | uppercase mono eyebrows |
+
+They are named by role because Tailwind already owns `--leading-tight`,
+`--tracking-tight` and the rest; the bridge adds `leading-display`,
+`tracking-title` and so on and leaves Tailwind's own utilities alone.
+
+A heading or title balances its lines (`text-wrap: balance`) and running text
+avoids a one-word last line (`pretty`). On a touch screen the tool tier's
+`--text-xs` rises from 11px to 12px.
+
 ## 6. Space, shape, elevation
 
 4px base (`--s1` … `--s9`). Radius: `--radius-sm` for chips and pills, `--radius`
@@ -150,6 +171,19 @@ for cards, `--radius-lg` for hero surfaces.
 **Elevation differs by theme.** Light mode separates surfaces with a hairline plus
 a shadow (`--shadow-1/2/3`). Dark mode does not use borders — surfaces get
 *lighter* with elevation. This is why `--line` can stay nearly invisible in dark.
+
+**Stacking** is named, not numbered: `--z-raised` (a control above its card's
+stretched link), `--z-sticky` (a header), `--z-float` (a floating label),
+`--z-skip` (the skip link), `--z-toast`. Dialogs, popovers and sheets sit in the
+browser's top layer and need none.
+
+**Breakpoints are a short list, not tokens**, because a CSS variable can't be
+used in a media query. Components and templates size to their own container
+(`@container`) wherever they can, so the same markup works in a narrow column
+and a wide page. The steps in use: 30rem (480px) and 35rem (560px) for a
+phone, 48rem (768px) where a second column appears, 60rem (960px) for a
+desktop layout, 75rem (1200px) where a third column appears. Reach for one of
+these before adding another.
 
 **Sticky chrome** — a header or toolbar that content scrolls under — is
 `--surface-sticky` with `backdrop-filter: blur(8px)`: 92% of the card in light,
@@ -187,6 +221,12 @@ shown, so a browser without `@starting-style` shows it at once; and under
 `prefers-reduced-motion` it is instant, backdrop included. An overlay that is
 already open when the page loads doesn't animate. That is the whole
 exception: content on the page itself still never animates in.
+
+**Print is the light theme.** `tokens.css` forces `color-scheme: light` on
+paper whatever the screen was showing, and `components.css` drops sticky
+chrome, shadows, popovers, sheets and controls that do nothing on paper, keeps cards and table
+rows whole across a page break, and writes an outside link's address after it
+in `.prose`.
 
 ## 8. Charts
 
