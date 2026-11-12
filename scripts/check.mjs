@@ -184,7 +184,7 @@ for (const [k, steps] of Object.entries(STEPS))
 // meaningful hue, so pure white is exempt.
 const HUES = [
   [/^--n-\d+$/, 286, 'ramp temperature'],
-  [/^--i(-ink|-hover|-pressed)?$/, 256, 'cobalt hue'],
+  [/^--i(-ink|-ink-hover|-hover|-pressed)?$/, 256, 'cobalt hue'],
   [/^--seq-[1-9]$/, 256, 'cobalt hue'],
 ];
 const HUE_TOLERANCE = 3;
@@ -215,7 +215,7 @@ for (const [k] of tokens) {
 // over --card first, which is where washes sit.
 const TEXT = 4.5, MARK = 3;
 const floors = [];
-for (const fg of ['--ink', '--ink-soft', '--slate', '--i-ink', '--success-ink', '--attention-ink', '--danger-ink'])
+for (const fg of ['--ink', '--ink-soft', '--slate', '--i-ink', '--i-ink-hover', '--success-ink', '--attention-ink', '--danger-ink'])
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, TEXT]);
 floors.push(['--slate', '--line-soft', TEXT]); // the Idea pill
 floors.push(['--ink', '--surface-sticky', TEXT], ['--ink-soft', '--surface-sticky', TEXT]); // sticky bars

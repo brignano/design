@@ -119,7 +119,7 @@
   @keyframes spinner-spin { to { transform: rotate(1turn); } }
 
   .link { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; border-radius: 2px; }
-  .link:hover { color: var(--i-hover); }
+  .link:hover { color: var(--i-ink-hover); }
   .link:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 
   @media (pointer: coarse) {
@@ -2104,7 +2104,7 @@
   }
 
   .prose a:not(.anchor) { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-  .prose a:not(.anchor):hover { color: var(--i-hover); text-decoration-thickness: 2px; }
+  .prose a:not(.anchor):hover { color: var(--i-ink-hover); text-decoration-thickness: 2px; }
   .prose a:not(.anchor):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: 2px; }
   .prose strong { font-weight: var(--weight-semibold); }
 

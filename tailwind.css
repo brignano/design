@@ -28,6 +28,7 @@
 
   --color-interactive: var(--i);
   --color-interactive-ink: var(--i-ink);
+  --color-interactive-ink-hover: var(--i-ink-hover);
   --color-interactive-hover: var(--i-hover);
   --color-interactive-pressed: var(--i-pressed);
   --color-interactive-surface: var(--i-surface);
