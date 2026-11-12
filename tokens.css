@@ -157,7 +157,7 @@
        --i          fill               5.18:1 / 3.78:1  (label 5.18 / 4.73)
        --i-ink      link/icon/focus    6.78:1 / 7.07:1
        --i-hover    hover fill         label 8.65:1 / 5.88:1
-       --i-ink-hover  hovered link     8.65:1 / 10.50:1 on --card
+       --i-ink-hover  hovered link     8.65:1 / 9.95:1 on --card
        --i-pressed  pressed fill       label 10.44:1 / 7.52:1
 
      The fill is a saturated mid-cobalt with a WHITE label in both themes,
