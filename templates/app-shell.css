@@ -56,9 +56,10 @@
      hover or keyboard focus.
 
    Tokens on .app-shell a product can override: --app-sidebar (15rem),
-   --app-rail (3.5rem) and --app-detail-width (22rem). The shell fills the
-   viewport's height (100dvh) and only .app-main scrolls; set a height on
-   .app-shell to put it in a smaller box. */
+   --app-rail (3.5rem) and --app-detail-width (22rem, the column; the sheet
+   from the end is 26rem). The shell fills the viewport's height (100dvh)
+   and only .app-main scrolls; set a height on .app-shell to put it in a
+   smaller box. */
 @layer brignano.components {
   .app-shell {
     --app-sidebar: 15rem;
@@ -208,17 +209,22 @@
     .app-sidebar[popover]:not(:popover-open) { display: flex; }
     .app-sidebar:not(:popover-open) .app-sidebar-toggle { display: inline-flex; }
 
-    .app-detail:modal {
+    /* On the element itself, not on :modal, so it keeps this shape while it
+       closes; [open] then puts it in place, at the same specificity as the
+       starting style. */
+    .app-detail {
       width: min(100%, 26rem);
       height: 100dvh;
       max-height: 100dvh;
-      margin: 0 0 0 auto;
-      border-width: 0 0 0 1px;
+      margin: 0;
+      margin-inline-start: auto;
+      border-width: 0;
+      border-inline-start-width: 1px;
       border-radius: 0;
       transform: translateX(100%);
     }
-    .app-detail:modal:dir(rtl) { margin: 0 auto 0 0; border-width: 0 1px 0 0; transform: translateX(-100%); }
-    .app-detail[open]:modal { transform: none; }
+    .app-detail:dir(rtl) { transform: translateX(-100%); }
+    .app-detail[open] { transform: none; }
     @starting-style {
       .app-detail:modal { transform: translateX(100%); }
       .app-detail:modal:dir(rtl) { transform: translateX(-100%); }
@@ -275,6 +281,8 @@
      scrolling doesn't clip it. */
   @supports (anchor-name: --a) {
     @container app-shell (min-width: 48rem) {
+      /* Scoped per item, so a hovered item and a focused one each get their own. */
+      .app-shell[data-sidebar='collapsed'] .app-sidebar li { anchor-scope: --app-rail-item; }
       .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a:is(:hover, :focus-visible) {
         anchor-name: --app-rail-item;
       }
@@ -291,7 +299,8 @@
       .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) { overflow: visible; }
       .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a { position: relative; }
       .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a:is(:hover, :focus-visible) > .app-sidebar-label {
-        inset: 50% auto auto calc(100% + var(--s2));
+        inset-block: 50% auto;
+        inset-inline: calc(100% + var(--s2)) auto;
         translate: 0 -50%;
       }
     }
@@ -300,6 +309,9 @@
   /* ── 75rem and up: the detail is a third column ───────────────────────── */
   @container app-shell (min-width: 75rem) {
     .app-shell-grid { --app-detail-mode: column; }
+    /* A column closes at once: the grid drops its column the moment the
+       panel closes, so a fade-out would play over the sidebar and main. */
+    .app-detail:not([open]) { transition: none; }
     .app-shell-grid:has(> .app-detail[open]:not(:modal)) {
       grid-template-columns: var(--app-sidebar) minmax(0, 1fr) var(--app-detail-width);
       grid-template-areas: "head head head" "side main detail";
