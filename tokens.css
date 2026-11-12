@@ -177,7 +177,7 @@
   --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #0371e0 20%, transparent));
   --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
   --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
-  --on-i: #ffffff;
+  --on-i: light-dark(#ffffff, #ffffff);
   /* The label on a --danger fill. Its own token because the two fills no
      longer agree in dark: rust still lifts to a pale fill there and takes a
      dark label, where cobalt takes white. */
@@ -367,7 +367,7 @@
      differs. So shadows 2 and 3 carry one layer per theme, with the other
      theme's layer transparent — it draws nothing. */
   --radius-sm: 6px;
-  --radius-control: 8px; /* buttons, inputs, selects, the segmented control */
+  --radius-control: 8px; /* buttons, inputs, selects, the segmented control, menu items */
   --radius: 12px;
   --radius-lg: 18px;
   --shadow-1: 0 1px 2px light-dark(rgba(17, 17, 17, 0.04), rgba(0, 0, 0, 0.45));

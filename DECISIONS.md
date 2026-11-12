@@ -657,12 +657,13 @@ beyond a colour step, while switching a tab was an instant swap.
   `--on-i` is white everywhere; a `--danger` fill gets its own `--on-danger`,
   because rust still lifts to a pale fill with a dark label in dark.
 - **Controls have their own radius.** `--radius-control` (8px) for buttons,
-  inputs, selects and the segmented control, between `--radius-sm` (chips,
-  menu items) and `--radius` (cards).
+  inputs, selects, the segmented control and menu items, between
+  `--radius-sm` (chips, pills) and `--radius` (cards).
 - **A control may answer the person who used it.** A button settles by 2%
   while pressed, and a switch of view (a tab, a segment) may cross-fade
-  through `document.startViewTransition()`. Both take `--dur-fast`, both are
-  only ever started by the person, and neither happens under
+  through `document.startViewTransition()`, at the browser's default 250ms.
+  The package styles nothing on the transition, so it can't change a site's
+  own. Both are only ever started by the person, and neither happens under
   `prefers-reduced-motion`.
 
 ### Consequences

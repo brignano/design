@@ -84,7 +84,7 @@
     <ul>
       <li>Click or Enter/Space selects a tab: set <code>aria-selected="true"</code> on it and <code>"false"</code> on the rest, and show only its panel (<code>hidden</code> on the others).</li>
       <li>Left and Right arrows move to the previous and next tab and select it; Home and End go to the first and last. Skip <code>aria-disabled</code> tabs.</li>
-      <li>Optional: wrap the swap in <code>document.startViewTransition()</code> and the panels cross-fade over the system's fast duration. Skip it under <code>prefers-reduced-motion</code>; a browser without the API swaps at once. Never run it on load.</li>
+      <li>Optional: wrap the swap in <code>document.startViewTransition()</code> and the panels cross-fade at the browser's default, 250ms (the system's <code>--dur</code>). Skip it under <code>prefers-reduced-motion</code>; a browser without the API swaps at once. Never run it on load.</li>
       <li>Only the selected tab is in the tab order (<code>tabindex="0"</code>); the others are <code>tabindex="-1"</code>. Tab from the list moves into the panel.</li>
     </ul>
   </section>

@@ -77,8 +77,10 @@
   .btn-ghost { border-color: transparent; background: transparent; color: var(--i-ink); }
   .btn-ghost:is(:hover, :active) { background: var(--i-surface); }
 
-  /* Danger has no hover/pressed tokens of its own: hover deepens to
-     --danger-ink, the same direction --i-hover takes in each theme. */
+  /* Danger has no hover/pressed tokens of its own: hover moves to
+     --danger-ink, darker in light and lighter in dark. In dark that is now
+     the opposite direction to --i-hover (ADR-0015), until the dark danger
+     fill is revisited. */
   .btn-danger { border-color: transparent; background: var(--danger); color: var(--on-danger); }
   .btn-danger:hover, .btn-danger:active { background: var(--danger-ink); }
 
@@ -1133,7 +1135,7 @@
     min-height: 36px;
     padding: var(--s2) var(--s3);
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-control);
     background-color: transparent;
     color: var(--ink);
     font: inherit;
@@ -2206,21 +2208,6 @@
     color: var(--ink);
   }
   .rule { display: block; width: 56px; height: 3px; border: 0; border-radius: 2px; background: var(--mark-current); }
-}
-
-/* ── Switching views (ADR-0015) ─────────────────────────────────────────────
-   When a person switches a view (picks a tab, changes a segmented control),
-   the script that swaps the content may wrap the swap in
-   document.startViewTransition(). The browser then cross-fades old to new;
-   this sets that fade to the system's fast duration and curve. Opt in per
-   switch, never on load. Without the API the swap is instant, and tokens.css
-   turns the fade off under reduced motion. */
-@layer brignano.components {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: var(--dur-fast);
-    animation-timing-function: var(--ease);
-  }
 }
 
 /* ── Line breaks ────────────────────────────────────────────────────────────

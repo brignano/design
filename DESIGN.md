@@ -214,8 +214,8 @@ avoids a one-word last line (`pretty`). On a touch screen the tool tier's
 
 4px base (`--s1` … `--s9`). Radius steps by what the thing is, so a control
 inside a card reads as nested rather than as a smaller card: `--radius-sm`
-(6px) for chips, pills and menu items, `--radius-control` (8px) for buttons,
-inputs, selects and the segmented control, `--radius` (12px) for cards,
+(6px) for chips and pills, `--radius-control` (8px) for buttons, inputs,
+selects, the segmented control and menu items, `--radius` (12px) for cards,
 messages, popovers and code blocks, `--radius-lg` (18px) for dialogs and
 hero surfaces.
 
@@ -274,14 +274,16 @@ already open when the page loads doesn't animate. That is the whole
 exception: content on the page itself still never animates in.
 
 **The third: a control may answer the person who used it** (ADR-0015). Two
-cases, both over `--dur-fast`, both only ever started by the person:
+cases, both only ever started by the person:
 
-- **A press.** A `.btn` settles by 2% while it is held down. Not when it is
+- **A press.** A `.btn` settles by 2% over `--dur-fast` while it is held down. Not when it is
   disabled or busy.
 - **A switch of view.** When someone picks a tab or a segment, the script that
   swaps the content may wrap the swap in `document.startViewTransition()`, and
-  the old view cross-fades to the new one. Opt in per switch; a browser without
-  the API swaps at once.
+  the old view cross-fades to the new one at the browser's default, 250ms
+  (the same as `--dur`). The package sets nothing on the transition, so a
+  site that already uses view transitions is not affected. Opt in per switch;
+  a browser without the API swaps at once.
 
 Under `prefers-reduced-motion` neither happens. Nothing here runs on load, on
 hover or on scroll.
