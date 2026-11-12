@@ -1,9 +1,9 @@
 name: Publish
 
-# Publishes to npm when a v* tag is pushed. The tag is the trigger and the
-# source of truth for the version — see the guard step below.
-#
-#   npm version minor && git push --follow-tags
+# Publishes to npm when release.yml dispatches it (the usual path: see
+# README "Releasing"), or when a v* tag is pushed by hand. On the usual path
+# the tag is the version and nothing bumps package.json; a hand-pushed tag
+# still has to match package.json. See the guard step below.
 #
 # Auth is npm trusted publishing (OIDC). There is no NPM_TOKEN and there
 # should never be one: the runner exchanges its OIDC identity for a
