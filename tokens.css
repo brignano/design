@@ -178,10 +178,20 @@
   --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
   --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
   --on-i: light-dark(#ffffff, #ffffff);
-  /* The label on a --danger fill. Its own token because the two fills no
-     longer agree in dark: rust still lifts to a pale fill there and takes a
-     dark label, where cobalt takes white. */
-  --on-danger: light-dark(#ffffff, #111111);
+  /* A button filled with danger (.btn-danger), and its label. Its own
+     tokens so the state hue --danger can stay a pale, readable rust in dark
+     (messages, pills, field errors) while the button is as deep as the
+     primary beside it: as light as a white label allows, stepping darker on
+     hover and press (ADR-0015). In light the fills ARE --danger and
+     --danger-ink; `npm run check` holds them to those.
+
+       --danger-fill          label 6.10:1 / 4.58:1   on --card 3.91:1 in dark
+       --danger-fill-hover    label 7.92:1 / 5.65:1
+       --danger-fill-pressed  label 7.92:1 / 6.96:1 */
+  --danger-fill: light-dark(#a4442c, #be563c);
+  --danger-fill-hover: light-dark(#8a3722, #ad472e);
+  --danger-fill-pressed: light-dark(#8a3722, #9d381e);
+  --on-danger: light-dark(#ffffff, #ffffff);
   --i-disabled-bg: var(--n-200);
   --i-disabled-ink: var(--n-400);
 

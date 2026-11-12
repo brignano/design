@@ -168,7 +168,9 @@ for (const [k, sources] of Object.entries(WASHES))
   });
 const STEPS = { '--bg': ['--n-25', '--n-0'], '--card': ['--n-0', '--n-50'], '--on-dark': ['--n-25', '--n-0'],
   '--slate': ['--n-600', '--n-500'], '--line-control': ['--n-500', null],
-  '--device': ['--n-900', '--n-300'] };
+  '--device': ['--n-900', '--n-300'],
+  // The danger button's fills are the state hue in light; only dark has its own.
+  '--danger-fill': ['--danger', null], '--danger-fill-hover': ['--danger-ink', null], '--danger-fill-pressed': ['--danger-ink', null] };
 for (const [k, steps] of Object.entries(STEPS))
   steps.forEach((step, i) => {
     const [theme, map] = i ? ['dark', dark] : ['light', light];
@@ -221,7 +223,8 @@ floors.push(['--i', '--surface-sticky', MARK], ['--i-ink', '--surface-sticky', M
 for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg, TEXT]);
 // Buttons (#47): labels on the fills a hover or press swaps in, which no
 // single rule pairs with its colour.
-for (const bg of ['--danger', '--danger-ink']) floors.push(['--on-danger', bg, TEXT]);
+for (const bg of ['--danger-fill', '--danger-fill-hover', '--danger-fill-pressed']) floors.push(['--on-danger', bg, TEXT]);
+for (const bg of ['--card', '--bg']) floors.push(['--danger-fill', bg, MARK]); // the button has to be found on the surface it sits on
 for (const bg of ['--surface-hover', '--surface-active']) floors.push(['--ink', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);
