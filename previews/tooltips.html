@@ -94,7 +94,6 @@
       <ul>
         <li>An icon button needs a visible name on hover and focus, like the trip tools above.</li>
         <li><b>Names only.</b> One short phrase that names what the button does.</li>
-        <li>You can live with a beta: only Chromium ships <code>interestfor</code>, so other browsers get the CSS fallback described below.</li>
       </ul>
     </section>
     <section data-doc="dont-use">
@@ -109,7 +108,7 @@
 
   <section>
     <h2>Where it opens</h2>
-    <p>With <code>interestfor</code> support, the browser opens it as a hint popover above the trigger (below if there's no room) and Esc dismisses it. Only Chromium ships <code>interestfor</code> today, which is why this component is in beta. Elsewhere, <code>.tooltip-wrap</code> shows it on hover and focus. No script either way. That fallback can't close on Esc or flip at the top of the viewport, and a parent with <code>overflow: hidden</code> clips it.</p>
+    <p>With <code>interestfor</code> support, the browser opens it as a hint popover above the trigger (below if there's no room) and Esc dismisses it. Not every browser supports <code>interestfor</code> yet, which is why this component is in beta. Elsewhere, <code>.tooltip-wrap</code> shows it on hover and focus. No script either way. That fallback can't close on Esc or flip at the top of the viewport, and a parent with <code>overflow: hidden</code> clips it.</p>
   </section>
 
   <section>
@@ -122,7 +121,7 @@
     <ul>
       <li><b>The name comes from the tooltip.</b> <code>aria-labelledby</code> on the trigger points at the tooltip, so screen readers hear the same words people see, with or without hover.</li>
       <li>Give the tooltip <code>role="tooltip"</code> and <code>popover="hint"</code>. It opens on keyboard focus as well as hover.</li>
-      <li>Esc dismisses it only in browsers with <code>interestfor</code> (Chromium today). In the CSS fallback it closes when focus or the pointer leaves.</li>
+      <li>Esc dismisses it only in browsers with <code>interestfor</code>. In the CSS fallback it closes when focus or the pointer leaves.</li>
       <li>It stays open while the pointer is on it, so it can be read with a magnifier. In forced colours it keeps a visible border.</li>
     </ul>
   </section>

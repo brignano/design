@@ -20,7 +20,7 @@
 </head>
 <body>
 <h1>Dialog and sheet</h1>
-<p class="sub">Native &lt;dialog&gt; with showModal(): the browser traps focus, Esc closes it and focus goes back to the button that opened it. A sheet comes in from the right on a wide screen and from the bottom on a phone. Opening and closing take 150ms, and are instant with reduced motion (ADR-0013).</p>
+<p class="sub">Native &lt;dialog&gt; with showModal(): the page behind goes inert, Esc closes it and focus goes back to the button that opened it. A sheet comes in from the right on a wide screen and from the bottom on a phone. Opening and closing take 150ms, and are instant with reduced motion (ADR-0013).</p>
 <div class="pair">
   <div class="panel light"><span class="panel-label">Light</span>
     <div class="stack gap-5">
@@ -168,7 +168,7 @@
   <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
-      <li>Use the native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: the browser traps focus, Esc closes it, and focus goes back to the button that opened it.</li>
+      <li>Use the native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: the page behind goes inert, Esc closes it, and focus goes back to the button that opened it.</li>
       <li>Point <code>aria-labelledby</code> at the <code>.dialog-title</code>, so screen readers announce the title when it opens.</li>
       <li>The icon-only close button needs <code>aria-label="Close"</code>.</li>
       <li>Use <code>&lt;div&gt;</code>s for the header and footer. A <code>&lt;header&gt;</code> or <code>&lt;footer&gt;</code> inside a dialog reads as the page's banner or footer landmark.</li>

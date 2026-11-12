@@ -398,17 +398,25 @@ for (const f of previews) {
   if (!STATUSES.includes(status)) { fail(`previews/${f}: <html> needs data-status="${STATUSES.join('|')}"`); continue; }
   if (cardStatus.get(f) !== status)
     fail(`index.html: the card for previews/${f} shows status ${cardStatus.get(f) ?? 'none'}, but the page says ${status}`);
-  const docs = html.indexOf('class="docs"');
+  // Comments and escaped snippets can't stand in for a section: strip
+  // comments, then match the attribute only on a real <section> tag.
+  const page = html.replace(/<!--[\s\S]*?-->/g, '');
+  const docs = page.search(/class="(?:[^"]*\s)?docs(?:\s[^"]*)?"/);
   if (docs < 0) { fail(`previews/${f}: no .docs block`); continue; }
-  const after = html.slice(docs);
+  const after = page.slice(docs);
+  const order = [];
   for (const [key, heading] of Object.entries(DOCS)) {
-    const at = after.search(new RegExp(`data-doc="${key}"`));
-    if (at < 0) { fail(`previews/${f}: .docs has no data-doc="${key}" section ("${heading}")`); continue; }
+    const at = after.search(new RegExp(`<section\\b[^>]*\\sdata-doc="${key}"`));
+    if (at < 0) { fail(`previews/${f}: .docs has no <section data-doc="${key}"> ("${heading}")`); continue; }
+    order.push(at);
     const section = after.slice(at, after.indexOf('</section>', at));
-    if (!section.includes(`>${heading.replace("'", '&#39;')}</h2>`) && !section.includes(`>${heading}</h2>`))
+    if (!section.includes(`>${heading}</h2>`))
       fail(`previews/${f}: the data-doc="${key}" section's heading must read "${heading}"`);
     if (key === 'usage' && !section.includes('<pre')) fail(`previews/${f}: "Use it" has no copy-paste snippet (<pre>)`);
+    else if (key !== 'usage' && !/<(li|p)\b/.test(section)) fail(`previews/${f}: "${heading}" is empty`);
   }
+  if (order.length === 4 && order.some((at, i) => i && at < order[i - 1]))
+    fail(`previews/${f}: the docs sections must run Use it, Use when, Don't use when, Accessibility`);
 }
 
 if (failures.length) {
