@@ -480,3 +480,6 @@ body.pp { margin: 0; }
    by the site's build, never typed and never written by client script. */
 .pp-legal { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s2) var(--s5); padding-top: var(--s4); border-top: 1px solid var(--line); font-size: var(--text-xs); }
 .pp-legal small { font-size: inherit; }
+
+/* Card and step headings balance their lines, like the band headings above. */
+:where(.pp-get, .pp-compare, .pp-how, .pp-points, .pp-done) h3, .pp-price dt { text-wrap: balance; }

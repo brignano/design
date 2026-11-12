@@ -301,8 +301,8 @@
 
   /* Weight, leading and tracking. Sizes are per tier (below); these are
      not. Three weights, and nothing lighter or bolder. Leading is unitless
-     so it scales with the text: tight for display headings, snug for
-     titles, normal for interface text, relaxed for paragraphs. Tracking
+     so it scales with the text: display for large headings, title for
+     titles, ui for interface text, body for paragraphs. Tracking
      only ever tightens a heading or opens an uppercase mono eyebrow.
 
      Named by role, not tight/snug/normal: Tailwind owns those names
