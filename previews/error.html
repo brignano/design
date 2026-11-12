@@ -58,7 +58,8 @@
           <p class="error-page-code">500</p>
           <h1 class="error-page-title">Something went wrong on our side</h1>
           <p class="error-page-body">It isn't anything you did. Try again in a minute.</p>
-          <button type="button" class="btn btn-primary">Try again</button>
+          <p class="error-page-ref">Request ID req_01HZY8K3QW9V7X2M4N6P8R0T2V4X6Z8B1D3F5H7J9L</p>
+          <a class="btn btn-primary" href="">Try again</a>
         </div>
       </div>
       <div class="error-page">
@@ -67,7 +68,7 @@
           <p class="error-page-code">Offline</p>
           <h1 class="error-page-title">You're offline</h1>
           <p class="error-page-body">Check your connection, then try again.</p>
-          <button type="button" class="btn btn-primary">Try again</button>
+          <a class="btn btn-primary" href="">Try again</a>
         </div>
       </div>
 </div>
@@ -75,7 +76,8 @@
 <div class="docs">
   <section data-doc="usage">
     <h2>Use it</h2>
-<pre tabindex="0">@import '@brignano/design/components.css';
+<pre tabindex="0">@import '@brignano/design/tokens.css';
+@import '@brignano/design/components.css';
 @import '@brignano/design/templates/error.css';
 
 &lt;main class="error-page"&gt;
@@ -112,9 +114,11 @@
     <h2>The three pages</h2>
     <ul>
       <li><b>404:</b> say the page doesn't exist and link home. Keep the URL as it is so the person can fix a typo.</li>
-      <li><b>500:</b> say it's on your side, not theirs, and offer to try again. Don't show a stack trace; a request ID in <code>.error-page-code</code> is fine if support will ask for it.</li>
-      <li><b>Offline:</b> say they're offline and offer to try again. A service worker serves it from the cache, so the page, its CSS and the mark must all be cached.</li>
-      <li>Serve each with its real status code (404, 500, or 503 for offline from a worker), so crawlers and monitors see the failure.</li>
+      <li><b>500:</b> say it's on your side, not theirs, and offer to try again. Don't show a stack trace. If support will ask for a request ID, put it in <code>.error-page-ref</code>, which sits after the words.</li>
+      <li><b>Offline:</b> say they're offline and offer to try again. Only a service worker can show it: precache the page, its CSS and the mark (they're stored as 200s), and return the page from the fetch handler when the network fails.</li>
+      <li>Serve 404 and 500 with their real status codes, so crawlers and monitors see the failure. For planned maintenance or overload, use the 500 page's shape with a 503 and <code>Retry-After</code>.</li>
+      <li>"Try again" is a link to the same page (<code>href=""</code>), so it reloads with no script.</li>
+      <li>The code above the title is the page's label. It's the one exception to codes going after the words (<a class="link" href="writing.html#errors">Errors</a>); a request ID still goes after.</li>
     </ul>
   </section>
 
@@ -124,6 +128,7 @@
       <li>The <code>&lt;title&gt;</code> says what happened first ("Page not found · Breakeven"), because a screen reader announces it before anything else.</li>
       <li>The title is the page's one <code>&lt;h1&gt;</code>, and the page sits in <code>&lt;main&gt;</code>.</li>
       <li>The mark is a link home with the product name as text; its svg is <code>aria-hidden</code>.</li>
+      <li>The mark and the button are the only tab stops, in that order, and both show the focus ring.</li>
       <li>The code is plain text in a muted colour that still meets 4.5:1. The title carries the meaning, so the code is never the only sign.</li>
     </ul>
   </section>
