@@ -586,3 +586,35 @@ and closes, in both tiers, when:
   adopt it in a later change.
 - Anything else that wants to move still has to meet ADR-0009 or it is
   decorative.
+
+## ADR-0014 — Wireframes before substantial UI work
+
+**Status:** accepted · 2026-11-12 · Anthony, in the brignano.io project
+
+### Context
+
+Substantial UI changes were reviewed only after they were built, through
+before/after screenshots and PR previews (the fleet's UX gate). By then a
+wrong layout or flow had already cost a full build, and fixing it meant a
+rebuild plus another review round. Several component and holiday-theme
+changes went through two or three such rounds. Anthony asked that every
+substantial UI or UX change be wireframed and approved before the real
+implementation.
+
+### Decision
+
+DESIGN.md §16: any substantial UI or UX change on any surface is wireframed
+first, at phone (390px) and desktop (1280px) widths, static or as an
+interactive prototype when flow, state or motion is the point, built from the
+real tokens and components with real copy. Anthony's explicit OK comes before
+any implementation code. Small tweaks and fixes are exempt. In this repo the
+files live in `previews/wireframes/`, so the PR preview serves them.
+
+### Consequences
+
+- Every product that installs `@brignano/design` gets the rule with
+  DESIGN.md. Product repos keep their wireframes in `proposals/wireframes/`.
+- The UX gate's before/after screenshots are now checked against the approved
+  wireframe, not only against the old page.
+- One more stop before building. A small change stays exempt, so the stop
+  falls only on work big enough to be worth redrawing.

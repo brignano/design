@@ -786,3 +786,52 @@ on marketing pages, jargon the reader has to look up.
 
 - Do: "Couldn't load your trips. Try again."
 - Don't: "Oops! Something went wrong!! Simply refresh."
+
+## 16. Wireframes before building
+
+Building the wrong screen costs more than drawing it twice. Any substantial
+UI or UX change, on any surface, is wireframed and approved by Anthony before
+real implementation starts.
+
+**Substantial** means any of:
+
+- a new page, route, screen, template, email or component;
+- a new flow or interaction: a form, dialog, menu, onboarding, empty or error
+  state, or motion that tells the user something changed;
+- a change to the layout or structure of an existing page or component:
+  sections added, removed or moved, navigation, header or footer, or how it
+  rearranges between phone and desktop.
+
+**Exempt:** copy edits, bug fixes that restore the intended design, small
+spacing, colour or token nudges within the rules above, accessibility fixes
+that don't move anything, and dependency bumps. When in doubt, wireframe: it
+is cheaper than the rebuild.
+
+**What a wireframe is.**
+
+- **Phone first, then desktop.** Every wireframe shows a phone width (390px)
+  and a desktop width (1280px), the same two widths the `ui-check` job shoots.
+- **Static by default.** Boxes, real copy, real hierarchy, no polish. Make it
+  an **interactive prototype** (clickable states, open and closed, steps of a
+  flow, the motion at real speed) whenever flow, state or motion is the point
+  of the change.
+- **Built from this system.** Real tokens and components where they exist, so
+  what Anthony approves is what ships. A grey box is fine for a picture or a
+  chart; it is not fine for a control that already exists in `components.css`.
+- **Real content.** Real headings and labels written to §15, demo data only.
+  Lorem ipsum hides the problems a wireframe is for.
+- **One self-contained HTML file**, so it opens as a private link on a phone.
+  Commit it with the work: in this repo under `previews/wireframes/`, in a
+  product repo under `proposals/wireframes/`.
+
+**The gate.**
+
+1. Wireframe first, before any implementation code, and share it with
+   Anthony: a link he can tap on his phone plus phone and desktop
+   screenshots, and the options it rejected, one line each.
+2. **Stop.** Mark the work `needs:anthony` and wait. His explicit OK, in the
+   thread or on the PR, is the approval. Changes he asks for get a new round
+   of wireframes, not a note in the code PR.
+3. Build what was approved. The PR links the approved wireframe and its
+   before/after screenshots are checked against it; anything that departs
+   from it is called out in the PR, or goes back for approval first.

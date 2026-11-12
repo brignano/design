@@ -3,6 +3,16 @@
 Read `DESIGN.md` (the rules) and `DECISIONS.md` (why) before changing a token.
 Before every commit: `npm run check`.
 
+## Wireframes before UI work
+
+Any substantial UI or UX change (a new component, template, preview page or
+flow, or a change to an existing one's layout or structure) starts with a
+wireframe at phone (390px) and desktop (1280px) widths, static or interactive,
+and waits for Anthony's explicit OK before any implementation code. What
+counts as substantial, what is exempt and what a wireframe must show:
+`DESIGN.md` §16. Where they go and how to share them:
+`previews/wireframes/README.md`. Small tweaks and fixes are exempt.
+
 ## How to release
 
 Only when Anthony says "publish X" explicitly. An npm version can never be
