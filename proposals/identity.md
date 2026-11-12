@@ -1,4 +1,4 @@
-Status: proposed · Tracking issue: #137
+Status: accepted · Tracking issue: #137 · ADR-0014
 
 # Identity: a mono voice, product marks inside the apps, and a heavy display treatment
 
@@ -13,9 +13,8 @@ marks (`teal`, `violet`, `magenta`) stop at the product page, so once you are
 inside an app nothing says which one it is.
 
 Anthony chose a direction from the wireframe on 2026-11-12: **1 + 2 + 3b**.
-This proposal turns that choice into what ships. Five choices are still open;
-each has a recommendation, and accepting the proposal accepts all five unless
-he says otherwise.
+This proposal turns that choice into what ships. He accepted it the same day,
+with all five recommendations below (D1 to D5) as written.
 
 ## Wireframe
 
@@ -70,7 +69,7 @@ Each row above is a size S issue once this is accepted, filed with its
 Decisions taken from here. The preview pages (`type.html`, `site-chrome.html`,
 `error.html`, `app-shell.html`) show the new classes, as the check requires.
 
-## Decisions for Anthony
+## Decisions (accepted 2026-11-12)
 
 | # | Question | Recommendation | Rejected, and why |
 |---|---|---|---|
