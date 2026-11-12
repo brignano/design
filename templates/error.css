@@ -1,0 +1,65 @@
+/* @brignano/design — error page template (#71)
+   404, 500 and offline: the product mark, the code in mono, one line of what
+   happened and one way forward. Calm, no jokes or illustrations (DESIGN.md §1);
+   the wording follows DESIGN.md §15 and belongs to each product.
+   Needs tokens.css and components.css (for .btn).
+
+   <main class="error-page">
+     <div class="error-page-block">
+       <a class="error-page-mark" href="/"><svg aria-hidden="true" …></svg>Product</a>
+       <p class="error-page-code">404</p>
+       <h1 class="error-page-title">This page doesn't exist</h1>
+       <p class="error-page-body">It may have moved, or the link has a typo.</p>
+       <a class="btn btn-primary" href="/">Go to the home page</a>
+     </div>
+   </main>
+
+   The page fills the screen and centres the block. Wiring it into a host's
+   404 handling is each site's job. */
+@layer brignano.components {
+  .error-page {
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    min-height: 100svh;
+    padding: var(--s7) var(--s5);
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .error-page-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s3);
+    max-width: 28rem;
+    text-align: center;
+  }
+  .error-page-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    margin-bottom: var(--s5);
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .error-page-mark:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: var(--radius); }
+  .error-page-mark > svg { width: 1.5em; height: 1.5em; flex: none; }
+  .error-page-code {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    color: var(--slate);
+  }
+  .error-page-title {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  .error-page-body { margin: 0 0 var(--s3); color: var(--ink-soft); text-wrap: pretty; }
+  @media (pointer: coarse) { .error-page-mark { min-height: 44px; } }
+}

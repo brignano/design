@@ -55,6 +55,7 @@
     ['article.html', 'Article and docs page'],
     ['changelog.html', 'Changelog page'],
     ['legal.html', 'Legal page'],
+    ['error.html', 'Error pages'],
     ['email.html', 'Transactional email'],
   ];
 
