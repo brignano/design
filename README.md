@@ -19,7 +19,7 @@ The shared design system for every brignano surface — `brignano.io`, `life`,
 
 Three layers, so no colour does two jobs:
 
-- **`--mark`** — identity. Larch amber. Inks the trail and the monogram. Never a control.
+- **`--mark`** — identity. Larch amber. Inks a product's glyph, the monogram and a hero rule. Never a control.
 - **`--i-*`** — affordance. Cobalt. Links, buttons, focus, selection. Semantically inert.
 - **`--success / --attention / --danger`** — state. Conventional hues, always with an icon and a word.
 
