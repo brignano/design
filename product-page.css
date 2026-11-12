@@ -78,26 +78,26 @@ body.pp { margin: 0; }
 .pp-wrap { max-width: var(--pp-width); margin: 0 auto; padding: 0 var(--pp-gutter); }
 
 /* ── Skip link ─────────────────────────────────────────────────────────── */
-.pp-skip { position: absolute; left: var(--s4); top: -100px; z-index: 20; padding: var(--s2) var(--s3);
+.pp-skip { position: absolute; left: var(--s4); top: -100px; z-index: var(--z-float); padding: var(--s2) var(--s3);
   background: var(--card); color: var(--ink); border-radius: var(--radius-sm); box-shadow: var(--shadow-2); }
 .pp-skip:focus { top: var(--s3); }
 
 /* ── Header ────────────────────────────────────────────────────────────── */
 .pp-header {
-  position: sticky; top: 0; z-index: 10;
+  position: sticky; top: 0; z-index: var(--z-sticky);
   background: var(--surface-sticky); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
 .pp-header > .pp-wrap { display: flex; align-items: center; gap: var(--s5); min-height: 64px; }
 .pp-brand {
   display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none;
-  font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.01em;
+  font-weight: var(--weight-semibold); font-size: var(--text-lg); letter-spacing: var(--tracking-tight);
 }
 .pp-brand img, .pp-brand svg { width: 26px; height: 26px; }
 /* An inline glyph drawn in currentColor takes the product's mark. */
 .pp-brand svg { color: var(--pp-mark); }
 .pp-nav { display: flex; align-items: center; gap: var(--s5); margin-left: auto; }
-.pp-nav a { color: var(--ink-soft); text-decoration: none; font-size: var(--text-sm); font-weight: 500; }
+.pp-nav a { color: var(--ink-soft); text-decoration: none; font-size: var(--text-sm); font-weight: var(--weight-medium); }
 .pp-nav a:hover { color: var(--ink); }
 .pp-header-actions { display: flex; align-items: center; gap: var(--s3); }
 .pp-nav + .pp-header-actions { margin-left: 0; }
@@ -115,7 +115,7 @@ body.pp { margin: 0; }
    neutral. The word always carries the meaning on its own. */
 .pp-status {
   display: inline-flex; align-items: center; gap: var(--s2); white-space: nowrap;
-  font: 500 var(--text-xs) / 1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+  font: 500 var(--text-xs) / 1 var(--mono); letter-spacing: var(--tracking-caps); text-transform: uppercase;
   color: var(--ink-soft); padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 999px;
 }
 .pp-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--slate); flex: none; }
@@ -134,7 +134,7 @@ body.pp { margin: 0; }
 }
 .pp-button:hover { background: var(--i-hover); border-color: var(--i-hover); color: var(--on-i); }
 .pp-button:active { background: var(--i-pressed); border-color: var(--i-pressed); }
-.pp-button.is-secondary { background: transparent; color: var(--ink); border-color: var(--line-control); font-weight: 500; }
+.pp-button.is-secondary { background: transparent; color: var(--ink); border-color: var(--line-control); font-weight: var(--weight-medium); }
 .pp-button.is-secondary:hover { background: var(--surface-hover); color: var(--ink); }
 .pp-button.is-secondary:active { background: var(--surface-active); }
 .pp-button.is-small { font-size: var(--text-sm); padding: 8px 14px; }
@@ -183,11 +183,11 @@ body.pp { margin: 0; }
 /* Who it's for, in a few words, above the thesis: "For teams running on AWS".
    A stranger decides "is this for me?" before reading anything else. Ink,
    not cobalt: cobalt says "you can act on this", and this is a label. */
-.pp-audience { margin: 0 0 var(--s2); font-size: var(--text-base); font-weight: 600; line-height: 1.4; color: var(--ink-soft); }
+.pp-audience { margin: 0 0 var(--s2); font-size: var(--text-base); font-weight: var(--weight-semibold); line-height: var(--leading-normal); color: var(--ink-soft); }
 /* The thesis names the outcome in 8 words or fewer. On a phone it steps down
    from --text-4xl so it takes two or three lines, not five. */
 .pp-thesis {
-  font-size: min(var(--text-4xl), 1.25rem + 4vw); font-weight: 600; line-height: 1.04; letter-spacing: -0.035em;
+  font-size: min(var(--text-4xl), 1.25rem + 4vw); font-weight: var(--weight-semibold); line-height: 1.04; letter-spacing: -0.035em;
   margin: 0 0 var(--s4); max-width: 16ch; text-wrap: balance;
 }
 .pp-hero-head .pp-thesis { margin-bottom: 0; }
@@ -294,7 +294,7 @@ body.pp { margin: 0; }
 }
 .pp-steps > li {
   counter-increment: pp-step; padding-top: var(--s2); border-top: 2px solid var(--line-strong);
-  font: 500 var(--text-xs) / 1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft);
+  font: 500 var(--text-xs) / 1.4 var(--mono); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--ink-soft);
   transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .pp-steps > li::before { content: counter(pp-step) " "; color: var(--ink); }
@@ -306,7 +306,7 @@ body.pp { margin: 0; }
    needs a way to stop it (WCAG 2.2.2). Hidden until the script wires it. */
 .pp-play {
   display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer;
-  font: 500 var(--text-xs) / 1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+  font: 500 var(--text-xs) / 1 var(--mono); letter-spacing: var(--tracking-caps); text-transform: uppercase;
   padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-control);
   background: transparent; color: var(--ink);
 }
@@ -321,8 +321,8 @@ body.pp { margin: 0; }
 .pp-band { padding: var(--s8) 0; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
 @media (max-width: 560px) { .pp-band { padding: var(--s7) 0; } }
 .pp-title {
-  font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: 600; line-height: 1.15;
-  letter-spacing: -0.025em; margin: 0; max-width: 24ch; text-wrap: balance;
+  font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: var(--weight-semibold); line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter); margin: 0; max-width: 24ch; text-wrap: balance;
 }
 
 /* What you get: three cards. Each is a small picture of the product doing the
@@ -335,7 +335,7 @@ body.pp { margin: 0; }
 .pp-get-media { margin: 0; aspect-ratio: 16 / 9; overflow: hidden; display: grid; place-items: center;
   background: var(--bg); border-bottom: 1px solid var(--line); }
 .pp-get-media > img, .pp-get-media > video { display: block; width: 100%; height: 100%; object-fit: cover; }
-.pp-get h3 { margin: var(--s4) var(--s4) 4px; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.pp-get h3 { margin: var(--s4) var(--s4) 4px; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
 .pp-get p { margin: 0 var(--s4) var(--s4); color: var(--ink-soft); }
 
 /* Compare: this product beside the thing the reader would otherwise use
@@ -347,7 +347,7 @@ body.pp { margin: 0; }
 .pp-compare > div { padding: var(--s5); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card); }
 .pp-compare > .is-ours { border-top: 4px solid var(--pp-mark); box-shadow: var(--shadow-2); }
 @media (max-width: 719px) { .pp-compare > .is-ours { order: -1; } }
-.pp-compare h3 { margin: 0 0 var(--s3); font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.pp-compare h3 { margin: 0 0 var(--s3); font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
 .pp-compare > :not(.is-ours) h3 { color: var(--ink-soft); }
 .pp-compare ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); }
 .pp-compare li { padding-top: var(--s2); border-top: 1px solid var(--line); }
@@ -361,7 +361,7 @@ body.pp { margin: 0; }
   content: counter(pp-how); grid-row: span 2; display: inline-grid; place-items: center; width: 28px; height: 28px;
   border-radius: 50%; border: 2px solid var(--pp-mark); font: 600 var(--text-sm) / 1 var(--mono); color: var(--ink);
 }
-.pp-how h3 { margin: 0; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.pp-how h3 { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
 .pp-how p { margin: 0; color: var(--ink-soft); }
 .pp-band .pp-figure { margin-top: var(--s6); }
 
@@ -377,11 +377,11 @@ body.pp { margin: 0; }
   .pp-chapter > .pp-wrap { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); }
   .pp-chapter-body { grid-column: 2; }
 }
-.pp-label { margin: 0; padding-top: 0.4em; font: 500 var(--text-xs) / 1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.pp-label { margin: 0; padding-top: 0.4em; font: 500 var(--text-xs) / 1.4 var(--mono); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--ink-soft); }
 .pp-label::before { content: counter(pp-chapter, decimal-leading-zero) " / "; color: var(--ink); }
 .pp-chapter h2 {
-  font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: 600; line-height: 1.15;
-  letter-spacing: -0.025em; margin: 0 0 var(--s4); max-width: 22ch; text-wrap: balance;
+  font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: var(--weight-semibold); line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter); margin: 0 0 var(--s4); max-width: 22ch; text-wrap: balance;
 }
 .pp-chapter-body > p { margin: 0 0 var(--s4); max-width: 62ch; color: var(--ink-soft); font-size: var(--text-lg); line-height: 1.55; }
 .pp-chapter-body > p:last-child { margin-bottom: 0; }
@@ -389,7 +389,7 @@ body.pp { margin: 0; }
 /* Two to four short points under a chapter: a ruled column each. */
 .pp-points { list-style: none; margin: var(--s6) 0 0; padding: 0; display: grid; gap: var(--s5); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .pp-points > li { border-top: 2px solid var(--ink); padding-top: var(--s3); }
-.pp-points h3 { margin: 0 0 6px; font-size: var(--text-lg); font-weight: 600; letter-spacing: -0.01em; }
+.pp-points h3 { margin: 0 0 6px; font-size: var(--text-lg); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-tight); }
 .pp-points p { margin: 0; color: var(--ink-soft); }
 
 /* A chapter's figure: a terminal, a screenshot, a small mock of the product. */
@@ -405,7 +405,7 @@ body.pp { margin: 0; }
 .pp-close { padding: var(--s8) 0 var(--s9); border-top: 1px solid var(--line); scroll-margin-top: 64px; }
 .pp-close > .pp-wrap { display: grid; gap: var(--s6); grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 960px) { .pp-close > .pp-wrap { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
-.pp-close h2 { font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; margin: var(--s4) 0 var(--s3); text-wrap: balance; }
+.pp-close h2 { font-size: clamp(var(--text-xl), 1rem + 2vw, var(--text-3xl)); font-weight: var(--weight-semibold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tighter); margin: var(--s4) 0 var(--s3); text-wrap: balance; }
 .pp-close .pp-subhead { margin-bottom: 0; }
 .pp-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: var(--s6); }
 @media (max-width: 560px) { .pp-panel { padding: var(--s5) var(--s4); } }
@@ -428,8 +428,8 @@ body.pp { margin: 0; }
 /* [hidden] is how the form gives way to .pp-done; display: grid would beat it. */
 .pp-form[hidden], .pp-error[hidden], .pp-done[hidden] { display: none; }
 .pp-field { display: grid; gap: 6px; min-width: 0; }
-.pp-field > label { font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
-.pp-optional { font-weight: 400; color: var(--ink-soft); }
+.pp-field > label { font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--ink); }
+.pp-optional { font-weight: var(--weight-regular); color: var(--ink-soft); }
 .pp-field input, .pp-field textarea {
   box-sizing: border-box; width: 100%; margin: 0; min-width: 0;
   font: var(--text-base) / 1.5 var(--sans); color: var(--ink);
@@ -445,11 +445,11 @@ body.pp { margin: 0; }
 .pp-field input:focus-visible, .pp-field textarea:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
 .pp-field input:disabled, .pp-field textarea:disabled { background: var(--surface-hover); color: var(--ink-soft); cursor: not-allowed; }
 .pp-field [aria-invalid="true"], .pp-field [aria-invalid="true"]:hover { border-color: var(--danger); }
-.pp-error { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--danger-ink); }
+.pp-error { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--danger-ink); }
 /* A send error reuses the note under the button. */
 .pp-note.is-error { color: var(--danger-ink); }
 
-.pp-done h3 { margin: 0 0 var(--s2); font-size: var(--text-xl); font-weight: 600; line-height: 1.25; letter-spacing: -0.015em; }
+.pp-done h3 { margin: 0 0 var(--s2); font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: 1.25; letter-spacing: -0.015em; }
 .pp-done p { margin: 0; color: var(--ink-soft); }
 .pp-done:focus { outline: none; }
 .pp-done:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 4px; border-radius: var(--radius-sm); }
@@ -462,7 +462,7 @@ body.pp { margin: 0; }
    own way in gets a plain link in its <dd>. */
 .pp-price { margin: var(--s6) 0 0; display: grid; gap: var(--s5); grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 .pp-price > div { border-top: 2px solid var(--ink); padding-top: var(--s3); }
-.pp-price dt { margin: 0 0 6px; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.pp-price dt { margin: 0 0 6px; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
 .pp-price dd { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
 .pp-price dd a { color: var(--i-ink); }
 

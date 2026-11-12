@@ -44,7 +44,7 @@
     padding: 0 var(--s4);
     font: inherit;
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     line-height: 20px;
     white-space: nowrap;
     text-decoration: none;
@@ -145,10 +145,10 @@
    name the unit in the label too. When to validate is your script's call. */
 @layer brignano.components {
   .field { display: grid; align-content: start; gap: 6px; min-width: 0; }
-  .field > label { font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
-  .field-optional { font-weight: 400; color: var(--ink-soft); }
-  .field-hint { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--ink-soft); }
-  .field-error { display: flex; gap: 6px; align-items: flex-start; margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--danger-ink); }
+  .field > label { font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--ink); }
+  .field-optional { font-weight: var(--weight-regular); color: var(--ink-soft); }
+  .field-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--ink-soft); }
+  .field-error { display: flex; gap: 6px; align-items: flex-start; margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--danger-ink); }
   .field-error > svg { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--danger); }
   .field-error[hidden] { display: none; }
 
@@ -247,7 +247,7 @@
    real radios inside it, so arrow keys and the group name come for free. */
 @layer brignano.components {
   .choice-group { display: grid; gap: var(--s2); min-width: 0; margin: 0; padding: 0; border: 0; }
-  .choice-group > legend { margin: 0 0 6px; padding: 0; font-size: var(--text-sm); font-weight: 500; line-height: 1.4; color: var(--ink); }
+  .choice-group > legend { margin: 0 0 6px; padding: 0; font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--ink); }
 
   .choice { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s2); align-items: start; line-height: 1.5; color: var(--ink); cursor: pointer; }
   .choice > input { grid-column: 1; font: inherit; cursor: inherit; }
@@ -289,7 +289,7 @@
   .choice:has(> input[type='checkbox']:checked:disabled)::before { background-color: var(--i-disabled-ink); }
   .choice > :not(input) { grid-column: 2; }
   .choice > label { cursor: inherit; }
-  .choice-hint { margin: 0; font-size: var(--text-sm); line-height: 1.4; color: var(--ink-soft); }
+  .choice-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--ink-soft); }
   .choice > input:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
   .choice:has(> input:disabled) { color: var(--i-disabled-ink); cursor: not-allowed; }
 
@@ -345,7 +345,7 @@
     padding: 0 var(--s3);
     border-radius: calc(var(--radius) - 3px);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     line-height: 20px;
     color: var(--ink);
     cursor: pointer;
@@ -420,7 +420,7 @@
   }
   .msg > svg, .banner > svg { flex: none; width: 16px; height: 16px; margin-top: 2px; color: var(--i); }
   .msg-content { display: grid; gap: 2px; flex: 1; min-width: 0; }
-  .msg-title { margin: 0; font-weight: 600; }
+  .msg-title { margin: 0; font-weight: var(--weight-semibold); }
   .msg-body { margin: 0; color: var(--ink-soft); }
   .msg-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); }
   /* An outlined button's --line-control edge is under 3:1 on a status wash,
@@ -481,7 +481,7 @@
     color: var(--ink-soft);
     font-family: var(--mono);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     line-height: 16px;
     letter-spacing: .04em;
     text-transform: uppercase;
@@ -520,7 +520,7 @@
     background-color: var(--i);
     color: var(--on-i);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     line-height: 1;
     font-variant-numeric: tabular-nums;
   }
@@ -605,7 +605,7 @@
   .card-media { margin: calc(-1 * var(--s5)) calc(-1 * var(--s5)) 0; }
   .card-media > :is(img, video, picture, svg) { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
   .card-header { display: grid; gap: var(--s1); }
-  .card-title { margin: 0; font-size: var(--text-lg); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+  .card-title { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
   .card-title a { color: inherit; text-decoration: none; }
   .card-meta { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
   .card-body { color: var(--ink-soft); }
@@ -617,7 +617,7 @@
   .card-link { transition: background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
   .card-link .card-title a::after { content: ''; position: absolute; inset: 0; z-index: 0; }
   /* Zero-specificity so components that position their own parts (for example .segmented) still win. */
-  :where(.card-link :is(a, button, input, select, textarea, label):not(.card-title a)) { position: relative; z-index: 1; }
+  :where(.card-link :is(a, button, input, select, textarea, label):not(.card-title a)) { position: relative; z-index: var(--z-raised); }
   .card-link:hover { background-color: var(--surface-hover); box-shadow: var(--shadow-2); }
   .card-link:hover .card-title a { text-decoration: underline; text-underline-offset: 3px; }
   /* The ring moves to the card only where :has() works; elsewhere the link keeps its own ring. */
@@ -736,12 +736,12 @@
     position: absolute;
     top: var(--s3);
     left: var(--s4);
-    z-index: 30;
+    z-index: var(--z-skip);
     padding: var(--s2) var(--s3);
     border-radius: var(--radius-sm);
     background-color: var(--card);
     color: var(--ink);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     box-shadow: var(--shadow-2);
     transform: translateY(calc(-100% - var(--s5)));
   }
@@ -751,7 +751,7 @@
     container: site-header / inline-size;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: var(--z-sticky);
     border-bottom: 1px solid var(--line);
     background-color: var(--surface-sticky);
     color: var(--ink);
@@ -773,9 +773,9 @@
     min-height: 40px;
     margin-inline-end: auto; /* pushes the nav and actions to the end */
     color: var(--ink);
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     font-size: var(--text-lg);
-    letter-spacing: -0.01em;
+    letter-spacing: var(--tracking-tight);
     text-decoration: none;
   }
   .site-brand > :is(img, svg) { flex: none; width: 24px; height: 24px; }
@@ -803,7 +803,7 @@
     border-radius: var(--radius-sm);
     color: var(--ink-soft);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     text-decoration: none;
   }
   .site-nav a:hover { color: var(--ink); }
@@ -863,7 +863,7 @@
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
     gap: var(--s5);
   }
-  .site-footer-heading { margin: 0 0 var(--s2); color: var(--ink); font-size: var(--text-sm); font-weight: 600; }
+  .site-footer-heading { margin: 0 0 var(--s2); color: var(--ink); font-size: var(--text-sm); font-weight: var(--weight-semibold); }
   .site-footer ul { display: grid; gap: var(--s1); margin: 0; padding: 0; list-style: none; }
   .site-footer a { color: var(--ink-soft); text-decoration: none; }
   .site-footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
@@ -973,7 +973,7 @@
     gap: var(--s3);
     padding: var(--s5) var(--s5) 0;
   }
-  .dialog-title { margin: 0; padding-top: 2px; font-size: var(--text-lg); font-weight: 600; line-height: 1.4; }
+  .dialog-title { margin: 0; padding-top: 2px; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-normal); }
   .dialog-header > form { display: contents; }
   .dialog-close { flex: none; margin: -6px -8px 0 auto; }
   .dialog-body {
@@ -1130,7 +1130,7 @@
     color: var(--ink);
     font: inherit;
     font-size: var(--text-sm);
-    line-height: 1.4;
+    line-height: var(--leading-normal);
     text-align: start;
     text-decoration: none;
     cursor: pointer;
@@ -1207,8 +1207,8 @@
     color: var(--card);
     font-family: var(--sans);
     font-size: var(--text-xs);
-    font-weight: 500;
-    line-height: 1.4;
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-normal);
     text-align: center;
   }
   /* A transparent strip over the gap on both block sides, so the pointer can
@@ -1294,7 +1294,7 @@
 @layer brignano.components {
   .toast-region {
     position: fixed;
-    z-index: 40;
+    z-index: var(--z-toast);
     inset: auto var(--s4) var(--s4);
     display: flex;
     flex-direction: column;
@@ -1340,7 +1340,7 @@
   .toast[data-leaving] { opacity: 0; transform: translateY(8px); }
   .toast > svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
   .toast-content { display: grid; gap: 2px; flex: 1; min-width: 0; }
-  .toast-title { margin: 0; font-weight: 600; }
+  .toast-title { margin: 0; font-weight: var(--weight-semibold); }
   .toast-body { margin: 0; color: var(--ink-soft); }
   .toast-action { flex: none; margin: -4px 0; }
   .toast-close { flex: none; margin: -4px -2px -4px 0; color: var(--ink-soft); }
@@ -1474,7 +1474,7 @@
     text-align: center;
   }
   .empty > svg { width: 32px; height: 32px; margin-bottom: var(--s2); color: var(--ink-soft); }
-  .empty-title { margin: 0; font-size: var(--text-base); font-weight: 600; color: var(--ink); }
+  .empty-title { margin: 0; font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--ink); }
   .empty-body { max-width: 32ch; margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
   .empty > .btn { margin-top: var(--s3); }
 
@@ -1526,7 +1526,7 @@
   .table caption {
     caption-side: top;
     text-align: left;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     padding: 0 0 var(--s2);
   }
   .table th,
@@ -1537,14 +1537,14 @@
     border-bottom: 1px solid var(--line);
   }
   .table th {
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     color: var(--ink-soft);
     white-space: nowrap;
     border-bottom-color: var(--line-strong);
   }
   .table tbody tr:hover { background: var(--surface-hover); }
   .table .num { text-align: right; white-space: nowrap; }
-  .table tfoot td { font-weight: 600; border-top: 1px solid var(--line-strong); border-bottom: 0; }
+  .table tfoot td { font-weight: var(--weight-semibold); border-top: 1px solid var(--line-strong); border-bottom: 0; }
 
   /* Sortable header: the <button> fills the cell; the arrow is decoration,
      aria-sort on the <th> is what assistive tech reads. */
@@ -1576,7 +1576,7 @@
      header's scroll container, so the header only sticks when the wrap has a
      max-height and scrolls vertically itself. Without one, it scrolls away
      with the page. */
-  .table-sticky thead th { position: sticky; top: 0; z-index: 1; background: var(--card); }
+  .table-sticky thead th { position: sticky; top: 0; z-index: var(--z-raised); background: var(--card); }
 
   .tier-marketing .table { font-size: var(--text-base); }
   .tier-marketing .table th,
@@ -1634,10 +1634,10 @@
   .stat-value {
     font-family: var(--mono);
     font-size: var(--text-2xl);
-    font-weight: 500;
-    line-height: 1.15;
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-tight);
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
+    letter-spacing: var(--tracking-tight);
   }
   .stat-delta { font-size: var(--text-sm); color: var(--ink-soft); }
   .stat-delta[data-dir]::before { margin-right: var(--s1); }
@@ -1681,7 +1681,7 @@
     flex: none;
     padding: var(--s2) var(--s3);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     color: var(--ink-soft);
     white-space: nowrap;
     cursor: pointer;
@@ -1791,7 +1791,7 @@
   .pagination-prev:focus-visible,
   .pagination-next:focus-visible,
   .pagination-pages a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-  .pagination-pages [aria-current='page'] { color: var(--on-i); background: var(--i); font-weight: 600; }
+  .pagination-pages [aria-current='page'] { color: var(--on-i); background: var(--i); font-weight: var(--weight-semibold); }
   .pagination-prev,
   .pagination-next { flex-shrink: 0; white-space: nowrap; }
   .pagination-prev::before { content: '←' / ''; margin-right: var(--s1); }
@@ -1817,7 +1817,7 @@
     box-sizing: border-box;
     padding: var(--s2) var(--s4);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     color: var(--ink);
     background: var(--card);
     border: 1px solid var(--line-control);
@@ -1850,7 +1850,7 @@
     justify-content: space-between;
     gap: var(--s3);
     padding: var(--s3);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     color: var(--ink);
     list-style: none;
     cursor: pointer;
@@ -1903,7 +1903,7 @@
     height: 2.5rem;
     overflow: hidden;
     font-size: var(--text-sm);
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     line-height: 1;
     color: var(--ink);
     background: var(--surface-active);
@@ -1936,7 +1936,7 @@
     padding: .1em .4em;
     font-family: var(--mono);
     font-size: .85em;
-    line-height: 1.4;
+    line-height: var(--leading-normal);
     text-align: center;
     color: var(--ink);
     background: var(--card);
@@ -1981,7 +1981,7 @@
     padding: var(--s1) var(--s3);
     font-family: var(--sans);
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     color: var(--ink-soft);
     cursor: pointer;
     border-radius: var(--radius-sm);
@@ -1995,7 +1995,7 @@
     overflow-x: auto;
     font-family: var(--mono);
     font-size: var(--text-sm);
-    line-height: 1.6;
+    line-height: var(--leading-relaxed);
     tab-size: 2;
   }
   .code-block pre:focus-visible,
@@ -2058,9 +2058,9 @@
   .prose > * { margin: 0; }
   .prose > * + * { margin-top: var(--s4); }
   .prose :where(h2, h3, h4) {
-    font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
     scroll-margin-top: var(--s7);
   }
   .prose h2 { font-size: var(--text-xl); }
@@ -2074,7 +2074,7 @@
      devices without hover it always shows. */
   .prose .anchor {
     margin-left: var(--s2);
-    font-weight: 400;
+    font-weight: var(--weight-regular);
     color: var(--slate);
     text-decoration: none;
     opacity: 0;
@@ -2094,7 +2094,7 @@
   .prose a:not(.anchor) { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
   .prose a:not(.anchor):hover { color: var(--i-hover); text-decoration-thickness: 2px; }
   .prose a:not(.anchor):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: 2px; }
-  .prose strong { font-weight: 600; }
+  .prose strong { font-weight: var(--weight-semibold); }
 
   .prose :where(ul, ol) { padding-left: var(--s5); }
   .prose li + li { margin-top: var(--s1); }
@@ -2152,4 +2152,40 @@
   .gap-4 { gap: var(--s4); }
   .gap-5 { gap: var(--s5); }
   .gap-6 { gap: var(--s6); }
+}
+
+/* ── Line breaks ────────────────────────────────────────────────────────────
+   A short title balances its lines, so a two-line heading doesn't end on one
+   stranded word; running text avoids a last line of one word. Both are hints:
+   a browser without text-wrap breaks lines as before. */
+@layer brignano.components {
+  :where(.card-title, .dialog-title, .empty-title, .msg-title, .toast-title, .stat-delta),
+  .prose :where(h2, h3, h4) { text-wrap: balance; }
+  :where(.empty-body, .field-hint, .choice-hint),
+  .prose :where(p, li, blockquote, figcaption) { text-wrap: pretty; }
+}
+
+/* ── Print ──────────────────────────────────────────────────────────────────
+   A receipt, a legal page or an article gets printed. tokens.css already
+   forces the light theme on paper; this drops what only works on a screen
+   (sticky chrome, shadows, controls that do nothing on paper), keeps blocks
+   whole across a page break, and writes an outside link's address after it
+   in running text, where the reader can no longer follow it. */
+@layer brignano.components {
+  @media print {
+    .site-header { position: static; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .skip-link, .site-menu-button, .toast-region, .tooltip, .msg-close, .dialog-close,
+    .code-block-copy, .tag-remove, .pagination, .load-more { display: none; }
+    .card, .stat, .msg, .code-block, .table-wrap, .dialog { box-shadow: none; }
+    .card, .stat, .msg, .figure, .blockquote, .kv > div, .table tr { break-inside: avoid; }
+    .table-wrap { overflow: visible; }
+    .code-block pre, .prose pre { white-space: pre-wrap; overflow: visible; }
+    .prose :where(h2, h3, h4) { break-after: avoid; }
+    .prose a[href^='http']::after {
+      content: ' (' attr(href) ')';
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
+      overflow-wrap: anywhere;
+    }
+  }
 }

@@ -123,8 +123,8 @@
     padding-inline: var(--s3);
     color: var(--ink-soft);
     font-size: var(--text-xs);
-    font-weight: 600;
-    line-height: 1.6;
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-relaxed);
   }
   .app-sidebar ul { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
   .app-sidebar a {
@@ -136,11 +136,11 @@
     border-radius: var(--radius);
     color: var(--ink-soft);
     font-size: var(--text-sm);
-    font-weight: 500;
+    font-weight: var(--weight-medium);
     text-decoration: none;
   }
   .app-sidebar a:hover { background-color: var(--surface-hover); color: var(--ink); }
-  .app-sidebar a[aria-current='page'] { background-color: var(--i-surface); color: var(--i-ink); font-weight: 600; }
+  .app-sidebar a[aria-current='page'] { background-color: var(--i-surface); color: var(--i-ink); font-weight: var(--weight-semibold); }
   .app-sidebar a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
   .app-sidebar-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -260,7 +260,7 @@
 
     /* The hovered or focused item's label, shown as a tooltip beside it. */
     .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a:is(:hover, :focus-visible) > .app-sidebar-label {
-      z-index: 20;
+      z-index: var(--z-float);
       width: max-content;
       max-width: 16rem;
       height: auto;
@@ -272,8 +272,8 @@
       background-color: var(--ink);
       color: var(--card);
       font-size: var(--text-xs);
-      font-weight: 500;
-      line-height: 1.4;
+      font-weight: var(--weight-medium);
+      line-height: var(--leading-normal);
       pointer-events: none;
     }
   }

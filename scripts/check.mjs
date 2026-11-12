@@ -105,13 +105,15 @@ function side(value, i) {
   return c ? side(value.slice(0, c.start) + c.args[i] + value.slice(c.end), i) : value;
 }
 
+const SCALE_BLOCKS = ['.tier-marketing', '@media (pointer: coarse) > :root:not(.tier-marketing)'];
 const tokens = new Map();
 for (const f of ['tokens.css', 'tokens.chart.css'])
   for (const { selector, decls } of blocks(read(f)))
     for (const [k, v] of decls) {
       if (selector === ':root') tokens.set(k, v);
-      // .tier-marketing re-declares type and rhythm, never colour.
-      else if (selector !== '.tier-marketing' || /light-dark|#|rgb|color-mix/.test(v))
+      // .tier-marketing re-declares type and rhythm, never colour. So does
+      // the tool tier's coarse-pointer block (a larger smallest step on a phone).
+      else if (!SCALE_BLOCKS.includes(selector) || /light-dark|#|rgb|color-mix/.test(v))
         fail(`one list: ${f} declares ${k} under \`${selector}\`; colours live once, on :root, as light-dark()`);
     }
 const light = new Map([...tokens].map(([k, v]) => [k, side(v, 0)]));

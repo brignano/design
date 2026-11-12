@@ -75,6 +75,17 @@
   --font-mono: var(--mono);
   --font-display: var(--display);
 
+  --font-weight-normal: var(--weight-regular);
+  --font-weight-medium: var(--weight-medium);
+  --font-weight-semibold: var(--weight-semibold);
+  --leading-tight: var(--leading-tight);
+  --leading-snug: var(--leading-snug);
+  --leading-normal: var(--leading-normal);
+  --leading-relaxed: var(--leading-relaxed);
+  --tracking-tight: var(--tracking-tight);
+  --tracking-tighter: var(--tracking-tighter);
+  --tracking-caps: var(--tracking-caps);
+
   --radius-sm: var(--radius-sm);
   --radius: var(--radius);
   --radius-lg: var(--radius-lg);
