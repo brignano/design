@@ -305,7 +305,8 @@
      and .stamp, ADR-0014.) Leading is unitless
      so it scales with the text: display for large headings, title for
      titles, ui for interface text, body for paragraphs. Tracking
-     only ever tightens a heading or opens an uppercase mono eyebrow.
+     only ever tightens a heading or opens an uppercase mono eyebrow
+     (and the .stamp monogram, whose bar closes up otherwise).
 
      Named by role, not tight/snug/normal: Tailwind owns those names
      (--leading-tight, --tracking-tight) and an unlayered token here would

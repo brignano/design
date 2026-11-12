@@ -158,7 +158,8 @@ No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
   stat's value already do.
 - **One heavy moment.** `.display` sets an error code or a single headline
   figure in Geist at `--weight-heavy` (800), tight and large; `.stamp` sets the
-  `A|B` monogram the same way, for a footer or an about page. This is the
+  `A|B` monogram at the same weight, spaced open (`--tracking-caps`) so the bar
+  doesn't read as an I, for a footer or an about page. This is the
   display treatment, in both tiers. It is the one use of a weight above 600,
   and at most once a screen. `.rule` is the short bar in `--mark` above a hero
   heading. (`--display` still names Silkscreen on the marketing tier until
@@ -176,7 +177,7 @@ tracking don't:
 | `--leading-ui` | 1.4 | interface text |
 | `--leading-body` | 1.6 | paragraphs |
 | `--tracking-title` / `--tracking-display` | -0.01em / -0.025em | headings / large display headings |
-| `--tracking-caps` | 0.08em | uppercase mono eyebrows |
+| `--tracking-caps` | 0.08em | uppercase mono eyebrows; the `.stamp` monogram |
 
 They are named by role because Tailwind already owns `--leading-tight`,
 `--tracking-tight` and the rest; the bridge adds `leading-display`,

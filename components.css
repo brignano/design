@@ -1564,7 +1564,8 @@
   .table th.num[aria-sort] > button { justify-content: flex-end; }
   .table th[aria-sort] > button:hover { color: var(--ink); }
   .table th[aria-sort] > button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
-  .table th[aria-sort] > button::after { content: '↕' / ''; color: var(--slate); }
+  /* \FE0E asks for the text glyph: ↕ is one of the arrows phones draw as an emoji. */
+  .table th[aria-sort] > button::after { content: '↕\FE0E' / ''; color: var(--slate); }
   .table th[aria-sort='ascending'] > button::after { content: '↑' / ''; color: var(--ink); }
   .table th[aria-sort='descending'] > button::after { content: '↓' / ''; color: var(--ink); }
   .table th[aria-sort='ascending'],
