@@ -45,8 +45,8 @@
         </section>
       </div>
       <div class="stack gap-2">
-        <p class="name">Phone width (375px): the menu button opens the nav as a sheet</p>
-        <section class="frame phone" aria-label="Light phone example">
+        <p class="name">Phone width (375px), with data-mark="teal": the menu button opens the nav as a sheet</p>
+        <section class="frame phone" data-mark="teal" aria-label="Light phone example">
         <header class="site-header">
           <div class="site-header-inner container container-wide">
             <a class="site-brand" href="#lp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l4-7 4 7"/></svg>Waypoint</a>
@@ -103,8 +103,8 @@
         </section>
       </div>
       <div class="stack gap-2">
-        <p class="name">Phone width (375px): the menu button opens the nav as a sheet</p>
-        <section class="frame phone" aria-label="Dark phone example">
+        <p class="name">Phone width (375px), with data-mark="teal": the menu button opens the nav as a sheet</p>
+        <section class="frame phone" data-mark="teal" aria-label="Dark phone example">
         <header class="site-header">
           <div class="site-header-inner container container-wide">
             <a class="site-brand" href="#dp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l4-7 4 7"/></svg>Waypoint</a>
@@ -190,6 +190,14 @@
       <li>The phone menu needs no script. The <code>popover</code> attribute gives you Esc and click-outside to close.</li>
       <li>The collapse follows the header's own width (a container query at 45rem), not the window, so it works in a narrow frame too.</li>
       <li>The sheet opens across the top of the window. On this preview page it spans the whole window even from the 375px frame.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The product's mark</h2>
+    <ul>
+      <li>The glyph beside the name draws in the mark in force: the family amber by default, or the product's own once <code>data-mark="teal"</code>, <code>"violet"</code> or <code>"magenta"</code> is set on <code>&lt;html&gt;</code> (or any ancestor). Above, the desktop examples are unmarked and the phone examples set teal.</li>
+      <li>Only an inline <code>&lt;svg&gt;</code> in <code>currentColor</code> takes it; an <code>&lt;img&gt;</code> logo keeps its own colours. The name stays ink, and buttons and links stay cobalt on every product.</li>
     </ul>
   </section>
 

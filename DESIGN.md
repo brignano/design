@@ -79,6 +79,25 @@ it (the monogram, the type, restraint; ADR-0014), so amber in UI chrome now only
 ever means *attention*. If you're reaching for `--mark` to tint an interface
 element, the answer is a neutral or a state colour.
 
+### A product's mark follows it
+
+Each product has one mark colour (`--mark-teal`, `--mark-violet`,
+`--mark-magenta`; §13), and it is the same on its marketing page, inside its
+app and on its error pages (ADR-0014). Set it once:
+
+```html
+<html data-mark="teal">
+```
+
+`data-mark` sets `--mark-current` for everything inside the element. The brand
+glyph in `.site-brand` and `.error-page-mark` (an inline SVG in `currentColor`)
+and `.rule` draw in it; the name beside the glyph stays `--ink`. With no
+attribute the mark is the family amber, so personal tools share it. A product
+gets its own hue when it gets a product page, not before.
+
+The contract is `--mark`'s: a graphic only. Buttons and links stay cobalt on
+every product, so "you can act on this" looks the same everywhere.
+
 ### Colour is a surface, not text
 
 A wash (12% light / 20% dark via `color-mix`) behind an element with the text kept
@@ -161,8 +180,8 @@ No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
   `A|B` monogram at the same weight, spaced open (`--tracking-caps`) so the bar
   doesn't read as an I, for a footer or an about page. This is the
   display treatment, in both tiers. It is the one use of a weight above 600,
-  and at most once a screen. `.rule` is the short bar in `--mark` above a hero
-  heading. (`--display` still names Silkscreen on the marketing tier until
+  and at most once a screen. `.rule` is the short bar in the mark in force (`--mark-current`, §3)
+  above a hero heading. (`--display` still names Silkscreen on the marketing tier until
   #142 removes it.)
 
 Sizes change with the tier (`--text-xs` … `--text-4xl`); weight, leading and
@@ -503,7 +522,8 @@ Shared structure is what makes a page fast to build; shared looks is what made
 Driftwood, Guidebook and Sites read as one page with the words swapped. Each
 product makes three choices, and **no two products make all three the same**:
 
-- **A mark** (`data-mark` on `.pp`: `teal`, `violet` or `magenta`; tokens
+- **A mark** (`data-mark` on `.pp` or on `<html>`, the same attribute its app
+  uses, §3: `teal`, `violet` or `magenta`; tokens
   `--mark-teal` and so on). It inks the product's glyph (an inline SVG in
   `currentColor`), the hero rule above the thesis, the **stage** (a faint field
   behind the hero proof), the clip's current step and the how-it-works

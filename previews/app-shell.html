@@ -107,7 +107,7 @@
   </div>
   <div class="shell-scroll" style="margin-top: var(--s4)">
     <div class="shell-frame dark w1440">
-      <section class="app-shell" data-sidebar="collapsed" aria-label="Example app, wide dark">
+      <section class="app-shell" data-sidebar="collapsed" data-mark="teal" aria-label="Example app, wide dark">
       <div class="app-shell-grid">
         <header class="site-header">
           <div class="site-header-inner">
@@ -467,6 +467,14 @@ function openDetail() {
         <li>The phone menu needs no script: <code>popovertarget</code> opens and closes it.</li>
       </ul>
     </div>
+  </section>
+
+  <section>
+    <h2>The product's mark</h2>
+    <ul>
+      <li>The glyph beside the name draws in the mark in force: the family amber by default, or the product's own once <code>data-mark="teal"</code>, <code>"violet"</code> or <code>"magenta"</code> is set on <code>&lt;html&gt;</code> (or any ancestor). Above, the light wide example is unmarked and the dark one sets teal.</li>
+      <li>Only an inline <code>&lt;svg&gt;</code> in <code>currentColor</code> takes it; an <code>&lt;img&gt;</code> logo keeps its own colours. The name stays ink, and buttons and links stay cobalt on every product.</li>
+    </ul>
   </section>
 
   <section data-doc="a11y">

@@ -270,6 +270,12 @@
   --mark-teal: light-dark(#0e7c86, #4cc0cb);
   --mark-violet: light-dark(#7148c9, #a990f2);
   --mark-magenta: light-dark(#b1366f, #ea7fb0);
+  /* The mark in force here (ADR-0014): the family amber until `data-mark`
+     on an ancestor, usually <html>, names a product's. A brand glyph and
+     .rule draw in this, so a product's colour follows it from its marketing
+     page into its app and onto its error pages. The [data-mark] rules below
+     only point it at a token above; they declare no colour of their own. */
+  --mark-current: var(--mark);
 
   /* ── Legacy aliases ───────────────────────────────────────────────────
      Kept so existing `life` components keep compiling. Do not use in new
@@ -415,6 +421,19 @@
   --text-4xl: clamp(2.75rem, 1rem + 4.5vw, 4rem); /* rem term keeps it zoomable (WCAG 1.4.4) */
   --section-gap: var(--s9);
   --measure: 68ch;
+}
+
+/* ── A product's mark, wherever the product is ──────────────────────────
+   One attribute per product: <html data-mark="teal">. Works on any element,
+   so a page that shows two products can mark each one's section. */
+[data-mark='teal'] {
+  --mark-current: var(--mark-teal);
+}
+[data-mark='violet'] {
+  --mark-current: var(--mark-violet);
+}
+[data-mark='magenta'] {
+  --mark-current: var(--mark-magenta);
 }
 
 ::selection {

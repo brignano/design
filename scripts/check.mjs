@@ -106,6 +106,9 @@ function side(value, i) {
 }
 
 const SCALE_BLOCKS = ['.tier-marketing', '@media (pointer: coarse) > :root:not(.tier-marketing)'];
+// [data-mark] points --mark-current at an existing mark token (ADR-0014). Same
+// terms as the blocks above: a var() to a token, never a colour of its own.
+const MARK_BLOCKS = ["[data-mark='teal']", "[data-mark='violet']", "[data-mark='magenta']"];
 const tokens = new Map();
 for (const f of ['tokens.css', 'tokens.chart.css'])
   for (const { selector, decls } of blocks(read(f)))
@@ -113,6 +116,7 @@ for (const f of ['tokens.css', 'tokens.chart.css'])
       if (selector === ':root') tokens.set(k, v);
       // .tier-marketing re-declares type and rhythm, never colour. So does
       // the tool tier's coarse-pointer block (a larger smallest step on a phone).
+      else if (MARK_BLOCKS.includes(selector) && k === '--mark-current' && /^var\(--mark-[a-z]+\)$/.test(v)) continue;
       else if (!SCALE_BLOCKS.includes(selector) || /light-dark|#|rgb|color-mix/.test(v))
         fail(`one list: ${f} declares ${k} under \`${selector}\`; colours live once, on :root, as light-dark()`);
     }
@@ -238,7 +242,7 @@ floors.push(['--i', '--i-surface', MARK]);
 // takes --code-string, so --code-comment is not paired with the wash.
 for (const fg of ['--code-ink', '--code-keyword', '--code-string']) floors.push([fg, '--code-highlight', TEXT]);
 for (const fg of ['--code-ink', '--code-keyword', '--code-string', '--code-comment']) floors.push([fg, '--code-surface', TEXT]);
-for (const fg of ['--i', '--success', '--attention', '--danger', '--line-control', '--mark-teal', '--mark-violet', '--mark-magenta'])
+for (const fg of ['--i', '--success', '--attention', '--danger', '--line-control', '--mark', '--mark-current', '--mark-teal', '--mark-violet', '--mark-magenta'])
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, MARK]);
 // Chart series: light slots 3–5 are exempt by the relief rule in tokens.chart.css.
 for (let n = 1; n <= 8; n++) floors.push([`--chart-${n}`, '--chart-surface', MARK, n >= 3 && n <= 5 ? 'dark' : null]);

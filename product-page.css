@@ -66,9 +66,9 @@
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
-.pp[data-mark="teal"] { --pp-mark: var(--mark-teal); }
-.pp[data-mark="violet"] { --pp-mark: var(--mark-violet); }
-.pp[data-mark="magenta"] { --pp-mark: var(--mark-magenta); }
+/* data-mark on .pp or on an ancestor (<html data-mark="teal">, the same
+   attribute the app uses) picks the mark; tokens.css resolves it. */
+.pp[data-mark], [data-mark] .pp { --pp-mark: var(--mark-current); }
 /* On <body>, drop the browser's 8px margin so the sticky header and every band
    run to the screen edges. On a wrapper, the body is the site's business. */
 body.pp { margin: 0; }
