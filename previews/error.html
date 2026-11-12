@@ -1,0 +1,137 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en" data-status="stable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Error pages</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../templates/error.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* The preview chrome styles bare h1 without a layer, which would beat the
+     template. revert-layer hands the demo headings back to error.css. A real
+     error page fills the screen; here each one sits in a panel. */
+  .error-page-title { all: revert-layer; }
+  .panel .error-page, .variants .error-page { min-height: 0; padding: var(--s7) var(--s4); border-radius: var(--radius); }
+  .variants { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--s4); margin-top: var(--s6); }
+  .variants .error-page { border: 1px solid var(--line); }
+  .variants-h { font-size: var(--text-lg); font-weight: 600; margin: var(--s7) 0 0; }
+</style>
+</head>
+<body id="top">
+<h1>Error pages</h1>
+<p class="sub">404, 500 and offline: the product mark, the code, one line of what happened and one way forward. No jokes, no illustrations.</p>
+
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light</span>
+      <div class="error-page">
+        <div class="error-page-block">
+          <a class="error-page-mark" href="#top"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l3-3 2 2 3-4"/></svg>Breakeven</a>
+          <p class="error-page-code">404</p>
+          <h1 class="error-page-title">This page doesn't exist</h1>
+          <p class="error-page-body">It may have moved, or the link has a typo.</p>
+          <a class="btn btn-primary" href="#top">Go to the home page</a>
+        </div>
+      </div>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+      <div class="error-page">
+        <div class="error-page-block">
+          <a class="error-page-mark" href="#top"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l3-3 2 2 3-4"/></svg>Breakeven</a>
+          <p class="error-page-code">404</p>
+          <h1 class="error-page-title">This page doesn't exist</h1>
+          <p class="error-page-body">It may have moved, or the link has a typo.</p>
+          <a class="btn btn-primary" href="#top">Go to the home page</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+<h2 class="variants-h">The other two</h2>
+<div class="variants">
+      <div class="error-page">
+        <div class="error-page-block">
+          <a class="error-page-mark" href="#top"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l3-3 2 2 3-4"/></svg>Breakeven</a>
+          <p class="error-page-code">500</p>
+          <h1 class="error-page-title">Something went wrong on our side</h1>
+          <p class="error-page-body">It isn't anything you did. Try again in a minute.</p>
+          <p class="error-page-ref">Request ID req_01HZY8K3QW9V7X2M4N6P8R0T2V4X6Z8B1D3F5H7J9L</p>
+          <a class="btn btn-primary" href="">Try again</a>
+        </div>
+      </div>
+      <div class="error-page">
+        <div class="error-page-block">
+          <a class="error-page-mark" href="#top"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l3-3 2 2 3-4"/></svg>Breakeven</a>
+          <p class="error-page-code">Offline</p>
+          <h1 class="error-page-title">You're offline</h1>
+          <p class="error-page-body">Check your connection, then try again.</p>
+          <a class="btn btn-primary" href="">Try again</a>
+        </div>
+      </div>
+</div>
+
+<div class="docs">
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0">@import '@brignano/design/tokens.css';
+@import '@brignano/design/components.css';
+@import '@brignano/design/templates/error.css';
+
+&lt;main class="error-page"&gt;
+  &lt;div class="error-page-block"&gt;
+    &lt;a class="error-page-mark" href="/"&gt;&lt;svg aria-hidden="true" …&gt;&lt;/svg&gt;Breakeven&lt;/a&gt;
+    &lt;p class="error-page-code"&gt;404&lt;/p&gt;
+    &lt;h1 class="error-page-title"&gt;This page doesn't exist&lt;/h1&gt;
+    &lt;p class="error-page-body"&gt;It may have moved, or the link has a typo.&lt;/p&gt;
+    &lt;a class="btn btn-primary" href="/"&gt;Go to the home page&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/main&gt;</pre>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A page isn't there (404), the server failed (500), or a page or app shell has no network (offline).</li>
+        <li>The whole page failed. Give it the error page, not a message inside an empty layout.</li>
+        <li>For the words, follow <a class="link" href="writing.html#errors">Errors</a> in the content guidelines.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>One part of a page failed. Use a message (<code>.msg-danger</code>) in that part and keep the rest working.</li>
+        <li>A list is empty. That's an empty state, not an error.</li>
+        <li>You'd add a joke, an illustration or a second button. One way forward is the point.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>The three pages</h2>
+    <ul>
+      <li><b>404:</b> say the page doesn't exist and link home. Keep the URL as it is so the person can fix a typo.</li>
+      <li><b>500:</b> say it's on your side, not theirs, and offer to try again. Don't show a stack trace. If support will ask for a request ID, put it in <code>.error-page-ref</code>, which sits after the words.</li>
+      <li><b>Offline:</b> say they're offline and offer to try again. Only a service worker can show it: precache the page, its CSS and the mark (they're stored as 200s), and return the page from the fetch handler when the network fails.</li>
+      <li>Serve 404 and 500 with their real status codes, so crawlers and monitors see the failure. For planned maintenance or overload, use the 500 page's shape with a 503 and <code>Retry-After</code>.</li>
+      <li>"Try again" is a link to the same page (<code>href=""</code>), so it reloads with no script.</li>
+      <li>The code above the title is the page's label. It's the one exception to codes going after the words (<a class="link" href="writing.html#errors">Errors</a>); a request ID still goes after.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>The <code>&lt;title&gt;</code> says what happened first ("Page not found · Breakeven"), because a screen reader announces it before anything else.</li>
+      <li>The title is the page's one <code>&lt;h1&gt;</code>, and the page sits in <code>&lt;main&gt;</code>.</li>
+      <li>The mark is a link home with the product name as text; its svg is <code>aria-hidden</code>.</li>
+      <li>The mark and the button are the only tab stops, in that order, and both show the focus ring.</li>
+      <li>The code is plain text in a muted colour that still meets 4.5:1. The title carries the meaning, so the code is never the only sign.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
