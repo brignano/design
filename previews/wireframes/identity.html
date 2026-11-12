@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identity directions</title>
+<!-- Wireframe for issue #137. The rule: "Wireframes before build" in brignano/ai-tools fleet/README.md. -->
+<link rel="stylesheet" href="../_fonts.css">
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../components.css">
+<style>
+  /* Wireframe chrome: the frames and the notes beside them. */
+  * { box-sizing: border-box; }
+  body { margin: 0; padding-block: 16px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: var(--text-base); line-height: 1.55; }
+  .wf-head { max-width: 72ch; margin: 0 0 32px; }
+  .wf-head h1 { font-size: var(--text-2xl); letter-spacing: var(--tracking-tight); margin: 0 0 8px; text-wrap: balance; }
+  .wf-head p { margin: 0 0 8px; color: var(--ink-soft); text-wrap: pretty; }
+  .wf-head strong { color: var(--ink); }
+  .wf-dir { margin: 0 0 48px; }
+  .wf-dir > h2 { font-size: var(--text-xl); letter-spacing: var(--tracking-tight); margin: 0 0 4px; }
+  .wf-dir > p { max-width: 72ch; margin: 0 0 16px; color: var(--ink-soft); text-wrap: pretty; }
+  .wf-frames { display: flex; gap: 24px; align-items: flex-start; overflow-x: auto; padding-bottom: 8px; }
+  .wf-frame { flex: none; }
+  .wf-label { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 6px; }
+  .wf-screen {
+    container-type: inline-size; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden;
+  }
+  .wf-phone .wf-screen { width: 390px; }
+  .wf-desktop .wf-screen { width: 1280px; }
+
+  /* ── The three surfaces, drawn once. Use @container, not @media. ──
+     Each direction changes only the custom properties at the bottom. */
+  .id { --id-mark: var(--ink); --id-rule: var(--mark); --id-eyebrow-font: var(--sans); --id-eyebrow-case: none;
+        --id-eyebrow-track: 0; --id-eyebrow-size: var(--text-sm); --id-code-font: var(--mono); --id-code-size: var(--text-sm);
+        --id-code-weight: 400; --id-code-track: var(--tracking-caps); --id-num-font: var(--sans); --id-stamp-font: var(--sans);
+        --id-stamp-weight: 600; --id-stamp-track: 0; }
+  .id-band { padding: 32px 20px; border-bottom: 1px solid var(--line); }
+  .id-band:last-child { border-bottom: 0; }
+  .id-surface { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 16px; }
+  .id-glyph { width: 24px; height: 24px; flex: none; color: var(--id-mark); }
+  .id-brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .id-eyebrow { margin: 0 0 12px; font-family: var(--id-eyebrow-font); font-size: var(--id-eyebrow-size);
+    text-transform: var(--id-eyebrow-case); letter-spacing: var(--id-eyebrow-track); color: var(--ink-soft); }
+  .id-rule { display: block; width: 56px; height: 3px; border-radius: 2px; background: var(--id-rule); margin: 0 0 20px; }
+  .id-stamp { font-family: var(--id-stamp-font); font-weight: var(--id-stamp-weight); letter-spacing: var(--id-stamp-track); color: var(--ink); }
+
+  /* Marketing hero */
+  .id-hero h3 { margin: 0 0 16px; font-size: 2.25rem; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; max-width: 16ch; text-wrap: balance; }
+  .id-hero .sub { margin: 0 0 20px; max-width: 44ch; font-size: var(--text-lg); color: var(--ink-soft); text-wrap: pretty; }
+  .id-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* App screen */
+  .id-app { background: var(--bg); }
+  .id-appbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 24px; }
+  .id-app h3 { margin: 0 0 16px; font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-tight); }
+  .id-rows { margin: 16px 0 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .id-rows li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); min-width: 0; }
+  .id-rows li:last-child { border-bottom: 0; }
+  .id-rows .when { font-family: var(--id-num-font); font-size: var(--text-sm); color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .id-app .stat-value { font-family: var(--id-num-font); }
+
+  /* Error page */
+  .id-error { display: grid; justify-items: center; align-content: start; gap: 12px; text-align: center; }
+  .id-error .id-surface { justify-self: start; }
+  .id-code { margin: 8px 0 0; font-family: var(--id-code-font); font-size: var(--id-code-size); font-weight: var(--id-code-weight); letter-spacing: var(--id-code-track); color: var(--slate); }
+  .id-error h3 { margin: 0; font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-tight); text-wrap: balance; }
+  .id-error p.body { margin: 0 0 8px; color: var(--ink-soft); }
+  .id-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: var(--text-sm); color: var(--ink-soft); }
+
+  @container (min-width: 900px) {
+    .id { display: grid; grid-template-columns: 1.2fr 1fr 1fr; }
+    .id-band { padding: 40px 32px; border-bottom: 0; border-right: 1px solid var(--line); }
+    .id-band:nth-child(3) { border-right: 0; }
+    .id-band.id-foot { grid-column: 1 / -1; border-top: 1px solid var(--line); border-right: 0; padding-block: 16px; }
+    .id-hero h3 { font-size: 3rem; }
+  }
+
+  /* ── The directions ── */
+  /* 1. Mono voice: every screen opens with a mono eyebrow, every number is mono. */
+  .id[data-dir='1'] { --id-eyebrow-font: var(--mono); --id-eyebrow-case: uppercase; --id-eyebrow-track: var(--tracking-caps);
+    --id-eyebrow-size: var(--text-xs); --id-num-font: var(--mono); --id-stamp-font: var(--mono); --id-stamp-weight: 500; }
+  /* 2. Product mark: the product's hue inks its glyph and rule on every surface. */
+  .id[data-dir='2'] { --id-mark: var(--mark-teal); --id-rule: var(--mark-teal); }
+  /* 3a. Display face, Silkscreen. */
+  .id[data-dir='3a'] { --id-eyebrow-font: 'Silkscreen', var(--mono); --id-eyebrow-case: uppercase; --id-eyebrow-track: 0.06em;
+    --id-eyebrow-size: var(--text-xs); --id-code-font: 'Silkscreen', var(--mono); --id-code-size: 3rem; --id-code-track: 0.04em;
+    --id-stamp-font: 'Silkscreen', var(--mono); --id-stamp-weight: 400; --id-stamp-track: 0.04em; }
+  /* 3b. Display face, Geist at its heaviest and tightest: no extra font. */
+  .id[data-dir='3b'] { --id-eyebrow-font: var(--sans); --id-eyebrow-case: uppercase; --id-eyebrow-track: 0.1em;
+    --id-eyebrow-size: var(--text-xs); --id-code-font: var(--sans); --id-code-size: 4rem; --id-code-weight: 800; --id-code-track: -0.05em;
+    --id-stamp-font: var(--sans); --id-stamp-weight: 800; --id-stamp-track: -0.04em; }
+  .id[data-dir='3a'] .id-eyebrow, .id[data-dir='3b'] .id-eyebrow { font-weight: 600; }
+  .id[data-dir='3a'] .id-eyebrow { font-weight: 400; }
+  .id[data-dir='3a'] .id-code, .id[data-dir='3b'] .id-code { color: var(--ink); line-height: 1; }
+</style>
+</head>
+<body>
+  <div class="wf-head">
+    <h1>Identity: three directions to choose from</h1>
+    <p>Issue #137. The trail is gone from brignano.io, and nothing else that makes a page yours ships in the package, so the apps look anonymous. Each direction below is drawn on the same three surfaces: a marketing hero, an app screen and an error page, using Driftwood as the example. Switch your device between light and dark to see both themes.</p>
+    <p><strong>My recommendation: 1 and 2 together, with 3b for the big moments.</strong> They don't compete: 1 is the voice every screen shares, 2 tells the products apart, and 3b gives error codes and the family stamp weight without loading another font. In all of them the buttons stay cobalt and the state colours keep their meaning.</p>
+    <p>Rejected: bringing back the trail (removed for hurting the experience); a brand colour on buttons or links (breaks "one hue, one meaning"); illustrations or a mascot (DESIGN.md §5).</p>
+  </div>
+
+  <section class="wf-dir" data-dir="1">
+    <h2>1. Mono voice</h2>
+    <p>Every screen opens with a small uppercase mono label, and every number, date and code is set in mono. The <code class="code">A|B</code> stamp sits in the footer. Quiet, costs nothing, and it is already how your best pages look.</p>
+  </section>
+  <section class="wf-dir" data-dir="2">
+    <h2>2. Product mark</h2>
+    <p>Each product keeps its own colour (teal here) on its glyph and its rule, on the marketing page, inside the app and on the error page. It never touches a button or a link. This is what tells Driftwood from homelab at a glance.</p>
+  </section>
+  <section class="wf-dir" data-dir="3a">
+    <h2>3a. Display face: Silkscreen</h2>
+    <p>The pixel face you have today, used for labels, the error code and the stamp. Distinctive, but it reads retro and gets hard to read below about 12px.</p>
+  </section>
+  <section class="wf-dir" data-dir="3b">
+    <h2>3b. Display face: heavy Geist</h2>
+    <p>The same moments set in Geist at its heaviest and tightest. Modern, no extra font to load, and it stays in the family with everything else on the page.</p>
+  </section>
+
+  <!-- Written once. The script puts a copy in a phone and a desktop frame for each direction. -->
+  <template id="wf-page">
+    <div class="id">
+      <section class="id-band id-hero">
+        <p class="id-surface">marketing hero</p>
+        <span class="id-rule"></span>
+        <p class="id-eyebrow">For teams running on AWS</p>
+        <h3>See what broke, and what changed it.</h3>
+        <p class="sub">When your app goes down, Driftwood shows the broken piece, why, and what the last deploy changed.</p>
+        <div class="id-actions">
+          <button class="btn btn-primary" type="button">Request access</button>
+          <button class="btn btn-secondary" type="button">Try the live demo</button>
+        </div>
+      </section>
+
+      <section class="id-band id-app">
+        <p class="id-surface">app screen</p>
+        <div class="id-appbar">
+          <span class="id-brand"><svg class="id-glyph" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="3" width="9" height="7" rx="2"/><rect x="15" y="3" width="9" height="7" rx="2"/><rect x="8.5" y="16" width="9" height="7" rx="2"/><path d="M6.5 10v2.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V10M13 14v2"/></svg>Driftwood</span>
+          <span class="pill pill-danger">1 down</span>
+        </div>
+        <p class="id-eyebrow">Production</p>
+        <h3>Services</h3>
+        <div class="stat-grid">
+          <div class="stat"><span class="stat-label">Healthy</span><span class="stat-value">11</span></div>
+          <div class="stat"><span class="stat-label">Last deploy</span><span class="stat-value">214</span></div>
+        </div>
+        <ul class="id-rows">
+          <li><span>storefront</span><span class="when">12s ago</span></li>
+          <li><span>orders-api</span><span class="when">2026-11-07 09:30</span></li>
+          <li><span>payments</span><span class="when">2026-11-06 21:12</span></li>
+        </ul>
+      </section>
+
+      <section class="id-band id-error">
+        <p class="id-surface">error page</p>
+        <span class="id-brand"><svg class="id-glyph" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="3" width="9" height="7" rx="2"/><rect x="15" y="3" width="9" height="7" rx="2"/><rect x="8.5" y="16" width="9" height="7" rx="2"/><path d="M6.5 10v2.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V10M13 14v2"/></svg>Driftwood</span>
+        <p class="id-code">404</p>
+        <h3>This page doesn't exist</h3>
+        <p class="body">It may have moved, or the link has a typo.</p>
+        <button class="btn btn-primary" type="button">Go to the home page</button>
+      </section>
+
+      <footer class="id-band id-foot">
+        <span>Made by Anthony Brignano</span>
+        <span class="id-stamp" aria-label="A B monogram">A|B</span>
+      </footer>
+    </div>
+  </template>
+
+  <script>
+    const page = document.getElementById('wf-page');
+    for (const dir of document.querySelectorAll('.wf-dir')) {
+      const frames = document.createElement('div');
+      frames.className = 'wf-frames';
+      for (const [kind, label] of [['phone', 'Phone · 390px'], ['desktop', 'Desktop · 1280px']]) {
+        const frame = document.createElement('div');
+        frame.className = `wf-frame wf-${kind}`;
+        frame.innerHTML = `<p class="wf-label">${label}</p><div class="wf-screen"></div>`;
+        const copy = page.content.cloneNode(true);
+        copy.querySelector('.id').dataset.dir = dir.dataset.dir;
+        frame.querySelector('.wf-screen').append(copy);
+        frames.append(frame);
+      }
+      dir.append(frames);
+    }
+  </script>
+</body>
+</html>
