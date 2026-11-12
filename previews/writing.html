@@ -25,6 +25,7 @@
   .ex-do .ex-label { color: var(--success-ink); }
   .ex-dont .ex-label { color: var(--danger-ink); }
   .ex-quote { margin: 0; }
+  .rule-text code { font-family: var(--mono); font-size: .92em; }
   .ex-frame { border: 1px dashed var(--line-strong); border-radius: var(--radius); }
   .ex-confirm { display: flex; flex-direction: column; gap: var(--s2); }
   .ex-confirm p { margin: 0; }
@@ -57,15 +58,15 @@
 </nav>
 <section class="rule" aria-labelledby="voice">
   <h2 id="voice">Voice</h2>
-  <p class="rule-text">Competent, calm, plain words: what happened and what to do next. No hype, no jokes, no apology theatre.</p>
+  <p class="rule-text">Competent, calm, plain words. Say what happened and what to do next, the way a colleague who knows the system would. No hype, no jokes, no apology theatre.</p>
   <div class="ex-pair">
-    <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">Your changes are saved.</p></div>
+    <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">Changes saved.</p></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><p class="ex-quote">Awesome! Your changes have been successfully saved!</p></div>
   </div>
 </section>
 <section class="rule" aria-labelledby="sentence-case">
   <h2 id="sentence-case">Sentence case</h2>
-  <p class="rule-text">Capitalise the first word and proper nouns, everywhere: buttons, headings, labels, tabs, menus, titles. An eyebrow may be uppercase through CSS, but it is typed in sentence case.</p>
+  <p class="rule-text">Everything is in sentence case: buttons, headings, labels, menu items, tabs, page titles. Capitalise only the first word and proper nouns. An eyebrow can be uppercase through CSS, but it is written in sentence case.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><div class="cluster"><button type="button" class="btn">Account settings</button><button type="button" class="btn">Sign in with GitHub</button></div></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="cluster"><button type="button" class="btn">Account Settings</button><button type="button" class="btn">SIGN IN</button></div></div>
@@ -73,15 +74,15 @@
 </section>
 <section class="rule" aria-labelledby="buttons-and-links">
   <h2 id="buttons-and-links">Buttons and links</h2>
-  <p class="rule-text">A button is a verb and its object, so it reads on its own. A link names where it goes.</p>
+  <p class="rule-text">A button is a verb and its object, so it still makes sense read on its own. A link names where it goes. The button that confirms an action repeats that action's verb.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><div class="cluster"><button type="button" class="btn btn-danger">Delete trip</button><a class="link" href="#buttons-and-links">Read the release notes</a></div></div>
-    <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="cluster"><button type="button" class="btn btn-primary">OK</button><span>For the notes, <a class="link" href="#buttons-and-links">click here</a>.</span></div></div>
+    <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="cluster"><button type="button" class="btn btn-primary">OK</button><span><a class="link" href="#buttons-and-links">Click here</a> for the notes.</span></div></div>
   </div>
 </section>
 <section class="rule" aria-labelledby="form-labels">
   <h2 id="form-labels">Form labels</h2>
-  <p class="rule-text">A short noun phrase above the field, never a placeholder. Mark the optional fields, not the required ones; formats go in the hint.</p>
+  <p class="rule-text">A label is a short noun phrase above its field, never a placeholder. Mark the optional fields with "(optional)", not the required ones, and put formats in the hint below.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><div class="field"><label for="w-phone">Phone <span class="field-optional">(optional)</span></label><input id="w-phone" type="tel" aria-describedby="w-phone-hint"><p class="field-hint" id="w-phone-hint">We only call about bookings.</p></div></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="field"><label for="w-phone-x">Phone*</label><input id="w-phone-x" type="tel" placeholder="Please enter your phone number"></div></div>
@@ -89,15 +90,15 @@
 </section>
 <section class="rule" aria-labelledby="errors">
   <h2 id="errors">Errors</h2>
-  <p class="rule-text">What happened, then how to fix it, next to what went wrong. Name the field or the action, never the person.</p>
+  <p class="rule-text">Say what happened and how to fix it, in that order, next to the thing that went wrong. Name the field or the action, never the person. No codes unless someone will search for them, and then in mono after the words.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><div class="field"><label for="w-date">Start date</label><input id="w-date" value="2 Nov 2026" aria-invalid="true" aria-describedby="w-date-err"><p class="field-error" id="w-date-err"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>That date has passed. Pick today or later.</p></div></div>
-    <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="field"><label for="w-date-x">Start date</label><input id="w-date-x" value="2 Nov 2026" aria-invalid="true" aria-describedby="w-date-x-err"><p class="field-error" id="w-date-x-err"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>You entered a wrong date.</p></div></div>
+    <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="field"><label for="w-date-x">Start date</label><input id="w-date-x" value="2 Nov 2026" aria-invalid="true" aria-describedby="w-date-x-err"><p class="field-error" id="w-date-x-err"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>You entered a wrong date.</p></div><div class="field"><label for="w-date-y">End date</label><input id="w-date-y" value="31 Feb" aria-invalid="true" aria-describedby="w-date-y-err"><p class="field-error" id="w-date-y-err"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>Invalid input.</p></div></div>
   </div>
 </section>
 <section class="rule" aria-labelledby="empty-states">
   <h2 id="empty-states">Empty states</h2>
-  <p class="rule-text">Say what will be here and give the one action that fills it. If the person can't fill it, say why it's empty.</p>
+  <p class="rule-text">Say what will be here and give the one action that fills it. If the person can't fill it (no results, nothing assigned yet), say why it's empty and what would change that.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><div class="ex-frame"><div class="empty"><p class="empty-title">No trips yet</p><p class="empty-body">Plan one and it shows up here.</p><button type="button" class="btn btn-primary">Plan a trip</button></div></div></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="ex-frame"><div class="empty"><p class="empty-title">Nothing to see here!</p></div></div></div>
@@ -105,7 +106,7 @@
 </section>
 <section class="rule" aria-labelledby="confirmations">
   <h2 id="confirmations">Confirmations</h2>
-  <p class="rule-text">Ask only before something that can't be undone. The title names the action and the object, the body says what goes with it, the buttons are the verb and a way out.</p>
+  <p class="rule-text">Ask only before something that can't be undone. The title names the action and the object, the body says what goes with it, and the buttons are the verb and a way out ("Cancel", or "Keep trip" when that reads better). Where an action can be undone, do it and offer Undo instead of asking.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><div class="ex-confirm"><p class="ex-confirm-title">Delete Lisbon 2027?</p><p>Its 12 photos go with it. This can't be undone.</p><div class="cluster"><button type="button" class="btn">Keep trip</button><button type="button" class="btn btn-danger">Delete trip</button></div></div></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="ex-confirm"><p class="ex-confirm-title">Are you sure?</p><div class="cluster"><button type="button" class="btn">No</button><button type="button" class="btn btn-primary">Yes</button></div></div></div>
@@ -113,7 +114,7 @@
 </section>
 <section class="rule" aria-labelledby="success-messages">
   <h2 id="success-messages">Success messages</h2>
-  <p class="rule-text">Past tense, the object first, and Undo when there is one. Quiet: a toast or an inline line, never a dialog.</p>
+  <p class="rule-text">Past tense, the object first, and Undo when there is one. A success message is quiet: a toast or an inline line, never a dialog.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><div class="toast toast-success"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg><div class="toast-content"><p class="toast-title">Trip deleted</p></div><button type="button" class="btn btn-ghost btn-sm toast-action">Undo</button></div></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><div class="toast toast-success"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg><div class="toast-content"><p class="toast-title">Success!</p></div></div></div>
@@ -121,15 +122,15 @@
 </section>
 <section class="rule" aria-labelledby="dates">
   <h2 id="dates">Dates</h2>
-  <p class="rule-text">Day, short month, year in the interface. ISO 8601 in mono for data a person copies, sorts or searches.</p>
+  <p class="rule-text">In the interface a date is day, short month, year: "7 Nov 2026", with the weekday first when it helps planning ("Sat 7 Nov 2026"). Drop the year inside the current year when nothing is ambiguous. Data a person might copy, sort or search (logs, IDs, exports, timestamps in a table) uses ISO 8601 in <code>--mono</code>.</p>
   <div class="ex-pair">
-    <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">Departs Sat 7 Nov 2026</p><p class="ex-quote"><code class="code">2026-11-07T09:30Z deploy ok</code></p></div>
+    <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">Departs Sat 7 Nov 2026</p><p class="ex-quote"><code class="code">2026-11-07 deploy ok</code></p></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><p class="ex-quote">Departs 11/07/2026</p><p class="ex-quote">Departs November 7th, 2026</p></div>
   </div>
 </section>
 <section class="rule" aria-labelledby="times">
   <h2 id="times">Times</h2>
-  <p class="rule-text">Twelve-hour, a space, capital AM or PM; drop ":00" on the hour in prose. Add the zone when the reader might be elsewhere. No 24-hour time.</p>
+  <p class="rule-text">Twelve-hour, with a space and capital AM or PM; drop ":00" on the hour in prose. Add the zone when the reader might be elsewhere. 24-hour time is not used, except inside ISO 8601 data in mono (<code>2026-11-07T21:30Z</code> in a log). For something in the last day, a relative time ("5 min ago") is fine, with the full date and time in a tooltip or <code>title</code>.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">9:30 AM · 3 PM ET · 2–3 AM UTC</p></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><p class="ex-quote">21:30 · 9:30am</p></div>
@@ -137,7 +138,7 @@
 </section>
 <section class="rule" aria-labelledby="numbers">
   <h2 id="numbers">Numbers</h2>
-  <p class="rule-text">Numerals always, a comma every three digits, a space before a unit except %.</p>
+  <p class="rule-text">Numerals for every number, a comma every three digits, and a space before a unit except %. Compact durations in tables and mono data ("2h 11m", "150ms") can drop the space. Words a person typed, like a quoted message, stay as written. Figures that line up in a column use tabular figures, which the type tokens already set.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">3 trips · 10,482 photos · 64 GB · 64%</p></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><p class="ex-quote">three trips · 10482 photos · 64GB · 64 %</p></div>
@@ -145,7 +146,7 @@
 </section>
 <section class="rule" aria-labelledby="currency">
   <h2 id="currency">Currency</h2>
-  <p class="rule-text">The symbol first with no space. Whole amounts drop ".00" in prose; a price table shows two decimals on every row. Name the currency only when it could be mistaken.</p>
+  <p class="rule-text">The symbol before the number with no space. Whole amounts drop ".00" in prose; a table of prices shows two decimals on every row so they line up. Name the currency ("US$", "€") only when the reader could mistake it.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">$1,240 · $12.50</p></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><p class="ex-quote">$1240.00 · 12.5 USD</p></div>
@@ -153,7 +154,7 @@
 </section>
 <section class="rule" aria-labelledby="what-never-appears">
   <h2 id="what-never-appears">What never appears</h2>
-  <p class="rule-text">Exclamation marks, "simply", "just" or "easy", "Oops", emoji as words, typed ALL CAPS, and jargon on marketing pages.</p>
+  <p class="rule-text">These don't appear in a product's interface: exclamation marks; "simply", "just" or "easy" when they play a task down (they blame the person when it isn't); "Oops" or "Uh-oh"; emoji as words; ALL CAPS typed into the text; and, on marketing pages, jargon the reader has to look up.</p>
   <div class="ex-pair">
     <div class="ex ex-do"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>Do</p><p class="ex-quote">Couldn't load your trips. Try again.</p></div>
     <div class="ex ex-dont"><p class="ex-label"><svg class="icon icon-sm" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>Don't</p><p class="ex-quote">Oops! Something went wrong!! Simply refresh.</p></div>

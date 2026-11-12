@@ -670,7 +670,7 @@ a rule here has no section there.
 Competent, calm, plain words. Say what happened and what to do next, the way a
 colleague who knows the system would. No hype, no jokes, no apology theatre.
 
-- Do: "Your changes are saved."
+- Do: "Changes saved."
 - Don't: "Awesome! Your changes have been successfully saved!"
 
 ### Sentence case
@@ -715,14 +715,15 @@ Say what will be here and give the one action that fills it. If the person
 can't fill it (no results, nothing assigned yet), say why it's empty and what
 would change that.
 
-- Do: "No trips yet. Plan one and it shows up here." with a "Plan a trip" button
+- Do: "No trips yet", then "Plan one and it shows up here." and a "Plan a trip" button
 - Don't: "Nothing to see here!"
 
 ### Confirmations
 
 Ask only before something that can't be undone. The title names the action and
 the object, the body says what goes with it, and the buttons are the verb and
-a way out ("Cancel", or "Keep trip" when that reads better). Where an action can be undone, do it and offer Undo instead of asking.
+a way out ("Cancel", or "Keep trip" when that reads better). Where an action
+can be undone, do it and offer Undo instead of asking.
 
 - Do: "Delete Lisbon 2027?" / "Its 12 photos go with it. This can't be undone." / "Delete trip", "Keep trip"
 - Don't: "Are you sure?" / "Yes", "No"
@@ -748,7 +749,8 @@ search (logs, IDs, exports, timestamps in a table) uses ISO 8601 in `--mono`.
 ### Times
 
 Twelve-hour, with a space and capital AM or PM; drop ":00" on the hour in prose.
-Add the zone when the reader might be elsewhere. 24-hour time is not used. For
+Add the zone when the reader might be elsewhere. 24-hour time is not used,
+except inside ISO 8601 data in mono (`2026-11-07T21:30Z` in a log). For
 something in the last day, a relative time ("5 min ago") is fine, with the full
 date and time in a tooltip or `title`.
 
@@ -758,7 +760,9 @@ date and time in a tooltip or `title`.
 ### Numbers
 
 Numerals for every number, a comma every three digits, and a space before a
-unit except %. Figures that line up in a column use tabular figures, which the
+unit except %. Compact durations in tables and mono data ("2h 11m", "150ms")
+can drop the space. Words a person typed, like a quoted message, stay as
+written. Figures that line up in a column use tabular figures, which the
 type tokens already set.
 
 - Do: "3 trips · 10,482 photos · 64 GB · 64%"
@@ -775,10 +779,10 @@ currency ("US$", "€") only when the reader could mistake it.
 
 ### What never appears
 
-These don't appear in a product's interface: exclamation marks, "simply",
-"just" or "easy" (they blame the person when it isn't), "Oops" or "Uh-oh",
-emoji as words, ALL CAPS typed into the text, and on marketing pages, jargon
-the reader has to look up.
+These don't appear in a product's interface: exclamation marks; "simply",
+"just" or "easy" when they play a task down (they blame the person when it
+isn't); "Oops" or "Uh-oh"; emoji as words; ALL CAPS typed into the text; and,
+on marketing pages, jargon the reader has to look up.
 
 - Do: "Couldn't load your trips. Try again."
 - Don't: "Oops! Something went wrong!! Simply refresh."
