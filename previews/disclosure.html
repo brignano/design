@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -62,9 +62,9 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
-<pre>&lt;details class="disclosure"&gt;
+<pre tabindex="0">&lt;details class="disclosure"&gt;
   &lt;summary&gt;What happens to my photos?&lt;/summary&gt;
   &lt;p&gt;They stay in your album until you delete them.&lt;/p&gt;
 &lt;/details&gt;
@@ -107,23 +107,23 @@
     </div>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
       <h2>Use when</h2>
       <ul>
         <li>FAQs on a product page.</li>
         <li>Detail most people skip, like advanced settings or the full log behind a summary.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section data-doc="dont-use">
       <h2>Don't use when</h2>
       <ul>
         <li>The content is what people came for. Show it.</li>
         <li>People switch between views of one thing. Use tabs.</li>
         <li>It hides an error or a required field.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section>
     <h2>Behaviour</h2>
@@ -134,7 +134,7 @@
     </ul>
   </section>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>The summary is the button: keep it short, and don't put links or other controls inside it.</li>

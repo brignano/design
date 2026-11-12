@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -122,9 +122,9 @@
     </div>
   </section>
 
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
-<pre>&lt;div class="table-wrap"&gt;
+<pre tabindex="0">&lt;div class="table-wrap"&gt;
   &lt;table class="table"&gt;
     &lt;caption&gt;Containers on the homelab&lt;/caption&gt;
     &lt;thead&gt;&lt;tr&gt;
@@ -138,24 +138,24 @@
 &lt;/div&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
       <h2>Use when</h2>
       <ul>
         <li>People compare values across rows: prices, sizes, counts, dates.</li>
         <li>The columns are the same for every row.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section data-doc="dont-use">
       <h2>Don't use when</h2>
       <ul>
         <li>Each item has a different shape. Use cards or a key-value list.</li>
         <li>It's for layout. Tables are for data only.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Every header cell is a <code>&lt;th scope="col"&gt;</code>; a row header is <code>&lt;th scope="row"&gt;</code>.</li>

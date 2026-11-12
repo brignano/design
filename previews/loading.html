@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -123,8 +123,9 @@
 </div>
 
 <div class="docs">
-<h2>Use</h2>
-<pre><code>&lt;p class="cluster gap-2"&gt;&lt;span class="spinner" aria-hidden="true"&gt;&lt;/span&gt; Loading trips…&lt;/p&gt;
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;p class="cluster gap-2"&gt;&lt;span class="spinner" aria-hidden="true"&gt;&lt;/span&gt; Loading trips…&lt;/p&gt;
 
 &lt;div role="group" aria-busy="true" aria-label="Loading trip"&gt;
   &lt;span class="skeleton skeleton-circle" aria-hidden="true"&gt;&lt;/span&gt;
@@ -144,13 +145,56 @@
   &lt;p class="empty-body"&gt;Trips you save show up here.&lt;/p&gt;
   &lt;a class="btn btn-primary" href="/plan"&gt;Plan a trip&lt;/a&gt;
 &lt;/div&gt;</code></pre>
-<ul>
-  <li><b>Spinner or skeleton.</b> A skeleton only when you know the layout that's coming; otherwise a spinner. A spinner always has words beside it, or <code>role="img" aria-label="Loading"</code> where there's no room.</li>
-  <li><b>Busy regions.</b> Put <code>aria-busy="true"</code> on the container that's loading and remove it when the content lands. Skeleton blocks are <code>aria-hidden</code>.</li>
-  <li><b>Progress and meter.</b> Progress is how far a task has got; leave out <code>value</code> when you can't say, and it shows a pulsing segment in the middle, which can't be read as an amount. Meter is a level in a known range: its fill is cobalt in the <code>optimum</code> range, attention one range away and danger two away. Always label them. Without the class they stay native.</li>
-  <li><b>Empty states.</b> One line saying what will be here, at most one action, an icon and no illustration. If there's nothing the reader can do, leave the button out.</li>
-  <li><b>Reduced motion.</b> The spinner shows a still arc, the shimmer stops and leaves a plain block, and an indeterminate bar holds still as its centre segment. The words and <code>aria-busy</code> carry the meaning.</li>
-</ul>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li><b>Spinner or skeleton.</b> A skeleton only when you know the layout that's coming; otherwise a spinner.</li>
+        <li><b>Progress</b> for how far a task has got; <b>meter</b> for a level in a known range.</li>
+        <li><b>Empty state</b> when a list or view has nothing in it yet.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The wait is on a button the reader just pressed: use <code>aria-busy="true"</code> on the button.</li>
+        <li>You don't know the layout that's coming: use a spinner, not a skeleton.</li>
+        <li>An amount you can't measure: leave out <code>value</code> on the progress bar rather than guess.</li>
+        <li>A count that is the whole point of the view: use a stat tile, not a meter.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="two">
+    <section>
+      <h2>Progress and meter</h2>
+      <ul>
+        <li>Progress is how far a task has got; leave out <code>value</code> when you can't say, and it shows a pulsing segment in the middle, which can't be read as an amount.</li>
+        <li>Meter is a level in a known range: its fill is cobalt in the <code>optimum</code> range, attention one range away and danger two away.</li>
+        <li>Without the class they stay native.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Empty states</h2>
+      <ul>
+        <li>One line saying what will be here, at most one action, an icon and no illustration.</li>
+        <li>If there's nothing the reader can do, leave the button out.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>A spinner always has words beside it, or <code>role="img" aria-label="Loading"</code> where there's no room.</li>
+      <li><b>Busy regions.</b> Put <code>aria-busy="true"</code> on the container that's loading and remove it when the content lands. Skeleton blocks are <code>aria-hidden</code>.</li>
+      <li>Always label progress and meter with a <code>&lt;label for&gt;</code>, and put the value in words inside the element too.</li>
+      <li><b>Reduced motion.</b> The spinner shows a still arc, the shimmer stops and leaves a plain block, and an indeterminate bar holds still as its centre segment. The words and <code>aria-busy</code> carry the meaning.</li>
+      <li>Under forced colours the spinner, progress and meter draw in system colours.</li>
+    </ul>
+  </section>
 </div>
 </body>
 </html>

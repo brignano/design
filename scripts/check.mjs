@@ -19,7 +19,11 @@
 //      Their rules that set both a text colour and a background from tokens
 //      join the contrast floors in (1);
 //   9. templates/email.html names a colour token that tokens.css can't
-//      resolve to a light-theme value, or carries a hex of its own.
+//      resolve to a light-theme value, or carries a hex of its own;
+//  10. a component or template page misses part of the docs shape (#86):
+//      data-status on <html>, and .docs sections tagged data-doc="usage"
+//      (with a snippet), "use-when", "dont-use" and "a11y"; or its card on
+//      index.html shows a different status.
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -371,9 +375,53 @@ for (const [f, rs] of layerRules)
     for (const m of selector.matchAll(/\.([a-z][\w-]*)/gi))
       if (!shown.has(m[1]) && shown.add(m[1])) fail(`not shown: .${m[1]} (${f}) appears on no preview page`);
 
+// ── 10. Every component page is a docs page ─────────────────────────────────
+// The shape a builder (or an agent) can use without reading CSS: a status, a
+// copy-paste snippet, when to use it and when not, and what accessibility
+// asks of the consumer. Foundations are specimens, and the product page
+// skeleton and its examples are documented in DESIGN.md §13.
+const NOT_DOCS = new Set(['color.html', 'type.html', 'elevation.html', 'components.html',
+  'diagram.html', 'product-page.html', 'product-page-example.html', 'product-media.html']);
+const STATUSES = ['stable', 'beta', 'planned'];
+const DOCS = { usage: 'Use it', 'use-when': 'Use when', 'dont-use': "Don't use when", a11y: 'Accessibility' };
+const cardStatus = new Map(
+  [...index.matchAll(/<a class="gallery-card" href="previews\/([\w-]+\.html)">([\s\S]*?)<\/a>/g)]
+    .map(([, f, body]) => [f, body.match(/data-status="([\w-]+)"/)?.[1]]));
+for (const f of previews) {
+  const html = read(`previews/${f}`);
+  const status = html.match(/<html[^>]*\sdata-status="([\w-]+)"/)?.[1];
+  if (NOT_DOCS.has(f)) {
+    if (status) fail(`previews/${f}: a foundation or product-page example carries data-status; drop it or take it off the exempt list`);
+    if (cardStatus.get(f)) fail(`index.html: the card for previews/${f} shows a status, but the page is exempt`);
+    continue;
+  }
+  if (!STATUSES.includes(status)) { fail(`previews/${f}: <html> needs data-status="${STATUSES.join('|')}"`); continue; }
+  if (cardStatus.get(f) !== status)
+    fail(`index.html: the card for previews/${f} shows status ${cardStatus.get(f) ?? 'none'}, but the page says ${status}`);
+  // Comments and escaped snippets can't stand in for a section: strip
+  // comments, then match the attribute only on a real <section> tag.
+  const page = html.replace(/<!--[\s\S]*?-->/g, '');
+  const docs = page.search(/class="(?:[^"]*\s)?docs(?:\s[^"]*)?"/);
+  if (docs < 0) { fail(`previews/${f}: no .docs block`); continue; }
+  const after = page.slice(docs);
+  const order = [];
+  for (const [key, heading] of Object.entries(DOCS)) {
+    const at = after.search(new RegExp(`<section\\b[^>]*\\sdata-doc="${key}"`));
+    if (at < 0) { fail(`previews/${f}: .docs has no <section data-doc="${key}"> ("${heading}")`); continue; }
+    order.push(at);
+    const section = after.slice(at, after.indexOf('</section>', at));
+    if (!section.includes(`>${heading}</h2>`))
+      fail(`previews/${f}: the data-doc="${key}" section's heading must read "${heading}"`);
+    if (key === 'usage' && !section.includes('<pre')) fail(`previews/${f}: "Use it" has no copy-paste snippet (<pre>)`);
+    else if (key !== 'usage' && !/<(li|p)\b/.test(section)) fail(`previews/${f}: "${heading}" is empty`);
+  }
+  if (order.length === 4 && order.some((at, i) => i && at < order[i - 1]))
+    fail(`previews/${f}: the docs sections must run Use it, Use when, Don't use when, Accessibility`);
+}
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented`);

@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -70,7 +70,7 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;span class="avatar"&gt;&lt;img src="ana.jpg" alt="Ana Ruiz"&gt;&lt;/span&gt;
 &lt;span class="avatar avatar-sm" role="img" aria-label="Ben Okafor"&gt;BO&lt;/span&gt;
@@ -89,23 +89,32 @@
 &lt;figure class="figure"&gt;&lt;img src="…" alt="…"&gt;&lt;figcaption&gt;…&lt;/figcaption&gt;&lt;/figure&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
-      <h2>Sizes and classes</h2>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
       <ul>
-        <li>Avatar: <code>.avatar-sm</code> 24px, <code>.avatar</code> 40px, <code>.avatar-lg</code> 64px.</li>
-        <li>Code tokens: <code>.tok-keyword</code>, <code>.tok-string</code>, <code>.tok-comment</code>; a highlighted line is <code>.line-highlight</code>. Everything else stays <code>--code-ink</code>.</li>
-        <li>Colours are tokens (<code>--code-*</code>) so a highlighter theme can map to them.</li>
+        <li>Showing who did something: an avatar beside a name in a list, a comment or a header.</li>
+        <li>Naming a key, a command or a file of code in an app screen or a docs page.</li>
+        <li>Quoting someone, or captioning an image or a chart.</li>
       </ul>
-    </div>
-    <div>
-      <h2>Don't</h2>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
       <ul>
-        <li>Colour more token types. Keywords in cobalt, comments in italics: that's enough to scan.</li>
-        <li>Use the blockquote for a callout or a warning. Use a message.</li>
-        <li>Put an avatar where the name isn't nearby or in its label.</li>
+        <li>You want to colour more token types. Keywords in cobalt, comments in italics: that's enough to scan.</li>
+        <li>You need a callout or a warning. Use a message, not the blockquote.</li>
+        <li>The name isn't nearby or in the avatar's label. Leave the avatar out.</li>
       </ul>
-    </div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Sizes and classes</h2>
+    <ul>
+      <li>Avatar: <code>.avatar-sm</code> 24px, <code>.avatar</code> 40px, <code>.avatar-lg</code> 64px.</li>
+      <li>Code tokens: <code>.tok-keyword</code>, <code>.tok-string</code>, <code>.tok-comment</code>; a highlighted line is <code>.line-highlight</code>. Everything else stays <code>--code-ink</code>.</li>
+      <li>Colours are tokens (<code>--code-*</code>) so a highlighter theme can map to them.</li>
+    </ul>
   </section>
 
   <section>
@@ -116,7 +125,7 @@
     </ul>
   </section>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>The code block scrolls sideways instead of wrapping, so give its <code>&lt;pre&gt;</code> <code>tabindex="0"</code> and an <code>aria-label</code>: keyboard users can then scroll it.</li>

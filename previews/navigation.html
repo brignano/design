@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -90,9 +90,9 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
-<pre>&lt;nav class="breadcrumb" aria-label="Breadcrumb"&gt;&lt;ol&gt;
+<pre tabindex="0">&lt;nav class="breadcrumb" aria-label="Breadcrumb"&gt;&lt;ol&gt;
   &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href="/work/x" aria-current="page"&gt;This page&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;&lt;/nav&gt;
@@ -110,26 +110,26 @@
 &lt;/div&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
       <h2>Use when</h2>
       <ul>
         <li>Breadcrumb: pages sit two or more levels deep, like a case study inside Work.</li>
         <li>Pagination: a table people page through and come back to ("page 3").</li>
         <li>Load more: a content list people scan, like posts or photos.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section data-doc="dont-use">
       <h2>Don't use when</h2>
       <ul>
         <li>Breadcrumb on a top-level page, or as the only navigation.</li>
         <li>Numbered pages for a content list. Use load more.</li>
         <li>Infinite scroll. It's not part of the system: people lose their place and the footer.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Both are a <code>&lt;nav&gt;</code> with an <code>aria-label</code>, so they appear in the landmarks list.</li>

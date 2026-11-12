@@ -1,6 +1,6 @@
 <!-- @dsCard group="Controls" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -149,7 +149,7 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;fieldset class="choice-group"&gt;
   &lt;legend&gt;Notify me&lt;/legend&gt;
@@ -174,28 +174,38 @@
 &lt;/fieldset&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
-      <h2>Which one</h2>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
       <ul>
         <li><b>Checkbox</b>: any number of options, or one yes/no that is sent with a form.</li>
         <li><b>Radio</b>: exactly one of a few options, all visible, with room for a hint each.</li>
-        <li><b>Switch</b>: a setting that takes effect the moment it flips. Never inside a form with a submit button: use a checkbox there.</li>
-        <li><b>Segmented</b>: one of two to five short options that change a view or a unit. Longer lists are radios or a select.</li>
+        <li><b>Switch</b>: a setting that takes effect the moment it flips.</li>
+        <li><b>Segmented</b>: one of two to five short options that change a view or a unit.</li>
       </ul>
-    </div>
-    <div>
-      <h2>States</h2>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
       <ul>
-        <li>Checkboxes and radios are native, coloured by <code>accent-color: var(--i)</code> from <code>tokens.css</code>.</li>
-        <li>The switch knob moves right when on, so the state reads without colour.</li>
-        <li>Focus is the 2px <code>--i-ink</code> ring; on a segment it rings the label.</li>
-        <li><code>disabled</code> goes neutral (<code>--i-disabled-*</code>), and the row's text dims with it.</li>
+        <li>A setting inside a form with a submit button: use a checkbox there, not a switch.</li>
+        <li>More than five options, or long ones: use radios or a native <code>&lt;select&gt;</code>, not the segmented control.</li>
+        <li>Many options that won't fit on screen: use a <code>&lt;select&gt;</code> in a text field.</li>
+        <li>An action that runs when pressed: use a button.</li>
       </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section>
+    <h2>States</h2>
+    <ul>
+      <li>Checkboxes and radios are native, coloured by <code>accent-color: var(--i)</code> from <code>tokens.css</code>.</li>
+      <li>The switch knob moves right when on, so the state reads without colour.</li>
+      <li>Focus is the 2px <code>--i-ink</code> ring; on a segment it rings the label.</li>
+      <li><code>disabled</code> goes neutral (<code>--i-disabled-*</code>), and the row's text dims with it.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Group related choices in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>; the legend names the group.</li>

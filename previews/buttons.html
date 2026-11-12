@@ -1,6 +1,6 @@
 <!-- @dsCard group="Controls" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -124,7 +124,7 @@
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;button type="submit" class="btn btn-primary"&gt;Save&lt;/button&gt;
 &lt;a class="btn btn-secondary" href="/back"&gt;Cancel&lt;/a&gt;
@@ -136,8 +136,27 @@
 &lt;p&gt;Read the &lt;a class="link" href="/terms"&gt;terms&lt;/a&gt;.&lt;/p&gt;</pre>
   </section>
 
-  <section class="two">
-    <div>
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>Someone acts: save, send, delete, open a dialog. Use <code>&lt;button&gt;</code>.</li>
+        <li>A link should look like an action, such as "Cancel" next to "Save". Put <code>.btn</code> on the <code>&lt;a href&gt;</code>.</li>
+        <li>A link sits inside running text: <code>.link</code>.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Navigation inside running text: use <code>.link</code>, not a button.</li>
+        <li>A choice between options: the segmented control, not a row of buttons.</li>
+        <li>Two primaries side by side: make one secondary.</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="two">
+    <section>
       <h2>Variants</h2>
       <ul>
         <li><b>Primary</b>: the one action the view exists for. One per view.</li>
@@ -145,8 +164,8 @@
         <li><b>Ghost</b>: low-weight actions in toolbars and next to a primary.</li>
         <li><b>Danger</b>: deletes or loses something. The only fill that isn't cobalt; confirm before it acts.</li>
       </ul>
-    </div>
-    <div>
+    </section>
+    <section>
       <h2>Sizes and shapes</h2>
       <ul>
         <li><code>.btn-sm</code> 32px, default 40px, <code>.btn-lg</code> 48px; all reach 44px on touch.</li>
@@ -154,30 +173,20 @@
         <li><code>.btn-block</code> fills its row, for phone forms and dialogs.</li>
         <li>One radius everywhere: <code>--radius</code>.</li>
       </ul>
-    </div>
-  </section>
-
-  <section class="two">
-    <div>
-      <h2>States</h2>
-      <ul>
-        <li>Hover and pressed swap the fill: <code>--i-hover</code>, <code>--i-pressed</code> on primary; neutral surfaces on secondary.</li>
-        <li>Focus is the 2px <code>--i-ink</code> ring, 2px out. Never removed.</li>
-        <li><code>disabled</code> on a button, <code>aria-disabled="true"</code> on a link or a button that must stay focusable (so its tooltip can explain why). Both get the neutral disabled fill; your script ignores clicks on <code>aria-disabled</code>.</li>
-        <li><code>aria-busy="true"</code> hides the label behind a spinner without changing the width.</li>
-      </ul>
-    </div>
-    <div>
-      <h2>When not to</h2>
-      <ul>
-        <li>Navigation inside running text: use <code>.link</code>, not a button.</li>
-        <li>A choice between options: the segmented control, not a row of buttons.</li>
-        <li>Two primaries side by side: make one secondary.</li>
-      </ul>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section>
+    <h2>States</h2>
+    <ul>
+      <li>Hover and pressed swap the fill: <code>--i-hover</code>, <code>--i-pressed</code> on primary; neutral surfaces on secondary.</li>
+      <li>Focus is the 2px <code>--i-ink</code> ring, 2px out. Never removed.</li>
+      <li><code>disabled</code> on a button, <code>aria-disabled="true"</code> on a link or a button that must stay focusable (so its tooltip can explain why). Both get the neutral disabled fill; your script ignores clicks on <code>aria-disabled</code>.</li>
+      <li><code>aria-busy="true"</code> hides the label behind a spinner without changing the width.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Use <code>&lt;button&gt;</code> for actions and <code>&lt;a href&gt;</code> for navigation; the class is the same.</li>

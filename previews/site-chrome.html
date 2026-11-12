@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -144,8 +144,9 @@
 </div>
 
 <div class="docs">
-<h2>Use</h2>
-<pre><code>&lt;a class="skip-link" href="#main"&gt;Skip to content&lt;/a&gt;
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;a class="skip-link" href="#main"&gt;Skip to content&lt;/a&gt;
 &lt;header class="site-header"&gt;
   &lt;div class="site-header-inner container container-wide"&gt;
     &lt;a class="site-brand" href="/"&gt;…logo… Name&lt;/a&gt;
@@ -162,13 +163,47 @@
 &lt;/header&gt;
 &lt;main id="main"&gt;…&lt;/main&gt;
 &lt;footer class="site-footer"&gt;…&lt;/footer&gt;</code></pre>
-<ul>
-  <li>The phone menu needs no script. The <code>popover</code> attribute gives you Esc and click-outside to close. The <code>autofocus</code> close button takes focus when the menu opens, and focus goes back to the menu button when it closes.</li>
-  <li>The collapse follows the header's own width (a container query at 45rem), not the window, so it works in a narrow frame too.</li>
-  <li>A popover doesn't trap focus. Tabbing past the last link leaves the sheet open and moves on to the page behind it, so keep the sheet short.</li>
-  <li>Mark the current page with <code>aria-current="page"</code>, never a class.</li>
-  <li>The sheet opens across the top of the window. On this preview page it spans the whole window even from the 375px frame.</li>
-</ul>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>Every page of a site or app needs the same brand, main nav and actions at the top.</li>
+        <li>The site needs a footer with link columns and a legal line.</li>
+        <li>The main nav has a handful of top-level links.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>You need to show where a page sits in a hierarchy. Add a breadcrumb under the header.</li>
+        <li>The links switch views of one thing. Use tabs.</li>
+        <li>The nav is long or nested. Keep the header to top-level links and put the rest on the pages themselves.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Behaviour</h2>
+    <ul>
+      <li>The phone menu needs no script. The <code>popover</code> attribute gives you Esc and click-outside to close.</li>
+      <li>The collapse follows the header's own width (a container query at 45rem), not the window, so it works in a narrow frame too.</li>
+      <li>The sheet opens across the top of the window. On this preview page it spans the whole window even from the 375px frame.</li>
+    </ul>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Put the <code>.skip-link</code> first in the body, pointing at <code>&lt;main id="main"&gt;</code>. It stays hidden until a keyboard user tabs to it.</li>
+      <li>The <code>autofocus</code> close button takes focus when the menu opens, and focus goes back to the menu button when it closes.</li>
+      <li>A popover doesn't trap focus. Tabbing past the last link leaves the sheet open and moves on to the page behind it, so keep the sheet short.</li>
+      <li>Mark the current page with <code>aria-current="page"</code>, never a class.</li>
+      <li>Give the <code>&lt;nav&gt;</code> an <code>aria-label</code>, and the icon-only menu and close buttons an <code>aria-label</code> each. Nav and footer links are at least 44px tall on touch screens.</li>
+      <li>In forced colours the header border and current-page underline stay visible. With reduced transparency the header drops its blur for a solid surface.</li>
+    </ul>
+  </section>
 </div>
 </body>
 </html>

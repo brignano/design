@@ -1,6 +1,6 @@
 <!-- @dsCard group="Components" -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-status="stable">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -95,7 +95,7 @@ if (await cache.has(key)) return cache.restore(key);</code></pre>
 </div>
 
 <div class="docs">
-  <section>
+  <section data-doc="usage">
     <h2>Use it</h2>
 <pre tabindex="0">&lt;article class="prose"&gt;
   &lt;h2 id="cause"&gt;Find the real cause &lt;a class="anchor" href="#cause" aria-label="Link to Find the real cause"&gt;&lt;/a&gt;&lt;/h2&gt;
@@ -103,6 +103,23 @@ if (await cache.has(key)) return cache.restore(key);</code></pre>
   &lt;div class="table-wrap"&gt;&lt;table class="table"&gt;…&lt;/table&gt;&lt;/div&gt;
 &lt;/article&gt;</pre>
   </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>You render Markdown or CMS content and don't control each element: posts, docs pages, release notes.</li>
+        <li>Long reading text sits inside the article, changelog or legal template.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>The page is an app screen: forms, dashboards, settings. Use the components directly.</li>
+        <li>You need an h1: the page template owns the title, so prose starts at h2.</li>
+      </ul>
+    </section>
+  </div>
 
   <section>
     <h2>Marketing tier</h2>
@@ -125,27 +142,18 @@ if (await cache.has(key)) return cache.restore(key);</code></pre>
     </div>
   </section>
 
-  <section class="two">
-    <div>
-      <h2>What it covers</h2>
-      <ul>
-        <li>Headings h2 to h4 with a <code>.anchor</code> link after the text, paragraphs, links, bold, lists (nested too).</li>
-        <li>Inline <code>code</code>, <code>kbd</code>, <code>pre</code>, <code>blockquote</code>, <code>figure</code>, <code>hr</code>, and footnotes in both shapes: markdown-it's <code>.footnotes</code> (light panel) and remark-gfm's <code>section[data-footnotes]</code> with its heading (dark panel).</li>
-        <li>Images are capped at the column, including linked ones.</li>
-        <li>Tables: wrap them in <code>.table-wrap</code> with <code>.table</code>. Renderers emit a bare <code>&lt;table&gt;</code>, so add the wrapper with a renderer plugin or a component; a bare table isn't styled and won't scroll.</li>
-        <li>Width stops at the tier's <code>--measure</code>; spacing is <code>--s*</code>.</li>
-      </ul>
-    </div>
-    <div>
-      <h2>Don't use when</h2>
-      <ul>
-        <li>The page is an app screen: forms, dashboards, settings. Use the components directly.</li>
-        <li>You need an h1: the page template owns the title, so prose starts at h2.</li>
-      </ul>
-    </div>
+  <section>
+    <h2>What it covers</h2>
+    <ul>
+      <li>Headings h2 to h4 with a <code>.anchor</code> link after the text, paragraphs, links, bold, lists (nested too).</li>
+      <li>Inline <code>code</code>, <code>kbd</code>, <code>pre</code>, <code>blockquote</code>, <code>figure</code>, <code>hr</code>, and footnotes in both shapes: markdown-it's <code>.footnotes</code> (light panel) and remark-gfm's <code>section[data-footnotes]</code> with its heading (dark panel).</li>
+      <li>Images are capped at the column, including linked ones.</li>
+      <li>Tables: wrap them in <code>.table-wrap</code> with <code>.table</code>. Renderers emit a bare <code>&lt;table&gt;</code>, so add the wrapper with a renderer plugin or a component; a bare table isn't styled and won't scroll.</li>
+      <li>Width stops at the tier's <code>--measure</code>; spacing is <code>--s*</code>.</li>
+    </ul>
   </section>
 
-  <section>
+  <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>Give each <code>.anchor</code> an <code>aria-label</code> naming its section; the <code>#</code> is drawn by CSS.</li>
