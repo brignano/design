@@ -57,6 +57,7 @@
     ['legal.html', 'Legal page'],
     ['error.html', 'Error pages'],
     ['settings.html', 'Settings page'],
+    ['app-shell.html', 'App shell'],
     ['email.html', 'Transactional email'],
   ];
 

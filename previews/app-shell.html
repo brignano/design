@@ -1,0 +1,525 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en" data-status="beta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>App shell</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../templates/app-shell.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* Preview chrome only: each example is a fixed box the shell fills, and
+     the wide ones scroll sideways on a narrow screen. */
+  .shell-demo { margin-top: var(--s6); }
+  .shell-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
+  .shell-demo > p { margin: 0 0 var(--s3); color: var(--ink-soft); max-width: 70ch; }
+  .shell-scroll { overflow-x: auto; padding-bottom: var(--s2); }
+  .shell-frame { border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+  .shell-frame.light { color-scheme: light; }
+  .shell-frame.dark { color-scheme: dark; }
+  .shell-frame .app-shell { height: 600px; }
+  .shell-frame.w1440 { width: 1440px; }
+  .shell-frame.w900 { width: 900px; }
+  .shell-frame.w375 { width: 375px; max-width: 100%; }
+  .phones { display: flex; flex-wrap: wrap; gap: var(--s4); }
+  .phones > div { display: grid; gap: var(--s2); }
+  /* The example app's own page styles, not part of the template. */
+  .app-page { padding: var(--s5); }
+  .app-page-title { margin: 0 0 var(--s4); font-size: var(--text-xl); font-weight: 600; }
+  .host-open { min-height: 32px; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-weight: 600; text-align: start; cursor: pointer; }
+  .host-open:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .host-open:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: 2px; }
+  .host-open[aria-current='true'] { color: var(--i-ink); }
+</style>
+</head>
+<body>
+<h1>App shell</h1>
+<p class="sub">The frame a tool app sits in: header, sidebar, main view and a detail panel. It follows its own width, so the same markup is a phone layout, a tablet layout and a three-column desktop.</p>
+
+<section class="shell-demo" aria-labelledby="t-wide">
+  <h2 id="t-wide">Wide, 1440px</h2>
+  <p>The sidebar is a column and the selected host's details are a third column. Collapse the sidebar with the button at its foot, and hover or tab through the rail to see each label.</p>
+  <div class="shell-scroll">
+    <div class="shell-frame light w1440">
+      <section class="app-shell" data-sidebar="expanded" aria-label="Example app, wide light">
+      <div class="app-shell-grid">
+        <header class="site-header">
+          <div class="site-header-inner">
+            <button type="button" class="btn btn-ghost btn-icon app-menu-button" popovertarget="wl-nav" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button>
+            <a class="site-brand" href="#wl-home"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>homelab</a>
+            <div class="site-actions">
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Search"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Account"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+            </div>
+          </div>
+        </header>
+        <nav class="app-sidebar" id="wl-nav" popover aria-label="Main, wide light">
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-close" popovertarget="wl-nav" popovertargetaction="hide" aria-label="Close menu" autofocus><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="wl-nav-0">Infrastructure</p>
+            <ul aria-labelledby="wl-nav-0"><li><a href="#wl-hosts" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg><span class="app-sidebar-label">Hosts</span></a></li><li><a href="#wl-backups"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="app-sidebar-label">Backups</span></a></li><li><a href="#wl-updates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="app-sidebar-label">Updates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="wl-nav-1">Network</p>
+            <ul aria-labelledby="wl-nav-1"><li><a href="#wl-tunnels"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="app-sidebar-label">Tunnels</span></a></li><li><a href="#wl-certificates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="app-sidebar-label">Certificates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="wl-nav-2">System</p>
+            <ul aria-labelledby="wl-nav-2"><li><a href="#wl-alerts"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg><span class="app-sidebar-label">Alerts</span></a></li><li><a href="#wl-settings"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span class="app-sidebar-label">Settings</span></a></li></ul>
+          </div>
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-toggle" aria-controls="wl-nav" aria-expanded="true" aria-label="Collapse sidebar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        </nav>
+        <div class="app-main">
+          <div class="app-page">
+            <h2 class="app-page-title">Hosts</h2>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th scope="col">Host</th><th scope="col">Status</th><th scope="col" class="num">CPU</th><th scope="col" class="num">Uptime</th></tr></thead>
+                <tbody>
+                <tr><td><button type="button" class="host-open" data-host="pve-01" aria-controls="wl-detail" aria-current="true">pve-01</button></td><td><span class="pill pill-success">Running</span></td><td class="num">23%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="nas" aria-controls="wl-detail">nas</button></td><td><span class="pill pill-success">Running</span></td><td class="num">8%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="pi-dns" aria-controls="wl-detail">pi-dns</button></td><td><span class="pill pill-attention">Degraded</span></td><td class="num">71%</td><td class="num">3 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="media" aria-controls="wl-detail">media</button></td><td><span class="pill pill-success">Running</span></td><td class="num">35%</td><td class="num">12 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="backup-offsite" aria-controls="wl-detail">backup-offsite</button></td><td><span class="pill pill-danger">Stopped</span></td><td class="num">–</td><td class="num">–</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <dialog class="dialog app-detail" id="wl-detail" aria-labelledby="wl-detail-title" open>
+          <div class="dialog-header"><h2 class="dialog-title" id="wl-detail-title">pve-01</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close details"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></form></div>
+          <div class="dialog-body">
+            <dl class="kv">
+              <div><dt>Status</dt><dd data-f="status"><span class="pill pill-success">Running</span></dd></div>
+              <div><dt>CPU</dt><dd data-f="cpu">23%</dd></div>
+              <div><dt>Uptime</dt><dd data-f="up">41 days</dd></div>
+              <div><dt>Address</dt><dd>10.0.0.12</dd></div>
+              <div><dt>Last backup</dt><dd>Today, 3:10 am</dd></div>
+            </dl>
+          </div>
+        </dialog>
+      </div>
+    </section>
+    </div>
+  </div>
+  <div class="shell-scroll" style="margin-top: var(--s4)">
+    <div class="shell-frame dark w1440">
+      <section class="app-shell" data-sidebar="collapsed" aria-label="Example app, wide dark">
+      <div class="app-shell-grid">
+        <header class="site-header">
+          <div class="site-header-inner">
+            <button type="button" class="btn btn-ghost btn-icon app-menu-button" popovertarget="wd-nav" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button>
+            <a class="site-brand" href="#wd-home"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>homelab</a>
+            <div class="site-actions">
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Search"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Account"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+            </div>
+          </div>
+        </header>
+        <nav class="app-sidebar" id="wd-nav" popover aria-label="Main, wide dark">
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-close" popovertarget="wd-nav" popovertargetaction="hide" aria-label="Close menu" autofocus><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="wd-nav-0">Infrastructure</p>
+            <ul aria-labelledby="wd-nav-0"><li><a href="#wd-hosts" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg><span class="app-sidebar-label">Hosts</span></a></li><li><a href="#wd-backups"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="app-sidebar-label">Backups</span></a></li><li><a href="#wd-updates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="app-sidebar-label">Updates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="wd-nav-1">Network</p>
+            <ul aria-labelledby="wd-nav-1"><li><a href="#wd-tunnels"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="app-sidebar-label">Tunnels</span></a></li><li><a href="#wd-certificates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="app-sidebar-label">Certificates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="wd-nav-2">System</p>
+            <ul aria-labelledby="wd-nav-2"><li><a href="#wd-alerts"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg><span class="app-sidebar-label">Alerts</span></a></li><li><a href="#wd-settings"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span class="app-sidebar-label">Settings</span></a></li></ul>
+          </div>
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-toggle" aria-controls="wd-nav" aria-expanded="false" aria-label="Expand sidebar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        </nav>
+        <div class="app-main">
+          <div class="app-page">
+            <h2 class="app-page-title">Hosts</h2>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th scope="col">Host</th><th scope="col">Status</th><th scope="col" class="num">CPU</th><th scope="col" class="num">Uptime</th></tr></thead>
+                <tbody>
+                <tr><td><button type="button" class="host-open" data-host="pve-01" aria-controls="wd-detail">pve-01</button></td><td><span class="pill pill-success">Running</span></td><td class="num">23%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="nas" aria-controls="wd-detail">nas</button></td><td><span class="pill pill-success">Running</span></td><td class="num">8%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="pi-dns" aria-controls="wd-detail" aria-current="true">pi-dns</button></td><td><span class="pill pill-attention">Degraded</span></td><td class="num">71%</td><td class="num">3 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="media" aria-controls="wd-detail">media</button></td><td><span class="pill pill-success">Running</span></td><td class="num">35%</td><td class="num">12 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="backup-offsite" aria-controls="wd-detail">backup-offsite</button></td><td><span class="pill pill-danger">Stopped</span></td><td class="num">–</td><td class="num">–</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <dialog class="dialog app-detail" id="wd-detail" aria-labelledby="wd-detail-title" open>
+          <div class="dialog-header"><h2 class="dialog-title" id="wd-detail-title">pi-dns</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close details"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></form></div>
+          <div class="dialog-body">
+            <dl class="kv">
+              <div><dt>Status</dt><dd data-f="status"><span class="pill pill-attention">Degraded</span></dd></div>
+              <div><dt>CPU</dt><dd data-f="cpu">71%</dd></div>
+              <div><dt>Uptime</dt><dd data-f="up">3 days</dd></div>
+              <div><dt>Address</dt><dd>10.0.0.12</dd></div>
+              <div><dt>Last backup</dt><dd>Today, 3:10 am</dd></div>
+            </dl>
+          </div>
+        </dialog>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="shell-demo" aria-labelledby="t-mid">
+  <h2 id="t-mid">Tablet, 900px</h2>
+  <p>Between 48rem and 75rem there's no room for a third column, so selecting a host opens its details as a sheet from the end, over the list.</p>
+  <div class="shell-scroll">
+    <div class="shell-frame light w900">
+      <section class="app-shell" data-sidebar="expanded" aria-label="Example app, tablet">
+      <div class="app-shell-grid">
+        <header class="site-header">
+          <div class="site-header-inner">
+            <button type="button" class="btn btn-ghost btn-icon app-menu-button" popovertarget="m-nav" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button>
+            <a class="site-brand" href="#m-home"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>homelab</a>
+            <div class="site-actions">
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Search"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Account"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+            </div>
+          </div>
+        </header>
+        <nav class="app-sidebar" id="m-nav" popover aria-label="Main, tablet">
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-close" popovertarget="m-nav" popovertargetaction="hide" aria-label="Close menu" autofocus><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="m-nav-0">Infrastructure</p>
+            <ul aria-labelledby="m-nav-0"><li><a href="#m-hosts" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg><span class="app-sidebar-label">Hosts</span></a></li><li><a href="#m-backups"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="app-sidebar-label">Backups</span></a></li><li><a href="#m-updates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="app-sidebar-label">Updates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="m-nav-1">Network</p>
+            <ul aria-labelledby="m-nav-1"><li><a href="#m-tunnels"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="app-sidebar-label">Tunnels</span></a></li><li><a href="#m-certificates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="app-sidebar-label">Certificates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="m-nav-2">System</p>
+            <ul aria-labelledby="m-nav-2"><li><a href="#m-alerts"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg><span class="app-sidebar-label">Alerts</span></a></li><li><a href="#m-settings"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span class="app-sidebar-label">Settings</span></a></li></ul>
+          </div>
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-toggle" aria-controls="m-nav" aria-expanded="true" aria-label="Collapse sidebar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        </nav>
+        <div class="app-main">
+          <div class="app-page">
+            <h2 class="app-page-title">Hosts</h2>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th scope="col">Host</th><th scope="col">Status</th><th scope="col" class="num">CPU</th><th scope="col" class="num">Uptime</th></tr></thead>
+                <tbody>
+                <tr><td><button type="button" class="host-open" data-host="pve-01" aria-controls="m-detail">pve-01</button></td><td><span class="pill pill-success">Running</span></td><td class="num">23%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="nas" aria-controls="m-detail">nas</button></td><td><span class="pill pill-success">Running</span></td><td class="num">8%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="pi-dns" aria-controls="m-detail">pi-dns</button></td><td><span class="pill pill-attention">Degraded</span></td><td class="num">71%</td><td class="num">3 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="media" aria-controls="m-detail">media</button></td><td><span class="pill pill-success">Running</span></td><td class="num">35%</td><td class="num">12 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="backup-offsite" aria-controls="m-detail">backup-offsite</button></td><td><span class="pill pill-danger">Stopped</span></td><td class="num">–</td><td class="num">–</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <dialog class="dialog app-detail" id="m-detail" aria-labelledby="m-detail-title">
+          <div class="dialog-header"><h2 class="dialog-title" id="m-detail-title">pve-01</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close details"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></form></div>
+          <div class="dialog-body">
+            <dl class="kv">
+              <div><dt>Status</dt><dd data-f="status"><span class="pill pill-success">Running</span></dd></div>
+              <div><dt>CPU</dt><dd data-f="cpu">23%</dd></div>
+              <div><dt>Uptime</dt><dd data-f="up">41 days</dd></div>
+              <div><dt>Address</dt><dd>10.0.0.12</dd></div>
+              <div><dt>Last backup</dt><dd>Today, 3:10 am</dd></div>
+            </dl>
+          </div>
+        </dialog>
+      </div>
+    </section>
+    </div>
+  </div>
+</section>
+
+<section class="shell-demo" aria-labelledby="t-phone">
+  <h2 id="t-phone">Phone, 375px</h2>
+  <p>The sidebar is behind the menu button and opens as a sheet from the start. A host's details come up from the bottom. Both sheets open over the whole window here, as they would in the app.</p>
+  <div class="phones">
+    <div><span class="panel-label">Light</span><div class="shell-frame light w375"><section class="app-shell" data-sidebar="expanded" aria-label="Example app, phone light">
+      <div class="app-shell-grid">
+        <header class="site-header">
+          <div class="site-header-inner">
+            <button type="button" class="btn btn-ghost btn-icon app-menu-button" popovertarget="pl-nav" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button>
+            <a class="site-brand" href="#pl-home"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>homelab</a>
+            <div class="site-actions">
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Search"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Account"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+            </div>
+          </div>
+        </header>
+        <nav class="app-sidebar" id="pl-nav" popover aria-label="Main, phone light">
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-close" popovertarget="pl-nav" popovertargetaction="hide" aria-label="Close menu" autofocus><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="pl-nav-0">Infrastructure</p>
+            <ul aria-labelledby="pl-nav-0"><li><a href="#pl-hosts" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg><span class="app-sidebar-label">Hosts</span></a></li><li><a href="#pl-backups"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="app-sidebar-label">Backups</span></a></li><li><a href="#pl-updates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="app-sidebar-label">Updates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="pl-nav-1">Network</p>
+            <ul aria-labelledby="pl-nav-1"><li><a href="#pl-tunnels"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="app-sidebar-label">Tunnels</span></a></li><li><a href="#pl-certificates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="app-sidebar-label">Certificates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="pl-nav-2">System</p>
+            <ul aria-labelledby="pl-nav-2"><li><a href="#pl-alerts"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg><span class="app-sidebar-label">Alerts</span></a></li><li><a href="#pl-settings"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span class="app-sidebar-label">Settings</span></a></li></ul>
+          </div>
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-toggle" aria-controls="pl-nav" aria-expanded="true" aria-label="Collapse sidebar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        </nav>
+        <div class="app-main">
+          <div class="app-page">
+            <h2 class="app-page-title">Hosts</h2>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th scope="col">Host</th><th scope="col">Status</th><th scope="col" class="num">CPU</th><th scope="col" class="num">Uptime</th></tr></thead>
+                <tbody>
+                <tr><td><button type="button" class="host-open" data-host="pve-01" aria-controls="pl-detail">pve-01</button></td><td><span class="pill pill-success">Running</span></td><td class="num">23%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="nas" aria-controls="pl-detail">nas</button></td><td><span class="pill pill-success">Running</span></td><td class="num">8%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="pi-dns" aria-controls="pl-detail">pi-dns</button></td><td><span class="pill pill-attention">Degraded</span></td><td class="num">71%</td><td class="num">3 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="media" aria-controls="pl-detail">media</button></td><td><span class="pill pill-success">Running</span></td><td class="num">35%</td><td class="num">12 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="backup-offsite" aria-controls="pl-detail">backup-offsite</button></td><td><span class="pill pill-danger">Stopped</span></td><td class="num">–</td><td class="num">–</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <dialog class="dialog app-detail" id="pl-detail" aria-labelledby="pl-detail-title">
+          <div class="dialog-header"><h2 class="dialog-title" id="pl-detail-title">pve-01</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close details"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></form></div>
+          <div class="dialog-body">
+            <dl class="kv">
+              <div><dt>Status</dt><dd data-f="status"><span class="pill pill-success">Running</span></dd></div>
+              <div><dt>CPU</dt><dd data-f="cpu">23%</dd></div>
+              <div><dt>Uptime</dt><dd data-f="up">41 days</dd></div>
+              <div><dt>Address</dt><dd>10.0.0.12</dd></div>
+              <div><dt>Last backup</dt><dd>Today, 3:10 am</dd></div>
+            </dl>
+          </div>
+        </dialog>
+      </div>
+    </section></div></div>
+    <div><span class="panel-label">Dark</span><div class="shell-frame dark w375"><section class="app-shell" data-sidebar="expanded" aria-label="Example app, phone dark">
+      <div class="app-shell-grid">
+        <header class="site-header">
+          <div class="site-header-inner">
+            <button type="button" class="btn btn-ghost btn-icon app-menu-button" popovertarget="pd-nav" aria-label="Menu"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg></button>
+            <a class="site-brand" href="#pd-home"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>homelab</a>
+            <div class="site-actions">
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Search"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></button>
+              <button type="button" class="btn btn-ghost btn-icon" aria-label="Account"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+            </div>
+          </div>
+        </header>
+        <nav class="app-sidebar" id="pd-nav" popover aria-label="Main, phone dark">
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-close" popovertarget="pd-nav" popovertargetaction="hide" aria-label="Close menu" autofocus><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="pd-nav-0">Infrastructure</p>
+            <ul aria-labelledby="pd-nav-0"><li><a href="#pd-hosts" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg><span class="app-sidebar-label">Hosts</span></a></li><li><a href="#pd-backups"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="app-sidebar-label">Backups</span></a></li><li><a href="#pd-updates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span class="app-sidebar-label">Updates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="pd-nav-1">Network</p>
+            <ul aria-labelledby="pd-nav-1"><li><a href="#pd-tunnels"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span class="app-sidebar-label">Tunnels</span></a></li><li><a href="#pd-certificates"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span class="app-sidebar-label">Certificates</span></a></li></ul>
+          </div>
+          <div class="app-sidebar-section">
+            <p class="app-sidebar-title" id="pd-nav-2">System</p>
+            <ul aria-labelledby="pd-nav-2"><li><a href="#pd-alerts"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg><span class="app-sidebar-label">Alerts</span></a></li><li><a href="#pd-settings"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span class="app-sidebar-label">Settings</span></a></li></ul>
+          </div>
+          <button type="button" class="btn btn-ghost btn-icon app-sidebar-toggle" aria-controls="pd-nav" aria-expanded="true" aria-label="Collapse sidebar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        </nav>
+        <div class="app-main">
+          <div class="app-page">
+            <h2 class="app-page-title">Hosts</h2>
+            <div class="table-wrap">
+              <table class="table">
+                <thead><tr><th scope="col">Host</th><th scope="col">Status</th><th scope="col" class="num">CPU</th><th scope="col" class="num">Uptime</th></tr></thead>
+                <tbody>
+                <tr><td><button type="button" class="host-open" data-host="pve-01" aria-controls="pd-detail">pve-01</button></td><td><span class="pill pill-success">Running</span></td><td class="num">23%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="nas" aria-controls="pd-detail">nas</button></td><td><span class="pill pill-success">Running</span></td><td class="num">8%</td><td class="num">41 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="pi-dns" aria-controls="pd-detail">pi-dns</button></td><td><span class="pill pill-attention">Degraded</span></td><td class="num">71%</td><td class="num">3 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="media" aria-controls="pd-detail">media</button></td><td><span class="pill pill-success">Running</span></td><td class="num">35%</td><td class="num">12 days</td></tr>
+                <tr><td><button type="button" class="host-open" data-host="backup-offsite" aria-controls="pd-detail">backup-offsite</button></td><td><span class="pill pill-danger">Stopped</span></td><td class="num">–</td><td class="num">–</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <dialog class="dialog app-detail" id="pd-detail" aria-labelledby="pd-detail-title">
+          <div class="dialog-header"><h2 class="dialog-title" id="pd-detail-title">pve-01</h2><form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close details"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></form></div>
+          <div class="dialog-body">
+            <dl class="kv">
+              <div><dt>Status</dt><dd data-f="status"><span class="pill pill-success">Running</span></dd></div>
+              <div><dt>CPU</dt><dd data-f="cpu">23%</dd></div>
+              <div><dt>Uptime</dt><dd data-f="up">41 days</dd></div>
+              <div><dt>Address</dt><dd>10.0.0.12</dd></div>
+              <div><dt>Last backup</dt><dd>Today, 3:10 am</dd></div>
+            </dl>
+          </div>
+        </dialog>
+      </div>
+    </section></div></div>
+  </div>
+</section>
+
+<div class="docs">
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0">@import '@brignano/design/tokens.css';
+@import '@brignano/design/components.css';
+@import '@brignano/design/templates/app-shell.css';
+
+&lt;div class="app-shell" data-sidebar="expanded"&gt;
+  &lt;div class="app-shell-grid"&gt;
+    &lt;header class="site-header"&gt;
+      &lt;div class="site-header-inner"&gt;
+        &lt;button type="button" class="btn btn-ghost btn-icon app-menu-button"
+                popovertarget="app-nav" aria-label="Menu"&gt;…&lt;/button&gt;
+        &lt;a class="site-brand" href="/"&gt;…&lt;/a&gt;
+        &lt;div class="site-actions"&gt;…&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/header&gt;
+    &lt;nav class="app-sidebar" id="app-nav" popover aria-label="Main"&gt;
+      &lt;button type="button" class="btn btn-ghost btn-icon app-sidebar-close"
+              popovertarget="app-nav" popovertargetaction="hide"
+              aria-label="Close menu" autofocus&gt;…&lt;/button&gt;
+      &lt;div class="app-sidebar-section"&gt;
+        &lt;p class="app-sidebar-title" id="nav-infra"&gt;Infrastructure&lt;/p&gt;
+        &lt;ul aria-labelledby="nav-infra"&gt;
+          &lt;li&gt;&lt;a href="/hosts" aria-current="page"&gt;&lt;svg class="icon" aria-hidden="true"&gt;…&lt;/svg&gt;&lt;span class="app-sidebar-label"&gt;Hosts&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;button type="button" class="btn btn-ghost btn-icon app-sidebar-toggle"
+              aria-controls="app-nav" aria-expanded="true"
+              aria-label="Collapse sidebar"&gt;…chevron-left…&lt;/button&gt;
+    &lt;/nav&gt;
+    &lt;main class="app-main" id="main"&gt;…&lt;/main&gt;
+    &lt;dialog class="dialog app-detail" id="detail" aria-labelledby="detail-title"&gt;
+      &lt;div class="dialog-header"&gt;&lt;h2 class="dialog-title" id="detail-title"&gt;pve-01&lt;/h2&gt;…close…&lt;/div&gt;
+      &lt;div class="dialog-body"&gt;…&lt;/div&gt;
+    &lt;/dialog&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+// your script
+const shell = document.querySelector('.app-shell');
+const grid = shell.querySelector('.app-shell-grid');
+const toggle = shell.querySelector('.app-sidebar-toggle');
+const detail = shell.querySelector('.app-detail');
+
+const setSidebar = (state) =&gt; {
+  shell.dataset.sidebar = state;
+  toggle.setAttribute('aria-expanded', String(state === 'expanded'));
+  toggle.setAttribute('aria-label', state === 'expanded' ? 'Collapse sidebar' : 'Expand sidebar');
+};
+try { setSidebar(localStorage.getItem('sidebar') ?? 'expanded'); } catch {}
+toggle.addEventListener('click', () =&gt; {
+  const next = shell.dataset.sidebar === 'collapsed' ? 'expanded' : 'collapsed';
+  setSidebar(next);
+  try { localStorage.setItem('sidebar', next); } catch {}
+});
+
+// selecting an item: a column where there's room, a sheet where there isn't
+function openDetail() {
+  if (detail.open) detail.close();
+  const mode = getComputedStyle(grid).getPropertyValue('--app-detail-mode').trim();
+  if (mode === 'column') detail.show(); else detail.showModal();
+}</pre>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A tool app with several places to go: life, homelab, driftwood.</li>
+        <li>A list or table whose items have details worth a panel of their own.</li>
+        <li>Every place in the sidebar has an icon from <a class="link" href="icons.html">icons</a>, because the rail shows only icons.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>A marketing or content site. Use the site header and footer on their own.</li>
+        <li>An app with one screen. A header is enough.</li>
+        <li>Details that need the whole screen to read or edit. Give them a page of their own.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="two">
+    <div>
+      <h2>Layout</h2>
+      <ul>
+        <li>Under 48rem: one column. The sidebar opens as a sheet from the start, and details as a sheet from the bottom.</li>
+        <li>48rem to 75rem: the sidebar is a 15rem column, or a 3.5rem rail when collapsed. Details are a sheet from the end.</li>
+        <li>75rem and up: details become a 22rem third column.</li>
+        <li>These are container queries on <code>.app-shell</code>, so they follow the shell's width, not the screen's.</li>
+        <li>The shell is the viewport's height and only <code>.app-main</code> scrolls. Set a height on <code>.app-shell</code> to put it in a smaller box.</li>
+        <li>Override <code>--app-sidebar</code>, <code>--app-rail</code> or <code>--app-detail-width</code> on <code>.app-shell</code> if a product needs to.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your script</h2>
+      <ul>
+        <li>The collapse toggle sets <code>data-sidebar</code> to <code>expanded</code> or <code>collapsed</code>, with its own <code>aria-expanded</code> and label to match. Remembering it is up to you.</li>
+        <li>Open the detail with <code>show()</code> when <code>--app-detail-mode</code> is <code>column</code>, and <code>showModal()</code> when it's <code>sheet</code>. Close an open one first, since <code>showModal()</code> throws on a dialog that's already open.</li>
+        <li>The phone menu needs no script: <code>popovertarget</code> opens and closes it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li>The sidebar is a <code>&lt;nav&gt;</code> with an <code>aria-label</code>, and each list is labelled by its section title. The current page has <code>aria-current="page"</code>.</li>
+      <li>In the rail, each label is visually hidden, not removed, so every link keeps its name. It shows beside the icon on hover and keyboard focus. Touch users never hover, so keep the rail for places people already know.</li>
+      <li>The collapse toggle has <code>aria-controls</code> pointing at the nav and an <code>aria-expanded</code> that says whether the labels are showing.</li>
+      <li>On a phone the sidebar is a popover: Esc, a tap outside or the close button closes it, the close button takes focus when it opens, and focus goes back to the menu button when it closes. Like the site header's menu, it doesn't trap focus.</li>
+      <li>A sheet detail is a modal <code>&lt;dialog&gt;</code>: the page behind is inert, Esc closes it, and focus returns to the row that opened it. A column detail is a non-modal dialog beside the list, so the list stays usable.</li>
+      <li>Nav links reach 44px on touch and in the rail.</li>
+    </ul>
+  </section>
+</div>
+<script>
+  // Preview only: the collapse toggle and the detail panel, as a consumer
+  // would write them.
+  document.querySelectorAll('.app-shell').forEach((shell) => {
+    const grid = shell.querySelector('.app-shell-grid');
+    const toggle = shell.querySelector('.app-sidebar-toggle');
+    const detail = shell.querySelector('.app-detail');
+    const title = detail.querySelector('.dialog-title');
+    toggle.addEventListener('click', () => {
+      const next = shell.dataset.sidebar === 'collapsed' ? 'expanded' : 'collapsed';
+      shell.dataset.sidebar = next;
+      toggle.setAttribute('aria-expanded', String(next === 'expanded'));
+      toggle.setAttribute('aria-label', next === 'expanded' ? 'Collapse sidebar' : 'Expand sidebar');
+    });
+    const rows = shell.querySelectorAll('.host-open');
+    let opener = shell.querySelector('.host-open[aria-current]');
+    rows.forEach((b) => b.addEventListener('click', () => {
+      rows.forEach((x) => x.removeAttribute('aria-current'));
+      b.setAttribute('aria-current', 'true');
+      opener = b;
+      const cells = b.closest('tr').cells;
+      title.textContent = b.dataset.host;
+      detail.querySelector('[data-f="status"]').innerHTML = cells[1].innerHTML;
+      detail.querySelector('[data-f="cpu"]').textContent = cells[2].textContent;
+      detail.querySelector('[data-f="up"]').textContent = cells[3].textContent;
+      if (detail.open) detail.close();
+      const mode = getComputedStyle(grid).getPropertyValue('--app-detail-mode').trim();
+      if (mode === 'column') detail.show(); else detail.showModal();
+    }));
+    // Fires after close(), so skip it when the panel was reopened for another row.
+    detail.addEventListener('close', () => {
+      if (detail.open || !opener) return;
+      opener.removeAttribute('aria-current');
+      opener.focus();
+      opener = null;
+    });
+    // Links in the example go nowhere.
+    shell.querySelectorAll('.app-sidebar a, .site-brand').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
+  });
+</script>
+</body>
+</html>
