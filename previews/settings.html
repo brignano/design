@@ -204,7 +204,11 @@ const note = form.querySelector('.settings-save-note');
 const actions = form.querySelector('.settings-save-actions');
 const heading = form.querySelector('h2'); // has tabindex="-1"
 const done = (text) =&gt; { heading.focus(); actions.hidden = true; note.textContent = text; };
-form.addEventListener('input', () =&gt; { note.textContent = 'Unsaved changes'; actions.hidden = false; });
+form.addEventListener('input', () =&gt; {
+  if (!actions.hidden) return;              // write the note once, not per keystroke
+  note.textContent = 'Unsaved changes';
+  actions.hidden = false;
+});
 form.addEventListener('reset', () =&gt; done(''));
 form.addEventListener('submit', async (e) =&gt; {
   e.preventDefault();
@@ -212,6 +216,7 @@ form.addEventListener('submit', async (e) =&gt; {
   for (const el of form.elements) {         // so Discard can't undo the save
     if ('defaultValue' in el) el.defaultValue = el.value;
     if ('defaultChecked' in el) el.defaultChecked = el.checked;
+    if (el.options) for (const o of el.options) o.defaultSelected = o.selected;
   }
   done('Profile saved');
 });</pre>
@@ -272,13 +277,18 @@ form.addEventListener('submit', async (e) =&gt; {
     const actions = form.querySelector('.settings-save-actions');
     const heading = form.querySelector('h2');
     const done = (text) => { heading.focus(); actions.hidden = true; note.textContent = text; };
-    form.addEventListener('input', () => { note.textContent = 'Unsaved changes'; actions.hidden = false; });
+    form.addEventListener('input', () => {
+      if (!actions.hidden) return;
+      note.textContent = 'Unsaved changes';
+      actions.hidden = false;
+    });
     form.addEventListener('reset', () => done(''));
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       for (const el of form.elements) {
         if ('defaultValue' in el) el.defaultValue = el.value;
         if ('defaultChecked' in el) el.defaultChecked = el.checked;
+        if (el.options) for (const o of el.options) o.defaultSelected = o.selected;
       }
       done('Profile saved');
     });
