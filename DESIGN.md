@@ -18,6 +18,11 @@ colour used so sparingly that when it appears you look at it.
 Nothing here should read as a developer-portfolio template, and nothing should
 read as a toy.
 
+What makes a screen recognisably one of these (ADR-0014): a **mono voice** (a
+small uppercase mono label opens every screen, and every number, date and code
+is set in mono), the product's own mark on its glyph, and one heavy, tight
+Geist moment where a screen has something big to say. §5 has the classes.
+
 ## 2. Two tiers, one foundation
 
 The professional site should be more polished than a private trip planner. That
@@ -31,7 +36,7 @@ family, motion and shape are identical; what changes is how much room things get
 | Section rhythm | `--s9` (96px) | `--s6` (32px) |
 | Measure | 68ch | 780px |
 | Display face | Silkscreen — monogram, hero eyebrows | none (aliases to `--sans`) |
-| Motion | the trail, scroll reveal, overlays opening and closing (ADR-0013) | none, except overlays opening and closing (ADR-0013) |
+| Motion | scroll reveal, overlays opening and closing (ADR-0013) | none, except overlays opening and closing (ADR-0013) |
 | Density | whitespace carries the layout | scanning beats reading |
 
 ## 3. Colour — one hue, one meaning
@@ -63,14 +68,14 @@ system coherent across a marketing site and an operational tool.
 
 ### Identity is not a fill
 
-`--mark` inks a **graphic**: the trail line, the `A|B` monogram, a hero rule.
+`--mark` inks a **graphic**: a product's glyph, the `A|B` monogram, a hero rule.
 That is its entire permitted use. It is never a button, chip, badge, wash, border,
 or link.
 
 This is the resolution of a real problem. Amber used to be both the brand colour
 and the warning colour, kept apart by a rule about scale — and rules enforced by
 remembering get forgotten. Identity moved to the things that were always carrying
-it (the trail, the monogram, the type, restraint), so amber in UI chrome now only
+it (the monogram, the type, restraint; ADR-0014), so amber in UI chrome now only
 ever means *attention*. If you're reaching for `--mark` to tint an interface
 element, the answer is a neutral or a state colour.
 
@@ -142,18 +147,37 @@ Three roles, no more:
 
 No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
 
+**The voice** (ADR-0014) is these three roles used the same way everywhere:
+
+- **One eyebrow per screen.** `.eyebrow` is a small uppercase mono label above
+  the screen's heading that says where you are ("Production" above
+  "Services"). One, not one per card. Written in sentence case; the CSS
+  uppercases it (§15).
+- **Numbers in mono.** A number, date, time or code a person might compare or
+  copy takes `.num` (mono, tabular figures). A table's numeric column and a
+  stat's value already do.
+- **One heavy moment.** `.display` sets an error code or a single headline
+  figure in Geist at `--weight-heavy` (800), tight and large; `.stamp` sets the
+  `A|B` monogram at the same weight, spaced open (`--tracking-caps`) so the bar
+  doesn't read as an I, for a footer or an about page. This is the
+  display treatment, in both tiers. It is the one use of a weight above 600,
+  and at most once a screen. `.rule` is the short bar in `--mark` above a hero
+  heading. (`--display` still names Silkscreen on the marketing tier until
+  #142 removes it.)
+
 Sizes change with the tier (`--text-xs` … `--text-4xl`); weight, leading and
 tracking don't:
 
 | Token | Value | For |
 |---|---|---|
 | `--weight-regular` / `-medium` / `-semibold` | 400 / 500 / 600 | text / controls and labels / headings. Nothing lighter or bolder. |
+| `--weight-heavy` | 800 | `.display` and `.stamp` only |
 | `--leading-display` | 1.15 | display headings |
 | `--leading-title` | 1.3 | titles |
 | `--leading-ui` | 1.4 | interface text |
 | `--leading-body` | 1.6 | paragraphs |
 | `--tracking-title` / `--tracking-display` | -0.01em / -0.025em | headings / large display headings |
-| `--tracking-caps` | 0.08em | uppercase mono eyebrows |
+| `--tracking-caps` | 0.08em | uppercase mono eyebrows; the `.stamp` monogram |
 
 They are named by role because Tailwind already owns `--leading-tight`,
 `--tracking-tight` and the rest; the bridge adds `leading-display`,

@@ -12,10 +12,17 @@
 </head>
 <body>
 <h1>Content pieces</h1>
-<p class="sub">Avatars, keycaps, code and quotes. Code is neutral with cobalt keywords; no syntax rainbow.</p>
+<p class="sub">The voice (an eyebrow, mono numbers, one heavy moment), then avatars, keycaps, code and quotes. Code is neutral with cobalt keywords; no syntax rainbow.</p>
 
 <div class="pair">
   <div class="panel light"><span class="panel-label">Light</span>
+    <div style="display:grid;gap:var(--s2);justify-items:start">
+      <span class="rule"></span>
+      <p class="eyebrow">Production</p>
+      <p class="display">404</p>
+      <p style="margin:0">Deploy <span class="num">214</span> went out at <span class="num">2026-11-07 09:30</span>.</p>
+      <span class="stamp" role="img" aria-label="Anthony Brignano">A|B</span>
+    </div>
     <div style="display:flex;gap:var(--s3);align-items:center">
       <span class="avatar avatar-lg"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='26' r='12' fill='white' fill-opacity='.75'/%3E%3Cpath d='M10 64c3-14 12-20 22-20s19 6 22 20z' fill='white' fill-opacity='.75'/%3E%3C/svg%3E" alt="Ana Ruiz"></span>
       <span class="avatar" role="img" aria-label="Ben Okafor">BO</span>
@@ -42,6 +49,13 @@
     </figure>
   </div>
   <div class="panel dark"><span class="panel-label">Dark</span>
+    <div style="display:grid;gap:var(--s2);justify-items:start">
+      <span class="rule"></span>
+      <p class="eyebrow">Production</p>
+      <p class="display">404</p>
+      <p style="margin:0">Deploy <span class="num">214</span> went out at <span class="num">2026-11-07 09:30</span>.</p>
+      <span class="stamp" role="img" aria-label="Anthony Brignano">A|B</span>
+    </div>
     <div style="display:flex;gap:var(--s3);align-items:center">
       <span class="avatar avatar-lg"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='26' r='12' fill='white' fill-opacity='.75'/%3E%3Cpath d='M10 64c3-14 12-20 22-20s19 6 22 20z' fill='white' fill-opacity='.75'/%3E%3C/svg%3E" alt="Ana Ruiz"></span>
       <span class="avatar" role="img" aria-label="Ben Okafor">BO</span>
@@ -72,7 +86,15 @@
 <div class="docs">
   <section data-doc="usage">
     <h2>Use it</h2>
-<pre tabindex="0">&lt;span class="avatar"&gt;&lt;img src="ana.jpg" alt="Ana Ruiz"&gt;&lt;/span&gt;
+<pre tabindex="0">&lt;p class="eyebrow"&gt;Production&lt;/p&gt;
+&lt;h1&gt;Services&lt;/h1&gt;
+Deployed &lt;span class="num"&gt;2026-11-07 09:30&lt;/span&gt;
+
+&lt;p class="display"&gt;404&lt;/p&gt;
+&lt;span class="stamp" role="img" aria-label="Anthony Brignano"&gt;A|B&lt;/span&gt;
+&lt;span class="rule"&gt;&lt;/span&gt;
+
+&lt;span class="avatar"&gt;&lt;img src="ana.jpg" alt="Ana Ruiz"&gt;&lt;/span&gt;
 &lt;span class="avatar avatar-sm" role="img" aria-label="Ben Okafor"&gt;BO&lt;/span&gt;
 
 &lt;kbd class="kbd"&gt;⌘&lt;/kbd&gt; &lt;kbd class="kbd"&gt;K&lt;/kbd&gt;   &lt;code class="code"&gt;npm run check&lt;/code&gt;
@@ -93,6 +115,8 @@
     <section data-doc="use-when">
       <h2>Use when</h2>
       <ul>
+        <li>Opening a screen: one eyebrow above its heading, saying where you are.</li>
+        <li>Showing a number, date, time or code someone might compare or copy: <code>.num</code>.</li>
         <li>Showing who did something: an avatar beside a name in a list, a comment or a header.</li>
         <li>Naming a key, a command or a file of code in an app screen or a docs page.</li>
         <li>Quoting someone, or captioning an image or a chart.</li>
@@ -101,6 +125,8 @@
     <section data-doc="dont-use">
       <h2>Don't use when</h2>
       <ul>
+        <li>You want an eyebrow on every card. One a screen; a card has a title.</li>
+        <li>You want a second heavy moment. <code>.display</code> is for an error code or one headline figure, once a screen; headings stay at 600.</li>
         <li>You want to colour more token types. Keywords in cobalt, comments in italics: that's enough to scan.</li>
         <li>You need a callout or a warning. Use a message, not the blockquote.</li>
         <li>The name isn't nearby or in the avatar's label. Leave the avatar out.</li>
@@ -111,6 +137,7 @@
   <section>
     <h2>Sizes and classes</h2>
     <ul>
+      <li>Voice: <code>.eyebrow</code> (mono, uppercase through CSS, written in sentence case), <code>.num</code> (mono, tabular figures), <code>.display</code> and <code>.stamp</code> (Geist at 800), <code>.rule</code> (a 56px bar in the mark colour, above a hero heading).</li>
       <li>Avatar: <code>.avatar-sm</code> 24px, <code>.avatar</code> 40px, <code>.avatar-lg</code> 64px.</li>
       <li>Code tokens: <code>.tok-keyword</code>, <code>.tok-string</code>, <code>.tok-comment</code>; a highlighted line is <code>.line-highlight</code>. Everything else stays <code>--code-ink</code>.</li>
       <li>Colours are tokens (<code>--code-*</code>) so a highlighter theme can map to them.</li>
@@ -130,6 +157,8 @@
     <ul>
       <li>The code block scrolls sideways instead of wrapping, so give its <code>&lt;pre&gt;</code> <code>tabindex="0"</code> and an <code>aria-label</code>: keyboard users can then scroll it.</li>
       <li>An initials avatar is <code>role="img"</code> with the full name as its <code>aria-label</code>; a photo needs real <code>alt</code>, or <code>alt=""</code> when the name is right beside it.</li>
+      <li>The eyebrow is a <code>&lt;p&gt;</code>, not a heading: the heading under it names the screen. Write it in sentence case so a screen reader doesn't spell it out.</li>
+      <li>The stamp is <code>role="img"</code> with the name as its <code>aria-label</code>, so it is read as a name, not "A vertical bar B". <code>.rule</code> is decoration and has no text.</li>
       <li>Every figure image needs <code>alt</code>; the caption doesn't replace it.</li>
     </ul>
   </section>

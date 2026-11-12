@@ -28,7 +28,7 @@
    2. IDENTITY IS NOT A FILL. Amber used to be the brand colour AND the
       warning colour, managed by a rule about scale. Rules enforced by
       remembering get forgotten. So identity moved to the thing that was
-      always carrying it — the trail, the monogram, the type — and --mark
+      always carrying it — the monogram, the type, restraint — and --mark
       exists only to ink a graphic. It is never a button, chip, wash, or
       border. The naming is the enforcement.
 
@@ -244,7 +244,7 @@
   --code-highlight: var(--i-surface);
 
   /* ── Mark — identity ──────────────────────────────────────────────────
-     Inks a GRAPHIC: the trail line, the A|B monogram, a hero rule. That is
+     Inks a GRAPHIC: a product's glyph, the A|B monogram, a hero rule. That is
      the entire permitted use.
 
      It is NOT a button, chip, badge, wash, border, or link. If you are
@@ -300,10 +300,13 @@
   --display: var(--sans);
 
   /* Weight, leading and tracking. Sizes are per tier (below); these are
-     not. Three weights, and nothing lighter or bolder. Leading is unitless
+     not. Three weights, and nothing lighter or bolder.
+     (--weight-heavy is the one exception: the display treatment, .display
+     and .stamp, ADR-0014.) Leading is unitless
      so it scales with the text: display for large headings, title for
      titles, ui for interface text, body for paragraphs. Tracking
-     only ever tightens a heading or opens an uppercase mono eyebrow.
+     only ever tightens a heading or opens an uppercase mono eyebrow
+     (and the .stamp monogram, whose bar closes up otherwise).
 
      Named by role, not tight/snug/normal: Tailwind owns those names
      (--leading-tight, --tracking-tight) and an unlayered token here would
@@ -311,6 +314,7 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
+  --weight-heavy: 800;
   --leading-display: 1.15;
   --leading-title: 1.3;
   --leading-ui: 1.4;
