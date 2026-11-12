@@ -33,6 +33,9 @@
   --color-interactive-surface: var(--i-surface);
   --color-interactive-line: var(--i-line);
   --color-on-interactive: var(--on-i);
+  --color-danger-fill: var(--danger-fill);
+  --color-danger-fill-hover: var(--danger-fill-hover);
+  --color-danger-fill-pressed: var(--danger-fill-pressed);
   --color-on-danger: var(--on-danger);
 
   --color-success: var(--success);

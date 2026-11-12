@@ -137,7 +137,9 @@ The part that makes an interface feel built rather than styled.
   fill is a saturated cobalt with a white label (`--on-i`) in both themes, and
   hover and pressed step darker in both. In dark the fill and the ink are
   different steps: fill a surface with `--i`, write or draw on a surface with
-  `--i-ink`. A `--danger` fill takes `--on-danger`.
+  `--i-ink`. A destructive button fills with `--danger-fill` (and its
+  `-hover` and `-pressed` steps) under a white `--on-danger` label, not with
+  the state hue `--danger`, which in dark is a pale rust for reading.
 - **Disabled is neutral, never hued** (`--i-disabled-bg` / `--i-disabled-ink`). A
   greyed-out control must stop signalling "click me". Its low contrast is allowed
   only because WCAG 1.4.3 exempts *inactive* controls, so the state must be real:

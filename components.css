@@ -77,12 +77,12 @@
   .btn-ghost { border-color: transparent; background: transparent; color: var(--i-ink); }
   .btn-ghost:is(:hover, :active) { background: var(--i-surface); }
 
-  /* Danger has no hover/pressed tokens of its own: hover moves to
-     --danger-ink, darker in light and lighter in dark. In dark that is now
-     the opposite direction to --i-hover (ADR-0015), until the dark danger
-     fill is revisited. */
-  .btn-danger { border-color: transparent; background: var(--danger); color: var(--on-danger); }
-  .btn-danger:hover, .btn-danger:active { background: var(--danger-ink); }
+  /* Danger has its own fills (--danger-fill…), not the state hue: in dark
+     --danger is a pale rust meant to be read, the button a deep one meant
+     to be pressed. Hover and press step darker, like the primary. */
+  .btn-danger { border-color: transparent; background: var(--danger-fill); color: var(--on-danger); }
+  .btn-danger:hover { background: var(--danger-fill-hover); }
+  .btn-danger:active { background: var(--danger-fill-pressed); }
 
   .btn-sm { min-height: 32px; padding: 0 var(--s3); font-size: var(--text-xs); line-height: 16px; }
   .btn-lg { min-height: 48px; padding: 0 var(--s5); font-size: var(--text-base); line-height: 24px; }
