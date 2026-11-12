@@ -51,7 +51,7 @@
     text-decoration: none;
   }
   .error-page-mark:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: var(--radius); }
-  .error-page-mark > svg { width: 1.5em; height: 1.5em; flex: none; }
+  .error-page-mark > svg { width: 1.5em; height: 1.5em; flex: none; color: var(--mark-current); }
   .error-page-code {
     margin: 0;
     font-family: var(--mono);

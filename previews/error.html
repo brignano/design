@@ -50,9 +50,9 @@
   </div>
 </div>
 
-<h2 class="variants-h">The other two</h2>
+<h2 class="variants-h">The other two, on products with their own mark</h2>
 <div class="variants">
-      <div class="error-page">
+      <div class="error-page" data-mark="violet">
         <div class="error-page-block">
           <a class="error-page-mark" href="#top"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l3-3 2 2 3-4"/></svg>Breakeven</a>
           <p class="error-page-code">500</p>
@@ -62,7 +62,7 @@
           <a class="btn btn-primary" href="">Try again</a>
         </div>
       </div>
-      <div class="error-page">
+      <div class="error-page" data-mark="magenta">
         <div class="error-page-block">
           <a class="error-page-mark" href="#top"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 15l3-3 2 2 3-4"/></svg>Breakeven</a>
           <p class="error-page-code">Offline</p>
@@ -119,6 +119,14 @@
       <li>Serve 404 and 500 with their real status codes, so crawlers and monitors see the failure. For planned maintenance or overload, use the 500 page's shape with a 503 and <code>Retry-After</code>.</li>
       <li>"Try again" is a link to the same page (<code>href=""</code>), so it reloads with no script.</li>
       <li>The code above the title is the page's label. It's the one exception to codes going after the words (<a class="link" href="writing.html#errors">Errors</a>); a request ID still goes after.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The product's mark</h2>
+    <ul>
+      <li>The glyph beside the name draws in the mark in force: the family amber by default, or the product's own once <code>data-mark="teal"</code>, <code>"violet"</code> or <code>"magenta"</code> is set on <code>&lt;html&gt;</code> (or any ancestor). Above, the 404 is unmarked, the 500 sets violet and the offline page sets magenta.</li>
+      <li>Only an inline <code>&lt;svg&gt;</code> in <code>currentColor</code> takes it; an <code>&lt;img&gt;</code> logo keeps its own colours. The name stays ink, and buttons and links stay cobalt on every product.</li>
     </ul>
   </section>
 
