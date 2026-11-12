@@ -13,11 +13,11 @@
   * { box-sizing: border-box; }
   body { margin: 0; padding-block: 16px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: var(--text-base); line-height: 1.55; }
   .wf-head { max-width: 72ch; margin: 0 0 32px; }
-  .wf-head h1 { font-size: var(--text-2xl); letter-spacing: var(--tracking-tight); margin: 0 0 8px; text-wrap: balance; }
+  .wf-head h1 { font-size: var(--text-2xl); letter-spacing: var(--tracking-title); margin: 0 0 8px; text-wrap: balance; }
   .wf-head p { margin: 0 0 8px; color: var(--ink-soft); text-wrap: pretty; }
   .wf-head strong { color: var(--ink); }
   .wf-dir { margin: 0 0 48px; }
-  .wf-dir > h2 { font-size: var(--text-xl); letter-spacing: var(--tracking-tight); margin: 0 0 4px; }
+  .wf-dir > h2 { font-size: var(--text-xl); letter-spacing: var(--tracking-title); margin: 0 0 4px; }
   .wf-dir > p { max-width: 72ch; margin: 0 0 16px; color: var(--ink-soft); text-wrap: pretty; }
   .wf-frames { display: flex; gap: 24px; align-items: flex-start; overflow-x: auto; padding-bottom: 8px; }
   .wf-frame { flex: none; }
@@ -53,7 +53,7 @@
   /* App screen */
   .id-app { background: var(--bg); }
   .id-appbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 24px; }
-  .id-app h3 { margin: 0 0 16px; font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-tight); }
+  .id-app h3 { margin: 0 0 16px; font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-title); }
   .id-rows { margin: 16px 0 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
   .id-rows li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); min-width: 0; }
   .id-rows li:last-child { border-bottom: 0; }
@@ -64,7 +64,7 @@
   .id-error { display: grid; justify-items: center; align-content: start; gap: 12px; text-align: center; }
   .id-error .id-surface { justify-self: start; }
   .id-code { margin: 8px 0 0; font-family: var(--id-code-font); font-size: var(--id-code-size); font-weight: var(--id-code-weight); letter-spacing: var(--id-code-track); color: var(--slate); }
-  .id-error h3 { margin: 0; font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-tight); text-wrap: balance; }
+  .id-error h3 { margin: 0; font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-title); text-wrap: balance; }
   .id-error p.body { margin: 0 0 8px; color: var(--ink-soft); }
   .id-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: var(--text-sm); color: var(--ink-soft); }
 

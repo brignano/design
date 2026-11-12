@@ -25,7 +25,7 @@
     margin-inline: auto;
   }
   .changelog-header { margin-bottom: var(--s7); }
-  .changelog-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-tight); text-wrap: balance; }
+  .changelog-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-display); text-wrap: balance; }
   .changelog-header > p { margin: var(--s2) 0 0; color: var(--ink-soft); }
 
   .release {

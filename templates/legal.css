@@ -27,7 +27,7 @@
     margin-inline: auto;
   }
   .legal-header { margin-bottom: var(--s6); padding-bottom: var(--s5); border-bottom: 1px solid var(--line); }
-  .legal-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-tight); text-wrap: balance; }
+  .legal-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-display); text-wrap: balance; }
   .legal-updated { margin: var(--s2) 0 0; font-family: var(--mono); font-size: var(--text-sm); color: var(--slate); }
 
   .legal-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6); }

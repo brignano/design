@@ -145,10 +145,10 @@
    name the unit in the label too. When to validate is your script's call. */
 @layer brignano.components {
   .field { display: grid; align-content: start; gap: 6px; min-width: 0; }
-  .field > label { font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--ink); }
+  .field > label { font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-ui); color: var(--ink); }
   .field-optional { font-weight: var(--weight-regular); color: var(--ink-soft); }
-  .field-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--ink-soft); }
-  .field-error { display: flex; gap: 6px; align-items: flex-start; margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--danger-ink); }
+  .field-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-ui); color: var(--ink-soft); }
+  .field-error { display: flex; gap: 6px; align-items: flex-start; margin: 0; font-size: var(--text-sm); line-height: var(--leading-ui); color: var(--danger-ink); }
   .field-error > svg { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--danger); }
   .field-error[hidden] { display: none; }
 
@@ -247,7 +247,7 @@
    real radios inside it, so arrow keys and the group name come for free. */
 @layer brignano.components {
   .choice-group { display: grid; gap: var(--s2); min-width: 0; margin: 0; padding: 0; border: 0; }
-  .choice-group > legend { margin: 0 0 6px; padding: 0; font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--ink); }
+  .choice-group > legend { margin: 0 0 6px; padding: 0; font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-ui); color: var(--ink); }
 
   .choice { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s2); align-items: start; line-height: 1.5; color: var(--ink); cursor: pointer; }
   .choice > input { grid-column: 1; font: inherit; cursor: inherit; }
@@ -289,7 +289,7 @@
   .choice:has(> input[type='checkbox']:checked:disabled)::before { background-color: var(--i-disabled-ink); }
   .choice > :not(input) { grid-column: 2; }
   .choice > label { cursor: inherit; }
-  .choice-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--ink-soft); }
+  .choice-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-ui); color: var(--ink-soft); }
   .choice > input:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
   .choice:has(> input:disabled) { color: var(--i-disabled-ink); cursor: not-allowed; }
 
@@ -605,7 +605,7 @@
   .card-media { margin: calc(-1 * var(--s5)) calc(-1 * var(--s5)) 0; }
   .card-media > :is(img, video, picture, svg) { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
   .card-header { display: grid; gap: var(--s1); }
-  .card-title { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); letter-spacing: var(--tracking-tight); }
+  .card-title { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-title); letter-spacing: var(--tracking-title); }
   .card-title a { color: inherit; text-decoration: none; }
   .card-meta { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
   .card-body { color: var(--ink-soft); }
@@ -775,7 +775,7 @@
     color: var(--ink);
     font-weight: var(--weight-semibold);
     font-size: var(--text-lg);
-    letter-spacing: var(--tracking-tight);
+    letter-spacing: var(--tracking-title);
     text-decoration: none;
   }
   .site-brand > :is(img, svg) { flex: none; width: 24px; height: 24px; }
@@ -973,7 +973,7 @@
     gap: var(--s3);
     padding: var(--s5) var(--s5) 0;
   }
-  .dialog-title { margin: 0; padding-top: 2px; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-normal); }
+  .dialog-title { margin: 0; padding-top: 2px; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-ui); }
   .dialog-header > form { display: contents; }
   .dialog-close { flex: none; margin: -6px -8px 0 auto; }
   .dialog-body {
@@ -1130,7 +1130,7 @@
     color: var(--ink);
     font: inherit;
     font-size: var(--text-sm);
-    line-height: var(--leading-normal);
+    line-height: var(--leading-ui);
     text-align: start;
     text-decoration: none;
     cursor: pointer;
@@ -1208,7 +1208,7 @@
     font-family: var(--sans);
     font-size: var(--text-xs);
     font-weight: var(--weight-medium);
-    line-height: var(--leading-normal);
+    line-height: var(--leading-ui);
     text-align: center;
   }
   /* A transparent strip over the gap on both block sides, so the pointer can
@@ -1635,9 +1635,9 @@
     font-family: var(--mono);
     font-size: var(--text-2xl);
     font-weight: var(--weight-medium);
-    line-height: var(--leading-tight);
+    line-height: var(--leading-display);
     font-variant-numeric: tabular-nums;
-    letter-spacing: var(--tracking-tight);
+    letter-spacing: var(--tracking-title);
   }
   .stat-delta { font-size: var(--text-sm); color: var(--ink-soft); }
   .stat-delta[data-dir]::before { margin-right: var(--s1); }
@@ -1936,7 +1936,7 @@
     padding: .1em .4em;
     font-family: var(--mono);
     font-size: .85em;
-    line-height: var(--leading-normal);
+    line-height: var(--leading-ui);
     text-align: center;
     color: var(--ink);
     background: var(--card);
@@ -1995,7 +1995,7 @@
     overflow-x: auto;
     font-family: var(--mono);
     font-size: var(--text-sm);
-    line-height: var(--leading-relaxed);
+    line-height: var(--leading-body);
     tab-size: 2;
   }
   .code-block pre:focus-visible,
@@ -2059,8 +2059,8 @@
   .prose > * + * { margin-top: var(--s4); }
   .prose :where(h2, h3, h4) {
     font-weight: var(--weight-semibold);
-    line-height: var(--leading-snug);
-    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-title);
+    letter-spacing: var(--tracking-title);
     scroll-margin-top: var(--s7);
   }
   .prose h2 { font-size: var(--text-xl); }
@@ -2168,13 +2168,14 @@
 /* ── Print ──────────────────────────────────────────────────────────────────
    A receipt, a legal page or an article gets printed. tokens.css already
    forces the light theme on paper; this drops what only works on a screen
-   (sticky chrome, shadows, controls that do nothing on paper), keeps blocks
+   (sticky chrome, shadows, popovers and sheets, controls that do nothing on
+   paper; an open dialog still prints, since it is what the reader is looking at), keeps blocks
    whole across a page break, and writes an outside link's address after it
    in running text, where the reader can no longer follow it. */
 @layer brignano.components {
   @media print {
     .site-header { position: static; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
-    .skip-link, .site-menu-button, .toast-region, .tooltip, .msg-close, .dialog-close,
+    .skip-link, .site-menu-button, .toast-region, .tooltip, .popover, .sheet, .msg-close, .dialog-close,
     .code-block-copy, .tag-remove, .pagination, .load-more { display: none; }
     .card, .stat, .msg, .code-block, .table-wrap, .dialog { box-shadow: none; }
     .card, .stat, .msg, .figure, .blockquote, .kv > div, .table tr { break-inside: avoid; }

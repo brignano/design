@@ -47,7 +47,7 @@
     max-width: 64rem;
     margin-inline: auto;
   }
-  .settings-title { margin: 0 0 var(--s6); font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-tight); text-wrap: balance; }
+  .settings-title { margin: 0 0 var(--s6); font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-display); text-wrap: balance; }
 
   .settings-section {
     display: grid;
@@ -58,7 +58,7 @@
     border-top: 1px solid var(--line);
   }
   .settings-intro { min-width: 0; overflow-wrap: anywhere; }
-  .settings-intro > h2 { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); }
+  .settings-intro > h2 { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-title); }
   .settings-intro > p { margin: var(--s1) 0 0; font-size: var(--text-sm); color: var(--ink-soft); max-width: 40ch; }
   .settings-fields { display: grid; gap: var(--s5); min-width: 0; max-width: 32rem; }
 

@@ -148,12 +148,16 @@ tracking don't:
 | Token | Value | For |
 |---|---|---|
 | `--weight-regular` / `-medium` / `-semibold` | 400 / 500 / 600 | text / controls and labels / headings. Nothing lighter or bolder. |
-| `--leading-tight` | 1.15 | display headings |
-| `--leading-snug` | 1.3 | titles |
-| `--leading-normal` | 1.4 | interface text |
-| `--leading-relaxed` | 1.6 | paragraphs |
-| `--tracking-tight` / `-tighter` | -0.01em / -0.025em | headings / large display headings |
+| `--leading-display` | 1.15 | display headings |
+| `--leading-title` | 1.3 | titles |
+| `--leading-ui` | 1.4 | interface text |
+| `--leading-body` | 1.6 | paragraphs |
+| `--tracking-title` / `--tracking-display` | -0.01em / -0.025em | headings / large display headings |
 | `--tracking-caps` | 0.08em | uppercase mono eyebrows |
+
+They are named by role because Tailwind already owns `--leading-tight`,
+`--tracking-tight` and the rest; the bridge adds `leading-display`,
+`tracking-title` and so on and leaves Tailwind's own utilities alone.
 
 A heading or title balances its lines (`text-wrap: balance`) and running text
 avoids a one-word last line (`pretty`). On a touch screen the tool tier's
@@ -220,7 +224,7 @@ exception: content on the page itself still never animates in.
 
 **Print is the light theme.** `tokens.css` forces `color-scheme: light` on
 paper whatever the screen was showing, and `components.css` drops sticky
-chrome, shadows and controls that do nothing on paper, keeps cards and table
+chrome, shadows, popovers, sheets and controls that do nothing on paper, keeps cards and table
 rows whole across a page break, and writes an outside link's address after it
 in `.prose`.
 

@@ -37,7 +37,7 @@
 @layer brignano.components {
   .article { container: article / inline-size; width: 100%; max-width: var(--measure); margin-inline: auto; }
   .article-header { margin-bottom: var(--s6); }
-  .article-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-tight); text-wrap: balance; }
+  .article-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-display); text-wrap: balance; }
   .article-meta {
     display: flex;
     flex-wrap: wrap;

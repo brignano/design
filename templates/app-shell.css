@@ -124,7 +124,7 @@
     color: var(--ink-soft);
     font-size: var(--text-xs);
     font-weight: var(--weight-semibold);
-    line-height: var(--leading-relaxed);
+    line-height: var(--leading-body);
   }
   .app-sidebar ul { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
   .app-sidebar a {
@@ -273,7 +273,7 @@
       color: var(--card);
       font-size: var(--text-xs);
       font-weight: var(--weight-medium);
-      line-height: var(--leading-normal);
+      line-height: var(--leading-ui);
       pointer-events: none;
     }
   }
