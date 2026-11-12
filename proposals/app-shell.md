@@ -1,4 +1,4 @@
-Status: proposed · Tracking issue: #68
+Status: accepted · Tracking issue: #68
 
 # App shell: one layout for life, homelab and driftwood
 
@@ -13,7 +13,7 @@ this proposal accepts all four unless he says otherwise.
 
 ## Wireframe
 
-[`app-shell-wireframe.html`](app-shell-wireframe.html) is interactive. Pick a
+[`previews/wireframes/app-shell.html`](../previews/wireframes/app-shell.html) is interactive. Pick a
 width or drag the frame, collapse the sidebar, open the phone menu, and select a
 host to see where its details go at each width. Accept the wireframe before the
 build starts.
@@ -92,8 +92,20 @@ query its own size, so the container is a wrapper around the grid
 The settings page (#69, done), sign-in (Cloudflare Access owns it), and
 per-app navigation content.
 
-## Next step
+## As built
 
-On acceptance: mark this proposal accepted, then build `templates/app-shell.css`
-and its preview in one PR against #68. The `package.json` export
-`./templates/*` already covers the new file.
+Accepted on 12 Nov 2026 and built in `templates/app-shell.css`, with
+`previews/app-shell.html`. Two details changed in the build, and A1 to A3 are
+as written:
+
+- **A4, the phone sidebar, is a popover, not a modal `<dialog>`.** The same
+  `<nav>` has to be the sidebar column on a wide screen, and a `<dialog>` is
+  always announced as a dialog, so the nav would read as one on desktop too.
+  A `popover` nav is shown inline when wide and opens as the sheet when
+  narrow, like the site header's menu. Esc, a tap outside and the close
+  button close it, and focus goes back to the menu button, all with no
+  script. What it gives up: it doesn't trap focus, so the page behind isn't
+  inert.
+- **The detail panel is one `<dialog class="dialog app-detail">`.** It opens
+  with `show()` where it's a column and `showModal()` where it's a sheet. The
+  grid tells the script which one through `--app-detail-mode`.

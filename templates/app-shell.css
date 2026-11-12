@@ -1,0 +1,346 @@
+/* @brignano/design — app shell template (#68, proposals/app-shell.md)
+   The frame a tool app sits in: a header across the top, a sidebar of
+   places to go, the main view, and an optional detail panel. Needs
+   tokens.css and components.css (.site-header, .btn, .icon, .dialog).
+
+   <div class="app-shell" data-sidebar="expanded">
+     <div class="app-shell-grid">
+       <header class="site-header">
+         <div class="site-header-inner">
+           <button type="button" class="btn btn-ghost btn-icon app-menu-button"
+                   popovertarget="app-nav" aria-label="Menu">…menu icon…</button>
+           <a class="site-brand" href="/">…</a>
+           <div class="site-actions">…</div>
+         </div>
+       </header>
+       <nav class="app-sidebar" id="app-nav" popover aria-label="Main">
+         <button type="button" class="btn btn-ghost btn-icon app-sidebar-close"
+                 popovertarget="app-nav" popovertargetaction="hide"
+                 aria-label="Close menu" autofocus>…x icon…</button>
+         <div class="app-sidebar-section">
+           <p class="app-sidebar-title" id="nav-infra">Infrastructure</p>
+           <ul aria-labelledby="nav-infra">
+             <li><a href="/hosts" aria-current="page"><svg class="icon" aria-hidden="true">…</svg><span class="app-sidebar-label">Hosts</span></a></li>
+           </ul>
+         </div>
+         <button type="button" class="btn btn-ghost btn-icon app-sidebar-toggle"
+                 aria-controls="app-nav" aria-expanded="true"
+                 aria-label="Collapse sidebar">…chevron-left icon…</button>
+       </nav>
+       <main class="app-main" id="main">…</main>
+       <dialog class="dialog app-detail" id="detail" aria-labelledby="detail-title">…</dialog>
+     </div>
+   </div>
+
+   Widths follow the shell's own width (container queries on .app-shell), so
+   it behaves the same full screen as inside a preview or an embedded view:
+   - Under 48rem (phone): one column. The sidebar is behind the header's menu
+     button and opens as a sheet from the inline start, with no script: Esc,
+     a tap outside or the close button closes it, and focus goes back to the
+     menu button. The detail panel is a sheet from the bottom.
+   - 48rem to 75rem: the sidebar is a column. The detail panel is a sheet
+     from the inline end, over the main view.
+   - 75rem and up: the detail panel is a third column beside the main view.
+
+   Your script (design ships no JS; previews/app-shell.html has it):
+   - Collapse: the toggle flips data-sidebar on .app-shell between expanded
+     and collapsed (an icon rail), and its own aria-expanded and aria-label
+     with it. Remember the choice if you like (localStorage).
+   - Detail: open it with show() where the shell says the detail is a column,
+     and showModal() where it's a sheet. Read which from the grid:
+       getComputedStyle(grid).getPropertyValue('--app-detail-mode').trim()
+     is "column" or "sheet". Close it with close(); a modal one closes on
+     Esc by itself, and focus goes back to the row that opened it.
+   - Every nav item needs an icon from icons/: the rail shows only icons. The
+     label stays in the link, visually hidden, and appears beside the icon on
+     hover or keyboard focus.
+
+   Tokens on .app-shell a product can override: --app-sidebar (15rem),
+   --app-rail (3.5rem) and --app-detail-width (22rem, the column; the sheet
+   from the end is 26rem). The shell fills the viewport's height (100dvh)
+   and only .app-main scrolls; set a height on .app-shell to put it in a
+   smaller box. */
+@layer brignano.components {
+  .app-shell {
+    --app-sidebar: 15rem;
+    --app-rail: 3.5rem;
+    --app-detail-width: 22rem;
+    container: app-shell / inline-size;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100dvh;
+    background-color: var(--bg);
+    color: var(--ink);
+  }
+  /* The shell is the page: no body margin to scroll past. */
+  body:has(> .app-shell) { margin: 0; }
+
+  .app-shell-grid {
+    --app-detail-mode: sheet;
+    position: relative; /* the rail's labels are placed against it */
+    display: grid;
+    height: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas: "head" "main";
+  }
+  .app-shell-grid > .site-header { grid-area: head; position: relative; }
+  .app-shell .site-header-inner { padding-inline: var(--s3); }
+
+  .app-main {
+    grid-area: main;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  /* ── Menu button (phone only) ─────────────────────────────────────────── */
+  .app-menu-button { flex: none; }
+
+  /* ── Sidebar ──────────────────────────────────────────────────────────── */
+  .app-sidebar[popover] {
+    grid-area: side;
+    box-sizing: border-box;
+    display: none;
+    flex-direction: column;
+    gap: var(--s4);
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: var(--s4) var(--s2);
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 0;
+    border-inline-end: 1px solid var(--line);
+    background-color: var(--bg);
+    color: var(--ink);
+  }
+  .app-sidebar-section { min-width: 0; }
+  .app-sidebar-title {
+    margin: 0 0 var(--s1);
+    padding-inline: var(--s3);
+    color: var(--ink-soft);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    line-height: 1.6;
+  }
+  .app-sidebar ul { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+  .app-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    min-height: 40px;
+    padding: 0 var(--s3);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .app-sidebar a:hover { background-color: var(--surface-hover); color: var(--ink); }
+  .app-sidebar a[aria-current='page'] { background-color: var(--i-surface); color: var(--i-ink); font-weight: 600; }
+  .app-sidebar a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .app-sidebar-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .app-sidebar-close, .app-sidebar-toggle { display: none; }
+  .app-sidebar-toggle { margin-top: auto; align-self: flex-start; }
+  .app-sidebar-toggle > svg:dir(rtl) { scale: -1 1; }
+
+  /* Phone: the open sidebar is a sheet from the inline start. */
+  .app-sidebar[popover]:popover-open {
+    position: fixed;
+    inset: 0 auto 0 0;
+    display: flex;
+    width: min(85%, 18rem);
+    height: 100dvh;
+    padding-top: var(--s3);
+    border-inline-end: 1px solid var(--line);
+    background-color: var(--card);
+    box-shadow: var(--shadow-3);
+  }
+  .app-sidebar[popover]:popover-open:dir(rtl) { inset: 0 0 0 auto; }
+  .app-sidebar[popover]::backdrop { background-color: var(--scrim); }
+  .app-sidebar:popover-open .app-sidebar-close { display: inline-flex; align-self: flex-end; }
+  .app-sidebar:popover-open a { min-height: 44px; font-size: var(--text-base); }
+
+  /* ── Detail panel ─────────────────────────────────────────────────────── */
+  /* A sheet from the bottom on a phone, opened with showModal(). */
+  .app-detail {
+    width: 100%;
+    max-width: none;
+    height: fit-content;
+    max-height: 85dvh;
+    margin: auto 0 0;
+    border-width: 1px 0 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    transform: translateY(100%);
+  }
+  .app-detail[open] { transform: none; }
+  @starting-style {
+    .app-detail:modal { transform: translateY(100%); }
+  }
+  /* Opened with show() at a width that has since narrowed: it lies over the
+     main view's end, without a scrim. */
+  .app-detail[open]:not(:modal) {
+    grid-area: main;
+    position: absolute;
+    z-index: 2;
+    inset: 0 0 0 auto;
+    width: min(100%, var(--app-detail-width));
+    height: auto;
+    max-height: none;
+    margin: 0;
+    border-width: 0;
+    border-inline-start-width: 1px;
+    border-radius: 0;
+  }
+  .app-detail[open]:not(:modal):dir(rtl) { inset: 0 auto 0 0; }
+
+  /* ── 48rem and up: sidebar column, detail sheet from the inline end ──── */
+  @container app-shell (min-width: 48rem) {
+    .app-shell-grid {
+      grid-template-columns: var(--app-sidebar) minmax(0, 1fr);
+      grid-template-areas: "head head" "side main";
+    }
+    .app-shell[data-sidebar='collapsed'] .app-shell-grid { grid-template-columns: var(--app-rail) minmax(0, 1fr); }
+    .app-menu-button { display: none; }
+    .app-sidebar[popover]:not(:popover-open) { display: flex; }
+    .app-sidebar:not(:popover-open) .app-sidebar-toggle { display: inline-flex; }
+
+    /* On the element itself, not on :modal, so it keeps this shape while it
+       closes; [open] then puts it in place, at the same specificity as the
+       starting style. */
+    .app-detail {
+      width: min(100%, 26rem);
+      height: 100dvh;
+      max-height: 100dvh;
+      margin: 0;
+      margin-inline-start: auto;
+      border-width: 0;
+      border-inline-start-width: 1px;
+      border-radius: 0;
+      transform: translateX(100%);
+    }
+    .app-detail:dir(rtl) { transform: translateX(-100%); }
+    .app-detail[open] { transform: none; }
+    @starting-style {
+      .app-detail:modal { transform: translateX(100%); }
+      .app-detail:modal:dir(rtl) { transform: translateX(-100%); }
+    }
+  }
+
+  /* ── The rail: icons only, labels on hover and focus ─────────────────── */
+  @container app-shell (min-width: 48rem) {
+    .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) {
+      padding-inline: calc((var(--app-rail) - 44px) / 2);
+    }
+    .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) :is(.app-sidebar-title, .app-sidebar-label) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) .app-sidebar-section + .app-sidebar-section {
+      padding-top: var(--s4);
+      border-top: 1px solid var(--line-soft);
+    }
+    .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a {
+      justify-content: center;
+      width: 44px;
+      min-height: 44px;
+      padding: 0;
+    }
+    .app-shell[data-sidebar='collapsed'] .app-sidebar-toggle { align-self: center; }
+    .app-shell[data-sidebar='collapsed'] .app-sidebar-toggle > svg { scale: -1 1; }
+    .app-shell[data-sidebar='collapsed'] .app-sidebar-toggle > svg:dir(rtl) { scale: 1 1; }
+
+    /* The hovered or focused item's label, shown as a tooltip beside it. */
+    .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a:is(:hover, :focus-visible) > .app-sidebar-label {
+      z-index: 20;
+      width: max-content;
+      max-width: 16rem;
+      height: auto;
+      padding: 4px var(--s2);
+      overflow: visible;
+      clip-path: none;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      background-color: var(--ink);
+      color: var(--card);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      line-height: 1.4;
+      pointer-events: none;
+    }
+  }
+  /* Placed with anchor positioning against the grid, so the sidebar's own
+     scrolling doesn't clip it. */
+  @supports (anchor-name: --a) {
+    @container app-shell (min-width: 48rem) {
+      /* Scoped per item, so a hovered item and a focused one each get their own. */
+      .app-shell[data-sidebar='collapsed'] .app-sidebar li { anchor-scope: --app-rail-item; }
+      .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a:is(:hover, :focus-visible) {
+        anchor-name: --app-rail-item;
+      }
+      .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a:is(:hover, :focus-visible) > .app-sidebar-label {
+        position-anchor: --app-rail-item;
+        position-area: inline-end;
+        margin-inline-start: var(--s2);
+      }
+    }
+  }
+  /* Without it: placed against the link, and the rail doesn't scroll. */
+  @supports not (anchor-name: --a) {
+    @container app-shell (min-width: 48rem) {
+      .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) { overflow: visible; }
+      .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a { position: relative; }
+      .app-shell[data-sidebar='collapsed'] .app-sidebar:not(:popover-open) a:is(:hover, :focus-visible) > .app-sidebar-label {
+        inset-block: 50% auto;
+        inset-inline: calc(100% + var(--s2)) auto;
+        translate: 0 -50%;
+      }
+    }
+  }
+
+  /* ── 75rem and up: the detail is a third column ───────────────────────── */
+  @container app-shell (min-width: 75rem) {
+    .app-shell-grid { --app-detail-mode: column; }
+    /* A column closes at once: the grid drops its column the moment the
+       panel closes, so a fade-out would play over the sidebar and main. */
+    .app-detail:not([open]) { transition: none; }
+    .app-shell-grid:has(> .app-detail[open]:not(:modal)) {
+      grid-template-columns: var(--app-sidebar) minmax(0, 1fr) var(--app-detail-width);
+      grid-template-areas: "head head head" "side main detail";
+    }
+    .app-shell[data-sidebar='collapsed'] .app-shell-grid:has(> .app-detail[open]:not(:modal)) {
+      grid-template-columns: var(--app-rail) minmax(0, 1fr) var(--app-detail-width);
+    }
+    .app-detail[open]:not(:modal) {
+      grid-area: detail;
+      position: static;
+      z-index: auto;
+      width: auto;
+      min-width: 0;
+      box-shadow: none;
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .app-sidebar a { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .app-sidebar[popover] { border-inline-end-color: CanvasText; }
+    .app-sidebar a[aria-current='page'] { outline: 2px solid CanvasText; outline-offset: -2px; }
+    .app-shell[data-sidebar='collapsed'] .app-sidebar a:is(:hover, :focus-visible) > .app-sidebar-label { border-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-detail { transform: none; }
+  }
+}
