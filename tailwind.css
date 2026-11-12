@@ -33,6 +33,7 @@
   --color-interactive-surface: var(--i-surface);
   --color-interactive-line: var(--i-line);
   --color-on-interactive: var(--on-i);
+  --color-on-danger: var(--on-danger);
 
   --color-success: var(--success);
   --color-success-ink: var(--success-ink);
@@ -91,6 +92,7 @@
   --tracking-caps: var(--tracking-caps);
 
   --radius-sm: var(--radius-sm);
+  --radius-control: var(--radius-control);
   --radius: var(--radius);
   --radius-lg: var(--radius-lg);
 

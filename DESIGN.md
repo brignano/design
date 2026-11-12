@@ -36,7 +36,7 @@ family, motion and shape are identical; what changes is how much room things get
 | Section rhythm | `--s9` (96px) | `--s6` (32px) |
 | Measure | 68ch | 780px |
 | Display face | Silkscreen — monogram, hero eyebrows | none (aliases to `--sans`) |
-| Motion | scroll reveal, overlays opening and closing (ADR-0013) | none, except overlays opening and closing (ADR-0013) |
+| Motion | scroll reveal, overlays opening and closing (ADR-0013), a press and a switch of view (ADR-0015) | none, except overlays opening and closing (ADR-0013), a press and a switch of view (ADR-0015) |
 | Density | whitespace carries the layout | scanning beats reading |
 
 ## 3. Colour — one hue, one meaning
@@ -133,7 +133,11 @@ type is already carried by a text label. Nor `idea`, `planning`, `someday`, or
 
 The part that makes an interface feel built rather than styled.
 
-- `--i` fill, `--i-hover`, `--i-pressed`, `--i-ink` for links/icons/focus.
+- `--i` fill, `--i-hover`, `--i-pressed`, `--i-ink` for links/icons/focus. The
+  fill is a saturated cobalt with a white label (`--on-i`) in both themes, and
+  hover and pressed step darker in both. In dark the fill and the ink are
+  different steps: fill a surface with `--i`, write or draw on a surface with
+  `--i-ink`. A `--danger` fill takes `--on-danger`.
 - **Disabled is neutral, never hued** (`--i-disabled-bg` / `--i-disabled-ink`). A
   greyed-out control must stop signalling "click me". Its low contrast is allowed
   only because WCAG 1.4.3 exempts *inactive* controls, so the state must be real:
@@ -208,8 +212,12 @@ avoids a one-word last line (`pretty`). On a touch screen the tool tier's
 
 ## 6. Space, shape, elevation
 
-4px base (`--s1` … `--s9`). Radius: `--radius-sm` for chips and pills, `--radius`
-for cards, `--radius-lg` for hero surfaces.
+4px base (`--s1` … `--s9`). Radius steps by what the thing is, so a control
+inside a card reads as nested rather than as a smaller card: `--radius-sm`
+(6px) for chips and pills, `--radius-control` (8px) for buttons, inputs,
+selects, the segmented control and menu items, `--radius` (12px) for cards,
+messages, popovers and code blocks, `--radius-lg` (18px) for dialogs and
+hero surfaces.
 
 **Elevation differs by theme.** Light mode separates surfaces with a hairline plus
 a shadow (`--shadow-1/2/3`). Dark mode does not use borders — surfaces get
@@ -264,6 +272,21 @@ shown, so a browser without `@starting-style` shows it at once; and under
 `prefers-reduced-motion` it is instant, backdrop included. An overlay that is
 already open when the page loads doesn't animate. That is the whole
 exception: content on the page itself still never animates in.
+
+**The third: a control may answer the person who used it** (ADR-0015). Two
+cases, both only ever started by the person:
+
+- **A press.** A `.btn` settles by 2% over `--dur-fast` while it is held down. Not when it is
+  disabled or busy.
+- **A switch of view.** When someone picks a tab or a segment, the script that
+  swaps the content may wrap the swap in `document.startViewTransition()`, and
+  the old view cross-fades to the new one at the browser's default, 250ms
+  (the same as `--dur`). The package sets nothing on the transition, so a
+  site that already uses view transitions is not affected. Opt in per switch;
+  a browser without the API swaps at once.
+
+Under `prefers-reduced-motion` neither happens. Nothing here runs on load, on
+hover or on scroll.
 
 **Print is the light theme.** `tokens.css` forces `color-scheme: light` on
 paper whatever the screen was showing, and `components.css` drops sticky
@@ -364,7 +387,7 @@ not just `<html>`.** A dark hero band on a light marketing page is
 Two consequences for code that touches tokens directly:
 
 - **Don't read a token's value with `getPropertyValue`.** It returns the
-  declaration text, `light-dark(#076bd3, #6ba5f3)`, not a colour. To get the
+  declaration text, `light-dark(#076bd3, #0371e0)`, not a colour. To get the
   colour a chart library needs, resolve it on an element in the right subtree:
   set `el.style.color = 'var(--chart-1)'` and read `getComputedStyle(el).color`.
   Re-read it when the theme changes.
@@ -392,7 +415,7 @@ alone. In the consumer's `package.json`:
 ```
 
 Verified with Lightning CSS: older targets lower the tokens; these targets
-pass `light-dark(#076bd3, #6ba5f3)` through untouched.
+pass `light-dark(#076bd3, #0371e0)` through untouched.
 
 ### Tailwind
 

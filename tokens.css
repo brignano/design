@@ -154,23 +154,34 @@
      chroma. It is deliberately NOT Tailwind's blue-600 (263°, a touch
      violet and electric): same affordance, our own colour (ADR-0008).
 
-       --i          fill               5.18:1 / 7.07:1  (label 5.18 / 7.46)
+       --i          fill               5.18:1 / 3.78:1  (label 5.18 / 4.73)
        --i-ink      link/icon/focus    6.78:1 / 7.07:1
-       --i-hover    hover fill         8.65:1 / 10.50:1 (label)
-       --i-pressed  pressed fill      10.44:1 / 13.32:1 (label)
+       --i-hover    hover fill         label 8.65:1 / 5.88:1
+       --i-pressed  pressed fill       label 10.44:1 / 7.52:1
 
-     In dark, fill and ink converge, and hover/pressed get LIGHTER.
+     The fill is a saturated mid-cobalt with a WHITE label in both themes,
+     and hover and pressed step darker in both. Dark used to lift the fill
+     to the ink's pale blue with a dark label, which read as washed out on
+     the most important control on the screen. So in dark the fill and the
+     ink are now different steps: --i fills, --i-ink is what you read
+     (links, icons, the focus ring). The dark fill is as light as a white
+     label allows (4.5:1), which is what keeps it 3:1 as a mark on --card,
+     --bg and its own wash.
 
      DISABLED IS NEUTRAL, NEVER HUED — a greyed-out control must stop
      signalling "click me". */
-  --i: light-dark(#076bd3, #6ba5f3);
+  --i: light-dark(#076bd3, #0371e0);
   --i-ink: light-dark(#0159b5, #6ba5f3);
-  --i-hover: light-dark(#014a97, #98c4ff);
-  --i-pressed: light-dark(#003e82, #c0dbff);
-  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #6ba5f3 20%, transparent));
-  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #6ba5f3 44%, transparent));
-  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #6ba5f3 30%, transparent));
-  --on-i: light-dark(#ffffff, #111111);
+  --i-hover: light-dark(#014a97, #0062c7);
+  --i-pressed: light-dark(#003e82, #0553a6);
+  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #0371e0 20%, transparent));
+  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
+  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
+  --on-i: light-dark(#ffffff, #ffffff);
+  /* The label on a --danger fill. Its own token because the two fills no
+     longer agree in dark: rust still lifts to a pale fill there and takes a
+     dark label, where cobalt takes white. */
+  --on-danger: light-dark(#ffffff, #111111);
   --i-disabled-bg: var(--n-200);
   --i-disabled-ink: var(--n-400);
 
@@ -356,6 +367,7 @@
      differs. So shadows 2 and 3 carry one layer per theme, with the other
      theme's layer transparent — it draws nothing. */
   --radius-sm: 6px;
+  --radius-control: 8px; /* buttons, inputs, selects, the segmented control, menu items */
   --radius: 12px;
   --radius-lg: 18px;
   --shadow-1: 0 1px 2px light-dark(rgba(17, 17, 17, 0.04), rgba(0, 0, 0, 0.45));
@@ -465,5 +477,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  /* View transitions live on pseudo-elements the rule above can't reach. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

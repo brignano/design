@@ -84,6 +84,7 @@
     <ul>
       <li>Click or Enter/Space selects a tab: set <code>aria-selected="true"</code> on it and <code>"false"</code> on the rest, and show only its panel (<code>hidden</code> on the others).</li>
       <li>Left and Right arrows move to the previous and next tab and select it; Home and End go to the first and last. Skip <code>aria-disabled</code> tabs.</li>
+      <li>Optional: wrap the swap in <code>document.startViewTransition()</code> and the panels cross-fade at the browser's default, 250ms (the system's <code>--dur</code>). Skip it under <code>prefers-reduced-motion</code>; a browser without the API swaps at once. Never run it on load.</li>
       <li>Only the selected tab is in the tab order (<code>tabindex="0"</code>); the others are <code>tabindex="-1"</code>. Tab from the list moves into the panel.</li>
     </ul>
   </section>
@@ -102,14 +103,21 @@
   // select a tab; Home/End jump to the ends; disabled tabs are skipped.
   document.querySelectorAll('[data-demo]').forEach((root) => {
     const tabs = [...root.querySelectorAll('[role=tab]')].filter((t) => t.getAttribute('aria-disabled') !== 'true');
+    const calm = matchMedia('(prefers-reduced-motion: reduce)');
     const select = (tab) => {
-      tabs.forEach((t) => {
-        const on = t === tab;
-        t.setAttribute('aria-selected', on);
-        t.tabIndex = on ? 0 : -1;
-        root.querySelector('#' + t.getAttribute('aria-controls')).hidden = !on;
-      });
-      tab.focus();
+      const swap = () => {
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.setAttribute('aria-selected', on);
+          t.tabIndex = on ? 0 : -1;
+          root.querySelector('#' + t.getAttribute('aria-controls')).hidden = !on;
+        });
+        tab.focus();
+      };
+      // Optional: cross-fade the switch where the browser can, unless the
+      // person asked for less motion. Without it the swap is instant.
+      if (document.startViewTransition && !calm.matches) document.startViewTransition(swap);
+      else swap();
     };
     tabs.forEach((t, i) => {
       t.addEventListener('click', () => select(t));
