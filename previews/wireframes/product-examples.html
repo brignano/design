@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: below the first screen, per product</title>
+<!-- The rule: "Wireframes before build" in brignano/ai-tools fleet/README.md. For #156. -->
+<link rel="stylesheet" href="../_fonts.css">
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../components.css">
+<style>
+  /* Wireframe chrome. */
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.55; }
+  .wf-head { max-width: 76ch; margin: 0 0 32px; }
+  .wf-head h1 { font-size: var(--text-xl); margin: 0 0 4px; }
+  .wf-head h2 { font-size: var(--text-lg); margin: 40px 0 4px; }
+  .wf-head p, .wf-head li { margin: 0 0 8px; color: var(--ink-soft); }
+  .wf-head ul { margin: 0; padding-left: 20px; }
+  .wf-head strong { color: var(--ink); }
+  .wf-frames { display: flex; gap: 24px; align-items: flex-start; overflow-x: auto; padding-bottom: 8px; }
+  .wf-frame { flex: none; }
+  .wf-label { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 6px; }
+  .wf-screen { container-type: inline-size; background: var(--card); color: var(--ink);
+    border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+  .wf-phone .wf-screen { width: 390px; }
+  .wf-desktop .wf-screen { width: 1280px; }
+  .wf-fold { font: var(--text-xs) var(--mono); color: var(--slate); text-align: center; padding: 8px; border-bottom: 1px dashed var(--line-control); }
+
+  .p h2, .p h3, .p p, .p ul, .p ol { margin: 0; }
+  .p ul, .p ol { padding: 0; list-style: none; }
+  .p a { color: inherit; }
+  .p input { font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line-control); min-height: 48px; padding: 0 14px; width: 100%; }
+  .p input:focus-visible, .p .cta:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .p label { display: grid; gap: 6px; font-size: var(--text-sm); }
+  .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border: 0;
+    font: var(--weight-semibold) var(--text-base) / 1 var(--sans); cursor: pointer; text-decoration: none; }
+  .p .stamp { font-size: var(--text-lg); }
+  .sec { padding: 40px 16px; display: grid; gap: 20px; }
+  .foot { padding: 24px 16px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; font-size: var(--text-sm); color: var(--ink-soft); }
+  .foot .stamp { margin-left: auto; color: var(--ink); }
+  .foot small { flex-basis: 100%; font-size: var(--text-xs); }
+  @container (min-width: 900px) {
+    .sec { padding: 72px 64px; gap: 32px; }
+    .foot { padding: 32px 64px; }
+  }
+
+  /* ── 1. Driftwood: always dark, mono, square ─────────────────────────── */
+  .dw { background: var(--bg); color: var(--ink); font-family: var(--mono); }
+  .dw h2 { font: var(--weight-semibold) 26px / 1.2 var(--mono); letter-spacing: -0.02em; }
+  .dw .lede { color: var(--ink-soft); font-size: var(--text-sm); }
+  .dw-log { border: 1px solid var(--line-strong); font-size: var(--text-sm); }
+  .dw-log > li { display: grid; gap: 6px; padding: 14px 16px; border-top: 1px solid var(--line); }
+  .dw-log > li:first-child { border-top: 0; }
+  .dw-log b { font-weight: var(--weight-semibold); }
+  .dw-log code { display: block; padding: 2px 8px; font: inherit; }
+  .dw-log .rm { background: var(--diff-removed-surface); color: var(--diff-removed-ink); }
+  .dw-log .ad { background: var(--diff-added-surface); color: var(--diff-added-ink); }
+  .dw-log .eff { color: var(--ink-soft); }
+  .dw-log .eff.bad { color: var(--danger); }
+  .dw-how { font-size: var(--text-sm); display: grid; gap: 8px; }
+  .dw-how li::before { content: "$ "; color: var(--mark-teal); }
+  .dw-how span { color: var(--ink-soft); }
+  .dw-close { border-top: 1px solid var(--line); }
+  .dw-close form { display: grid; gap: 12px; }
+  .dw .cta { background: var(--mark-fill); color: var(--on-mark); border-radius: 0; font-family: var(--mono); }
+  .dw input { border-radius: 0; background: var(--card); }
+  .dw .foot { border-top: 1px solid var(--line); font-size: var(--text-xs); }
+  @container (min-width: 900px) {
+    .dw-band { grid-template-columns: 360px 1fr; align-items: start; }
+    .dw h2 { font-size: 34px; }
+    .dw-close { grid-template-columns: 1fr 1fr; align-items: end; }
+    .dw-close form { grid-template-columns: 1fr auto; align-items: end; }
+  }
+
+  /* ── 2. Guidebook: bright, heavy, pills ──────────────────────────────── */
+  .gb { background: var(--card); color: var(--ink); }
+  .gb h2 { font: var(--weight-heavy) 44px / 0.95 var(--sans); letter-spacing: -0.045em; text-wrap: balance; }
+  .gb .sec { justify-items: center; text-align: center; }
+  .gb-steps { display: grid; gap: 28px; width: 100%; max-width: 980px; text-align: left; }
+  .gb-step { display: grid; gap: 12px; }
+  .gb-shot { position: relative; padding: 16px; min-height: 150px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+  .gb-shot .row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: var(--radius-sm); font-size: var(--text-sm); }
+  .gb-shot .row.hit { outline: 3px solid var(--mark-violet); outline-offset: 3px; background: var(--card); }
+  .gb-tip { position: absolute; right: 12px; bottom: -18px; width: 220px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line-strong);
+    border-radius: var(--radius); box-shadow: var(--shadow-3); font-size: var(--text-xs); }
+  .gb-tip small { display: block; font-family: var(--mono); color: var(--ink-soft); }
+  .gb-step h3 { font-size: var(--text-lg); display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+  .gb-step h3 em { font-style: normal; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--mark-violet); font: var(--weight-semibold) var(--text-sm) var(--mono); }
+  .gb-step p { color: var(--ink-soft); }
+  .gb-close form { display: grid; gap: 12px; width: 100%; max-width: 520px; }
+  .gb input { border-radius: 999px; padding: 0 22px; }
+  .gb .cta { background: var(--mark-fill); color: var(--on-mark); border-radius: 999px; min-height: 56px; }
+  .gb .foot { border-top: 2px dotted var(--line-strong); }
+  @container (min-width: 900px) {
+    .gb h2 { font-size: 88px; }
+    .gb-steps { grid-template-columns: 1fr 1fr 1fr; }
+    .gb-close form { grid-template-columns: 1fr auto; }
+  }
+
+  /* ── 3. Sites: a warm wash, soft, round ──────────────────────────────── */
+  .st { background: var(--mark-surface); color: var(--ink); }
+  .st h2 { font: var(--weight-medium) 34px / 1.05 var(--sans); letter-spacing: -0.03em; }
+  .st-thread { display: grid; gap: 28px; }
+  .st-pair { display: grid; gap: 10px; }
+  .st-msg { justify-self: end; max-width: 300px; padding: 12px 16px; border-radius: 22px 22px 6px 22px; background: var(--mark-fill); color: var(--on-mark); line-height: 1.35; }
+  .st-reply { justify-self: start; padding: 10px 14px; border-radius: 22px 22px 22px 6px; background: var(--card); font-size: var(--text-sm); box-shadow: var(--shadow-1); }
+  .st-reply .num { color: var(--ink-soft); }
+  .st-snip { justify-self: start; width: 260px; padding: 14px; border-radius: 20px; background: var(--card); box-shadow: var(--shadow-2); font-size: var(--text-sm); display: grid; gap: 6px; }
+  .st-snip .new { outline: 2px solid var(--mark-magenta); border-radius: var(--radius-sm); padding: 4px 6px; }
+  .st-snip .pic { height: 70px; border-radius: 12px; background: var(--line); display: grid; place-items: center; color: var(--slate); font: var(--text-xs) var(--mono); }
+  .st-close { justify-items: start; }
+  .st-compose { display: grid; gap: 8px; width: 100%; max-width: 560px; padding: 6px; background: var(--card); border-radius: 28px; box-shadow: var(--shadow-2); }
+  @container (min-width: 900px) { .st-compose { display: flex; border-radius: 999px; } }
+  .st-compose input { border: 0; border-radius: 999px; min-height: 48px; }
+  .st .cta { background: var(--ink); color: var(--card); border-radius: 999px; flex: none; }
+  .st .note { color: var(--ink-soft); font-size: var(--text-sm); }
+  @container (min-width: 900px) {
+    .st h2 { font-size: 56px; }
+    .st-pair { grid-template-columns: 1fr 1fr; align-items: center; column-gap: 48px; }
+    .st-msg, .st-reply { grid-column: 1; }
+    .st-msg { justify-self: start; max-width: 440px; font-size: var(--text-lg); }
+    .st-snip { grid-column: 2; grid-row: 1 / span 2; justify-self: center; width: 320px; rotate: 2deg; }
+    .st-pair:nth-child(2) .st-snip { rotate: -2deg; }
+  }
+</style>
+</head>
+<body>
+  <div class="wf-head">
+    <h1>Wireframe: below the first screen, per product</h1>
+    <p>For <a href="https://github.com/brignano/design/issues/156">#156</a>. The first screens are approved
+      (<a href="product-identity.html">product-identity.html</a>). This draws everything under them on each example
+      page: one signature band in the product's own interface, the close, and the footer with the
+      <code>A|B</code> stamp. Each keeps the ground, voice and shape its first screen chose.</p>
+    <p><strong>Under the 180-word page budget:</strong> each band is one heading, one line, and the product doing
+      the thing. There is no separate "how it works" band; the steps live inside the signature band.</p>
+    <p>Rejected: keeping the shared three cards and three numerals under each new first screen: the page would
+      change look halfway down, which is the cookie cutter again.</p>
+  </div>
+
+  <div class="wf-head"><h2>1. Driftwood: the deploy log</h2>
+    <p>Dark, mono, square. The band is the last deploy as a log: each change with its diff and what it did, the
+      broken one in red. Setup is three shell lines. The close is a plain mono form with the teal button.</p></div>
+  <div class="wf-frames" data-tpl="dw" data-theme="dark" data-mark="teal">
+    <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+    <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+  </div>
+
+  <div class="wf-head"><h2>2. Guidebook: the next steps of the guide</h2>
+    <p>Bright, heavy, pills. The band continues the guide the first screen started: steps 2 to 4, each a small
+      screen with Guidebook's own highlight and tip on it. The close is one pill field and the violet pill button.</p></div>
+  <div class="wf-frames" data-tpl="gb" data-theme="light" data-mark="violet">
+    <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+    <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+  </div>
+
+  <div class="wf-head"><h2>3. Sites: more messages, more changes</h2>
+    <p>The warm wash, soft type, round corners. The band is the conversation carrying on: two more asks, each
+      answered, each with the changed bit of the site ringed beside it. The close is a message composer with the
+      ink send button. Shown in light; dark uses the same tokens.</p></div>
+  <div class="wf-frames" data-tpl="st" data-theme="light" data-mark="magenta">
+    <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+    <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+  </div>
+
+  <template id="dw">
+    <div class="p dw">
+      <p class="wf-fold">first screen above (approved)</p>
+      <section class="sec dw-band">
+        <div style="display:grid;gap:12px">
+          <h2>Deploy 214, line by line.</h2>
+          <p class="lede">Every change the last deploy made, and what it did to the shop.</p>
+        </div>
+        <ol class="dw-log">
+          <li><b>storefront · health check</b>
+            <code class="rm">- health_check = "/health"</code><code class="ad">+ health_check = "/healthz"</code>
+            <span class="eff bad">✕ AWS marks the shop down</span></li>
+          <li><b>orders-api · tasks</b>
+            <code class="rm">- desired_count = 2</code><code class="ad">+ desired_count = 4</code>
+            <span class="eff">healthy, 4 running</span></li>
+          <li><b>payments · timeout</b>
+            <code class="rm">- timeout = 10</code><code class="ad">+ timeout = 30</code>
+            <span class="eff">healthy</span></li>
+        </ol>
+        <ol class="dw-how" aria-label="Set up">
+          <li>driftwood init <span>reads your Terraform, read-only</span></li>
+          <li>driftwood deploy <span>one step in your pipeline</span></li>
+          <li>open driftwood <span>live health, your own login</span></li>
+        </ol>
+      </section>
+      <section class="sec dw-close">
+        <div style="display:grid;gap:10px"><h2>Try it on your own system.</h2>
+          <p class="lede">We reply within two days. Demo needs no signup.</p></div>
+        <form onsubmit="return false"><label>Work email<input type="email" autocomplete="email"></label>
+          <button class="cta" type="submit">Get set up</button></form>
+      </section>
+      <footer class="foot"><span>driftwood</span><a href="#">Docs</a><a href="#">Contact</a>
+        <span class="stamp" aria-label="Anthony Brignano">A|B</span><small>© 2026 Anthony Brignano. All rights reserved.</small></footer>
+    </div>
+  </template>
+
+  <template id="gb">
+    <div class="p gb">
+      <p class="wf-fold">first screen above (approved): step 1 of 4</p>
+      <section class="sec">
+        <h2>Pick a guide. Press play.</h2>
+        <ol class="gb-steps">
+          <li class="gb-step"><div class="gb-shot"><p class="row">Overview</p><p class="row hit">Team <span>→</span></p><p class="row">Billing</p>
+            <div class="gb-tip"><small>Step 2 of 4</small><b>Open Team</b></div></div>
+            <h3><em>2</em> Pick a ready-made guide</h3><p>Invite a teammate, set up billing, export data.</p></li>
+          <li class="gb-step"><div class="gb-shot"><p class="row">jordan@acme.co</p><p class="row hit">Invite teammate <span>+</span></p>
+            <div class="gb-tip"><small>Step 3 of 4</small><b>Press Invite</b></div></div>
+            <h3><em>3</em> It points at the real button</h3><p>On your app, not a screenshot of it.</p></li>
+          <li class="gb-step"><div class="gb-shot"><p class="row">Riley joined</p><p class="row hit">Done <span>✓</span></p>
+            <div class="gb-tip"><small>Step 4 of 4</small><b>That's it</b></div></div>
+            <h3><em>4</em> New hires finish on their own</h3><p>You see who got stuck, and where.</p></li>
+        </ol>
+      </section>
+      <section class="sec gb-close">
+        <h2>Try it with your team.</h2>
+        <form onsubmit="return false"><label style="text-align:left">Work email<input type="email" autocomplete="email"></label>
+          <button class="cta" type="submit" style="align-self:end">Try it with your team</button></form>
+      </section>
+      <footer class="foot"><span>Guidebook</span><a href="#">Chrome extension</a><a href="#">Contact</a>
+        <span class="stamp" aria-label="Anthony Brignano">A|B</span><small>© 2026 Anthony Brignano. All rights reserved.</small></footer>
+    </div>
+  </template>
+
+  <template id="st">
+    <div class="p st">
+      <p class="wf-fold">first screen above (approved)</p>
+      <section class="sec">
+        <h2>Ask for anything. It's live in a minute.</h2>
+        <div class="st-thread">
+          <div class="st-pair">
+            <p class="st-msg">Put a photo of the van at the top?</p>
+            <p class="st-reply">Done. It's live. <span class="num">52s</span></p>
+            <div class="st-snip"><b>Maple Street Plumbing</b><div class="pic new">photo: the van</div></div>
+          </div>
+          <div class="st-pair">
+            <p class="st-msg">Drain clearing is $120 now.</p>
+            <p class="st-reply">Done. It's live. <span class="num">31s</span></p>
+            <div class="st-snip"><p style="display:flex;justify-content:space-between">Leak repair <span class="num">$95</span></p>
+              <p class="new" style="display:flex;justify-content:space-between">Drain clearing <span class="num">$120</span></p></div>
+          </div>
+        </div>
+      </section>
+      <section class="sec st-close">
+        <h2>Get a free preview.</h2>
+        <form class="st-compose" onsubmit="return false"><label class="sr-only" for="st-site" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your business name or current website</label>
+          <input id="st-site" placeholder="Your business, or its current website">
+          <button class="cta" type="submit">Get a free preview</button></form>
+        <p class="note">I build your first version free. No card, no contract.</p>
+      </section>
+      <footer class="foot"><span>Sites</span><a href="#">How it works</a><a href="#">Log in</a>
+        <span class="stamp" aria-label="Anthony Brignano">A|B</span><small>© 2026 Anthony Brignano. All rights reserved.</small></footer>
+    </div>
+  </template>
+
+  <script>
+    for (const row of document.querySelectorAll('[data-tpl]')) {
+      const tpl = document.getElementById(row.dataset.tpl);
+      for (const screen of row.querySelectorAll('.wf-screen')) screen.append(tpl.content.cloneNode(true));
+    }
+  </script>
+</body>
+</html>
