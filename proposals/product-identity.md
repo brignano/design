@@ -1,4 +1,4 @@
-Status: accepted · Tracking issue: #153 · ADR-0017
+Status: building · Tracking issue: #153 · ADR-0017
 
 # Product identity: each product page is built from what the product does
 

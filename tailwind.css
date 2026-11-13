@@ -75,6 +75,11 @@
 
   --color-mark: var(--mark);
   --color-mark-ink: var(--mark-ink);
+  --color-mark-fill: var(--mark-fill);
+  --color-mark-fill-hover: var(--mark-fill-hover);
+  --color-mark-fill-pressed: var(--mark-fill-pressed);
+  --color-mark-surface: var(--mark-surface);
+  --color-on-mark: var(--on-mark);
 
   --font-sans: var(--sans);
   --font-mono: var(--mono);

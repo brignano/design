@@ -116,7 +116,7 @@ for (const f of ['tokens.css', 'tokens.chart.css'])
       if (selector === ':root') tokens.set(k, v);
       // .tier-marketing re-declares type and rhythm, never colour. So does
       // the tool tier's coarse-pointer block (a larger smallest step on a phone).
-      else if (MARK_BLOCKS.includes(selector) && k === '--mark-current' && /^var\(--mark-[a-z]+\)$/.test(v)) continue;
+      else if (MARK_BLOCKS.includes(selector) && /^--mark-(current|fill|fill-hover|fill-pressed|surface)$/.test(k) && /^var\(--mark-[a-z-]+\)$/.test(v)) continue;
       else if (!SCALE_BLOCKS.includes(selector) || /light-dark|#|rgb|color-mix/.test(v))
         fail(`one list: ${f} declares ${k} under \`${selector}\`; colours live once, on :root, as light-dark()`);
     }
@@ -170,7 +170,9 @@ const STEPS = { '--bg': ['--n-25', '--n-0'], '--card': ['--n-0', '--n-50'], '--o
   '--slate': ['--n-600', '--n-500'], '--line-control': ['--n-500', null],
   '--device': ['--n-900', '--n-300'],
   // The danger button's fills are the state hue in light; only dark has its own.
-  '--danger-fill': ['--danger', null], '--danger-fill-hover': ['--danger-ink', null], '--danger-fill-pressed': ['--danger-ink', null] };
+  '--danger-fill': ['--danger', null], '--danger-fill-hover': ['--danger-ink', null], '--danger-fill-pressed': ['--danger-ink', null],
+  // A product's fill is its mark in light; only dark has its own (ADR-0017).
+  '--mark-teal-fill': ['--mark-teal', null], '--mark-violet-fill': ['--mark-violet', null], '--mark-magenta-fill': ['--mark-magenta', null] };
 for (const [k, steps] of Object.entries(STEPS))
   steps.forEach((step, i) => {
     const [theme, map] = i ? ['dark', dark] : ['light', light];
@@ -210,6 +212,20 @@ for (const [k] of tokens) {
   }
 }
 
+// A mark's fills and its page ground sit at that mark's own hue, theme by
+// theme (ADR-0017). '' is the family amber, whose mark is --mark.
+const MARK_FAMILIES = ['', '-teal', '-violet', '-magenta'];
+for (const f of MARK_FAMILIES)
+  for (const step of ['fill', 'fill-hover', 'fill-pressed', 'surface'])
+    for (const [theme, map] of [['light', light], ['dark', dark]]) {
+      const k = `--mark${f}-${step}`, src = `--mark${f}`;
+      if (!tokens.has(k)) { fail(`mark hue: ${k} is missing`); continue; }
+      const want = oklch(resolve(`var(${src})`, map).rgb).H, got = oklch(resolve(`var(${k})`, map).rgb).H;
+      const off = Math.min(Math.abs(got - want), 360 - Math.abs(got - want));
+      if (off > HUE_TOLERANCE)
+        fail(`mark hue (${theme}): ${k} ${hexOf(k, map)} sits at hue ${got.toFixed(1)}°, but ${src} is ${want.toFixed(1)}° ±${HUE_TOLERANCE}°`);
+    }
+
 // ── 1. Contrast floors ───────────────────────────────────────────────────────
 // [foreground, background, floor]. A translucent background (a wash) is laid
 // over --card first, which is where washes sit.
@@ -225,6 +241,13 @@ for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg,
 // single rule pairs with its colour.
 for (const bg of ['--danger-fill', '--danger-fill-hover', '--danger-fill-pressed']) floors.push(['--on-danger', bg, TEXT]);
 for (const bg of ['--card', '--bg']) floors.push(['--danger-fill', bg, MARK]); // the button has to be found on the surface it sits on
+// A product page's primary button and ground (ADR-0017): the label on each
+// fill, the button found on every ground it can sit on, and text on the ground.
+for (const f of MARK_FAMILIES) {
+  for (const step of ['fill', 'fill-hover', 'fill-pressed']) floors.push(['--on-mark', `--mark${f}-${step}`, TEXT]);
+  for (const bg of ['--card', '--bg', `--mark${f}-surface`]) floors.push([`--mark${f}-fill`, bg, MARK]);
+  for (const fg of ['--ink', '--ink-soft', '--i-ink']) floors.push([fg, `--mark${f}-surface`, TEXT]);
+}
 for (const bg of ['--surface-hover', '--surface-active']) floors.push(['--ink', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);
