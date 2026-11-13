@@ -95,8 +95,28 @@ and `.rule` draw in it; the name beside the glyph stays `--ink`. With no
 attribute the mark is the family amber, so personal tools share it. A product
 gets its own hue when it gets a product page, not before.
 
-The contract is `--mark`'s: a graphic only. Buttons and links stay cobalt on
-every product, so "you can act on this" looks the same everywhere.
+The contract is `--mark`'s: a graphic only. Buttons and links stay cobalt in
+every app, so "you can act on this" looks the same everywhere a person works.
+
+### On a product page, the mark may fill and wash
+
+A product's marketing page (§13) is the one place a mark is more than a
+graphic (ADR-0017). There, and only there, it may do two more things:
+
+- **Fill the one primary button**: `--mark-fill` under a white `--on-mark`
+  label, stepping darker to `--mark-fill-hover` and `--mark-fill-pressed`.
+- **Wash the page ground**: `--mark-surface`, a faint opaque tint that
+  `--ink`, `--ink-soft` and links in `--i-ink` all read on.
+
+`data-mark` points all four at the product's, as it does `--mark-current`;
+with no attribute they are the family amber. The fill is its own step, the
+way `--i` sits beside `--i-ink`: in light it is the mark, in dark it is the
+mark's hue as light as a white label allows. Never fill or wash with
+`--mark-teal` and its siblings directly: in dark they are pale, for drawing.
+
+This is a scoped exception to "identity is not a fill", as the stage behind a
+hero proof was (ADR-0011). It never reaches an app, a link, text or a state,
+and the focus ring stays `--i-ink`.
 
 ### Colour is a surface, not text
 
