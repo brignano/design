@@ -751,10 +751,9 @@ swapped. Anthony chose a direction from the wireframe
 
 ### Consequences
 
-- "Identity is not a fill" (§3) has a second scoped exception on product
-  pages, beside ADR-0011's stage: the mark may fill the one primary action and
-  wash the page ground. It still never colours a link, text or a state, and
-  never appears as a fill in an app.
+- "One hue, one meaning" now has a second scoped exception on product pages:
+  the mark may fill the one primary action and wash the page ground. It still
+  never colours a link, text or a state, and never appears as a fill in an app.
 - The mark needs fill, label and surface tokens per product hue, each held to
   contrast in both themes by `npm run check`.
 - `product-page.css` stops being the look. The brief, show then tell, one
