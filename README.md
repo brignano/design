@@ -91,14 +91,18 @@ something actually looks different.
 
 ## Releasing
 
-The tag is the trigger. `.github/workflows/publish.yml` publishes to npm on any
-`v*` tag, after checking the tag agrees with `package.json` — npm versions are
-immutable, so a mismatch is caught before it's permanent.
+Releases are cut by Anthony, never by an agent on its own. The tag is the
+version: nothing bumps `package.json`, which stays at whatever it last said.
 
-```sh
-npm version minor   # bumps package.json, commits, tags
-git push --follow-tags
-```
+1. Write the notes in `releases/v<version>.md` and merge them to `main`. They
+   become the GitHub release body word for word.
+2. Run the **Release** workflow (`.github/workflows/release.yml`) with the
+   version (no leading `v`). It checks the tag, release and npm version don't
+   exist yet, creates the release, and dispatches `publish.yml`, which sets the
+   version from the tag and publishes.
+3. Check the Publish run, then `npm view @brignano/design version`.
+
+AGENTS.md has the same steps for agents.
 
 Publishing is done by CI, never from a laptop. There is no npm token anywhere in
 this repo and there should never be one — the runner exchanges its OIDC identity
