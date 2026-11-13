@@ -99,7 +99,7 @@
 <header class="pp-header">
   <div class="pp-wrap">
     <a class="pp-brand" href="#"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="20" height="20" rx="5"/><path d="M9 9h8M9 13h8M9 17h5"/></svg>Guidebook</a>
-    <p class="gb-prog" aria-live="polite"><span id="gb-step">Step <span class="num">1</span> of <span class="num">4</span></span><span class="gb-bar" aria-hidden="true"><i id="gb-bar"></i></span></p>
+    <p class="gb-prog"><span>Step <span class="num" id="gb-step">1</span> of <span class="num">4</span></span><span class="gb-bar" aria-hidden="true"><i id="gb-bar"></i></span></p>
   </div>
 </header>
 
@@ -188,11 +188,14 @@
 <script>
   /* The header counts the page's steps as they come into view. Without the
      script it reads "Step 1 of 4", which is true at the top. */
-  const label = document.getElementById('gb-step'), bar = document.getElementById('gb-bar');
+  const step = document.getElementById('gb-step'), bar = document.getElementById('gb-bar');
   const seen = new Set([1]);
+  let shown = 1;
   const show = () => {
     const n = Math.max(...seen);
-    label.innerHTML = `Step <span class="num">${n}</span> of <span class="num">4</span>`;
+    if (n === shown) return;
+    shown = n;
+    step.textContent = n;
     bar.style.width = `${n * 25}%`;
   };
   const io = new IntersectionObserver((entries) => {
