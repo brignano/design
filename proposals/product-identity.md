@@ -1,4 +1,4 @@
-Status: accepted · Tracking: brignano/design#152 · Would supersede part of ADR-0011
+Status: accepted · Tracking issue: #153 · ADR-0017
 
 # Product identity: each product page is built from what the product does
 
@@ -66,7 +66,7 @@ is the one family resemblance.
 | `.pp-button` takes the mark | `product-page.css` | Fill is `--mark-fill`, or `--ink` when the page chooses `data-button="ink"`. Focus ring stays `--i-ink`. |
 | A pinned theme | `DESIGN.md` §11, §13 | A product page may set `data-theme` and ignore the OS (Driftwood: dark). |
 | §13 rewritten | `DESIGN.md` | "Make it look like this product" becomes the five choices and the register. |
-| ADR-0015 | `DECISIONS.md` | Records this, and that the cobalt-everywhere line in ADR-0011 now ends at the product page. |
+| ADR-0017 | `DECISIONS.md` | Already recorded with this proposal: these decisions, and that the cobalt-everywhere line in ADR-0011 now ends at the product page. |
 | Example pages | `previews/` | `product-page-example.html` becomes three short examples, one per product, so the template is never shown as one look. |
 
 Then one issue each in driftwood, guidebook and sites to rebuild the page
