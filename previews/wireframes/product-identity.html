@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: each product page looks like its product</title>
+<!-- The rule: "Wireframes before build" in brignano/ai-tools fleet/README.md. -->
+<link rel="stylesheet" href="../_fonts.css">
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../components.css">
+<style>
+  /* Wireframe chrome. */
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.55; }
+  .wf-head { max-width: 76ch; margin: 0 0 32px; }
+  .wf-head h1 { font-size: var(--text-xl); margin: 0 0 4px; }
+  .wf-head h2 { font-size: var(--text-lg); margin: 40px 0 4px; }
+  .wf-head p, .wf-head li { margin: 0 0 8px; color: var(--ink-soft); }
+  .wf-head ul { margin: 0; padding-left: 20px; }
+  .wf-head strong { color: var(--ink); }
+  .wf-frames { display: flex; gap: 24px; align-items: flex-start; overflow-x: auto; padding-bottom: 8px; }
+  .wf-frame { flex: none; }
+  .wf-label { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 6px; }
+  .wf-screen {
+    container-type: inline-size; background: var(--card); color: var(--ink);
+    border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden;
+  }
+  .wf-phone .wf-screen { width: 390px; height: 844px; }
+  .wf-desktop .wf-screen { width: 1280px; height: 844px; }
+
+  /* Shared by all three: nothing but the reset and the family stamp. */
+  .p { height: 100%; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .p h1, .p p { margin: 0; }
+  .p a { color: inherit; text-decoration: none; }
+  .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px;
+    font: var(--weight-semibold) var(--text-base) / 1 var(--sans); border: 0; cursor: pointer; }
+  .cta:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  /* ── 1. Driftwood: the incident console ─────────────────────────────────
+     Always dark. The map is the page, not a picture on it. Everything is mono. */
+  .dw { background: var(--bg); color: var(--ink); font-family: var(--mono); }
+  .dw-bar { display: flex; gap: 16px; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--line);
+    font-size: var(--text-xs); color: var(--ink-soft); white-space: nowrap; }
+  .dw-bar b { color: var(--ink); font-weight: var(--weight-semibold); }
+  .dw-bar .dw-down { color: var(--danger); }
+  .dw-bar .cta { margin-left: auto; min-height: 32px; padding: 0 12px; font: var(--weight-semibold) var(--text-xs) / 1 var(--mono); }
+  .dw-hide { display: none; }
+  .dw .cta { background: var(--mark-teal); color: var(--bg); border-radius: 2px; font-family: var(--mono); }
+  .dw-map { position: absolute; inset: 41px 0 0 0; width: 100%; height: calc(100% - 41px); translate: -110px 0; }
+  .dw-map line, .dw-map path { stroke: var(--line-strong); stroke-width: 1.5; fill: none; }
+  .dw-map rect { fill: var(--card); stroke: var(--line-strong); stroke-width: 1.5; }
+  .dw-map text { fill: var(--ink-soft); font: 12px var(--mono); }
+  .dw-map .bad rect { stroke: var(--danger); stroke-width: 2.5; fill: var(--danger-surface); }
+  .dw-map .bad text { fill: var(--danger-ink); }
+  .dw-map .hot { stroke: var(--danger); stroke-dasharray: 5 5; }
+  .dw-words { position: relative; margin-top: auto; padding: 20px 16px 24px; display: grid; gap: 14px;
+    background: var(--bg); border-top: 1px solid var(--line); }
+  .dw-diff { font-size: var(--text-sm); line-height: 1.7; }
+  .dw-diff span { display: block; padding: 0 8px; }
+  .dw-diff .rm { background: var(--diff-removed-surface); color: var(--diff-removed-ink); }
+  .dw-diff .ad { background: var(--diff-added-surface); color: var(--diff-added-ink); }
+  .dw h1 { font: var(--weight-semibold) 30px / 1.15 var(--mono); letter-spacing: -0.02em; }
+  .dw h1 i { font-style: normal; color: var(--mark-teal); }
+  .dw-sub { color: var(--ink-soft); font-size: var(--text-sm); max-width: 52ch; }
+  .dw-ask { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: var(--text-sm); }
+  .dw-ask a:not(.cta) { border-bottom: 1px solid var(--line-control); }
+  @container (min-width: 900px) {
+    .dw-hide { display: inline; }
+    .dw-map { translate: none; }
+    .dw-words { position: absolute; left: 48px; bottom: 48px; width: 600px; margin: 0; padding: 28px;
+      border: 1px solid var(--line-strong); }
+    .dw h1 { font-size: 44px; }
+  }
+
+  /* ── 2. Guidebook: the page is a guide ──────────────────────────────────
+     Bright and loud. The product's own coach mark sits on the page's button. */
+  .gb { background: var(--card); color: var(--ink); text-align: center; }
+  .gb-top { display: flex; align-items: center; gap: 12px; padding: 14px 16px; font-weight: var(--weight-semibold); }
+  .gb-prog { margin-left: auto; display: flex; align-items: center; gap: 8px; font: var(--text-xs) var(--mono); color: var(--ink-soft); }
+  .gb-prog i { display: block; width: 72px; height: 4px; border-radius: 4px; background: var(--line);
+    background-image: linear-gradient(var(--mark-violet), var(--mark-violet)); background-size: 25% 100%; background-repeat: no-repeat; }
+  .gb-main { padding: 28px 16px 0; display: grid; justify-items: center; gap: 18px; }
+  .gb h1 { font: var(--weight-heavy) 54px / 0.95 var(--sans); letter-spacing: -0.045em; text-wrap: balance; }
+  .gb h1 u { text-decoration: none; box-shadow: inset 0 -0.28em 0 var(--mark-violet); }
+  .gb-sub { color: var(--ink-soft); font-size: var(--text-lg); max-width: 34ch; }
+  .gb-spot { position: relative; margin-top: 10px; }
+  .gb .cta { background: var(--mark-violet); color: var(--on-i); border-radius: 999px; min-height: 56px; padding: 0 30px; font-size: var(--text-lg);
+    outline: 3px solid var(--mark-violet); outline-offset: 7px; }
+  .gb-tip { position: relative; margin-top: 26px; width: 300px; text-align: left; padding: 14px 16px; background: var(--card);
+    border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow-3); font-size: var(--text-sm); }
+  .gb-tip::before { content: ''; position: absolute; top: -7px; left: 50%; width: 12px; height: 12px; margin-left: -6px; rotate: 45deg;
+    background: var(--card); border: 1px solid var(--line-strong); border-right: 0; border-bottom: 0; }
+  .gb-tip small { display: flex; justify-content: space-between; font: var(--text-xs) var(--mono); color: var(--ink-soft); margin-bottom: 6px; }
+  .gb-tip b { display: block; }
+  .gb-tip span { color: var(--ink-soft); }
+  .gb-next { margin-top: auto; padding: 16px; display: flex; justify-content: center; gap: 10px; align-items: center;
+    font: var(--text-xs) var(--mono); color: var(--ink-soft); border-top: 2px dotted var(--line-strong); }
+  .gb-next em { font-style: normal; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
+    border: 2px solid var(--mark-violet); color: var(--ink); }
+  @container (min-width: 900px) {
+    .gb-top { padding: 20px 40px; }
+    .gb-main { padding-top: 40px; gap: 20px; }
+    .gb h1 { font-size: 112px; max-width: 1100px; }
+    .gb-sub { font-size: var(--text-xl); max-width: 44ch; }
+  }
+
+  /* ── 3. Sites: ask, and it changes ──────────────────────────────────────
+     Warm and soft. The hero is a message and the site answering it. */
+  .st { background: color-mix(in srgb, var(--mark-magenta) 14%, var(--card)); color: var(--ink); }
+  .st-top { display: flex; align-items: center; gap: 10px; padding: 16px; font-size: var(--text-sm); }
+  .st-top b { font-size: var(--text-lg); }
+  .st-top span { margin-left: auto; color: var(--ink-soft); }
+  .st-main { padding: 8px 16px 0; display: grid; gap: 20px; flex: 1; min-height: 0; }
+  .st h1 { font: var(--weight-medium) 40px / 1.05 var(--sans); letter-spacing: -0.03em; }
+  .st h1 em { font-style: normal; color: var(--mark-magenta); }
+  .st-msg { display: grid; gap: 8px; justify-items: end; }
+  .st-bubble { max-width: 300px; padding: 12px 16px; border-radius: 22px 22px 6px 22px; background: var(--mark-magenta); color: var(--on-i);
+    font-size: var(--text-base); line-height: 1.35; }
+  .st-reply { justify-self: start; padding: 10px 14px; border-radius: 22px 22px 22px 6px; background: var(--card); font-size: var(--text-sm);
+    box-shadow: var(--shadow-1); }
+  .st-reply .num { color: var(--ink-soft); }
+  .st .cta { background: var(--ink); color: var(--card); border-radius: 999px; justify-self: start; }
+  .st-note { font-size: var(--text-sm); color: var(--ink-soft); margin-top: -8px; }
+  .st-phone { justify-self: center; align-self: end; width: 250px; height: 300px; margin-bottom: -40px; padding: 10px 10px 0;
+    background: var(--device); border-radius: 34px 34px 0 0; rotate: -3deg; box-shadow: var(--shadow-3); }
+  .st-site { height: 100%; background: var(--card); border-radius: 24px 24px 0 0; padding: 18px 16px; display: grid; gap: 8px; align-content: start;
+    font-size: var(--text-sm); }
+  .st-site b { font-size: var(--text-lg); line-height: 1.2; }
+  .st-site p { display: flex; justify-content: space-between; color: var(--ink-soft); padding: 4px 6px; }
+  .st-site .new { color: var(--ink); border-radius: var(--radius-sm); outline: 2px solid var(--mark-magenta); }
+  @container (min-width: 900px) {
+    .st-top { padding: 24px 56px; }
+    .st-main { grid-template-columns: 1.15fr 1fr; grid-template-rows: auto auto auto 1fr; column-gap: 56px; padding: 40px 56px 0; align-content: start; }
+    .st h1 { font-size: 84px; }
+    .st-msg { grid-column: 1; justify-items: start; }
+    .st-bubble { max-width: 440px; font-size: var(--text-xl); padding: 18px 24px; margin-left: 60px; }
+    .st-phone { grid-column: 2; grid-row: 1 / -1; width: 400px; height: 680px; padding: 14px 14px 0; border-radius: 52px 52px 0 0; rotate: 3deg; margin-bottom: -60px; }
+    .st-site { border-radius: 38px 38px 0 0; padding: 36px 28px; font-size: var(--text-lg); gap: 14px; }
+    .st-site b { font-size: var(--text-3xl); }
+  }
+</style>
+</head>
+<body>
+  <div class="wf-head">
+    <h1>Wireframe: each product page looks like its product</h1>
+    <p>Today Driftwood, Guidebook and Sites share a header, a ground, a typeface, a blue button, a status pill and a
+      rounded stage. Only a tint and left or right change, so flipping between them reads as one site. Below, the
+      first screen of each is drawn from what the product <em>does</em>, at phone and desktop width.</p>
+    <p><strong>Each product picks five things, and no two pick the same:</strong></p>
+    <ul>
+      <li><strong>Ground:</strong> the page's own surface (always dark, bright white, a warm wash of the mark).</li>
+      <li><strong>Voice:</strong> how the headline is set (mono, heavy 800, soft medium).</li>
+      <li><strong>Shape:</strong> square, pill or soft corners, on the button and everything else.</li>
+      <li><strong>Composition:</strong> where the product sits (it is the background, it annotates the page, it leans in from the edge).</li>
+      <li><strong>The page does the thing:</strong> one piece of the product's own interface, used on the page itself.</li>
+    </ul>
+    <p><strong>What stays shared:</strong> the five-line brief, show then tell, one primary action, the first-phone-screen
+      check, the tokens, and the <code>A|B</code> stamp in the footer. That stamp is the only family resemblance.</p>
+    <p><strong>What this breaks on purpose:</strong> the primary button is no longer cobalt on a product page (it takes
+      the mark, or ink). Inside the apps it stays cobalt. This needs your yes: it reverses part of ADR-0011.</p>
+    <p>Rejected: more knobs on the current template (a fourth layout, stronger tint): the sameness is the shared
+      header, button and stage, which knobs don't touch. A different typeface per product: the strongest lever, but
+      three more fonts to load and license; try this first.</p>
+  </div>
+
+  <div class="wf-head"><h2>1. Driftwood: the incident console</h2>
+    <p>Always dark, all mono, square corners. The system map is the page's background, with the broken box in red.
+      The headline is the added line of a diff. The header is a status line, not a nav.</p></div>
+  <div class="wf-frames" data-tpl="dw" data-theme="dark">
+    <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+    <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+  </div>
+
+  <div class="wf-head"><h2>2. Guidebook: the page is a guide</h2>
+    <p>Bright white, heavy type as large as the screen allows, pills. Guidebook's own coach mark points at the page's
+      button, and the header counts the steps of the page as you scroll. No screenshot on the first screen: the page
+      is the demo.</p></div>
+  <div class="wf-frames" data-tpl="gb" data-theme="light">
+    <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+    <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+  </div>
+
+  <div class="wf-head"><h2>3. Sites: ask, and it changes</h2>
+    <p>A warm wash of the mark over the whole page, soft medium type, round corners. The hero is a text message and
+      the site answering it: the phone leans in from the edge with the changed line ringed. The header names a
+      person, not a nav.</p></div>
+  <div class="wf-frames" data-tpl="st" data-theme="light">
+    <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+    <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+  </div>
+
+  <template id="dw">
+    <div class="p dw">
+      <div class="dw-bar"><b>driftwood</b><span>shop · prod</span><span class="dw-hide">deploy 214 · checked 12s ago</span><span class="dw-down">✕ 1 down</span>
+        <a class="cta" href="#">Get set up</a></div>
+      <svg class="dw-map" viewBox="0 0 1280 800" preserveAspectRatio="xMidYMin slice" aria-label="A system map: the storefront box is down">
+        <path d="M250 150H420M580 150H760M920 150H1080M500 180V330M840 180V330M500 390V520M840 390H1000" />
+        <path class="hot" d="M580 150H760" />
+        <g><rect x="90" y="120" width="160" height="60" /><text x="110" y="155">load balancer</text></g>
+        <g><rect x="420" y="120" width="160" height="60" /><text x="440" y="155">listener</text></g>
+        <g class="bad"><rect x="760" y="120" width="160" height="60" /><text x="780" y="148">storefront</text><text x="780" y="166">✕ down</text></g>
+        <g><rect x="1080" y="120" width="160" height="60" /><text x="1100" y="155">tasks</text></g>
+        <g><rect x="420" y="330" width="160" height="60" /><text x="440" y="365">payments</text></g>
+        <g><rect x="760" y="330" width="160" height="60" /><text x="780" y="365">orders-api</text></g>
+        <g><rect x="1000" y="330" width="160" height="60" /><text x="1020" y="365">orders db</text></g>
+        <g><rect x="420" y="520" width="160" height="60" /><text x="440" y="555">queue</text></g>
+      </svg>
+      <div class="dw-words">
+        <p class="dw-diff"><span class="rm">- health_check = "/health"</span><span class="ad">+ health_check = "/healthz"</span></p>
+        <h1>See what broke,<br>and <i>what changed it.</i></h1>
+        <p class="dw-sub">For teams on AWS. When your app fails, Driftwood shows the broken piece, why, and the deploy that did it.</p>
+        <p class="dw-ask"><a class="cta" href="#">Get set up</a><a href="#">Try the live demo</a></p>
+      </div>
+    </div>
+  </template>
+
+  <template id="gb">
+    <div class="p gb">
+      <div class="gb-top"><span>Guidebook</span><span class="gb-prog">Step 1 of 4 <i></i></span></div>
+      <div class="gb-main">
+        <h1>Show new hires <u>exactly</u> where to click.</h1>
+        <p class="gb-sub">Screenshots go stale. Guidebook points at each step on the real page.</p>
+        <div class="gb-spot"><a class="cta" href="#">Try it with your team</a></div>
+        <div class="gb-tip">
+          <small><span>Step 1 of 4</span><span>✕</span></small>
+          <b>Press this button</b>
+          <span>This is a Guidebook step, on this page. Your new hires see the same thing on your app.</span>
+        </div>
+      </div>
+      <div class="gb-next"><em>2</em> Scroll: pick a ready-made guide</div>
+    </div>
+  </template>
+
+  <template id="st">
+    <div class="p st">
+      <div class="st-top"><b>Sites</b><span>Anthony replies within a day</span></div>
+      <div class="st-main">
+        <h1>Change your website by <em>just asking.</em></h1>
+        <div class="st-msg">
+          <p class="st-bubble">Can you add Saturday hours? 9 to 1.</p>
+          <p class="st-reply">Done. It's live. <span class="num">40s</span></p>
+        </div>
+        <a class="cta" href="#">Get a free preview</a>
+        <p class="st-note">For local businesses. No card, no contract.</p>
+        <div class="st-phone"><div class="st-site">
+          <b>Maple Street Plumbing</b>
+          <p><span>Mon to Fri</span><span class="num">8 – 5</span></p>
+          <p class="new"><span>Saturday</span><span class="num">9 – 1</span></p>
+          <p><span>Sunday</span><span>Closed</span></p>
+        </div></div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    for (const row of document.querySelectorAll('[data-tpl]')) {
+      const tpl = document.getElementById(row.dataset.tpl);
+      for (const screen of row.querySelectorAll('.wf-screen')) screen.append(tpl.content.cloneNode(true));
+    }
+  </script>
+</body>
+</html>
