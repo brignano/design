@@ -110,8 +110,9 @@ graphic (ADR-0017). There, and only there, it may do two more things:
 
 `data-mark` points all four at the product's, as it does `--mark-current`;
 with no attribute they are the family amber. The fill is its own step, the
-way `--i` sits beside `--i-ink`: in light it is the mark, in dark it is the
-mark's hue as light as a white label allows. Never fill or wash with
+way `--i` sits beside `--i-ink`: in light it is the mark (amber is deepened
+to carry the label), in dark it is the mark's hue as light as a white label
+allows. Never fill or wash with
 `--mark-teal` and its siblings directly: in dark they are pale, for drawing.
 
 This is a scoped exception to "identity is not a fill", as the stage behind a
