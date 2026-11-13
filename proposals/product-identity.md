@@ -1,4 +1,4 @@
-Status: proposed · Tracking: brignano/design#152 · Would supersede part of ADR-0011
+Status: accepted · Tracking: brignano/design#152 · Would supersede part of ADR-0011
 
 # Product identity: each product page is built from what the product does
 
@@ -72,7 +72,7 @@ is the one family resemblance.
 Then one issue each in driftwood, guidebook and sites to rebuild the page
 from its own Look, starting with the first screen.
 
-## Decisions
+## Decisions (accepted 2026-11-13)
 
 | # | Question | Recommendation | Rejected, and why |
 |---|---|---|---|
@@ -83,7 +83,7 @@ from its own Look, starting with the first screen.
 | D5 | Do Guidebook and Sites follow the OS theme? | **Yes.** Each defines its ground in both themes. Only a product whose look is a theme (Driftwood) pins one. | Pin all three: Sites' visitors on a dark phone get a bright pink page at night. |
 | D6 | A typeface per product? | **Not now.** Try weight, size and mono first. Revisit if the three still read alike once built. | Three display faces now: three more fonts to load and license, and "two typefaces" is what still ties the family together. |
 
-D3 to D6 are open.
+All six were accepted by Anthony on 2026-11-13, as recommended.
 
 ## What it costs
 
