@@ -160,8 +160,9 @@ body.pp { margin: 0; }
    .pp-nav + .pp-header-actions so it outranks the margin-left: 0 above. */
 @media (max-width: 860px) { .pp-nav { display: none; } .pp-nav + .pp-header-actions { margin-left: auto; } }
 @media (max-width: 480px) { .pp-header .pp-status { display: none; } }
-/* On a touch screen every link in the header and footer is a 44px target
-   (DESIGN.md §10), like .pp-button below; a mouse keeps the tighter rows. */
+/* On a touch screen the brand link (header and footer) and the footer's links
+   are 44px targets (DESIGN.md §10), like .pp-button below; a mouse keeps the
+   tighter rows. The header's .pp-nav links are not covered yet. */
 @media (pointer: coarse) {
   .pp-header .pp-brand, .pp-footer .pp-brand, .pp-footer nav a { min-height: 44px; display: inline-flex; align-items: center; }
 }
