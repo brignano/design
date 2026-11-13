@@ -46,6 +46,8 @@ jobs:
           node scripts/fold.mjs \
             http://localhost:8080/previews/product-page.html \
             http://localhost:8080/previews/product-page-example.html \
+            http://localhost:8080/previews/product-page-guidebook.html \
+            http://localhost:8080/previews/product-page-sites.html \
             --shots fold-shots
       - uses: actions/upload-artifact@v4
         if: always()

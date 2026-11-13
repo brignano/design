@@ -287,8 +287,10 @@
      Each product's marketing page picks one, so Driftwood, Guidebook and
      Sites don't read as the same page with the words swapped (ADR-0011).
      Same contract as --mark: it inks the product's graphics (its glyph,
-     the hero rule, the proof's stage, step numerals), never a button,
-     link, text or state. Hues sit away from cobalt (act), forest
+     the hero rule, the proof's stage, step numerals), never a link, text
+     or state. On a product page only, it may also fill the primary button
+     and wash the ground, through the -fill and -surface steps below
+     (ADR-0017). Hues sit away from cobalt (act), forest
      (success), amber (attention) and rust (danger). All ≥ 3:1 on --bg and
      --card in both themes. product-page.css maps one onto --pp-mark via
      data-mark on .pp. */

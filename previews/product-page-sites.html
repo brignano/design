@@ -1,0 +1,221 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en" class="tier-marketing">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product page: Sites</title>
+<script src="_site.js"></script>
+<!-- One of three worked examples (ADR-0017): the shared parts of
+     product-page.css, with Sites' own look written over them in the <style>
+     below. Wireframes: previews/wireframes/product-identity.html (first
+     screen) and product-examples.html (the rest). Demo data only. -->
+<link rel="stylesheet" href="_fonts.css">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../product-page.css">
+<style>
+  /* ── Sites' look. Tokens only, no hex (npm run check). ──────────────────
+     Ground: the mark's wash (data-ground="mark"). Voice: Geist 500. Shape:
+     soft and round. Composition: the phone leans in from the edge. The page
+     does the thing: a message, its reply, and the site changing. The button
+     is ink (data-button="ink"), so the magenta stays with the customer. */
+  .st .pp-button { border-radius: 999px; }
+  .st .pp-header { background: var(--mark-surface); border-bottom: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .st-who { margin-left: auto; font-size: var(--text-sm); color: var(--ink-soft); }
+
+  .st-hero { padding: var(--s3) 0 0; overflow: hidden; }
+  .st-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-areas: "head" "body" "media"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; gap: var(--s5); align-items: start; }
+  .st-hero .pp-hero-head::before { display: none; }
+  .st .pp-audience { margin: 0 0 var(--s2); }
+  .st .pp-thesis { font-size: 2.5rem; font-weight: var(--weight-medium); line-height: 1.05; letter-spacing: -0.03em; max-width: 13ch; }
+  .st-thesis-mark { box-shadow: inset 0 -0.2em 0 var(--mark-current); }
+  .st-hero .pp-hero-body { display: grid; gap: var(--s4); }
+  .st-hero .pp-actions { margin-top: var(--s2); }
+  .st .pp-note { margin: 0; }
+
+  /* Messages: the customer's in the mark, the reply on a card. */
+  .st-pair { display: grid; gap: var(--s2); margin: 0; }
+  .st-msg { justify-self: end; max-width: 300px; margin: 0; padding: var(--s3) var(--s4); border-radius: 22px 22px 6px 22px; background: var(--mark-fill); color: var(--on-mark); line-height: 1.35; }
+  .st-reply { justify-self: start; margin: 0; padding: 10px 14px; border-radius: 22px 22px 22px 6px; background: var(--card); font-size: var(--text-sm); box-shadow: var(--shadow-1); }
+  .st-reply .num { color: var(--ink-soft); }
+
+  /* The proof: the customer's site on a phone, leaning in from the bottom edge. */
+  .st-hero .pp-media { justify-self: center; width: 250px; height: 300px; margin-bottom: -40px; padding: 10px 10px 0; border-radius: 34px 34px 0 0;
+    background: var(--device); rotate: -3deg; box-shadow: var(--shadow-3); }
+  .st-site { height: 100%; display: grid; gap: var(--s2); align-content: start; padding: var(--s4); border-radius: 24px 24px 0 0; background: var(--card); font-size: var(--text-sm); }
+  .st-site b { font-size: var(--text-lg); line-height: 1.2; }
+  .st-site p { display: flex; justify-content: space-between; margin: 0; padding: 4px 6px; color: var(--ink-soft); }
+  .st-site .new { color: var(--ink); border-radius: var(--radius-sm); outline: 2px solid var(--mark-current); }
+  @media (min-width: 960px) {
+    .st-hero { padding-top: var(--s6); }
+    .st-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "head media" "body media"; column-gap: var(--s8); }
+    .st .pp-thesis { font-size: 5.25rem; }
+    .st-msg { justify-self: start; max-width: 440px; font-size: var(--text-xl); padding: var(--s4) var(--s5); margin-left: var(--s8); }
+    .st-hero .pp-media { width: 400px; height: 640px; padding: 14px 14px 0; border-radius: 52px 52px 0 0; rotate: 3deg; align-self: end; margin-bottom: -80px; }
+    .st-site { padding: var(--s6) var(--s5); border-radius: 38px 38px 0 0; font-size: var(--text-lg); gap: var(--s3); }
+    .st-site b { font-size: var(--text-3xl); }
+  }
+
+  /* The band: more asks, each answered, each change ringed on the site. */
+  .st-band { position: relative; padding: var(--s8) 0; background: var(--mark-surface); }
+  .st h2 { margin: 0 0 var(--s6); font-size: 2.125rem; font-weight: var(--weight-medium); line-height: 1.05; letter-spacing: -0.03em; max-width: 18ch; text-wrap: balance; }
+  .st-thread { display: grid; gap: var(--s7); }
+  .st-snip { justify-self: start; width: 260px; margin: var(--s2) 0 0; padding: var(--s4); border-radius: 20px; background: var(--card); box-shadow: var(--shadow-2); font-size: var(--text-sm); display: grid; gap: 6px; }
+  .st-snip b { font-size: var(--text-base); }
+  .st-snip p { display: flex; justify-content: space-between; margin: 0; padding: 4px 6px; }
+  .st-snip .new { border-radius: var(--radius-sm); outline: 2px solid var(--mark-current); }
+  .st-pic { display: grid; place-items: center; height: 72px; border-radius: 12px; background: var(--line); color: var(--ink-soft); font: var(--text-xs) var(--mono); }
+  @media (min-width: 960px) {
+    .st h2 { font-size: 3.5rem; }
+    .st-band .st-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--s8); align-items: center; }
+    .st-band .st-msg, .st-band .st-reply { grid-column: 1; }
+    .st-band .st-msg { margin-left: 0; font-size: var(--text-lg); }
+    .st-snip { grid-column: 2; grid-row: 1 / span 2; justify-self: center; width: 320px; rotate: 2deg; }
+    .st-band .st-pair + .st-pair .st-snip { rotate: -2deg; }
+  }
+
+  /* The close: a message composer. */
+  .st .pp-close { border-top: 0; }
+  .st .pp-close > .pp-wrap { grid-template-columns: minmax(0, 1fr); }
+  .st .pp-close h2 { margin: 0; font-size: 2.125rem; font-weight: var(--weight-medium); letter-spacing: -0.03em; }
+  .st .pp-panel { width: min(600px, 100%); padding: 6px; border: 0; border-radius: 28px; box-shadow: var(--shadow-2); }
+  .st .pp-form { grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
+  .st .pp-form .pp-actions { margin: 0; }
+  .st .pp-field > label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .st .pp-field input { border: 0; border-radius: 999px; min-height: 48px; padding-inline: var(--s4); }
+  .st .pp-close .pp-button { width: 100%; }
+  .st .pp-done { padding: var(--s4); }
+  .st-close-note { margin: var(--s3) 0 0; color: var(--ink-soft); font-size: var(--text-sm); }
+  @media (min-width: 960px) {
+    .st .pp-close h2 { font-size: 3.5rem; }
+    .st .pp-panel { border-radius: 999px; }
+    .st .pp-form { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+    .st .pp-close .pp-button { width: auto; }
+  }
+
+  .st .pp-footer { border-top: 0; }
+  .st .pp-legal { border-top-color: var(--line-strong); }
+  .st .stamp { font-size: var(--text-lg); color: var(--ink); }
+</style>
+</head>
+<!-- Brief:
+       Who:     local businesses (a plumber, a salon)
+       Pain:    site builders hand you a blank page and a bill
+       Promise: Change your website by just asking.
+       Moment:  a text, a reply, and the site changing
+       Ask:     get a free preview
+     Look (DESIGN.md §13 register): ground the mark's wash · voice Geist 500 ·
+     shape soft and round · composition the phone leans in from the edge ·
+     the page does the thing with a message and its reply. -->
+<body class="pp st" data-mark="magenta" data-ground="mark" data-button="ink">
+<a class="pp-skip" href="#main">Skip to content</a>
+
+<header class="pp-header">
+  <div class="pp-wrap">
+    <a class="pp-brand" href="#"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 6h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/></svg>Sites</a>
+    <span class="st-who">Anthony replies within a day</span>
+  </div>
+</header>
+
+<main id="main">
+  <section class="pp-hero st-hero">
+    <div class="pp-wrap">
+      <div class="pp-hero-head">
+        <p class="pp-audience">For local businesses</p>
+        <h1 class="pp-thesis">Change your website by <span class="st-thesis-mark">just asking.</span></h1>
+      </div>
+      <figure class="pp-media" aria-label="Maple Street Plumbing's site on a phone. The new Saturday hours, 9 to 1, are ringed.">
+        <div class="st-site" aria-hidden="true">
+          <b>Maple Street Plumbing</b>
+          <p><span>Mon to Fri</span><span class="num">8 – 5</span></p>
+          <p class="new"><span>Saturday</span><span class="num">9 – 1</span></p>
+          <p><span>Sunday</span><span>Closed</span></p>
+        </div>
+      </figure>
+      <div class="pp-hero-body">
+        <div class="st-pair">
+          <p class="st-msg">Can you add Saturday hours? 9 to 1.</p>
+          <p class="st-reply">Done. It's live. <span class="num">40s</span></p>
+        </div>
+        <p class="pp-actions"><a class="pp-button" href="#start">Get a free preview</a></p>
+        <p class="pp-note">No card, no contract.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="st-band" aria-labelledby="st-band-title">
+    <div class="pp-wrap">
+      <h2 id="st-band-title">Ask for anything. It's live in a minute.</h2>
+      <div class="st-thread">
+        <div class="st-pair">
+          <p class="st-msg">Put a photo of the van at the top?</p>
+          <p class="st-reply">Done. It's live. <span class="num">52s</span></p>
+          <figure class="pp-media st-snip" aria-label="The site's header now shows a photo of the van, ringed.">
+            <b>Maple Street Plumbing</b><span class="st-pic new" aria-hidden="true">photo: the van</span>
+          </figure>
+        </div>
+        <div class="st-pair">
+          <p class="st-msg">Drain clearing is $120 now.</p>
+          <p class="st-reply">Done. It's live. <span class="num">31s</span></p>
+          <figure class="pp-media st-snip" aria-label="The price list: leak repair $95, and drain clearing now $120, ringed.">
+            <p><span>Leak repair</span><span class="num">$95</span></p>
+            <p class="new"><span>Drain clearing</span><span class="num">$120</span></p>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-close" id="start">
+    <div class="pp-wrap">
+      <h2>Get a free preview.</h2>
+      <div>
+        <div class="pp-panel">
+          <form class="pp-form" id="pilot-form" action="#" novalidate>
+            <div class="pp-field">
+              <label for="f-site">Your business name or current website</label>
+              <input id="f-site" name="site" required placeholder="Your business, or its website" aria-describedby="f-site-error">
+              <p class="pp-error" id="f-site-error" hidden>Tell me your business name or website, like mapleplumbing.com.</p>
+            </div>
+            <p class="pp-actions"><button class="pp-button" type="submit">Get a free preview</button></p>
+          </form>
+          <div class="pp-done" id="pilot-done" role="status" tabindex="-1" hidden>
+            <h3>Got it. I'll text you a preview.</h3>
+            <p>Usually within a day.</p>
+          </div>
+        </div>
+        <p class="st-close-note">I build your first version free.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pp-footer">
+  <div class="pp-wrap">
+    <p><a class="pp-brand" href="#">Sites</a><span>Change your website by just asking.</span></p>
+    <nav aria-label="More"><a href="#">How it works</a><a href="#">Log in</a></nav>
+    <span class="stamp" role="img" aria-label="Anthony Brignano">A|B</span>
+    <div class="pp-legal">
+      <small>&copy; 2026 Anthony Brignano. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+<script>
+  /* Preview only: shows the invalid and submitted states without sending. */
+  const form = document.getElementById('pilot-form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const site = form.elements.site, error = document.getElementById('f-site-error');
+    const bad = !site.value.trim();
+    if (bad) site.setAttribute('aria-invalid', 'true'); else site.removeAttribute('aria-invalid');
+    error.hidden = !bad;
+    if (bad) { site.focus(); return; }
+    form.hidden = true;
+    const done = document.getElementById('pilot-done');
+    done.hidden = false;
+    done.focus();
+  });
+</script>
+</body>
+</html>

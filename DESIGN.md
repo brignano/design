@@ -516,8 +516,10 @@ back, rewrite the brief, not the page.
 ### 2. Build the page from it
 
 `product-page.css` is the structure; `previews/product-page.html` is the
-skeleton (the brief template is at its top) and
-`previews/product-page-example.html` is a worked example. Import it after the
+skeleton (the brief template is at its top). Three worked examples, one per
+product, show a look written over it (§3 below): `product-page-example.html`
+(Driftwood), `product-page-guidebook.html` and `product-page-sites.html`, all
+in `previews/`. Import it after the
 tokens, put `tier-marketing` on `<html>` and `pp` on `<body>`.
 
 ```css
