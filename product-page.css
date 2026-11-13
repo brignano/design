@@ -266,7 +266,7 @@ body.pp { margin: 0; }
    and lights the step the clip is on. Without the script, or with reduced
    motion, the poster stands still, so the poster is the finished state. */
 .pp-media > img, .pp-media > video {
-  display: block; width: 100%; height: auto; background: var(--card);
+  display: block; box-sizing: border-box; width: 100%; height: auto; background: var(--card);
   border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-3);
 }
 
