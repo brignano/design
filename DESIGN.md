@@ -407,6 +407,10 @@ not just `<html>`.** A dark hero band on a light marketing page is
 `<section data-theme="dark">`. Give that element its own
 `background: var(--bg); color: var(--ink)` — backgrounds don't inherit.
 
+A page may **pin** a theme only when the look is the theme: a product page
+whose identity is an always-dark console sets `data-theme="dark"` on `.pp`
+(§13, ADR-0017). An app never pins; it follows the OS or the person's toggle.
+
 Two consequences for code that touches tokens directly:
 
 - **Don't read a token's value with `getPropertyValue`.** It returns the
@@ -565,28 +569,57 @@ When a page is over, cut sentences, don't shrink type.
 ### 3. Make it look like this product
 
 Shared structure is what makes a page fast to build; shared looks is what made
-Driftwood, Guidebook and Sites read as one page with the words swapped. Each
-product makes three choices, and **no two products make all three the same**:
+Driftwood, Guidebook and Sites read as one page with the words swapped
+(ADR-0017). `product-page.css` is the structure and a **starting point** for
+the look: the parts every page needs are marked *shared*, and the header,
+hero, stage, bands and footer are a layout a product overrides in its own
+stylesheet.
+
+Each product makes **five choices**, writes them under **Look** in its
+`BRIEF.md`, and **no two products pick the same value for any of them**:
+
+| Choice | What it is |
+|---|---|
+| **Ground** | the page's own surface: `--bg`, `--card`, the mark's wash (`data-ground="mark"`), or a pinned dark theme |
+| **Voice** | how the thesis is set: weight, size and face (Geist or Plex Mono; no third typeface) |
+| **Shape** | the corners on the button and every surface: square, the system radii, or pills |
+| **Composition** | where the product sits on the first screen: beside the words, behind them, over them, leaning in from the edge |
+| **The page does the thing** | one piece of the product's own interface used on the page itself, not only pictured |
+
+The register, so the next product can see what is taken:
+
+| | Ground | Voice | Shape | Composition | The page does the thing |
+|---|---|---|---|---|---|
+| **Driftwood** (teal) | always dark | Plex Mono 600 | square | the system map is the background | a diff and a status line |
+| **Guidebook** (violet) | bright, `--card` | Geist 800, as large as the screen allows | pill | the product annotates the page | a coach mark and a step counter |
+| **Sites** (magenta) | the mark's wash | Geist 500 | soft and round | the phone leans in from the edge | a message and its reply |
+
+The attributes `product-page.css` gives every page:
 
 - **A mark** (`data-mark` on `.pp` or on `<html>`, the same attribute its app
-  uses, §3: `teal`, `violet` or `magenta`; tokens
-  `--mark-teal` and so on). It inks the product's glyph (an inline SVG in
-  `currentColor`), the hero rule above the thesis, the **stage** (a faint field
-  behind the hero proof), the clip's current step and the how-it-works
-  numerals. Like `--mark` (§3), it is never a button, link, text or state: the
-  actions stay cobalt on every product, so "you can click this" means the same
-  thing everywhere.
+  uses, §3: `teal`, `violet` or `magenta`). It inks the product's glyph (an
+  inline SVG in `currentColor`), the hero rule above the thesis, the
+  **stage** (a faint field behind the hero proof), the clip's current step and
+  the how-it-works numerals, and it **fills the one primary button**
+  (`--mark-fill` under `--on-mark`, §3). It is never a link, text or state,
+  and the focus ring stays `--i-ink`.
+- **An ink button** (`data-button="ink"` on `.pp`) when the mark is better
+  kept for the picture. A page with no `data-mark` is ink too.
+- **A mark ground** (`data-ground="mark"` on `.pp`): the page washes in
+  `--mark-surface`.
+- **A pinned theme** (`data-theme` on `.pp`, §11), only when the look *is* a
+  theme. Otherwise the page follows the visitor, and the product's own
+  stylesheet defines its ground for both.
 - **A hero layout** (`data-layout` on `.pp-hero`): `split` (the default, proof
-  on the right), `mirror` (proof on the left, for a picture that should be
-  read first) or `stage` (centred words and actions, the proof full width
-  under them, for a wide picture such as a map). Phones stack all three the same.
-- **A frame for the proof** that matches where the product lives: bare, a
-  phone (`.pp-device`) for something used on a phone, or a browser window
-  (`.pp-browser`, with `.pp-browser-bar` and `.pp-browser-url`) for an
-  extension or web app.
+  on the right), `mirror` (proof on the left) or `stage` (centred words and
+  actions, the proof full width under them). Phones stack all three the same.
+- **A frame for the proof**: bare, a phone (`.pp-device`) or a browser window
+  (`.pp-browser`, with `.pp-browser-bar` and `.pp-browser-url`).
 
-Then the voice: the thesis, the signature band and the close are written for
-this product's reader, not copied from the last page.
+A product's look lives in its own repo, in tokens, over this file: no hex, no
+preset in this package. Inside the product's app nothing changes: actions stay
+cobalt (ADR-0014). Then the words: the thesis, the signature band and the
+close are written for this product's reader, not copied from the last page.
 
 ### Compare
 

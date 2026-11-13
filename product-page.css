@@ -27,18 +27,47 @@
  *   .pp-footer    brand and links, then the legal line: © year, owner, and
  *                 the product's Privacy and Terms links if it has them
  *
- * Each product looks like itself (ADR-0011), with three choices on the page:
+ * Each product looks like itself (ADR-0017). This file is two things:
  *
- *   data-mark on .pp       teal | violet | magenta: the product's mark, which
- *                          inks its glyph, the hero rule, the stage behind the
- *                          proof and the step numerals. Never a button or text.
+ *   SHARED       what every page needs and nobody should rewrite: the skip
+ *                link, .pp-wrap, the status, the buttons, the clip's Pause
+ *                control and captions, the form and its states, .pp-done,
+ *                the prices and the legal line. Sections marked "shared".
+ *   STARTING     the header, hero, stage, bands, story, close and footer
+ *   POINT        layout. They work as they are, and a product overrides them
+ *                in its own stylesheet, after this one, to build its look.
+ *                Sections marked "starting point".
+ *
+ * A product's look is five choices, written under "Look" in its BRIEF.md,
+ * and no two products pick the same value for any of them (DESIGN.md §13
+ * keeps the register): a ground, a voice for the thesis, a shape, a
+ * composition, and one piece of its own interface used on the page itself.
+ * This file gives the attributes that are common to all of them:
+ *
+ *   data-mark on .pp       teal | violet | magenta: the product's mark. It
+ *                          inks the glyph, the hero rule, the stage behind
+ *                          the proof and the step numerals, and FILLS the one
+ *                          primary button (--mark-fill under --on-mark).
+ *                          Never a link, text or state.
+ *   data-button="ink"      the primary button fills with ink instead of the
+ *                          mark. A page with no data-mark is ink too.
+ *   data-ground="mark"     the page ground is the mark's wash (--mark-surface)
+ *                          instead of --bg.
+ *   data-theme on .pp      pins a theme when the look IS a theme (a console
+ *                          that is always dark). Otherwise leave it off: the
+ *                          page follows the visitor.
  *   data-layout on .pp-hero  split (default) | mirror (proof on the left) |
- *                          stage (centred words and actions, the proof full width under them)
+ *                          stage (centred words and actions, the proof full
+ *                          width under them)
  *   the proof's frame      bare, .pp-device (a phone) or .pp-browser (a window)
+ *
+ * Links, the focus ring and secondary buttons stay as they are on every
+ * page; inside the product's app, actions stay cobalt (ADR-0014).
  *
  * The skeleton is previews/product-page.html, and a worked example is
  * previews/product-page-example.html: copy one, keep the order, replace the
- * words and pictures. scripts/fold.mjs checks the first phone screen.
+ * words and pictures, then write the product's own look over it.
+ * scripts/fold.mjs checks the first phone screen.
  * Rules (DESIGN.md §13):
  *
  *   - One primary action per page (.pp-button). Everything else is secondary.
@@ -60,6 +89,12 @@
      is the field behind the hero proof, a faint wash of the mark. */
   --pp-mark: var(--ink);
   --pp-stage: color-mix(in srgb, var(--pp-mark) 8%, transparent);
+  /* The primary button's fill (ADR-0017): ink until data-mark picks a mark.
+     Ink steps toward the ground on hover and press, in both themes. */
+  --pp-fill: var(--ink);
+  --pp-fill-hover: var(--n-800);
+  --pp-fill-pressed: var(--n-700);
+  --pp-on-fill: var(--card);
   background: var(--bg);
   color: var(--ink);
   font: var(--text-base) / 1.6 var(--sans);
@@ -68,7 +103,24 @@
 }
 /* data-mark on .pp or on an ancestor (<html data-mark="teal">, the same
    attribute the app uses) picks the mark; tokens.css resolves it. */
-.pp[data-mark], [data-mark] .pp { --pp-mark: var(--mark-current); }
+.pp[data-mark], [data-mark] .pp {
+  --pp-mark: var(--mark-current);
+  --pp-fill: var(--mark-fill);
+  --pp-fill-hover: var(--mark-fill-hover);
+  --pp-fill-pressed: var(--mark-fill-pressed);
+  --pp-on-fill: var(--on-mark);
+}
+/* data-button="ink" keeps the button ink on a marked page. Declared after
+   the rule above, at the same specificity, so it wins. */
+.pp[data-button="ink"], [data-button="ink"] .pp {
+  --pp-fill: var(--ink);
+  --pp-fill-hover: var(--n-800);
+  --pp-fill-pressed: var(--n-700);
+  --pp-on-fill: var(--card);
+}
+/* data-ground="mark" washes the whole page in the mark (--mark-surface is
+   opaque, and --ink, --ink-soft and --i-ink all read on it). */
+.pp[data-ground="mark"] { background: var(--mark-surface); }
 /* On <body>, drop the browser's 8px margin so the sticky header and every band
    run to the screen edges. On a wrapper, the body is the site's business. */
 body.pp { margin: 0; }
@@ -77,12 +129,12 @@ body.pp { margin: 0; }
 /* The content column every band lines up on. */
 .pp-wrap { max-width: var(--pp-width); margin: 0 auto; padding: 0 var(--pp-gutter); }
 
-/* ── Skip link ─────────────────────────────────────────────────────────── */
+/* ── Skip link · shared ────────────────────────────────────────────────── */
 .pp-skip { position: absolute; left: var(--s4); top: -100px; z-index: var(--z-float); padding: var(--s2) var(--s3);
   background: var(--card); color: var(--ink); border-radius: var(--radius-sm); box-shadow: var(--shadow-2); }
 .pp-skip:focus { top: var(--s3); }
 
-/* ── Header ────────────────────────────────────────────────────────────── */
+/* ── Header · starting point ───────────────────────────────────────────── */
 .pp-header {
   position: sticky; top: 0; z-index: var(--z-sticky);
   background: var(--surface-sticky); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
@@ -107,7 +159,7 @@ body.pp { margin: 0; }
 @media (max-width: 860px) { .pp-nav { display: none; } .pp-nav + .pp-header-actions { margin-left: auto; } }
 @media (max-width: 480px) { .pp-header .pp-status { display: none; } }
 
-/* ── Status ────────────────────────────────────────────────────────────
+/* ── Status · shared ───────────────────────────────────────────────────
    Where the product stands, as a word with a dot: "Pilot open", "In
    development", "Closed beta". The dot takes a state hue only when the state
    asks something of the reader (DESIGN.md §3): open = success (you can join),
@@ -122,18 +174,19 @@ body.pp { margin: 0; }
 .pp-status[data-state="open"]::before { background: var(--success); box-shadow: 0 0 0 3px var(--success-surface); }
 .pp-status[data-state="soon"]::before { background: var(--attention); box-shadow: 0 0 0 3px var(--attention-surface); }
 
-/* ── Buttons ───────────────────────────────────────────────────────────
-   .pp-button is the page's one primary action. .is-secondary is everything
-   else. Works on <a> and <button>. */
+/* ── Buttons · shared ──────────────────────────────────────────────────
+   .pp-button is the page's one primary action, filled with the product's
+   mark (or ink, see .pp above). .is-secondary is everything else. Works on
+   <a> and <button>. The focus ring stays --i-ink on every page. */
 .pp-button {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); box-sizing: border-box;
   font: 600 var(--text-base) / 1.2 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer;
-  padding: 13px 22px; border-radius: 8px; border: 1px solid var(--i);
-  background: var(--i); color: var(--on-i);
+  padding: 13px 22px; border-radius: 8px; border: 1px solid var(--pp-fill);
+  background: var(--pp-fill); color: var(--pp-on-fill);
   transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
-.pp-button:hover { background: var(--i-hover); border-color: var(--i-hover); color: var(--on-i); }
-.pp-button:active { background: var(--i-pressed); border-color: var(--i-pressed); }
+.pp-button:hover { background: var(--pp-fill-hover); border-color: var(--pp-fill-hover); color: var(--pp-on-fill); }
+.pp-button:active { background: var(--pp-fill-pressed); border-color: var(--pp-fill-pressed); }
 .pp-button.is-secondary { background: transparent; color: var(--ink); border-color: var(--line-control); font-weight: var(--weight-medium); }
 .pp-button.is-secondary:hover { background: var(--surface-hover); color: var(--ink); }
 .pp-button.is-secondary:active { background: var(--surface-active); }
@@ -147,7 +200,7 @@ body.pp { margin: 0; }
 .pp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin: 0; }
 .pp-note { margin: var(--s3) 0 0; font-size: var(--text-sm); color: var(--ink-soft); }
 
-/* ── Hero ──────────────────────────────────────────────────────────────
+/* ── Hero · starting point ─────────────────────────────────────────────
    Split into .pp-hero-head (status, thesis), the proof (.pp-media), and
    .pp-hero-body (subhead, actions, note). On a phone they stack in that
    order, so the proof is on the first screen; from 960px the head and body
@@ -241,7 +294,7 @@ body.pp { margin: 0; }
 }
 .pp-browser > :not(.pp-browser-bar) { display: block; width: 100%; height: auto; }
 
-/* ── Proof media: a clip, a phone frame, the steps it shows ───────────────
+/* ── Proof media: a clip, a phone frame, the steps it shows · shared ──────
    The proof slot holds an <img> or a <video>, bare or in a .pp-device phone
    frame, and optionally a row of .pp-steps naming what the clip shows.
 
@@ -316,7 +369,7 @@ body.pp { margin: 0; }
 .pp-play[hidden] { display: none; }
 @media (pointer: coarse) { .pp-play { min-height: 44px; } }
 
-/* ── Bands: what you get, how it works ─────────────────────────────────
+/* ── Bands: what you get, how it works · starting point ────────────────
    A band is a hairline, a short title that is a sentence, and a grid. */
 .pp-band { padding: var(--s8) 0; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
 @media (max-width: 560px) { .pp-band { padding: var(--s7) 0; } }
@@ -365,7 +418,7 @@ body.pp { margin: 0; }
 .pp-how p { margin: 0; color: var(--ink-soft); }
 .pp-band .pp-figure { margin-top: var(--s6); }
 
-/* ── Story ─────────────────────────────────────────────────────────────
+/* ── Story · starting point ────────────────────────────────────────────
    Optional, and at most one chapter on a product page (the longer argument
    belongs in the docs). An <ol> of chapters. Each opens on a hairline with "01 / Label" in mono,
    then a headline that is a sentence, then a short body and an optional
@@ -400,7 +453,7 @@ body.pp { margin: 0; }
   padding: var(--s5); font: var(--text-sm) / 1.7 var(--mono); }
 .pp-terminal code { font: inherit; }
 
-/* ── Close ─────────────────────────────────────────────────────────────
+/* ── Close · starting point ────────────────────────────────────────────
    The primary action once more, with the room a form needs. */
 .pp-close { padding: var(--s8) 0 var(--s9); border-top: 1px solid var(--line); scroll-margin-top: 64px; }
 .pp-close > .pp-wrap { display: grid; gap: var(--s6); grid-template-columns: minmax(0, 1fr); }
@@ -410,7 +463,7 @@ body.pp { margin: 0; }
 .pp-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: var(--s6); }
 @media (max-width: 560px) { .pp-panel { padding: var(--s5) var(--s4); } }
 
-/* ── Form ──────────────────────────────────────────────────────────────
+/* ── Form · shared ─────────────────────────────────────────────────────
    The short form a close panel may need: a few .pp-field, then the primary
    action in .pp-actions, then a .pp-note for the privacy line (or, after a
    failed send, the error). Mark the optional fields with .pp-optional inside
@@ -453,7 +506,7 @@ body.pp { margin: 0; }
 .pp-done p { margin: 0; color: var(--ink-soft); }
 .pp-done:focus { outline: none; }
 .pp-done:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 4px; border-radius: var(--radius-sm); }
-/* ── Price ─────────────────────────────────────────────────────────────
+/* ── Price · shared ────────────────────────────────────────────────────
    Two to four ways to pay, as a <dl>: one <div> per option, the price as <dt>,
    one line of condition as <dd>. Ruled like .pp-points, narrower so three fit
    in the close band's left column. It goes under the close's subhead (or in a
@@ -466,7 +519,7 @@ body.pp { margin: 0; }
 .pp-price dd { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
 .pp-price dd a { color: var(--i-ink); }
 
-/* ── Footer ────────────────────────────────────────────────────────────── */
+/* ── Footer · starting point; the legal line is shared ─────────────────── */
 .pp-footer { border-top: 1px solid var(--line); padding: var(--s6) 0 var(--s7); color: var(--ink-soft); font-size: var(--text-sm); }
 .pp-footer > .pp-wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s4) var(--s6); }
 .pp-footer p { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }

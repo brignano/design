@@ -27,9 +27,13 @@
        Promise: what they get, 8 words or fewer         → .pp-thesis
        Moment:  the 10 seconds that prove it            → the proof (.pp-media)
        Ask:     the one action, and what happens next   → .pp-button and .pp-note
-     Identity (ADR-0011): data-mark on <body> (teal | violet | magenta),
-     data-layout on .pp-hero (split | mirror | stage), and the proof's frame
-     (bare, .pp-device or .pp-browser). No two products share all three. -->
+     Look (ADR-0017, DESIGN.md §13): five choices in BRIEF.md (ground, voice,
+     shape, composition, the page does the thing), no two products alike. Here:
+     data-mark on <body> (teal | violet | magenta) fills the primary button,
+     data-button="ink" / data-ground="mark" / data-theme on <body> when the
+     look needs them, data-layout on .pp-hero (split | mirror | stage), the
+     proof's frame (bare, .pp-device or .pp-browser). Write the rest of the
+     look in the product's own stylesheet. -->
 <body class="pp" data-mark="teal">
 <a class="pp-skip" href="#main">Skip to content</a>
 
