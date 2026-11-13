@@ -425,7 +425,8 @@ for (const [f, rs] of layerRules)
 // asks of the consumer. Foundations are specimens, and the product page
 // skeleton and its examples are documented in DESIGN.md §13.
 const NOT_DOCS = new Set(['color.html', 'type.html', 'elevation.html', 'components.html',
-  'diagram.html', 'product-page.html', 'product-page-example.html', 'product-media.html', 'writing.html']);
+  'diagram.html', 'product-page.html', 'product-page-example.html', 'product-page-guidebook.html',
+  'product-page-sites.html', 'product-media.html', 'writing.html']);
 const STATUSES = ['stable', 'beta', 'planned'];
 const DOCS = { usage: 'Use it', 'use-when': 'Use when', 'dont-use': "Don't use when", a11y: 'Accessibility' };
 const cardStatus = new Map(

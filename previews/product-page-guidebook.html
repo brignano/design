@@ -1,0 +1,220 @@
+<!-- @dsCard group="Templates" -->
+<!doctype html>
+<html lang="en" class="tier-marketing">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product page: Guidebook</title>
+<script src="_site.js"></script>
+<!-- One of three worked examples (ADR-0017): the shared parts of
+     product-page.css, with Guidebook's own look written over them in the
+     <style> below. Wireframes: previews/wireframes/product-identity.html
+     (first screen) and product-examples.html (the rest). -->
+<link rel="stylesheet" href="_fonts.css">
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../product-page.css">
+<style>
+  /* ── Guidebook's look. Tokens only, no hex (npm run check). ─────────────
+     Ground: bright (--card), in both themes. Voice: Geist 800, as large as
+     the screen allows. Shape: pill. Composition: the product annotates the
+     page. The page does the thing: a coach mark on the page's own button,
+     and a header that counts the page's steps. */
+  .gb { background: var(--card); }
+  .gb .pp-button { border-radius: 999px; }
+
+  .gb .pp-header { background: var(--card); border-bottom: 0; }
+  .gb-prog { margin-left: auto; display: flex; align-items: center; gap: var(--s2); font: var(--text-xs) var(--mono); color: var(--ink-soft); }
+  .gb-bar { width: 72px; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
+  .gb-bar i { display: block; height: 100%; width: 25%; background: var(--mark-current); transition: width var(--dur) var(--ease); }
+  @media (prefers-reduced-motion: reduce) { .gb-bar i { transition: none; } }
+
+  .gb-hero { padding: var(--s5) 0 var(--s7); text-align: center; }
+  .gb-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-areas: "head" "media" "body"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; justify-items: center; gap: var(--s5); }
+  .gb-hero .pp-hero-head::before { display: none; }
+  .gb-hero .pp-hero-head { display: grid; justify-items: center; gap: var(--s4); }
+  .gb .pp-audience { margin: 0; }
+  .gb .pp-thesis { font-size: 54px; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 11ch; }
+  .gb-thesis-mark { box-shadow: inset 0 -0.26em 0 var(--mark-current); }
+  .gb .pp-subhead { margin: 0; max-width: 34ch; }
+  /* The proof is the coach mark on the page's own button. */
+  .gb-hero .pp-media { padding: 0; border-radius: 0; background: none; display: grid; justify-items: center; gap: var(--s5); }
+  .gb-hero .pp-button { min-height: 56px; padding-inline: 30px; font-size: var(--text-lg); outline: 3px solid var(--mark-current); outline-offset: 7px; }
+  .gb-hero .pp-button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .gb-tip { position: relative; width: min(300px, 100%); text-align: left; padding: var(--s3) var(--s4); background: var(--card);
+    border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow-3); font-size: var(--text-sm); }
+  .gb-tip::before { content: ""; position: absolute; top: -7px; left: 50%; width: 12px; height: 12px; margin-left: -6px; rotate: 45deg;
+    background: var(--card); border: 1px solid var(--line-strong); border-right: 0; border-bottom: 0; }
+  .gb-tip small { display: block; font: var(--text-xs) var(--mono); color: var(--ink-soft); margin-bottom: 4px; }
+  .gb-tip b { display: block; }
+  .gb-tip span { color: var(--ink-soft); }
+  @media (min-width: 960px) {
+    .gb-hero { padding-top: var(--s7); }
+    .gb .pp-thesis { font-size: 112px; max-width: 11ch; }
+    .gb .pp-subhead { font-size: var(--text-xl); max-width: 44ch; }
+  }
+
+  /* The band: the next three steps of the guide. */
+  .gb-band { padding: var(--s8) 0; border-top: 2px dotted var(--line-strong); text-align: center; }
+  .gb h2 { margin: 0 auto var(--s7); font-size: 44px; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 14ch; text-wrap: balance; }
+  .gb-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s7); text-align: left; }
+  .gb-step h3 { display: flex; gap: var(--s3); align-items: center; margin: var(--s6) 0 var(--s2); font-size: var(--text-lg); }
+  .gb-step h3 .num { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--mark-current); font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+  .gb-step p { margin: 0; color: var(--ink-soft); }
+  .gb-shot { position: relative; margin: 0; padding: var(--s4); min-height: 150px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); font-size: var(--text-sm); }
+  .gb-shot .row { display: flex; justify-content: space-between; padding: var(--s2) var(--s3); border-radius: var(--radius-sm); }
+  .gb-shot .hit { outline: 3px solid var(--mark-current); outline-offset: 3px; background: var(--card); }
+  .gb-shot .gb-tip { position: absolute; right: var(--s3); bottom: -22px; width: 200px; padding: var(--s2) var(--s3); font-size: var(--text-xs); }
+  .gb-shot .gb-tip::before { display: none; }
+  @media (min-width: 960px) {
+    .gb h2 { font-size: 88px; }
+    .gb-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  /* The close: one pill field and the pill button. */
+  .gb .pp-close { border-top: 2px dotted var(--line-strong); text-align: center; }
+  .gb .pp-close > .pp-wrap { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .gb .pp-close h2 { margin: 0; font-size: 44px; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; }
+  .gb .pp-panel { width: min(560px, 100%); padding: 0; border: 0; box-shadow: none; background: none; text-align: left; }
+  .gb .pp-field input { border-radius: 999px; padding-inline: var(--s5); min-height: 52px; }
+  .gb .pp-close .pp-button { width: 100%; min-height: 52px; }
+  @media (min-width: 960px) { .gb .pp-close h2 { font-size: 88px; } }
+
+  .gb .pp-footer { border-top: 2px dotted var(--line-strong); }
+  .gb .stamp { font-size: var(--text-lg); color: var(--ink); }
+</style>
+</head>
+<!-- Brief:
+       Who:     teams training new hires or customers on a web app
+       Pain:    screenshots go stale and people get lost
+       Promise: Show new hires exactly where to click.
+       Moment:  a step that points at the real button, on the real page
+       Ask:     try it with your team
+     Look (DESIGN.md §13 register): ground bright · voice Geist 800, very large ·
+     shape pill · composition the product annotates the page · the page does
+     the thing with a coach mark and a step counter. -->
+<body class="pp gb" data-mark="violet">
+<a class="pp-skip" href="#main">Skip to content</a>
+
+<header class="pp-header">
+  <div class="pp-wrap">
+    <a class="pp-brand" href="#"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="20" height="20" rx="5"/><path d="M9 9h8M9 13h8M9 17h5"/></svg>Guidebook</a>
+    <p class="gb-prog" aria-live="polite"><span id="gb-step">Step <span class="num">1</span> of <span class="num">4</span></span><span class="gb-bar" aria-hidden="true"><i id="gb-bar"></i></span></p>
+  </div>
+</header>
+
+<main id="main">
+  <section class="pp-hero gb-hero" data-step="1">
+    <div class="pp-wrap">
+      <div class="pp-hero-head">
+        <p class="pp-audience">For teams training new hires on web apps</p>
+        <h1 class="pp-thesis">Show new hires <span class="gb-thesis-mark">exactly</span> where to click.</h1>
+        <p class="pp-subhead">Screenshots go stale. Guidebook points at each step on the real page.</p>
+      </div>
+      <figure class="pp-media">
+        <p class="pp-actions"><a class="pp-button" href="#start">Try it with your team</a></p>
+        <figcaption class="gb-tip" role="note">
+          <small>Step <span class="num">1</span> of <span class="num">4</span></small>
+          <b>Press this button</b>
+          <span>This is a Guidebook step, on this page. Your new hires see the same thing on your app.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="gb-band" aria-labelledby="gb-band-title">
+    <div class="pp-wrap">
+      <h2 id="gb-band-title">Pick a guide. Press play.</h2>
+      <ol class="gb-steps">
+        <li class="gb-step" data-step="2">
+          <figure class="pp-media gb-shot" aria-label="An app's sidebar with Team highlighted, and the tip: Step 2 of 4, open Team.">
+            <p class="row">Overview</p><p class="row hit">Team <span aria-hidden="true">→</span></p><p class="row">Billing</p>
+            <span class="gb-tip"><small>Step 2 of 4</small><b>Open Team</b></span>
+          </figure>
+          <h3><span class="num">2</span> Pick a ready-made guide</h3><p>Invite a teammate, set up billing, export data.</p>
+        </li>
+        <li class="gb-step" data-step="3">
+          <figure class="pp-media gb-shot" aria-label="The Team page with the Invite teammate button highlighted, and the tip: Step 3 of 4, press Invite.">
+            <p class="row">jordan@acme.co</p><p class="row hit">Invite teammate <span aria-hidden="true">+</span></p>
+            <span class="gb-tip"><small>Step 3 of 4</small><b>Press Invite</b></span>
+          </figure>
+          <h3><span class="num">3</span> It points at the real button</h3><p>On your app, not a screenshot of it.</p>
+        </li>
+        <li class="gb-step" data-step="4">
+          <figure class="pp-media gb-shot" aria-label="Riley has joined, Done is highlighted, and the tip: Step 4 of 4, that's it.">
+            <p class="row">Riley joined</p><p class="row hit">Done <span aria-hidden="true">✓</span></p>
+            <span class="gb-tip"><small>Step 4 of 4</small><b>That's it</b></span>
+          </figure>
+          <h3><span class="num">4</span> New hires finish on their own</h3><p>You see who got stuck, and where.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="pp-close" id="start">
+    <div class="pp-wrap">
+      <h2>Try it with your team.</h2>
+      <div class="pp-panel">
+        <form class="pp-form" id="pilot-form" action="#" novalidate>
+          <div class="pp-field">
+            <label for="f-email">Work email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-error">
+            <p class="pp-error" id="f-email-error" hidden>Enter an email address, like name@company.com.</p>
+          </div>
+          <div>
+            <p class="pp-actions"><button class="pp-button" type="submit">Try it with your team</button></p>
+            <p class="pp-note">We set it up with you. We reply within two days.</p>
+          </div>
+        </form>
+        <div class="pp-done" id="pilot-done" role="status" tabindex="-1" hidden>
+          <h3>Thanks. We'll be in touch.</h3>
+          <p>Expect an email within two working days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pp-footer">
+  <div class="pp-wrap">
+    <p><a class="pp-brand" href="#">Guidebook</a><span>Show new hires exactly where to click.</span></p>
+    <nav aria-label="More"><a href="#">Chrome extension</a><a href="#">Contact</a></nav>
+    <span class="stamp" aria-label="Anthony Brignano">A|B</span>
+    <div class="pp-legal">
+      <small>&copy; 2026 Anthony Brignano. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+<script>
+  /* The header counts the page's steps as they come into view. Without the
+     script it reads "Step 1 of 4", which is true at the top. */
+  const label = document.getElementById('gb-step'), bar = document.getElementById('gb-bar');
+  const seen = new Set([1]);
+  const show = () => {
+    const n = Math.max(...seen);
+    label.innerHTML = `Step <span class="num">${n}</span> of <span class="num">4</span>`;
+    bar.style.width = `${n * 25}%`;
+  };
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) seen.add(+e.target.dataset.step);
+    show();
+  }, { threshold: 0.6 });
+  document.querySelectorAll('[data-step]').forEach((el) => io.observe(el));
+
+  /* Preview only: shows the invalid and submitted states without sending. */
+  const form = document.getElementById('pilot-form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = form.elements.email, error = document.getElementById('f-email-error');
+    const bad = !email.checkValidity();
+    if (bad) email.setAttribute('aria-invalid', 'true'); else email.removeAttribute('aria-invalid');
+    error.hidden = !bad;
+    if (bad) { email.focus(); return; }
+    form.hidden = true;
+    const done = document.getElementById('pilot-done');
+    done.hidden = false;
+    done.focus();
+  });
+</script>
+</body>
+</html>

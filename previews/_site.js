@@ -50,7 +50,9 @@
     ['disclosure.html', 'Disclosure and accordion'],
     // Templates
     ['product-page.html', 'Product page'],
-    ['product-page-example.html', 'Product page: worked example'],
+    ['product-page-example.html', 'Product page: Driftwood'],
+    ['product-page-guidebook.html', 'Product page: Guidebook'],
+    ['product-page-sites.html', 'Product page: Sites'],
     ['product-media.html', 'Product page: video proof'],
     ['article.html', 'Article and docs page'],
     ['changelog.html', 'Changelog page'],

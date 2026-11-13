@@ -4,146 +4,201 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Product page: worked example</title>
+<title>Product page: Driftwood</title>
 <script src="_site.js"></script>
-<!-- The skeleton (product-page.html) filled in for a real product, to show
-     "show, then tell" at full strength: an outcome thesis, the product's own
-     picture on the first phone screen, three "you get" cards, three steps.
-     The pictures are faithful mocks built from the diagram-node rules
-     (DESIGN.md, ADR-0005: neutral nodes, colour only for state, always with
-     a word). A real page would use the product's own screenshots. -->
+<!-- One of three worked examples (ADR-0017): the shared parts of
+     product-page.css, with Driftwood's own look written over them in the
+     <style> below, the way the product's repo would. Wireframes:
+     previews/wireframes/product-identity.html (first screen) and
+     product-examples.html (the rest). The pictures are faithful mocks built
+     from the diagram rules (DESIGN.md §9: neutral nodes, colour only for
+     state, always with a word). -->
 <link rel="stylesheet" href="_fonts.css">
 <link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../components.css">
 <link rel="stylesheet" href="../product-page.css">
 <style>
-  /* Preview only: the product mocks. Tokens only, no hex (npm run check). */
-  .shot { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-3);
-    overflow: hidden; font-size: var(--text-sm); }
-  .shot-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 10px var(--s4);
-    border-bottom: 1px solid var(--line); font: 500 var(--text-xs) / 1.3 var(--mono); color: var(--ink-soft); }
-  .shot-alert { margin: var(--s4) var(--s4) 0; padding: var(--s3); border-radius: var(--radius); border: 1px solid var(--danger-line);
-    background: var(--danger-surface); color: var(--danger-ink); font-weight: 600; line-height: 1.35; }
-  .path { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 6px; padding: var(--s4); }
-  .path .arrow { color: var(--ink-soft); font-size: var(--text-sm); }
-  .node { min-width: 0; padding: 8px 4px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--card); text-align: center; }
-  .node b { display: block; font-size: var(--text-sm); line-height: 1.2; }
-  .node small { display: block; margin-top: 2px; font-size: var(--text-xs); color: var(--ink-soft); }
-  .node.down { border: 2px solid var(--danger); background: var(--danger-surface); }
-  .node.down small { color: var(--danger-ink); font-weight: 600; }
-  .node.ok small { color: var(--success-ink); }
-  .why { margin: 0 var(--s4) var(--s4); padding: var(--s3); border-radius: var(--radius); background: var(--bg); border: 1px solid var(--line); }
-  .why p { margin: 0 0 6px; color: var(--ink-soft); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--mono); }
-  .why p + .diff { margin-bottom: var(--s2); }
-  .diff { margin: 0; font: var(--text-xs) / 1.6 var(--mono); }
-  .diff span { display: block; padding: 0 6px; border-radius: 4px; }
-  .diff .rm { background: var(--diff-removed-surface); color: var(--diff-removed-ink); }
-  .diff .add { background: var(--diff-added-surface); color: var(--diff-added-ink); }
-  .why .cause { margin: 0; font: var(--text-sm) / 1.4 var(--sans); text-transform: none; letter-spacing: 0; color: var(--ink); }
+  /* ── Driftwood's look. Tokens only, no hex (npm run check). ──────────────
+     Ground: always dark (data-theme on .pp). Voice: Plex Mono 600. Shape:
+     square. Composition: the system map is the hero's background. The page
+     does the thing: a status line for a header, the deploy as a diff log. */
+  .dw { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .dw .pp-button { border-radius: 0; font-family: var(--mono); }
 
-  /* Small pictures in the "you get" cards. */
-  .mini { width: 100%; height: 100%; box-sizing: border-box; padding: var(--s4); display: grid; align-content: center; gap: 8px; font-size: var(--text-xs); }
-  .mini .path { padding: 0; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 4px; }
-  .mini .node { padding: 6px 4px; }
-  .mini .node b { font-size: var(--text-xs); }
-  .row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 6px 10px;
-    border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--card); }
-  .row b { font-weight: 600; }
-  .pill { font: 600 var(--text-xs) / 1 var(--mono); padding: 3px 6px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
-  .pill.down { color: var(--danger-ink); background: var(--danger-surface); border-color: var(--danger-line); }
-  .pill.deg { color: var(--attention-ink); background: var(--attention-surface); border-color: var(--attention-line); }
-  .pill.ok { color: var(--success-ink); background: var(--success-surface); border-color: var(--success-line); }
+  /* The header is a status line. */
+  .dw .pp-header { background: var(--bg); }
+  .dw .pp-header > .pp-wrap { min-height: 52px; gap: var(--s4); font-size: var(--text-xs); color: var(--ink-soft); }
+  .dw .pp-brand { font: var(--weight-semibold) var(--text-sm) var(--mono); letter-spacing: 0; }
+  .dw .pp-brand svg { width: 20px; height: 20px; }
+  .dw-down { color: var(--danger); white-space: nowrap; }
+  .dw-wide, .dw-where { white-space: nowrap; }
+  @media (max-width: 400px) { .dw-where { display: none; } }
+  @media (max-width: 860px) { .dw-wide { display: none; } }
+  .dw .pp-header .pp-button { margin-left: auto; }
+
+  /* The hero: the map behind, the words in a square panel over it. */
+  .dw-hero { position: relative; padding: 0; overflow: hidden; }
+  .dw-hero > .pp-wrap { display: grid; gap: 0; padding: 0; max-width: none; }
+  .dw-hero .pp-media.dw-map { padding: 0; border-radius: 0; background: none; height: 220px; }
+  .dw-map svg { display: block; width: 100%; height: 100%; }
+  /* A phone shows the map near the broken box; a wide screen shows all of it. */
+  .dw-full { display: none !important; }
+  @media (min-width: 960px) { .dw-full { display: block !important; } .dw-near { display: none !important; } }
+  .dw-map line, .dw-map path { stroke: var(--line-strong); stroke-width: 1.5; fill: none; }
+  .dw-map rect { fill: var(--card); stroke: var(--line-strong); stroke-width: 1.5; }
+  .dw-map text { fill: var(--ink-soft); font: 13px var(--mono); }
+  .dw-map .bad rect { stroke: var(--danger); stroke-width: 2.5; fill: var(--danger-surface); }
+  .dw-map .bad text { fill: var(--danger-ink); }
+  .dw-map .hot { stroke: var(--danger); stroke-dasharray: 6 6; }
+  .dw-panel { display: grid; gap: var(--s4); padding: var(--s5) var(--pp-gutter) var(--s6); border-top: 1px solid var(--line); background: var(--bg); }
+  /* The shared hero names grid areas; inside the panel the parts just stack. */
+  .dw-panel > .pp-hero-head, .dw-panel > .pp-hero-body { grid-area: auto; align-self: auto; }
+  .dw-hero .pp-hero-head::before { display: none; }
+  .dw-hero .pp-hero-head { display: grid; gap: var(--s3); }
+  .dw-hero .pp-media.dw-diff { padding: 0; border-radius: 0; background: none; }
+  .dw-diff pre { margin: 0; font: var(--text-sm) / 1.7 var(--mono); }
+  .dw-diff span { display: block; padding: 0 var(--s2); }
+  .rm { background: var(--diff-removed-surface); color: var(--diff-removed-ink); }
+  .ad { background: var(--diff-added-surface); color: var(--diff-added-ink); }
+  .dw .pp-audience { font: var(--weight-medium) var(--text-sm) var(--mono); }
+  .dw .pp-thesis { font: var(--weight-semibold) 30px / 1.15 var(--mono); letter-spacing: -0.02em; max-width: 20ch; }
+  /* The added line, marked the way a diff marks it: a bar in the mark under the words. */
+  .dw-thesis-mark { box-shadow: inset 0 -0.18em 0 var(--mark-current); }
+  .dw .pp-subhead { font-size: var(--text-sm); max-width: 52ch; margin: 0; }
+  .dw .pp-actions { gap: var(--s5); }
+  .dw-link { color: var(--i-ink); font-size: var(--text-sm); }
+  .dw-link:hover { color: var(--i-ink-hover); }
+  .dw-link:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  @media (min-width: 960px) {
+    .dw-hero { min-height: 640px; }
+    .dw-hero .pp-media.dw-map { position: absolute; inset: 0; height: auto; }
+    .dw-panel { position: relative; width: 620px; margin: 300px 0 var(--s8) var(--s8); padding: var(--s6); border: 1px solid var(--line-strong); }
+    .dw .pp-thesis { font-size: 44px; }
+  }
+
+  /* The band: the last deploy, as a log. */
+  .dw-band { padding: var(--s8) 0; border-top: 1px solid var(--line); }
+  .dw-band > .pp-wrap { display: grid; gap: var(--s6); }
+  .dw h2 { margin: 0; font: var(--weight-semibold) 26px / 1.2 var(--mono); letter-spacing: -0.02em; text-wrap: balance; }
+  .dw-lede { margin: var(--s3) 0 0; color: var(--ink-soft); font-size: var(--text-sm); }
+  .dw-log { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line-strong); font-size: var(--text-sm); }
+  .dw-log > li { display: grid; gap: var(--s2); padding: var(--s4); border-top: 1px solid var(--line); }
+  .dw-log > li:first-child { border-top: 0; }
+  .dw-log b { font-weight: var(--weight-semibold); }
+  .dw-log code { display: block; padding: 2px var(--s2); font: inherit; }
+  .dw-eff { color: var(--ink-soft); }
+  .dw-eff.bad { color: var(--danger); }
+  .dw-how { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s2); font-size: var(--text-sm); }
+  .dw-how li::before { content: "$ "; color: var(--mark-current); }
+  .dw-how span { color: var(--ink-soft); }
+  @media (min-width: 960px) {
+    .dw-band > .pp-wrap { grid-template-columns: 380px 1fr; align-items: start; }
+    .dw h2 { font-size: 34px; }
+    .dw-how { grid-column: 2; }
+  }
+
+  /* The close: a plain mono form. */
+  .dw .pp-close { padding: var(--s8) 0; }
+  .dw .pp-close h2 { font: var(--weight-semibold) 26px / 1.2 var(--mono); margin: 0 0 var(--s3); }
+  .dw .pp-panel { border-radius: 0; box-shadow: none; border-color: var(--line-strong); background: var(--bg); }
+  .dw .pp-field input { border-radius: 0; font-family: var(--mono); }
+  @media (min-width: 960px) { .dw .pp-close h2 { font-size: 34px; } }
+
+  .dw .pp-footer { font-size: var(--text-xs); }
+  .dw .pp-footer .pp-brand { font-size: var(--text-sm); }
+  .dw .stamp { font-size: var(--text-lg); }
 </style>
 </head>
 <!-- Brief:
        Who:     teams running an app on AWS
        Pain:    the app goes down and nobody knows which piece, or why
        Promise: See what broke, and what changed it.
-       Moment:  a red box, AWS's reason, and the line the last deploy changed
-       Ask:     request access; the demo needs no signup
-     Identity: teal mark, stage hero (the map is wide), bare proof, "you get" cards. -->
-<body class="pp" data-mark="teal">
+       Moment:  a red box on the map, and the line the last deploy changed
+       Ask:     get set up; the demo needs no signup
+     Look (DESIGN.md §13 register): ground always dark · voice Plex Mono 600 ·
+     shape square · composition the map is the background · the page does the
+     thing with a status line and a diff log. -->
+<body class="pp dw" data-mark="teal" data-theme="dark">
 <a class="pp-skip" href="#main">Skip to content</a>
 
 <header class="pp-header">
   <div class="pp-wrap">
-    <a class="pp-brand" href="#"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="3" width="9" height="7" rx="2"/><rect x="15" y="3" width="9" height="7" rx="2"/><rect x="8.5" y="16" width="9" height="7" rx="2"/><path d="M6.5 10v2.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V10M13 14v2"/></svg>Driftwood</a>
-    <nav class="pp-nav" aria-label="On this page">
-      <a href="#gets">What you get</a><a href="#how">How it works</a><a href="#">Docs</a>
-    </nav>
-    <div class="pp-header-actions">
-      <a class="pp-button is-small" href="#start">Request access</a>
-    </div>
+    <a class="pp-brand" href="#"><svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="3" width="9" height="7" rx="2"/><rect x="15" y="3" width="9" height="7" rx="2"/><rect x="8.5" y="16" width="9" height="7" rx="2"/><path d="M6.5 10v2.5a1.5 1.5 0 0 0 1.5 1.5h10a1.5 1.5 0 0 0 1.5-1.5V10M13 14v2"/></svg>driftwood</a>
+    <span class="dw-where">shop · prod</span>
+    <span class="dw-wide">deploy <span class="num">214</span> · checked <span class="num">12s</span> ago</span>
+    <span class="dw-down">✕ 1 down</span>
+    <a class="pp-button is-small" href="#start">Get set up</a>
   </div>
 </header>
 
 <main id="main">
-  <section class="pp-hero" data-layout="stage">
+  <section class="pp-hero dw-hero">
     <div class="pp-wrap">
-      <div class="pp-hero-head">
-        <span class="pp-status" data-state="soon">Private beta</span>
-        <p class="pp-audience">For teams running on AWS</p>
-        <h1 class="pp-thesis">See what broke, and what changed it.</h1>
-      </div>
-      <figure class="pp-media">
-        <div class="shot" role="img" aria-label="Driftwood during an incident: the storefront service is down, 3 of 4 tasks fail health checks, and the last deploy changed its health-check path from /health to /healthz.">
-          <div class="shot-bar"><span>shop · prod · deploy 214</span><span>checked 12s ago</span></div>
-          <div class="shot-alert">Your shop is down. Checkout is failing.</div>
-          <div class="path" aria-hidden="true">
-            <div class="node ok"><b>Load balancer</b><small>healthy</small></div><span class="arrow">→</span>
-            <div class="node down"><b>Storefront</b><small>✕ down</small></div><span class="arrow">→</span>
-            <div class="node ok"><b>Orders DB</b><small>healthy</small></div>
-          </div>
-          <div class="why" aria-hidden="true">
-            <p>Why</p>
-            <p class="cause">The last deploy changed the address AWS checks, so it thinks the shop is dead.</p>
-            <p style="margin-top: var(--s3)">The change</p>
-            <pre class="diff"><span class="rm">- health_check = "/health"</span><span class="add">+ health_check = "/healthz"</span></pre>
-          </div>
-        </div>
+      <figure class="pp-media dw-map" role="img" aria-label="A map of the shop's system: load balancer, listener, storefront, tasks, payments, orders API, orders database and queue. The storefront box is red and marked down.">
+        <svg class="dw-full" viewBox="0 0 1280 640" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+          <path d="M250 150H420M580 150H760M920 150H1080M500 180V330M840 180V330M500 390V500M920 360H1000" />
+          <path class="hot" d="M580 150H760" />
+          <g><rect x="90" y="120" width="160" height="60" /><text x="110" y="156">load balancer</text></g>
+          <g><rect x="420" y="120" width="160" height="60" /><text x="440" y="156">listener</text></g>
+          <g class="bad"><rect x="760" y="120" width="160" height="60" /><text x="780" y="146">storefront</text><text x="780" y="166">✕ down</text></g>
+          <g><rect x="1080" y="120" width="160" height="60" /><text x="1100" y="156">tasks</text></g>
+          <g><rect x="420" y="330" width="160" height="60" /><text x="440" y="366">payments</text></g>
+          <g><rect x="760" y="330" width="160" height="60" /><text x="780" y="366">orders-api</text></g>
+          <g><rect x="1000" y="330" width="160" height="60" /><text x="1020" y="366">orders db</text></g>
+          <g><rect x="420" y="500" width="160" height="60" /><text x="440" y="536">queue</text></g>
+        </svg>
+        <svg class="dw-near" viewBox="400 95 720 330" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <path d="M250 150H420M580 150H760M920 150H1080M500 180V330M840 180V330M500 390V500M920 360H1000" />
+          <path class="hot" d="M580 150H760" />
+          <g><rect x="90" y="120" width="160" height="60" /><text x="110" y="156">load balancer</text></g>
+          <g><rect x="420" y="120" width="160" height="60" /><text x="440" y="156">listener</text></g>
+          <g class="bad"><rect x="760" y="120" width="160" height="60" /><text x="780" y="146">storefront</text><text x="780" y="166">✕ down</text></g>
+          <g><rect x="1080" y="120" width="160" height="60" /><text x="1100" y="156">tasks</text></g>
+          <g><rect x="420" y="330" width="160" height="60" /><text x="440" y="366">payments</text></g>
+          <g><rect x="760" y="330" width="160" height="60" /><text x="780" y="366">orders-api</text></g>
+          <g><rect x="1000" y="330" width="160" height="60" /><text x="1020" y="366">orders db</text></g>
+          <g><rect x="420" y="500" width="160" height="60" /><text x="440" y="536">queue</text></g>
+        </svg>
       </figure>
-      <div class="pp-hero-body">
-        <p class="pp-subhead">When your app goes down, Driftwood shows the broken piece, why, and what the last deploy changed.</p>
-        <p class="pp-actions"><a class="pp-button" href="#start">Request access</a><a class="pp-button is-secondary" href="#">Try the live demo</a></p>
-        <p class="pp-note">Demo needs no signup. We reply within two days.</p>
+      <div class="dw-panel">
+        <div class="pp-hero-head">
+          <figure class="pp-media dw-diff" aria-label="The last deploy changed the health check from /health to /healthz.">
+            <pre aria-hidden="true"><span class="rm">- health_check = "/health"</span><span class="ad">+ health_check = "/healthz"</span></pre>
+          </figure>
+          <p class="pp-audience">For teams running on AWS</p>
+          <h1 class="pp-thesis">See what broke, and <span class="dw-thesis-mark">what changed it.</span></h1>
+        </div>
+        <div class="pp-hero-body">
+          <p class="pp-subhead">When your app fails, see the broken piece, why, and the deploy behind it.</p>
+          <p class="pp-actions"><a class="pp-button" href="#start">Get set up</a><a class="dw-link" href="#">Try the live demo</a></p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="pp-band" id="gets">
+  <section class="dw-band" aria-labelledby="dw-band-title">
     <div class="pp-wrap">
-      <h2 class="pp-title">What you see when it breaks.</h2>
-      <ul class="pp-gets">
-        <li class="pp-get">
-          <figure class="pp-get-media"><div class="mini" aria-hidden="true">
-            <div class="path"><div class="node"><b>LB</b></div><span class="arrow">→</span><div class="node"><b>Listener</b></div><span class="arrow">→</span><div class="node down"><b>Store</b></div><span class="arrow">→</span><div class="node"><b>Tasks</b></div></div>
-          </div></figure>
-          <h3>Where it broke</h3><p>The path a request takes, with the broken box in red.</p>
-        </li>
-        <li class="pp-get">
-          <figure class="pp-get-media"><div class="mini" aria-hidden="true">
-            <div class="row"><b>storefront</b><span class="pill down">✕ down</span></div>
-            <div class="row"><b>payments</b><span class="pill deg">▲ degraded</span></div>
-            <div class="row"><b>orders-api</b><span class="pill ok">✓ healthy</span></div>
-          </div></figure>
-          <h3>Why it broke</h3><p>AWS's own reason, next to each box.</p>
-        </li>
-        <li class="pp-get">
-          <figure class="pp-get-media"><div class="mini" aria-hidden="true">
-            <pre class="diff"><span>  storefront</span><span class="rm">- health_check = "/health"</span><span class="add">+ health_check = "/healthz"</span><span>  desired_count = 4</span></pre>
-          </div></figure>
-          <h3>What changed</h3><p>The last deploy's edits, one tap away.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="pp-band" id="how">
-    <div class="pp-wrap">
-      <h2 class="pp-title">Set up once. It redraws every deploy.</h2>
-      <ol class="pp-how">
-        <li><h3>Point it at your code</h3><p>Terraform or CloudFormation. Read-only.</p></li>
-        <li><h3>Add one pipeline step</h3><p>Every deploy draws a fresh map.</p></li>
-        <li><h3>Open it when it breaks</h3><p>Live health, with the login you have.</p></li>
+      <div>
+        <h2 id="dw-band-title">Deploy <span class="num">214</span>, line by line.</h2>
+        <p class="dw-lede">Every change it made, and what that did to the shop.</p>
+      </div>
+      <figure class="pp-media" aria-label="Three changes from deploy 214, each with its diff and its effect.">
+        <ol class="dw-log">
+          <li><b>storefront · health check</b>
+            <code class="rm">- health_check = "/health"</code><code class="ad">+ health_check = "/healthz"</code>
+            <span class="dw-eff bad">✕ AWS marks the shop down</span></li>
+          <li><b>orders-api · tasks</b>
+            <code class="rm">- desired_count = 2</code><code class="ad">+ desired_count = 4</code>
+            <span class="dw-eff">healthy, 4 running</span></li>
+          <li><b>payments · timeout</b>
+            <code class="rm">- timeout = 10</code><code class="ad">+ timeout = 30</code>
+            <span class="dw-eff">healthy</span></li>
+        </ol>
+      </figure>
+      <ol class="dw-how" aria-label="Set up in three steps">
+        <li>driftwood init <span>reads your Terraform, read-only</span></li>
+        <li>driftwood deploy <span>one step in your pipeline</span></li>
+        <li>open driftwood <span>live health, your own login</span></li>
       </ol>
     </div>
   </section>
@@ -151,9 +206,8 @@
   <section class="pp-close" id="start">
     <div class="pp-wrap">
       <div>
-        <span class="pp-status" data-state="soon">Private beta</span>
         <h2>Try it on your own system.</h2>
-        <p class="pp-subhead">Tell us what you run. We reply within two days.</p>
+        <p class="pp-subhead">We reply within two days.</p>
       </div>
       <div class="pp-panel">
         <form class="pp-form" id="pilot-form" action="#" novalidate>
@@ -162,12 +216,8 @@
             <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="f-email-error">
             <p class="pp-error" id="f-email-error" hidden>Enter an email address, like name@company.com.</p>
           </div>
-          <div class="pp-field">
-            <label for="f-why">What do you run? <span class="pp-optional">(optional)</span></label>
-            <input id="f-why" name="why" placeholder="e.g. ECS on AWS, Terraform">
-          </div>
           <div>
-            <p class="pp-actions"><button class="pp-button" type="submit">Request access</button></p>
+            <p class="pp-actions"><button class="pp-button" type="submit">Get set up</button></p>
             <p class="pp-note">We use your email only to reply. No newsletter.</p>
           </div>
         </form>
@@ -182,8 +232,9 @@
 
 <footer class="pp-footer">
   <div class="pp-wrap">
-    <p><a class="pp-brand" href="#">Driftwood</a><span>See what broke, and what changed it.</span></p>
+    <p><a class="pp-brand" href="#">driftwood</a><span>See what broke, and what changed it.</span></p>
     <nav aria-label="More"><a href="#">Docs</a><a href="#">Contact</a></nav>
+    <span class="stamp" aria-label="Anthony Brignano">A|B</span>
     <div class="pp-legal">
       <small>&copy; 2026 Anthony Brignano. All rights reserved.</small>
     </div>

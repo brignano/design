@@ -64,9 +64,11 @@
  * Links, the focus ring and secondary buttons stay as they are on every
  * page; inside the product's app, actions stay cobalt (ADR-0014).
  *
- * The skeleton is previews/product-page.html, and a worked example is
- * previews/product-page-example.html: copy one, keep the order, replace the
- * words and pictures, then write the product's own look over it.
+ * The skeleton is previews/product-page.html. Three worked examples, one
+ * per product, show what a look written over this file is like:
+ * previews/product-page-example.html (Driftwood), product-page-guidebook.html
+ * and product-page-sites.html. Copy the skeleton, keep the order, replace
+ * the words and pictures, then write the product's own look over it.
  * scripts/fold.mjs checks the first phone screen.
  * Rules (DESIGN.md §13):
  *
