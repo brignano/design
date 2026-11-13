@@ -24,7 +24,9 @@
   .gb .pp-button { border-radius: 999px; }
 
   .gb .pp-header { background: var(--card); border-bottom: 0; }
-  .gb-prog { margin-left: auto; display: flex; align-items: center; gap: var(--s2); font: var(--text-xs) var(--mono); color: var(--ink-soft); }
+  .gb .pp-header > .pp-wrap { flex-wrap: wrap; }
+  .gb-prog { margin: 0 0 0 auto; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); font: var(--text-xs) var(--mono); color: var(--ink-soft); }
+  @media (max-width: 22em) { .gb-bar { display: none; } }
   .gb-bar { width: 72px; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
   .gb-bar i { display: block; height: 100%; width: 25%; background: var(--mark-current); transition: width var(--dur) var(--ease); }
   @media (prefers-reduced-motion: reduce) { .gb-bar i { transition: none; } }
@@ -39,7 +41,7 @@
   .gb .pp-subhead { margin: 0; max-width: 34ch; }
   /* The proof is the coach mark on the page's own button. */
   .gb-hero .pp-media { padding: 0; border-radius: 0; background: none; display: grid; justify-items: center; gap: var(--s5); }
-  .gb-hero .pp-button { min-height: 56px; padding-inline: 30px; font-size: var(--text-lg); outline: 3px solid var(--mark-current); outline-offset: 7px; }
+  .gb-hero .pp-button { max-width: calc(100% - 20px); white-space: normal; min-height: 56px; padding-inline: 30px; font-size: var(--text-lg); outline: 3px solid var(--mark-current); outline-offset: 7px; }
   .gb-hero .pp-button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
   .gb-tip { position: relative; width: min(300px, 100%); text-align: left; padding: var(--s3) var(--s4); background: var(--card);
     border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow-3); font-size: var(--text-sm); }
@@ -77,7 +79,7 @@
   .gb .pp-close h2 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; }
   .gb .pp-panel { width: min(560px, 100%); padding: 0; border: 0; box-shadow: none; background: none; text-align: left; }
   .gb .pp-field input { border-radius: 999px; padding-inline: var(--s5); min-height: 52px; }
-  .gb .pp-close .pp-button { width: 100%; min-height: 52px; }
+  .gb .pp-close .pp-button { width: 100%; min-height: 52px; white-space: normal; }
   @media (min-width: 960px) { .gb .pp-close h2 { font-size: 5.5rem; } }
 
   .gb .pp-footer { border-top: 2px dotted var(--line-strong); }
@@ -113,7 +115,7 @@
       </div>
       <figure class="pp-media">
         <p class="pp-actions"><a class="pp-button" href="#start">Try it with your team</a></p>
-        <figcaption class="gb-tip" role="note">
+        <figcaption class="gb-tip">
           <small>Step <span class="num">1</span> of <span class="num">4</span></small>
           <b>Press this button</b>
           <span>This is a Guidebook step, on this page. Your new hires see the same thing on your app.</span>

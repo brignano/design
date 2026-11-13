@@ -27,13 +27,13 @@
 
   /* The header is a status line. */
   .dw .pp-header { background: var(--bg); }
-  .dw .pp-header > .pp-wrap { min-height: 52px; gap: var(--s4); font-size: var(--text-xs); color: var(--ink-soft); }
+  .dw .pp-header > .pp-wrap { min-height: 52px; gap: var(--s2) var(--s4); flex-wrap: wrap; padding-block: var(--s2); font-size: var(--text-xs); color: var(--ink-soft); }
   .dw .pp-brand { font: var(--weight-semibold) var(--text-sm) var(--mono); letter-spacing: 0; }
   .dw .pp-brand svg { width: 20px; height: 20px; }
   .dw-down { color: var(--danger); white-space: nowrap; }
   .dw-wide, .dw-where { white-space: nowrap; }
-  @media (max-width: 400px) { .dw-where { display: none; } }
-  @media (max-width: 860px) { .dw-wide { display: none; } }
+  @media (max-width: 25em) { .dw-where { display: none; } }
+  @media (max-width: 53.75em) { .dw-wide { display: none; } }
   .dw .pp-header .pp-button { margin-left: auto; }
 
   /* The hero: the map behind, the words in a square panel over it. */
