@@ -36,7 +36,7 @@
   .gb-hero .pp-hero-head::before { display: none; }
   .gb-hero .pp-hero-head { display: grid; justify-items: center; gap: var(--s4); }
   .gb .pp-audience { margin: 0; }
-  .gb .pp-thesis { font-size: 3.375rem; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 11ch; }
+  .gb .pp-thesis { font-size: min(3.375rem, 1rem + 13vw); overflow-wrap: anywhere; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 11ch; }
   .gb-thesis-mark { box-shadow: inset 0 -0.26em 0 var(--mark-current); }
   .gb .pp-subhead { margin: 0; max-width: 34ch; }
   /* The proof is the coach mark on the page's own button. */
@@ -58,7 +58,7 @@
 
   /* The band: the next three steps of the guide. */
   .gb-band { padding: var(--s8) 0; border-top: 2px dotted var(--line-strong); text-align: center; }
-  .gb h2 { margin: 0 auto var(--s7); font-size: var(--text-3xl); font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 14ch; text-wrap: balance; }
+  .gb h2 { margin: 0 auto var(--s7); font-size: min(var(--text-3xl), 1rem + 10vw); overflow-wrap: anywhere; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 14ch; text-wrap: balance; }
   .gb-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s7); text-align: left; }
   .gb-step h3 { display: flex; gap: var(--s3); align-items: center; margin: var(--s6) 0 var(--s2); font-size: var(--text-lg); }
   .gb-step h3 .num { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--mark-current); font-size: var(--text-sm); font-weight: var(--weight-semibold); }
@@ -76,7 +76,7 @@
   /* The close: one pill field and the pill button. */
   .gb .pp-close { border-top: 2px dotted var(--line-strong); text-align: center; }
   .gb .pp-close > .pp-wrap { grid-template-columns: minmax(0, 1fr); justify-items: center; }
-  .gb .pp-close h2 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; }
+  .gb .pp-close h2 { margin: 0; font-size: min(var(--text-3xl), 1rem + 10vw); overflow-wrap: anywhere; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; }
   .gb .pp-panel { width: min(560px, 100%); padding: 0; border: 0; box-shadow: none; background: none; text-align: left; }
   .gb .pp-field input { border-radius: 999px; padding-inline: var(--s5); min-height: 52px; }
   .gb .pp-close .pp-button { width: 100%; min-height: 52px; white-space: normal; }
