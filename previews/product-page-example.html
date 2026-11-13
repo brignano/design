@@ -61,7 +61,7 @@
   .rm { background: var(--diff-removed-surface); color: var(--diff-removed-ink); }
   .ad { background: var(--diff-added-surface); color: var(--diff-added-ink); }
   .dw .pp-audience { font: var(--weight-medium) var(--text-sm) var(--mono); }
-  .dw .pp-thesis { font: var(--weight-semibold) 30px / 1.15 var(--mono); letter-spacing: -0.02em; max-width: 20ch; }
+  .dw .pp-thesis { font: var(--weight-semibold) 1.875rem / 1.15 var(--mono); letter-spacing: -0.02em; max-width: 20ch; }
   /* The added line, marked the way a diff marks it: a bar in the mark under the words. */
   .dw-thesis-mark { box-shadow: inset 0 -0.18em 0 var(--mark-current); }
   .dw .pp-subhead { font-size: var(--text-sm); max-width: 52ch; margin: 0; }
@@ -73,13 +73,13 @@
     .dw-hero { min-height: 640px; }
     .dw-hero .pp-media.dw-map { position: absolute; inset: 0; height: auto; }
     .dw-panel { position: relative; width: 620px; margin: 300px 0 var(--s8) var(--s8); padding: var(--s6); border: 1px solid var(--line-strong); }
-    .dw .pp-thesis { font-size: 44px; }
+    .dw .pp-thesis { font-size: var(--text-3xl); }
   }
 
   /* The band: the last deploy, as a log. */
   .dw-band { padding: var(--s8) 0; border-top: 1px solid var(--line); }
   .dw-band > .pp-wrap { display: grid; gap: var(--s6); }
-  .dw h2 { margin: 0; font: var(--weight-semibold) 26px / 1.2 var(--mono); letter-spacing: -0.02em; text-wrap: balance; }
+  .dw h2 { margin: 0; font: var(--weight-semibold) 1.625rem / 1.2 var(--mono); letter-spacing: -0.02em; text-wrap: balance; }
   .dw-lede { margin: var(--s3) 0 0; color: var(--ink-soft); font-size: var(--text-sm); }
   .dw-log { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line-strong); font-size: var(--text-sm); }
   .dw-log > li { display: grid; gap: var(--s2); padding: var(--s4); border-top: 1px solid var(--line); }
@@ -93,16 +93,16 @@
   .dw-how span { color: var(--ink-soft); }
   @media (min-width: 960px) {
     .dw-band > .pp-wrap { grid-template-columns: 380px 1fr; align-items: start; }
-    .dw h2 { font-size: 34px; }
+    .dw h2 { font-size: 2.125rem; }
     .dw-how { grid-column: 2; }
   }
 
   /* The close: a plain mono form. */
   .dw .pp-close { padding: var(--s8) 0; }
-  .dw .pp-close h2 { font: var(--weight-semibold) 26px / 1.2 var(--mono); margin: 0 0 var(--s3); }
+  .dw .pp-close h2 { font: var(--weight-semibold) 1.625rem / 1.2 var(--mono); margin: 0 0 var(--s3); }
   .dw .pp-panel { border-radius: 0; box-shadow: none; border-color: var(--line-strong); background: var(--bg); }
   .dw .pp-field input { border-radius: 0; font-family: var(--mono); }
-  @media (min-width: 960px) { .dw .pp-close h2 { font-size: 34px; } }
+  @media (min-width: 960px) { .dw .pp-close h2 { font-size: 2.125rem; } }
 
   .dw .pp-footer { font-size: var(--text-xs); }
   .dw .pp-footer .pp-brand { font-size: var(--text-sm); }
