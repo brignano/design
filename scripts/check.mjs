@@ -248,6 +248,9 @@ for (const f of MARK_FAMILIES) {
   for (const bg of ['--card', '--bg', `--mark${f}-surface`]) floors.push([`--mark${f}-fill`, bg, MARK]);
   for (const fg of ['--ink', '--ink-soft', '--i-ink']) floors.push([fg, `--mark${f}-surface`, TEXT]);
 }
+// product-page.css: an ink primary button (data-button="ink", or no mark)
+// takes a --card label on --ink, --n-800 (hover) and --n-700 (pressed).
+for (const bg of ['--ink', '--n-800', '--n-700']) floors.push(['--card', bg, TEXT]);
 for (const bg of ['--surface-hover', '--surface-active']) floors.push(['--ink', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
 floors.push(['--i-ink', '--i-surface', TEXT]);
