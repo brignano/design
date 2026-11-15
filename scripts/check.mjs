@@ -33,6 +33,9 @@
 //      section of the same name, or a section with no rule; a duplicate; a
 //      different order; a section without one Do and one Don't panel, or a
 //      panel that doesn't show the quoted examples from its rule.
+//  13. the card stage (.card-stage in components.css) and the product-page
+//      stage (--pp-stage in product-page.css) mix the mark at different
+//      strengths: a product looks the same on its card and its page (ADR-0018).
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -527,9 +530,18 @@ else {
     fail('previews/writing.html: the rules must run in the same order as DESIGN.md §15');
 }
 
+// ── 13. One stage strength ───────────────────────────────────────────────────
+{
+  const strength = (css, re) => css.match(re)?.[1];
+  const page = strength(read('product-page.css'), /--pp-stage:\s*color-mix\(in srgb,\s*var\(--pp-mark\)\s+([\d.]+%)/);
+  const card = strength(read('components.css'), /\.card-stage\s*\{[^}]*color-mix\(in srgb,\s*var\(--mark-current\)\s+([\d.]+%)/);
+  if (!page || !card) fail('one stage: no --pp-stage mix in product-page.css or no .card-stage mix in components.css');
+  else if (page !== card) fail(`one stage: .card-stage mixes the mark at ${card}, --pp-stage at ${page}; they must match (ADR-0018)`);
+}
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength`);
