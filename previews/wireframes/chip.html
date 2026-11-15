@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: filter chip</title>
+<!-- Wireframe for issue #167. The rule: "Wireframes before build" in brignano/ai-tools fleet/README.md. -->
+<link rel="stylesheet" href="../_fonts.css">
+<link rel="stylesheet" href="../../tokens.css">
+<link rel="stylesheet" href="../../components.css">
+<style>
+  /* Wireframe chrome: the frames and the notes beside them. */
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.55; }
+  .wf-head { max-width: 72ch; margin: 0 0 24px; }
+  .wf-head h1 { font-size: var(--text-xl); margin: 0 0 4px; }
+  .wf-head p, .wf-head li { margin: 0 0 8px; color: var(--ink-soft); }
+  .wf-head ul { margin: 0; padding-left: 20px; }
+  .wf-head strong { color: var(--ink); }
+  h2.wf-section { font-size: var(--text-lg); margin: 32px 0 12px; }
+  .wf-frames { display: flex; gap: 24px; align-items: flex-start; overflow-x: auto; padding-bottom: 8px; }
+  .wf-frame { flex: none; }
+  .wf-label { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 6px; }
+  .wf-screen {
+    container-type: inline-size; background: var(--bg); color: var(--ink);
+    border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden;
+  }
+  .wf-phone .wf-screen { width: 390px; }
+  .wf-desktop .wf-screen { width: 1280px; }
+
+  /* .chip itself now lives in components.css, built to this wireframe. */
+
+  /* Wireframe only: pin the look of a state so it can be drawn standing still. */
+  .chip.is-hover { background-color: var(--surface-hover); }
+  .chip.is-focus { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .chip.is-touch { min-height: 44px; }
+
+  /* ── The page being wireframed: a filterable list. @container, not @media. ── */
+  .page { display: grid; gap: var(--s4); padding: var(--s4); }
+  .page h3 { margin: 0; font-size: var(--text-xl); letter-spacing: var(--tracking-title); }
+  .filter { display: grid; gap: var(--s2); }
+  .filter-label { margin: 0; font-size: var(--text-sm); font-weight: var(--weight-medium); }
+  .filter-chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .count { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
+  .rows { margin: 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .rows li { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 10px var(--s4); border-bottom: 1px solid var(--line); }
+  .rows li:last-child, .rows li.is-last { border-bottom: 0; }
+  .rows li[hidden] { display: none; }
+  @container (min-width: 900px) {
+    .page { padding: var(--s6); max-width: 880px; }
+    .filter { grid-template-columns: auto 1fr; align-items: center; gap: var(--s4); }
+  }
+
+  /* States sheet */
+  .states { display: grid; gap: var(--s4); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 1280px; }
+  .states > div { padding: var(--s4); background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius); }
+  .states dl { display: grid; grid-template-columns: 9ch 1fr; gap: var(--s3) var(--s4); align-items: center; margin: 0; }
+  .states dt { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); }
+  .states dd { display: flex; flex-wrap: wrap; gap: var(--s2); margin: 0; }
+</style>
+</head>
+<body>
+  <div class="wf-head">
+    <h1>Wireframe: filter chip</h1>
+    <p>For <a href="https://github.com/brignano/design/issues/167">issue 167</a>. A <strong>.chip</strong> is a toggle button for a filterable list: tap one to turn a filter on, tap again to turn it off, and any number can be on at once. Off is the card ground with a control edge; on is the interactive fill, the same as a chosen segmented option. The chips below work: try them.</p>
+    <p>Rejected:</p>
+    <ul>
+      <li>A wash for the on state: reads weaker than the segmented control beside it (already decided in the issue).</li>
+      <li>A tick inside the on chip: the chip changes width when toggled, so the row jumps.</li>
+      <li>A fully round pill shape: every other control uses the control radius, and round reads as a status pill.</li>
+      <li>One sideways-scrolling row on a phone: hides which filters exist. Chips wrap instead.</li>
+      <li>Checkboxes drawn as chips: a filter that applies at once is a button with a pressed state, not a form field.</li>
+    </ul>
+  </div>
+
+  <div class="wf-frames">
+    <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px · chips drawn at the 44px touch height</p><div class="wf-screen" data-touch></div></div>
+    <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+  </div>
+
+  <h2 class="wf-section">States, both themes</h2>
+  <div class="states">
+    <div data-theme="light"></div>
+    <div data-theme="dark"></div>
+  </div>
+
+  <template id="wf-page">
+    <div class="page">
+      <h3>Enquiries</h3>
+      <div class="filter" role="group" aria-labelledby="stage-label">
+        <p class="filter-label" id="stage-label">Stage</p>
+        <div class="filter-chips">
+          <button type="button" class="chip" aria-pressed="true" data-stage="Lead">Lead</button>
+          <button type="button" class="chip" aria-pressed="true" data-stage="Quoted">Quoted</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Booked">Booked</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Paid">Paid</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Declined">Declined</button>
+        </div>
+      </div>
+      <p class="count" role="status"></p>
+      <ul class="rows">
+        <li data-stage="Lead"><span>Harbour Kayak Club</span><span class="pill">Lead</span></li>
+        <li data-stage="Quoted"><span>Northside Bakery</span><span class="pill">Quoted</span></li>
+        <li data-stage="Booked"><span>Elm Street Dental</span><span class="pill">Booked</span></li>
+        <li data-stage="Lead"><span>Marlow Cycle Repair</span><span class="pill">Lead</span></li>
+        <li data-stage="Paid"><span>Tide Pool Books</span><span class="pill">Paid</span></li>
+        <li data-stage="Quoted"><span>Fern &amp; Stone Florist</span><span class="pill">Quoted</span></li>
+        <li data-stage="Declined"><span>Quarry Lane Garage</span><span class="pill">Declined</span></li>
+        <li data-stage="Booked"><span>Saltmarsh Yoga</span><span class="pill">Booked</span></li>
+      </ul>
+    </div>
+  </template>
+
+  <template id="wf-states">
+    <dl>
+      <dt>Off</dt><dd><button type="button" class="chip" aria-pressed="false">Lead</button></dd>
+      <dt>Off, hover</dt><dd><button type="button" class="chip is-hover" aria-pressed="false">Lead</button></dd>
+      <dt>On</dt><dd><button type="button" class="chip" aria-pressed="true">Lead</button></dd>
+      <dt>Focus</dt><dd><button type="button" class="chip is-focus" aria-pressed="false">Lead</button><button type="button" class="chip is-focus" aria-pressed="true">Lead</button></dd>
+      <dt>Disabled</dt><dd><button type="button" class="chip" aria-pressed="false" disabled>Lead</button><button type="button" class="chip" aria-pressed="true" disabled>Lead</button></dd>
+      <dt>Touch, 44px</dt><dd><button type="button" class="chip is-touch" aria-pressed="false">Lead</button><button type="button" class="chip is-touch" aria-pressed="true">Quoted</button></dd>
+      <dt>Beside</dt><dd><button type="button" class="chip" aria-pressed="true">Chip</button><span class="tag">Tag<button type="button" class="tag-remove" aria-label="Remove Tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span><span class="pill">Pill</span><button type="button" class="btn">Button</button></dd>
+    </dl>
+  </template>
+
+  <script>
+    const page = document.getElementById('wf-page');
+    for (const screen of document.querySelectorAll('.wf-screen')) {
+      screen.append(page.content.cloneNode(true));
+      const group = screen.querySelector('.filter');
+      // Each frame holds a copy, so ids must differ.
+      const id = 'stage-label-' + (screen.hasAttribute('data-touch') ? 'phone' : 'desktop');
+      group.querySelector('.filter-label').id = id;
+      group.setAttribute('aria-labelledby', id);
+      if (screen.hasAttribute('data-touch')) for (const chip of screen.querySelectorAll('.chip')) chip.classList.add('is-touch');
+      const rows = [...screen.querySelectorAll('.rows li')];
+      const update = () => {
+        const on = [...screen.querySelectorAll('.chip[aria-pressed="true"]')].map((chip) => chip.dataset.stage);
+        let last;
+        for (const row of rows) {
+          row.hidden = on.length > 0 && !on.includes(row.dataset.stage);
+          row.classList.remove('is-last');
+          if (!row.hidden) last = row;
+        }
+        if (last) last.classList.add('is-last');
+        const shown = rows.filter((row) => !row.hidden).length;
+        screen.querySelector('.count').textContent = on.length ? `${shown} of ${rows.length} enquiries` : `All ${rows.length} enquiries`;
+      };
+      screen.addEventListener('click', (event) => {
+        const chip = event.target.closest('.chip');
+        if (!chip) return;
+        chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+        update();
+      });
+      update();
+    }
+    const states = document.getElementById('wf-states');
+    for (const box of document.querySelectorAll('.states > div')) box.append(states.content.cloneNode(true));
+  </script>
+</body>
+</html>
