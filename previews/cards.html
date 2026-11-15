@@ -16,6 +16,7 @@
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--s4); }
   /* Preview only: shows the focus ring without tabbing to the card. */
   .card-link:has(.focus-demo) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .stage-label { all: revert-layer; margin: var(--s6) 0 var(--s3); font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -41,6 +42,29 @@
         <footer class="card-footer"><span class="pill pill-attention">Deposit due</span><button type="button" class="btn btn-sm btn-ghost">Pay deposit</button></footer>
       </article>
     </div>
+    <h2 class="stage-label">Product cards on a stage</h2>
+    <div class="cards stage-cards">
+      <article class="card card-link" data-mark="teal">
+        <div class="card-media card-stage"><svg viewBox="0 0 320 180" aria-hidden="true"><path d="M110 112 H210 L196 132 H124 Z" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M160 112 V48 L200 104 H160" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M40 146 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#l-driftwood">Driftwood</a></h2><p class="card-meta">Product page in teal</p></header>
+        <div class="card-body"><p>A logbook for a boat.</p></div>
+      </article>
+      <article class="card card-link" data-mark="violet">
+        <div class="card-media card-stage"><svg viewBox="0 0 200 200" aria-hidden="true"><rect x="40" y="30" width="120" height="140" rx="10" style="fill:var(--card);stroke:var(--line-strong);stroke-width:2"/><path d="M60 62 H140 M60 86 H120 M60 110 H130" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><circle cx="132" cy="140" r="14" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M146 154 L166 174" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#l-guidebook">Guidebook</a></h2><p class="card-meta">Product page in violet</p></header>
+        <div class="card-body"><p>Tours that teach an app inside the app.</p></div>
+      </article>
+      <article class="card card-link" data-mark="magenta">
+        <div class="card-media card-stage"><svg viewBox="0 0 320 180" aria-hidden="true"><rect x="60" y="30" width="200" height="124" rx="10" style="fill:var(--card);stroke:var(--line-strong);stroke-width:2"/><path d="M60 54 H260" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M84 78 H200 M84 98 H170" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><rect x="84" y="114" width="64" height="24" rx="6" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#l-sites">Sites</a></h2><p class="card-meta">Product page in magenta</p></header>
+        <div class="card-body"><p>A website from a few sentences.</p></div>
+      </article>
+      <article class="card card-link">
+        <div class="card-media card-stage"><svg viewBox="0 0 320 180" aria-hidden="true"><path d="M60 40 V140 H260" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M60 92 H260" style="stroke:var(--ink-soft);fill:none;stroke-width:2;stroke-dasharray:6 6"/><path d="M70 130 L120 118 L170 96 L220 70 L250 52" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><circle cx="178" cy="92" r="6" style="fill:var(--mark-current)"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#l-breakeven">Breakeven</a></h2><p class="card-meta">No product page: the family amber</p></header>
+        <div class="card-body"><p>When a purchase pays for itself.</p></div>
+      </article>
+    </div>
   </div>
   <div class="panel dark"><span class="panel-label">Dark</span>
     <div class="cards">
@@ -59,6 +83,29 @@
         <header class="card-header"><h2 class="card-title"><a href="#d-porto" class="focus-demo">Porto, 2 days</a></h2><p class="card-meta">Shown focused</p></header>
         <div class="card-body"><p>A link card can still hold its own button; it sits above the stretched link.</p></div>
         <footer class="card-footer"><span class="pill pill-attention">Deposit due</span><button type="button" class="btn btn-sm btn-ghost">Pay deposit</button></footer>
+      </article>
+    </div>
+    <h2 class="stage-label">Product cards on a stage</h2>
+    <div class="cards stage-cards">
+      <article class="card card-link" data-mark="teal">
+        <div class="card-media card-stage"><svg viewBox="0 0 320 180" aria-hidden="true"><path d="M110 112 H210 L196 132 H124 Z" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M160 112 V48 L200 104 H160" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M40 146 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#d-driftwood">Driftwood</a></h2><p class="card-meta">Product page in teal</p></header>
+        <div class="card-body"><p>A logbook for a boat.</p></div>
+      </article>
+      <article class="card card-link" data-mark="violet">
+        <div class="card-media card-stage"><svg viewBox="0 0 200 200" aria-hidden="true"><rect x="40" y="30" width="120" height="140" rx="10" style="fill:var(--card);stroke:var(--line-strong);stroke-width:2"/><path d="M60 62 H140 M60 86 H120 M60 110 H130" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><circle cx="132" cy="140" r="14" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M146 154 L166 174" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#d-guidebook">Guidebook</a></h2><p class="card-meta">Product page in violet</p></header>
+        <div class="card-body"><p>Tours that teach an app inside the app.</p></div>
+      </article>
+      <article class="card card-link" data-mark="magenta">
+        <div class="card-media card-stage"><svg viewBox="0 0 320 180" aria-hidden="true"><rect x="60" y="30" width="200" height="124" rx="10" style="fill:var(--card);stroke:var(--line-strong);stroke-width:2"/><path d="M60 54 H260" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M84 78 H200 M84 98 H170" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><rect x="84" y="114" width="64" height="24" rx="6" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#d-sites">Sites</a></h2><p class="card-meta">Product page in magenta</p></header>
+        <div class="card-body"><p>A website from a few sentences.</p></div>
+      </article>
+      <article class="card card-link">
+        <div class="card-media card-stage"><svg viewBox="0 0 320 180" aria-hidden="true"><path d="M60 40 V140 H260" style="stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><path d="M60 92 H260" style="stroke:var(--ink-soft);fill:none;stroke-width:2;stroke-dasharray:6 6"/><path d="M70 130 L120 118 L170 96 L220 70 L250 52" style="stroke:var(--mark-current);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"/><circle cx="178" cy="92" r="6" style="fill:var(--mark-current)"/></svg></div>
+        <header class="card-header"><h2 class="card-title"><a href="#d-breakeven">Breakeven</a></h2><p class="card-meta">No product page: the family amber</p></header>
+        <div class="card-body"><p>When a purchase pays for itself.</p></div>
       </article>
     </div>
   </div>
@@ -102,7 +149,8 @@
       <h2>Parts</h2>
       <ul>
         <li><code>.card-header</code> holds <code>.card-title</code> and <code>.card-meta</code>; <code>.card-body</code> and <code>.card-footer</code> follow. Every part is optional.</li>
-        <li><code>.card-media</code> goes first and runs edge to edge at 16:9.</li>
+        <li><code>.card-media</code> goes first and runs edge to edge at 16:9, cropped to fill.</li>
+        <li><code>.card-media.card-stage</code> is for a drawing of a product: the drawing is padded and contained, never cropped, on a faint field of the product's mark.</li>
         <li>The footer sits at the bottom, so cards in a row line up.</li>
         <li>Radius <code>--radius</code>; the grid of cards is the layout's job.</li>
       </ul>
@@ -117,12 +165,27 @@
     </section>
   </div>
 
+  <section>
+    <h2>Product cards on a stage</h2>
+    <ul>
+      <li>Only on a card that stands for a product, behind that product's picture (DESIGN.md §3, ADR-0018). Not for trips, posts or anything else.</li>
+      <li>Put <code>data-mark</code> on the card (or a section around it). The field is the same 8% mix as the hero stage on the product's page, so the two match.</li>
+      <li>A product without a product page has no <code>data-mark</code> and stays on the family amber.</li>
+      <li>The mark is the picture's ground only. The title, links, pills and buttons on the card stay as they are.</li>
+    </ul>
+<pre tabindex="0">&lt;article class="card card-link" data-mark="teal"&gt;
+  &lt;div class="card-media card-stage"&gt;&lt;svg viewBox="0 0 320 180" aria-hidden="true"&gt;…&lt;/svg&gt;&lt;/div&gt;
+  &lt;header class="card-header"&gt;&lt;h3 class="card-title"&gt;&lt;a href="/projects/driftwood"&gt;Driftwood&lt;/a&gt;&lt;/h3&gt;&lt;/header&gt;
+&lt;/article&gt;</pre>
+  </section>
+
   <section data-doc="a11y">
     <h2>Accessibility</h2>
     <ul>
       <li>The link's name is the title, so it says where it goes.</li>
       <li>Focus shows once, round the whole card.</li>
       <li>Decorative media takes <code>alt=""</code>; media that carries meaning gets real alt text.</li>
+      <li>The stage is a background, so forced colours drop it; the drawing and the card's border stay.</li>
     </ul>
   </section>
 </div>

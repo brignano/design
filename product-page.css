@@ -88,7 +88,9 @@
   --pp-width: 1160px;
   --pp-gutter: var(--s5);
   /* The product's mark (ADR-0011): ink until data-mark picks one. The stage
-     is the field behind the hero proof, a faint wash of the mark. */
+     is the field behind the hero proof, a faint wash of the mark. The card
+     stage (.card-stage, ADR-0018) repeats this strength; npm run check keeps
+     the two equal. */
   --pp-mark: var(--ink);
   --pp-stage: color-mix(in srgb, var(--pp-mark) 8%, transparent);
   /* The primary button's fill (ADR-0017): ink until data-mark picks a mark.

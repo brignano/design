@@ -70,7 +70,8 @@ system coherent across a marketing site and an operational tool.
 
 `--mark` inks a **graphic**: a product's glyph, the `A|B` monogram, a hero rule.
 That is its entire permitted use. It is never a button, chip, badge, wash, border,
-or link.
+or link. The scoped exceptions are the next sections: a product page, and the
+stage behind a product's picture on its card.
 
 This is the resolution of a real problem. Amber used to be both the brand colour
 and the warning colour, kept apart by a rule about scale — and rules enforced by
@@ -118,6 +119,20 @@ allows. Never fill or wash with
 This is a scoped exception to "identity is not a fill", as the stage behind a
 hero proof was (ADR-0011). It never reaches an app, a link, text or a state,
 and the focus ring stays `--i-ink`.
+
+### On a card that stands for a product, the stage
+
+A card that stands for one product, in a list of products on a page that
+isn't its product page, may put that product's picture on its stage
+(ADR-0018): `.card-media.card-stage`, the same 8% mix of `--mark-current` as
+the hero stage on the product page, so a product looks the same on its card
+and its page. `data-mark` on the card or an ancestor picks the hue; a product
+without a product page has none and stays on the family amber.
+
+The stage is the picture's ground and nothing else. On that card the mark
+still never colours a button, link, text, chip, badge, border or state, and
+the focus ring stays `--i-ink`. A card that doesn't stand for a product (a
+trip, a post) never gets a stage.
 
 ### Colour is a surface, not text
 

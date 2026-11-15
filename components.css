@@ -594,7 +594,9 @@
    link), so the markup stays a heading and a link, not a link wrapped
    round blocks. One focus ring goes round the card. Other buttons and
    links inside a .card-link still work: they sit above the stretched area.
-   .card-media goes first and runs edge to edge. No cards inside cards. */
+   .card-media goes first and runs edge to edge. No cards inside cards.
+   .card-media.card-stage is for a drawing of a product (data-mark on the
+   card picks its hue): <div class="card-media card-stage"><svg …></div>. */
 @layer brignano.components {
   .card {
     position: relative;
@@ -612,6 +614,13 @@
   }
   .card-media { margin: calc(-1 * var(--s5)) calc(-1 * var(--s5)) 0; }
   .card-media > :is(img, video, picture, svg) { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  /* Stage (ADR-0018): a product's drawing on a faint field of its mark, the
+     same 8% mix as --pp-stage on its product page, so the card and the page
+     match. data-mark on the card or an ancestor picks the hue; with none it
+     is the family amber. The drawing is padded and contained, never cropped,
+     and the box stays 16:9. Only on a card that stands for a product. */
+  .card-stage { background-color: color-mix(in srgb, var(--mark-current) 8%, transparent); }
+  .card-stage > :is(img, video, picture, svg) { box-sizing: border-box; padding: var(--s5); object-fit: contain; }
   .card-header { display: grid; gap: var(--s1); }
   .card-title { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-title); letter-spacing: var(--tracking-title); }
   .card-title a { color: inherit; text-decoration: none; }
