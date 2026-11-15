@@ -828,6 +828,10 @@ and in what order: [`proposals/component-layer.md`](./proposals/component-layer.
   `aria-hidden`; an icon-only button carries an `aria-label`. Need one that
   isn't there? Add it from Lucide in a PR; don't draw one or pull in another
   set. Brand logos are the exception and stay with their brands.
+- **Chip, segmented or tag.** A filter chip (`.chip`, a `<button>` with
+  `aria-pressed`) toggles one filter on a list, and any number can be on. One
+  of a few is `.segmented`; a filter already applied, with a remove button, is
+  `.tag`.
 - **Switch or checkbox.** A switch (`.switch`, `role="switch"`) is only for a
   setting that takes effect the moment it flips. Anything sent with a form's
   submit button is a checkbox, because a switch promises an effect the form
@@ -961,8 +965,9 @@ currency ("US$", "€") only when the reader could mistake it.
 
 These don't appear in a product's interface: exclamation marks; "simply",
 "just" or "easy" when they play a task down (they blame the person when it
-isn't); "Oops" or "Uh-oh"; emoji as words; ALL CAPS typed into the text; and,
-on marketing pages, jargon the reader has to look up.
+isn't); "Oops" or "Uh-oh"; emoji as words, icons or category markers (use a
+word or a Lucide icon); ALL CAPS typed into the text; and, on marketing pages,
+jargon the reader has to look up.
 
 - Do: "Couldn't load your trips. Try again."
 - Don't: "Oops! Something went wrong!! Simply refresh."

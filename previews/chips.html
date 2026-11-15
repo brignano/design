@@ -1,0 +1,162 @@
+<!-- @dsCard group="Controls" -->
+<!doctype html>
+<html lang="en" data-status="stable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Filter chip</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .panel.light, .panel.dark { background: var(--bg); }
+  .name { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin: 0; }
+  /* Preview only: the list the chips filter. */
+  .count { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
+  .rows { max-width: 32rem; margin: 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .rows li { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 10px var(--s4); border-top: 1px solid var(--line); }
+  .rows li[hidden] { display: none; }
+  .rows li.is-first { border-top: 0; }
+  .states { display: grid; grid-template-columns: 9ch minmax(0, 1fr); gap: var(--s3) var(--s4); align-items: center; margin: 0; }
+  .states dt { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); }
+  .states dd { display: flex; flex-wrap: wrap; gap: var(--s2); margin: 0; }
+</style>
+</head>
+<body>
+<h1>Filter chip</h1>
+<p class="sub">A toggle for a filterable list. Press one to turn a filter on, press it again to turn it off, and any number can be on at once. The state comes from <code>aria-pressed</code>, never a class.</p>
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light</span>
+    <div class="stack gap-5">
+      <div class="stack gap-2" data-chip-demo>
+        <p class="name">Try it: any number can be on</p>
+        <div class="cluster gap-2" role="group" aria-label="Stage (light)">
+          <button type="button" class="chip" aria-pressed="true" data-stage="Lead">Lead</button>
+          <button type="button" class="chip" aria-pressed="true" data-stage="Quoted">Quoted</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Booked">Booked</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Paid">Paid</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Declined">Declined</button>
+        </div>
+        <p class="count" role="status"></p>
+        <ul class="rows">
+          <li data-stage="Lead"><span>Harbour Kayak Club</span><span class="pill">Lead</span></li>
+          <li data-stage="Quoted"><span>Northside Bakery</span><span class="pill">Quoted</span></li>
+          <li data-stage="Booked"><span>Elm Street Dental</span><span class="pill">Booked</span></li>
+          <li data-stage="Lead"><span>Marlow Cycle Repair</span><span class="pill">Lead</span></li>
+          <li data-stage="Paid"><span>Tide Pool Books</span><span class="pill">Paid</span></li>
+          <li data-stage="Declined"><span>Quarry Lane Garage</span><span class="pill">Declined</span></li>
+        </ul>
+      </div>
+      <dl class="states">
+        <dt>Off</dt><dd><button type="button" class="chip" aria-pressed="false">Lead</button></dd>
+        <dt>On</dt><dd><button type="button" class="chip" aria-pressed="true">Lead</button></dd>
+        <dt>Focus</dt><dd><button type="button" class="chip focused" aria-pressed="false">Lead</button><button type="button" class="chip focused" aria-pressed="true">Lead</button></dd>
+        <dt>Disabled</dt><dd><button type="button" class="chip" aria-pressed="false" disabled>Lead</button><button type="button" class="chip" aria-pressed="true" disabled>Lead</button></dd>
+      </dl>
+    </div>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+    <div class="stack gap-5">
+      <div class="stack gap-2" data-chip-demo>
+        <p class="name">Try it: any number can be on</p>
+        <div class="cluster gap-2" role="group" aria-label="Stage (dark)">
+          <button type="button" class="chip" aria-pressed="true" data-stage="Lead">Lead</button>
+          <button type="button" class="chip" aria-pressed="true" data-stage="Quoted">Quoted</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Booked">Booked</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Paid">Paid</button>
+          <button type="button" class="chip" aria-pressed="false" data-stage="Declined">Declined</button>
+        </div>
+        <p class="count" role="status"></p>
+        <ul class="rows">
+          <li data-stage="Lead"><span>Harbour Kayak Club</span><span class="pill">Lead</span></li>
+          <li data-stage="Quoted"><span>Northside Bakery</span><span class="pill">Quoted</span></li>
+          <li data-stage="Booked"><span>Elm Street Dental</span><span class="pill">Booked</span></li>
+          <li data-stage="Lead"><span>Marlow Cycle Repair</span><span class="pill">Lead</span></li>
+          <li data-stage="Paid"><span>Tide Pool Books</span><span class="pill">Paid</span></li>
+          <li data-stage="Declined"><span>Quarry Lane Garage</span><span class="pill">Declined</span></li>
+        </ul>
+      </div>
+      <dl class="states">
+        <dt>Off</dt><dd><button type="button" class="chip" aria-pressed="false">Lead</button></dd>
+        <dt>On</dt><dd><button type="button" class="chip" aria-pressed="true">Lead</button></dd>
+        <dt>Focus</dt><dd><button type="button" class="chip focused" aria-pressed="false">Lead</button><button type="button" class="chip focused" aria-pressed="true">Lead</button></dd>
+        <dt>Disabled</dt><dd><button type="button" class="chip" aria-pressed="false" disabled>Lead</button><button type="button" class="chip" aria-pressed="true" disabled>Lead</button></dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;div class="cluster gap-2" role="group" aria-label="Stage"&gt;
+  &lt;button type="button" class="chip" aria-pressed="true"&gt;Lead&lt;/button&gt;
+  &lt;button type="button" class="chip" aria-pressed="false"&gt;Quoted&lt;/button&gt;
+  &lt;button type="button" class="chip" aria-pressed="false"&gt;Booked&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+    <p>Your script flips <code>aria-pressed</code> on click and filters the list. The CSS draws the rest.</p>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>A list can be narrowed by several values at once: stages, classes, grades.</li>
+        <li>There are few enough values to show them all, and the filter applies the moment a chip is pressed.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Only one value can be chosen. Use a <a class="link" href="choices.html">segmented control</a>.</li>
+        <li>You are showing a filter that is already applied and can be removed. Use a <a class="link" href="status.html">tag</a>.</li>
+        <li>The choice is sent with a form. Use checkboxes.</li>
+        <li>It is a setting, not a filter. Use a switch.</li>
+        <li>It only shows a status. Use a pill.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Layout and labels</h2>
+    <p>Chips wrap onto more rows on a narrow screen; they never scroll sideways, so every filter stays in view. The label is one or two words in sentence case, with no emoji and no count that changes the chip's width as you filter. With nothing pressed, show the whole list.</p>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li><b>A real button.</b> <code>&lt;button type="button"&gt;</code> with <code>aria-pressed="true"</code> or <code>"false"</code>, so Space and Enter toggle it and a screen reader says "pressed" or "not pressed".</li>
+      <li><b>Name the group.</b> Wrap the chips in <code>role="group"</code> with an <code>aria-label</code> or <code>aria-labelledby</code> that says what they filter.</li>
+      <li><b>Say what changed.</b> Put the result count in a <code>role="status"</code> element so the new count is announced after each press.</li>
+      <li>The on state is a fill and a contrast change, not hue alone. In forced colours it uses the system highlight.</li>
+      <li>32px tall with a pointer, 44px on touch. The focus ring is 2px, offset from the chip.</li>
+    </ul>
+  </section>
+</div>
+<script>
+  for (const demo of document.querySelectorAll('[data-chip-demo]')) {
+    const rows = [...demo.querySelectorAll('.rows li')];
+    const update = () => {
+      const on = [...demo.querySelectorAll('.chip[aria-pressed="true"]')].map((chip) => chip.dataset.stage);
+      let first = true;
+      for (const row of rows) {
+        row.hidden = on.length > 0 && !on.includes(row.dataset.stage);
+        row.classList.toggle('is-first', !row.hidden && first);
+        if (!row.hidden) first = false;
+      }
+      const shown = rows.filter((row) => !row.hidden).length;
+      demo.querySelector('.count').textContent = on.length ? `${shown} of ${rows.length} enquiries` : `All ${rows.length} enquiries`;
+    };
+    demo.addEventListener('click', (event) => {
+      const chip = event.target.closest('.chip');
+      if (!chip) return;
+      chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      update();
+    });
+    update();
+  }
+</script>
+</body>
+</html>

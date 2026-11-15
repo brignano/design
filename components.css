@@ -396,6 +396,57 @@
   }
 }
 
+/* ── Filter chip (issue 167) ───────────────────────────────────────────────────
+   <div class="cluster gap-2" role="group" aria-label="Stage">
+     <button type="button" class="chip" aria-pressed="true">Lead</button>
+     <button type="button" class="chip" aria-pressed="false">Quoted</button>
+   </div>
+   A toggle for a filterable list: any number can be on at once. The state
+   is aria-pressed, never a class; your script flips it and filters the
+   list. Off is the card ground with a control edge; on is the --i fill, the
+   same as a chosen .segmented option. One of a few is .segmented; a filter
+   already applied, with a remove button, is .tag. */
+@layer brignano.components {
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    margin: 0;
+    padding: 0 var(--s3);
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-control);
+    background-color: var(--card);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  }
+  .chip:hover:not(:disabled) { background-color: var(--surface-hover); }
+  .chip[aria-pressed='true'], .chip[aria-pressed='true']:hover:not(:disabled) { border-color: transparent; background-color: var(--i); color: var(--on-i); }
+  .chip:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .chip:disabled { border-color: var(--line); color: var(--i-disabled-ink); cursor: not-allowed; }
+  .chip[aria-pressed='true']:disabled { border-color: transparent; background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); }
+
+  @media (pointer: coarse) {
+    .chip { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .chip { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: CanvasText; }
+    .chip[aria-pressed='true'] { border-color: Highlight; background-color: Highlight; color: HighlightText; }
+    .chip:disabled, .chip[aria-pressed='true']:disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
+    .chip:focus-visible { outline-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chip { transition: none; }
+  }
+}
+
 /* ── Message and banner (#50) ─────────────────────────────────────────────
    <div class="msg msg-danger" role="alert">
      <svg aria-hidden="true" …></svg>

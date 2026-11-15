@@ -28,6 +28,7 @@
     ['buttons.html', 'Buttons & links'],
     ['fields.html', 'Text fields'],
     ['choices.html', 'Choices and switches'],
+    ['chips.html', 'Filter chip'],
     // Feedback
     ['feedback.html', 'Messages and banners'],
     ['status.html', 'Pills, badges and tags'],
