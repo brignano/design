@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41.33 24" width="41.33" height="24" role="img" aria-label="Anthony Brignano">
+  <!-- The A|B logo: Geist at 800, outlined, with the bar as a cursor in the
+       mark colour. A file used as an <img> can't read tokens.css, so the
+       colours repeat the ink and mark tokens in each theme; keep them in step.
+       Inline it from logo/paths.mjs instead when the page has tokens. -->
+  <style>
+    .ab { fill: rgb(17 17 20); } .bar { fill: rgb(180 116 31); }
+    @media (prefers-color-scheme: dark) { .ab { fill: rgb(242 242 244); } .bar { fill: rgb(224 164 79); } }
+  </style>
+  <path class="ab" d="M0 20.44 6.08 3.56H10.87L16.96 20.44H12.71L11.61 17.25H5.33L4.23 20.44ZM6.45 13.96H10.5L8.49 8.03ZM27.17 20.44V3.56H34Q37.18 3.56 38.9 4.67Q40.61 5.77 40.61 8.16Q40.61 9.2 40.21 9.95Q39.8 10.71 38.99 11.15Q38.19 11.6 37.04 11.71L37.03 11.72Q39.16 11.89 40.24 12.95Q41.33 14.01 41.33 15.78Q41.33 18.14 39.62 19.29Q37.92 20.44 34.76 20.44ZM31.31 17.18H34.51Q35.68 17.18 36.43 16.71Q37.17 16.23 37.17 15.25Q37.17 14.26 36.43 13.77Q35.7 13.27 34.51 13.27H31.31ZM31.31 10.44H33.85Q35.02 10.44 35.74 9.99Q36.46 9.53 36.46 8.64Q36.46 7.68 35.76 7.25Q35.05 6.82 33.85 6.82H31.31Z"/>
+  <path class="bar" d="M20.52 0h3.09v24h-3.09z"/>
+</svg>
