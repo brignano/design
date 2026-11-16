@@ -21,6 +21,7 @@
     "product-page.css",
     "templates/",
     "icons/",
+    "logo/",
     "scripts/fold.mjs",
     "scripts/email-tokens.mjs",
     "scripts/colour.mjs",
@@ -36,6 +37,7 @@
     "./product-page.css": "./product-page.css",
     "./templates/*": "./templates/*",
     "./icons/*": "./icons/*",
+    "./logo/*": "./logo/*",
     "./scripts/email-tokens.mjs": "./scripts/email-tokens.mjs"
   },
   "sideEffects": [

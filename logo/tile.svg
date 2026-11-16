@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" role="img" aria-label="Anthony Brignano">
+  <!-- The A|B logo in an ink tile: the favicon and app icon. One look in both
+       themes, like an app icon: an ink ground (n-900 light), light letters
+       (n-900 dark) and the dark-theme mark token, the one tuned for a dark
+       ground. Keep in step with tokens.css. -->
+  <rect width="24" height="24" rx="5.5" fill="rgb(17 17 20)"/>
+  <path d="M3 15.67 5.65 8.33H7.74L10.39 15.67H8.53L8.06 14.29H5.32L4.84 15.67ZM5.81 12.85H7.57L6.7 10.27ZM14.84 15.67V8.33H17.81Q19.2 8.33 19.94 8.81Q20.69 9.29 20.69 10.33Q20.69 10.78 20.51 11.11Q20.33 11.44 19.98 11.63Q19.63 11.82 19.13 11.87L19.13 11.88Q20.05 11.95 20.53 12.41Q21 12.87 21 13.65Q21 14.68 20.26 15.18Q19.51 15.67 18.14 15.67ZM16.64 14.26H18.03Q18.54 14.26 18.86 14.05Q19.19 13.84 19.19 13.41Q19.19 12.98 18.87 12.77Q18.55 12.55 18.03 12.55H16.64ZM16.64 11.32H17.74Q18.25 11.32 18.57 11.12Q18.88 10.93 18.88 10.53Q18.88 10.12 18.57 9.93Q18.27 9.74 17.74 9.74H16.64Z" fill="rgb(242 242 244)"/>
+  <path d="M11.94 6.77h1.35v10.45h-1.35z" fill="rgb(224 164 79)"/>
+</svg>
