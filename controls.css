@@ -1,0 +1,2251 @@
+/* controls.css — GENERATED from components.css by scripts/controls.mjs.
+   Do not edit: change components.css and run `npm run controls`.
+   The same components without the layout primitives (.container, .stack,
+   .cluster, .grid, .section, .divider, .gap-2 … .gap-6), for a site whose
+   utility framework already owns those names. DESIGN.md §14. */
+
+/* components.css — the shared controls and patterns every brignano surface
+   uses: buttons, fields, messages, pills, cards, dialogs and the rest.
+   DESIGN.md §14; the catalog and its order are in proposals/component-layer.md.
+
+     @import '@brignano/design/tokens.css';
+     @import '@brignano/design/components.css';
+
+   Rules for anything added here (ADR-0012):
+   - Everything sits in the `brignano.components` cascade layer, so a
+     consumer's own CSS and utilities win without !important.
+   - Short names: `.name`, `.name-variant`. State comes from real attributes
+     (disabled, aria-invalid, aria-current, aria-expanded, [open]), never from
+     a state class.
+   - Native first: <dialog>, popover, <details>. Where behaviour needs JS, the
+     component's preview page documents the ARIA contract; the consumer owns
+     the script.
+   - Tokens only. No hex, no colour that isn't a var() (npm run check).
+   - Every class here appears on a preview page, and every rule that sets both
+     a text colour and a background is contrast-checked in both themes. */
+
+@layer brignano.components;
+
+/* ── Button and link (#47) ────────────────────────────────────────────────
+   <button class="btn btn-primary">Save</button>
+   <a class="btn btn-secondary" href="…">Cancel</a>
+   Variants: .btn-primary (one per view), .btn-secondary (the default look of
+   a bare .btn), .btn-ghost, .btn-danger (the only non-cobalt fill). Sizes:
+   .btn-sm, default, .btn-lg. .btn-icon is square and needs aria-label;
+   .btn-block fills its row. Works the same on <button> and <a>.
+   State comes from attributes:
+   - disabled, or aria-disabled="true" on a link or a button that must stay
+     focusable: neutral --i-disabled-*, never opacity, no hover;
+   - aria-busy="true": the label hides behind a spinner and the button keeps
+     its width. Your script sets it and ignores clicks while it is set.
+   .link is the inline link for running text. */
+@layer brignano.components {
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s2);
+    min-height: 40px;
+    padding: 0 var(--s4);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    line-height: 20px;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--ink);
+    transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), scale var(--dur-fast) var(--ease);
+  }
+  /* Pressing a button answers the press (ADR-0015): it settles by 2%. Not on a
+     disabled or busy one, and tokens.css makes it instant under reduced motion. */
+  .btn:active:not(:disabled, [aria-disabled='true'], [aria-busy='true']) { scale: 0.98; }
+  @media (prefers-reduced-motion: reduce) {
+    .btn:active:not(:disabled, [aria-disabled='true'], [aria-busy='true']) { scale: none; }
+  }
+  .btn > svg { flex: none; width: 1.25em; height: 1.25em; }
+  .btn:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  .btn:hover, .btn-secondary:hover { background: var(--surface-hover); }
+  .btn:active, .btn-secondary:active { background: var(--surface-active); }
+  .btn-secondary { border-color: var(--line-control); background: transparent; color: var(--ink); }
+
+  .btn-primary { border-color: transparent; background: var(--i); color: var(--on-i); }
+  .btn-primary:hover { background: var(--i-hover); }
+  .btn-primary:active { background: var(--i-pressed); }
+
+  .btn-ghost { border-color: transparent; background: transparent; color: var(--i-ink); }
+  .btn-ghost:is(:hover, :active) { background: var(--i-surface); }
+
+  /* Danger has its own fills (--danger-fill…), not the state hue: in dark
+     --danger is a pale rust meant to be read, the button a deep one meant
+     to be pressed. Hover and press step darker, like the primary. */
+  .btn-danger { border-color: transparent; background: var(--danger-fill); color: var(--on-danger); }
+  .btn-danger:hover { background: var(--danger-fill-hover); }
+  .btn-danger:active { background: var(--danger-fill-pressed); }
+
+  .btn-sm { min-height: 32px; padding: 0 var(--s3); font-size: var(--text-xs); line-height: 16px; }
+  .btn-lg { min-height: 48px; padding: 0 var(--s5); font-size: var(--text-base); line-height: 24px; }
+  .btn-icon { aspect-ratio: 1; padding: 0; }
+  .btn-block { display: flex; width: 100%; }
+
+  /* Disabled: neutral, never opacity. Its low contrast is allowed only
+     because the control is really inactive (WCAG 1.4.3, DESIGN.md §4);
+     check.mjs exempts exactly this pair on :disabled / aria-disabled rules. */
+  .btn:is(:disabled, [aria-disabled='true']) {
+    border-color: transparent;
+    background: var(--i-disabled-bg);
+    color: var(--i-disabled-ink);
+    cursor: not-allowed;
+  }
+
+  /* Busy: the text goes transparent but keeps its box, so the width holds;
+     the spinner draws in the text colour. */
+  .btn[aria-busy='true'] { -webkit-text-fill-color: transparent; cursor: progress; pointer-events: none; }
+  .btn[aria-busy='true'] > * { visibility: hidden; }
+  .btn[aria-busy='true']::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 1em;
+    height: 1em;
+    margin: auto;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-spin 0.7s linear infinite;
+  }
+  /* Shared with .spinner (#59). */
+  @keyframes spinner-spin { to { transform: rotate(1turn); } }
+
+  .link { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; border-radius: 2px; }
+  .link:hover { color: var(--i-ink-hover); }
+  .link:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  @media (pointer: coarse) {
+    .btn:not(.btn-lg) { min-height: 44px; }
+    .btn-icon { min-width: 44px; }
+  }
+  /* Forced colours repaint the hidden label, so the busy button takes
+     system colours itself and the spinner draws on a clean face. */
+  @media (forced-colors: active) {
+    .btn[aria-busy='true'] { forced-color-adjust: none; background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+  }
+  /* Under reduced motion tokens.css stops the spin: a still arc, and
+     aria-busy still says the button is working. */
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+}
+
+/* ── Text field (#48) ─────────────────────────────────────────────────────
+   <div class="field">
+     <label for="email">Email <span class="field-optional">(optional)</span></label>
+     <input id="email" type="email" aria-describedby="email-hint email-error">
+     <p class="field-hint" id="email-hint">We only use it to reply.</p>
+     <p class="field-error" id="email-error"><svg …></svg>Enter an email like name@example.com</p>
+   </div>
+   The label sits above, never a placeholder in its place. Required fields
+   carry no star; mark the optional ones. Text-like <input>, <textarea> and a
+   native <select> are styled inside .field. State comes from attributes:
+   aria-invalid="true" turns the edge to --danger, disabled goes neutral.
+   .field-affix wraps a control with a prefix or suffix (a unit or an icon);
+   name the unit in the label too. When to validate is your script's call. */
+@layer brignano.components {
+  .field { display: grid; align-content: start; gap: 6px; min-width: 0; }
+  .field > label { font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-ui); color: var(--ink); }
+  .field-optional { font-weight: var(--weight-regular); color: var(--ink-soft); }
+  .field-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-ui); color: var(--ink-soft); }
+  .field-error { display: flex; gap: 6px; align-items: flex-start; margin: 0; font-size: var(--text-sm); line-height: var(--leading-ui); color: var(--danger-ink); }
+  .field-error > svg { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--danger); }
+  .field-error[hidden] { display: none; }
+
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select),
+  .field-affix {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 40px;
+    margin: 0;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-control);
+    background-color: var(--card);
+    color: var(--ink);
+    transition: border-color var(--dur-fast) var(--ease);
+  }
+  /* At least 16px, so phones don't zoom in on focus (the tool tier's base is 15px). */
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select) { padding: 7px 12px; font: max(1rem, var(--text-base)) / 24px var(--sans); }
+  .field textarea { min-height: 7em; resize: vertical; }
+  .field :is(input, textarea)::placeholder { color: var(--slate); opacity: 1; }
+
+  /* Native select, no custom dropdown: the chevron is two gradients in the
+     text colour, so it follows the theme and needs no image. */
+  .field select {
+    appearance: none;
+    padding-right: 36px;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 19px) 50%, calc(100% - 14px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+  /* Hover darkens the edge: --line-strong would drop it under 3:1 (DESIGN.md §4). */
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):hover, .field-affix:hover { border-color: var(--ink-soft); }
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  .field [aria-invalid='true'], .field [aria-invalid='true']:hover,
+  .field-affix:has([aria-invalid='true']) { border-color: var(--danger); background-color: var(--card); }
+
+  /* Disabled stays readable: a disabled field can still hold a value the
+     reader needs, so its text keeps the 4.5:1 floor. The edge goes, so it
+     no longer reads as something to type in. */
+  .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select):disabled,
+  .field-affix:has(:disabled) { border-color: transparent; background-color: var(--surface-hover); color: var(--ink-soft); cursor: not-allowed; }
+
+  /* Affix: the wrapper draws the edge and the focus ring; the control inside
+     goes bare. */
+  .field-affix { display: flex; align-items: center; gap: var(--s2); padding: 0 12px; font-size: max(1rem, var(--text-base)); color: var(--ink-soft); }
+  .field-affix > svg { flex: none; width: 18px; height: 18px; }
+  .field .field-affix > :is(input, select) {
+    flex: 1;
+    width: auto;
+    min-height: 38px;
+    padding: 7px 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--ink);
+    outline: 0;
+  }
+  .field .field-affix > :disabled { color: var(--ink-soft); }
+  .field .field-affix > select { padding-right: 24px; background-position: calc(100% - 7px) 50%, calc(100% - 2px) 50%; }
+  .field-affix:has(:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  @media (pointer: coarse) {
+    .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), select), .field-affix { min-height: 44px; }
+    .field .field-affix > :is(input, select) { min-height: 42px; }
+  }
+  /* Forced colours drop the gradient chevron: give the select its native arrow back. */
+  @media (forced-colors: active) {
+    .field select { appearance: auto; background-image: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .field :is(input:where(:not([type='checkbox'], [type='radio'], [type='range'], [type='color'], [type='file'], [type='hidden'], [type='submit'], [type='button'], [type='reset'], [type='image'])), textarea, select), .field-affix { transition: none; }
+  }
+}
+
+/* ── Checkbox, radio, switch, segmented control (#49) ─────────────────────
+   <fieldset class="choice-group">
+     <legend>Notify me</legend>
+     <label class="choice"><input type="checkbox" name="n" value="email"><span>By email</span></label>
+     <div class="choice">
+       <input type="radio" id="ship-fast" name="ship" aria-describedby="ship-fast-hint">
+       <label for="ship-fast">Express</label>
+       <p class="choice-hint" id="ship-fast-hint">Two working days.</p>
+     </div>
+   </fieldset>
+   Inside .choice, checkboxes and radios are drawn from tokens (issue 118): an
+   --line-control box on --card, filled --i with an --on-i mark when
+   checked, a dash when indeterminate. The tick is the row's ::before laid
+   over the box, because an <input> can't reliably hold a pseudo-element.
+   Outside .choice they stay native and take accent-color (DESIGN.md §4). .switch goes on <input type="checkbox" role="switch">,
+   only for a setting that applies at once; a form you submit uses a
+   checkbox. .segmented is a row of radios drawn as one control: keep the
+   real radios inside it, so arrow keys and the group name come for free. */
+@layer brignano.components {
+  .choice-group { display: grid; gap: var(--s2); min-width: 0; margin: 0; padding: 0; border: 0; }
+  .choice-group > legend { margin: 0 0 6px; padding: 0; font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: var(--leading-ui); color: var(--ink); }
+
+  .choice { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s2); align-items: start; line-height: 1.5; color: var(--ink); cursor: pointer; }
+  .choice > input { grid-column: 1; font: inherit; cursor: inherit; }
+  .choice > input:not(.switch) { width: 18px; height: 18px; margin: calc((1.5em - 18px) / 2) 0 0; }
+  .choice > input:is([type='checkbox'], [type='radio']):not(.switch) {
+    appearance: none;
+    box-sizing: border-box;
+    grid-area: 1 / 1;
+    flex: none;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--card);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .choice > input[type='radio']:not(.switch) { border-radius: 50%; } /* (0,3,1), after the base rule */
+  .choice > input:is([type='checkbox'], [type='radio']):not(.switch):not(:disabled):hover { border-color: var(--ink-soft); }
+  .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch) {
+    border-color: transparent;
+    background-color: var(--i);
+    color: var(--on-i);
+  }
+  .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch):not(:disabled):hover { background-color: var(--i-hover); }
+  .choice > input[type='radio']:checked { background-image: radial-gradient(circle, currentColor 0 3.5px, transparent 4px); }
+  .choice > input[type='checkbox']:indeterminate { background-image: linear-gradient(currentColor, currentColor); background-size: 10px 2px; }
+  .choice > input:is([type='checkbox'], [type='radio']):not(.switch):disabled { border-color: transparent; background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); cursor: not-allowed; }
+  /* The tick: the row's ::before sits in the box's grid cell, masked to a check. */
+  .choice:has(> input[type='checkbox']:checked:not(:indeterminate, .switch))::before {
+    content: '';
+    grid-area: 1 / 1;
+    width: 18px;
+    height: 18px;
+    margin: calc((1.5em - 18px) / 2) 0 0;
+    background-color: var(--on-i);
+    pointer-events: none;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9.5l3 3 6-7' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9.5l3 3 6-7' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+  }
+  .choice:has(> input[type='checkbox']:checked:disabled)::before { background-color: var(--i-disabled-ink); }
+  .choice > :not(input) { grid-column: 2; }
+  .choice > label { cursor: inherit; }
+  .choice-hint { margin: 0; font-size: var(--text-sm); line-height: var(--leading-ui); color: var(--ink-soft); }
+  .choice > input:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .choice:has(> input:disabled) { color: var(--i-disabled-ink); cursor: not-allowed; }
+
+  /* Switch: track and knob drawn on the input itself. The knob is a radial
+     gradient in the text colour, so on and off read by its position, not
+     by colour alone. */
+  .switch {
+    appearance: none;
+    box-sizing: border-box;
+    flex: none;
+    width: 40px;
+    height: 24px;
+    margin: 0;
+    border: 1px solid var(--line-control);
+    border-radius: 999px;
+    background-color: var(--card);
+    background-image: radial-gradient(circle, currentColor 0 7px, transparent 7.5px);
+    background-size: 22px 22px;
+    background-position: 0 50%;
+    background-repeat: no-repeat;
+    color: var(--ink-soft);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-position var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  }
+  .switch:checked { border-color: transparent; background-color: var(--i); background-position: 100% 50%; color: var(--on-i); }
+  .switch:not(:disabled):hover { border-color: var(--ink-soft); }
+  .switch:checked:not(:disabled):hover { border-color: transparent; background-color: var(--i-hover); }
+  .switch:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .switch:disabled { border-color: transparent; background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); cursor: not-allowed; }
+  /* In a .choice row the switch sits in the first column like a checkbox. */
+  .choice > .switch { margin: calc((1.5em - 24px) / 2) 0 0; }
+
+  /* Segmented: a track with the chosen option filled. The radio stays in
+     the tab order but out of sight; its label is the visible segment. */
+  .segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 2px;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-control);
+    background-color: var(--card);
+  }
+  .segmented > label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 var(--s3);
+    border-radius: calc(var(--radius-control) - 3px);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    line-height: 20px;
+    color: var(--ink);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .segmented > label > input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+  .segmented > label:not(:has(:disabled)):hover { background-color: var(--surface-hover); }
+  .segmented > label:has(:checked), .segmented > label:has(:checked):hover { background-color: var(--i); color: var(--on-i); }
+  .segmented > label:has(:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .segmented > label:has(:disabled) { color: var(--i-disabled-ink); cursor: not-allowed; }
+  .segmented > label:has(:checked:disabled) { background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); }
+
+  @media (pointer: coarse) {
+    .choice { min-height: 44px; align-content: center; }
+    .segmented > label { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .switch { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: CanvasText; }
+    .switch:checked { border-color: Highlight; background-color: Highlight; color: HighlightText; }
+    .switch:disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
+    .choice > input:is([type='checkbox'], [type='radio']):not(.switch) { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: HighlightText; }
+    .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch) { border-color: Highlight; background-color: Highlight; }
+    .choice > input:is([type='checkbox'], [type='radio']):not(.switch):disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
+    .choice:has(> input[type='checkbox']:checked:not(:indeterminate, .switch))::before { forced-color-adjust: none; background-color: HighlightText; }
+    .choice:has(> input[type='checkbox']:checked:disabled)::before { background-color: GrayText; }
+    /* Hover and focus keep system colours too (forced-color-adjust: none stops the browser doing it). */
+    .choice > input:is([type='checkbox'], [type='radio']):not(.switch):not(:disabled):hover { border-color: CanvasText; }
+    .choice > input:is([type='checkbox']:is(:checked, :indeterminate), [type='radio']:checked):not(.switch):not(:disabled):hover { border-color: Highlight; background-color: Highlight; }
+    .choice > input:focus-visible, .switch:focus-visible { outline-color: CanvasText; }
+    .switch:not(:disabled):hover { border-color: CanvasText; }
+    .switch:checked:not(:disabled):hover { border-color: Highlight; background-color: Highlight; }
+    .segmented > label { forced-color-adjust: none; color: CanvasText; }
+    .segmented > label:has(:checked) { background-color: Highlight; color: HighlightText; }
+    .segmented > label:has(:disabled) { color: GrayText; }
+    .segmented > label:has(:focus-visible) { outline-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .switch, .segmented > label { transition: none; }
+  }
+}
+
+/* ── Filter chip (issue 167) ───────────────────────────────────────────────────
+   <div class="cluster gap-2" role="group" aria-label="Stage">
+     <button type="button" class="chip" aria-pressed="true">Lead</button>
+     <button type="button" class="chip" aria-pressed="false">Quoted</button>
+   </div>
+   A toggle for a filterable list: any number can be on at once. The state
+   is aria-pressed, never a class; your script flips it and filters the
+   list. Off is the card ground with a control edge; on is the --i fill, the
+   same as a chosen .segmented option. One of a few is .segmented; a filter
+   already applied, with a remove button, is .tag. */
+@layer brignano.components {
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    margin: 0;
+    padding: 0 var(--s3);
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-control);
+    background-color: var(--card);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  }
+  .chip:hover:not(:disabled) { background-color: var(--surface-hover); }
+  .chip[aria-pressed='true'], .chip[aria-pressed='true']:hover:not(:disabled) { border-color: transparent; background-color: var(--i); color: var(--on-i); }
+  .chip:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .chip:disabled { border-color: var(--line); color: var(--i-disabled-ink); cursor: not-allowed; }
+  .chip[aria-pressed='true']:disabled { border-color: transparent; background-color: var(--i-disabled-bg); color: var(--i-disabled-ink); }
+
+  @media (pointer: coarse) {
+    .chip { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .chip { forced-color-adjust: none; border-color: CanvasText; background-color: Canvas; color: CanvasText; }
+    .chip[aria-pressed='true'] { border-color: Highlight; background-color: Highlight; color: HighlightText; }
+    .chip:disabled, .chip[aria-pressed='true']:disabled { border-color: GrayText; background-color: Canvas; color: GrayText; }
+    .chip:focus-visible { outline-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chip { transition: none; }
+  }
+}
+
+/* ── Message and banner (#50) ─────────────────────────────────────────────
+   <div class="msg msg-danger" role="alert">
+     <svg aria-hidden="true" …></svg>
+     <div class="msg-content">
+       <p class="msg-title">Couldn't reach WakaTime</p>
+       <p class="msg-body">Showing the last cached week.</p>
+       <div class="msg-actions"><button class="btn btn-sm">Try again</button></div>
+     </div>
+     <button class="btn btn-ghost btn-icon btn-sm msg-close" aria-label="Dismiss">…</button>
+   </div>
+   Kinds: .msg-info (neutral, cobalt icon: not a fourth hue; a bare .msg
+   looks the same), .msg-success,
+   .msg-attention, .msg-danger. Every kind carries an icon and words, never
+   colour alone. role="status" for info and success, role="alert" for
+   danger, and for attention when it needs action now. .banner is the same
+   message as a full-width strip above the site header, .banner-info and the
+   rest. The icon slot takes any inline SVG; dismissing is your script. */
+@layer brignano.components {
+  .msg {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+  }
+  .msg > svg, .banner > svg { flex: none; width: 16px; height: 16px; margin-top: 2px; color: var(--i); }
+  .msg-content { display: grid; gap: 2px; flex: 1; min-width: 0; }
+  .msg-title { margin: 0; font-weight: var(--weight-semibold); }
+  .msg-body { margin: 0; color: var(--ink-soft); }
+  .msg-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s2); }
+  /* An outlined button's --line-control edge is under 3:1 on a status wash,
+     so in a message it sits on its own --card fill. Zero-specificity
+     :where() keeps hover, pressed and disabled winning. */
+  :where(.msg-actions) > .btn:where(:not(.btn-primary, .btn-danger, .btn-ghost)) { background-color: var(--card); }
+  .msg-close { flex: none; margin: -6px -8px -6px 0; color: var(--ink-soft); }
+
+  /* Banner: the same parts in a strip, edge to edge, above the header. */
+  .banner {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px var(--s4);
+    border: 0;
+    border-bottom: 1px solid var(--line-strong);
+    background-color: var(--surface-hover);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+  }
+  /* The wash alone marks the box. Its -line token is under 3:1 on the wash,
+     so it can't be the edge (DESIGN.md §4); the border stays, transparent,
+     so every kind is the same size. */
+  .msg-success, .banner-success { border-color: transparent; background-color: var(--success-surface); color: var(--ink); }
+  .msg-attention, .banner-attention { border-color: transparent; background-color: var(--attention-surface); color: var(--ink); }
+  .msg-danger, .banner-danger { border-color: transparent; background-color: var(--danger-surface); color: var(--ink); }
+  :is(.msg-info, .banner-info) > svg { color: var(--i); }
+  :is(.msg-success, .banner-success) > svg { color: var(--success); }
+  :is(.msg-attention, .banner-attention) > svg { color: var(--attention); }
+  :is(.msg-danger, .banner-danger) > svg { color: var(--danger); }
+
+  .banner .msg-content { display: flex; flex-wrap: wrap; column-gap: var(--s2); align-items: baseline; }
+  .banner .msg-actions { margin: 0; }
+}
+
+/* ── Pill, badge and tag (#51) ────────────────────────────────────────────
+   <span class="pill pill-success">Booked</span>
+   <button class="btn btn-ghost btn-icon" aria-label="Notifications, 3 unread">
+     <svg …></svg><span class="badge" aria-hidden="true">3</span>
+   </button>
+   <span class="tag">Kayak<button type="button" class="tag-remove" aria-label="Remove Kayak"><svg …></svg></button></span>
+   .pill is a status label: neutral by default; .pill-success, -attention,
+   -danger and -info add a dot and their wash. Status always carries a word,
+   and categories stay neutral (no new hues). Domain names (booked, overdue)
+   belong to the consumer: map them onto these kinds. .badge is a count on
+   an icon button; put the count in the button's name too. .tag is a
+   removable filter chip; your script removes it. */
+@layer brignano.components {
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background-color: var(--surface-hover);
+    color: var(--ink-soft);
+    font-family: var(--mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    line-height: 16px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .pill-success { background-color: var(--success-surface); color: var(--success-ink); }
+  .pill-attention { background-color: var(--attention-surface); color: var(--attention-ink); }
+  .pill-danger { background-color: var(--danger-surface); color: var(--danger-ink); }
+  .pill-info { background-color: var(--info-surface); color: var(--info-ink); }
+  :is(.pill-success, .pill-attention, .pill-danger, .pill-info)::before {
+    content: '';
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+  .pill-success::before { background-color: var(--success); }
+  .pill-attention::before { background-color: var(--attention); }
+  .pill-danger::before { background-color: var(--danger); }
+  .pill-info::before { background-color: var(--info); }
+
+  /* Badge: a count pinned to the corner of an icon button (.btn is
+     position: relative). The ring in the card colour lifts it off the icon. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background-color: var(--i);
+    color: var(--on-i);
+    font-size: 11px;
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .btn > .badge { position: absolute; top: -6px; right: -6px; box-shadow: 0 0 0 2px var(--card); }
+
+  /* Tag: a filter chip with a remove button. The button is 24px, and 44px
+     of hit area on touch through an invisible ::before. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 28px;
+    padding: 0 2px 0 10px;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-sm);
+    background-color: var(--card);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    line-height: 20px;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .tag-remove {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: calc(var(--radius-sm) - 2px);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .tag-remove > svg { width: 14px; height: 14px; }
+  .tag-remove:hover { background-color: var(--surface-hover); color: var(--ink); }
+  .tag-remove:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  @media (pointer: coarse) {
+    .tag-remove::before { content: ''; position: absolute; inset: -10px; }
+  }
+  @media (forced-colors: active) {
+    :is(.pill-success, .pill-attention, .pill-danger, .pill-info)::before { background-color: CanvasText; }
+    .pill, .badge { border-color: CanvasText; }
+  }
+}
+
+/* ── Card (#52) ───────────────────────────────────────────────────────────
+   <article class="card card-link">
+     <div class="card-media"><img src="…" alt=""></div>
+     <header class="card-header">
+       <h3 class="card-title"><a href="/trips/lisbon">Lisbon, 4 days</a></h3>
+       <p class="card-meta">12–15 Mar · 2 people</p>
+     </header>
+     <div class="card-body"><p>…</p></div>
+     <footer class="card-footer"><span class="pill pill-success">Booked</span></footer>
+   </article>
+   .card is a static surface; every part is optional. .card-link makes the
+   whole card one target through the title link's ::after (a stretched
+   link), so the markup stays a heading and a link, not a link wrapped
+   round blocks. One focus ring goes round the card. Other buttons and
+   links inside a .card-link still work: they sit above the stretched area.
+   .card-media goes first and runs edge to edge. No cards inside cards.
+   .card-media.card-stage is for a drawing of a product (data-mark on the
+   card picks its hue): <div class="card-media card-stage"><svg …></div>. */
+@layer brignano.components {
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    min-width: 0;
+    padding: var(--s5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+  }
+  .card-media { margin: calc(-1 * var(--s5)) calc(-1 * var(--s5)) 0; }
+  .card-media > :is(img, video, picture, svg) { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  /* Stage (ADR-0018): a product's drawing on a faint field of its mark, the
+     same 8% mix as --pp-stage on its product page, so the card and the page
+     match. data-mark on the card or an ancestor picks the hue; with none it
+     is the family amber. The drawing is padded and contained, never cropped,
+     and the box stays 16:9. Only on a card that stands for a product. */
+  .card-stage { background-color: color-mix(in srgb, var(--mark-current) 8%, transparent); }
+  .card-stage > :is(img, video, picture, svg) { box-sizing: border-box; padding: var(--s5); object-fit: contain; }
+  .card-header { display: grid; gap: var(--s1); }
+  .card-title { margin: 0; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-title); letter-spacing: var(--tracking-title); }
+  .card-title a { color: inherit; text-decoration: none; }
+  .card-meta { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
+  .card-body { color: var(--ink-soft); }
+  .card-body > :first-child { margin-top: 0; }
+  .card-body > :last-child { margin-bottom: 0; }
+  .card-footer { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: auto; }
+
+  /* Link card: the title link stretches over the card. */
+  .card-link { transition: background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+  .card-link .card-title a::after { content: ''; position: absolute; inset: 0; z-index: 0; }
+  /* Zero-specificity so components that position their own parts (for example .segmented) still win. */
+  :where(.card-link :is(a, button, input, select, textarea, label):not(.card-title a)) { position: relative; z-index: var(--z-raised); }
+  .card-link:hover { background-color: var(--surface-hover); box-shadow: var(--shadow-2); }
+  .card-link:hover .card-title a { text-decoration: underline; text-underline-offset: 3px; }
+  /* The ring moves to the card only where :has() works; elsewhere the link keeps its own ring. */
+  .card-link:has(.card-title a:focus-visible) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .card-link:has(.card-title a:focus-visible) .card-title a { outline: none; }
+
+  @media (forced-colors: active) {
+    .card { border-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-link { transition: none; }
+  }
+}
+
+/* ── Icon (#87) ────────────────────────────────────────────────────────────
+   <svg class="icon" aria-hidden="true">…</svg>   paste from icons/<name>.svg
+   One curated set (Lucide, ISC: icons/LICENSE), drawn on a 24px grid at a
+   2px stroke in currentColor, so an icon takes its text's colour. Sizes
+   follow the type scale at 1.25× the text they sit beside, the same ratio
+   .btn gives an svg: .icon-sm beside --text-sm, .icon beside body text,
+   .icon-lg beside --text-lg. Decorative icons take aria-hidden="true"; an
+   icon alone in a button needs the button's aria-label. A state icon never
+   stands in for its word (DESIGN.md §3). */
+@layer brignano.components {
+  .icon {
+    flex: none;
+    display: inline-block;
+    width: calc(var(--text-base) * 1.25);
+    height: calc(var(--text-base) * 1.25);
+    vertical-align: -0.25em;
+  }
+  .icon-sm { width: calc(var(--text-sm) * 1.25); height: calc(var(--text-sm) * 1.25); }
+  .icon-lg { width: calc(var(--text-lg) * 1.25); height: calc(var(--text-lg) * 1.25); }
+}
+
+/* ── Site header, nav and footer (#54) ────────────────────────────────────
+   <a class="skip-link" href="#main">Skip to content</a>
+   <header class="site-header">
+     <div class="site-header-inner container container-wide">
+       <a class="site-brand" href="/">…</a>
+       <nav class="site-nav" id="site-menu" popover aria-label="Main">
+         <button type="button" class="btn btn-ghost btn-icon site-menu-close"
+                 popovertarget="site-menu" popovertargetaction="hide"
+                 aria-label="Close menu" autofocus>…</button>
+         <ul><li><a href="/" aria-current="page">Home</a></li>…</ul>
+       </nav>
+       <div class="site-actions">…</div>
+       <button type="button" class="btn btn-ghost btn-icon site-menu-button"
+               popovertarget="site-menu" aria-label="Menu">…</button>
+     </div>
+   </header>
+   - The header is sticky on --surface-sticky with an 8px blur (DESIGN.md §6).
+     One header for both tiers; the marketing tier only makes it taller.
+   - The nav is a popover. Wide, it is shown inline and the popover is never
+     opened. When the header is narrower than 45rem the links hide behind the
+     menu button, which opens the nav as a sheet from the top, with no script:
+     Esc or a click outside closes it, the autofocus close button takes focus
+     when it opens, and focus goes back to the menu button when it closes.
+   - aria-current="page" marks the current link: ink text, a cobalt underline.
+   - .site-footer: .site-footer-columns of link lists, each under a
+     .site-footer-heading, then .site-footer-legal and .site-footer-small. */
+@layer brignano.components {
+  .skip-link {
+    position: absolute;
+    top: var(--s3);
+    left: var(--s4);
+    z-index: var(--z-skip);
+    padding: var(--s2) var(--s3);
+    border-radius: var(--radius-sm);
+    background-color: var(--card);
+    color: var(--ink);
+    font-weight: var(--weight-medium);
+    box-shadow: var(--shadow-2);
+    transform: translateY(calc(-100% - var(--s5)));
+  }
+  .skip-link:focus { transform: none; outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  .site-header {
+    container: site-header / inline-size;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    border-bottom: 1px solid var(--line);
+    background-color: var(--surface-sticky);
+    color: var(--ink);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .site-header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--s4);
+    min-height: 56px;
+  }
+  .tier-marketing .site-header-inner { min-height: 72px; gap: var(--s5); }
+
+  .site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s2);
+    min-height: 40px;
+    margin-inline-end: auto; /* pushes the nav and actions to the end */
+    color: var(--ink);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-lg);
+    letter-spacing: var(--tracking-title);
+    text-decoration: none;
+  }
+  .site-brand > :is(img, svg) { flex: none; width: 24px; height: 24px; }
+  /* The glyph takes the product's mark (ADR-0014); the name beside it stays ink. */
+  .site-brand > svg { color: var(--mark-current); }
+
+  /* Wide: the popover is shown in the flow, never opened. */
+  .site-nav[popover] {
+    display: block;
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    background: none;
+    color: inherit;
+  }
+  .site-nav ul { display: flex; align-items: center; gap: var(--s1); margin: 0; padding: 0; list-style: none; }
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 var(--s3);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+  }
+  .site-nav a:hover { color: var(--ink); }
+  .site-nav a[aria-current='page'] {
+    color: var(--ink);
+    text-decoration: underline 2px var(--i);
+    text-underline-offset: 6px;
+  }
+  .site-nav a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+
+  .site-actions { display: flex; align-items: center; gap: var(--s2); }
+  .site-menu-button, .site-menu-close { display: none; }
+
+  /* Narrow: the links move into a sheet behind the menu button. */
+  @container site-header (max-width: 45rem) {
+    .site-header .site-header-inner { gap: var(--s2); } /* beats the marketing gap */
+    .site-brand { min-width: 0; }
+    .site-menu-button { display: inline-flex; }
+    .site-nav[popover]:not(:popover-open) { display: none; }
+  }
+
+  /* The open sheet, at any width, so it stays usable if the header widens
+     while it is open (a rotated tablet, a resized window). */
+  .site-nav[popover]:popover-open {
+    position: fixed;
+    inset: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+    width: 100%;
+    max-height: 100dvh;
+    box-sizing: border-box;
+    padding: var(--s3) var(--s4) var(--s5);
+    overflow-y: auto;
+    border-bottom: 1px solid var(--line);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-3);
+  }
+  .site-nav[popover]::backdrop { background-color: var(--scrim); }
+  .site-nav:popover-open .site-menu-close { display: inline-flex; align-self: flex-end; }
+  .site-nav:popover-open ul { flex-direction: column; align-items: stretch; }
+  .site-nav:popover-open a { width: 100%; min-height: 44px; font-size: var(--text-base); }
+
+  @media (pointer: coarse) {
+    .site-nav a { min-height: 44px; }
+  }
+
+  .site-footer {
+    padding-block: var(--s6) var(--s7);
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: var(--text-sm);
+  }
+  .site-footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    gap: var(--s5);
+  }
+  .site-footer-heading { margin: 0 0 var(--s2); color: var(--ink); font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+  .site-footer ul { display: grid; gap: var(--s1); margin: 0; padding: 0; list-style: none; }
+  .site-footer a { color: var(--ink-soft); text-decoration: none; }
+  .site-footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .site-footer ul a { display: inline-flex; align-items: center; min-height: 28px; }
+  .site-footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s2) var(--s4);
+    margin: var(--s6) 0 0;
+    padding-top: var(--s4);
+    border-top: 1px solid var(--line-soft);
+  }
+  .site-footer-small { margin: var(--s2) 0 0; font-size: var(--text-xs); }
+
+  @media (pointer: coarse) {
+    .site-footer ul a { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .site-header { border-bottom-color: CanvasText; }
+    .site-nav a[aria-current='page'] { text-decoration-color: CanvasText; }
+    .site-nav[popover]:popover-open { border: 1px solid CanvasText; }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .site-header { background-color: var(--card); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
+}
+
+/* ── Dialog and sheet (#55) ───────────────────────────────────────────────
+   <dialog class="dialog" id="rename" aria-labelledby="rename-title">
+     <div class="dialog-header">
+       <h2 class="dialog-title" id="rename-title">Rename trip</h2>
+       <form method="dialog"><button class="btn btn-ghost btn-icon btn-sm dialog-close" aria-label="Close">…</button></form>
+     </div>
+     <div class="dialog-body">…</div>
+     <div class="dialog-footer">…actions, primary last…</div>
+   </dialog>
+   Open it with dialog.showModal(), or with no script at all where
+   <button commandfor="rename" command="show-modal"> is supported. Native
+   <dialog> only: the browser traps focus, Esc closes it, and focus goes back
+   to the opener. Never open a dialog on top of a dialog. Use <div>s for the
+   header and footer: a <header> or <footer> inside a dialog reads as the
+   page's banner or footer landmark.
+   - .dialog-confirm: a narrow confirm. The destructive button names the
+     action ("Delete trip"), never "OK".
+   - .sheet (with .dialog): slides in from the right on a wide screen and up
+     from the bottom on a phone.
+   - Open and close: a fade and a short slide over --dur-fast, from the
+     edge a sheet comes from (ADR-0013), for modal dialogs only: one that is
+     open in the markup renders still. Only opacity and transform move, and
+     the open state is always fully shown, so a browser without
+     @starting-style just shows it at once. Instant under
+     prefers-reduced-motion. */
+@layer brignano.components {
+  .dialog {
+    box-sizing: border-box;
+    width: min(100% - 2 * var(--s4), 32rem);
+    max-width: none;
+    max-height: min(100dvh - 2 * var(--s4), 44rem);
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-3);
+    flex-direction: column; /* here, not on [open], so it holds while closing */
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  /* display only while open, so the UA's display: none still hides it closed. */
+  .dialog[open] { display: flex; opacity: 1; transform: none; }
+  @starting-style {
+    .dialog:modal { opacity: 0; transform: translateY(8px); }
+  }
+  .dialog::backdrop {
+    background-color: var(--scrim);
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease);
+  }
+  .dialog[open]::backdrop { opacity: 1; }
+  @starting-style {
+    .dialog:modal::backdrop { opacity: 0; }
+  }
+  /* Closing animates only where the dialog can stay in the top layer while it
+     fades (overlay). Elsewhere it would drop into the page flow, so it closes
+     at once. */
+  @supports (overlay: auto) {
+    .dialog {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        transform var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
+    .dialog::backdrop {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
+  }
+
+  .dialog-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s3);
+    padding: var(--s5) var(--s5) 0;
+  }
+  .dialog-title { margin: 0; padding-top: 2px; font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-ui); }
+  .dialog-header > form { display: contents; }
+  .dialog-close { flex: none; margin: -6px -8px 0 auto; }
+  .dialog-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: var(--s3) var(--s5);
+    overflow-y: auto;
+    color: var(--ink-soft);
+  }
+  .dialog-body > :first-child { margin-top: 0; }
+  .dialog-body > :last-child { margin-bottom: 0; }
+  .dialog-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--s2);
+    padding: var(--s4) var(--s5) var(--s5);
+  }
+  .dialog-footer > form { display: contents; }
+
+  .dialog-confirm { width: min(100% - 2 * var(--s4), 26rem); }
+
+  /* Sheet: from the right on a wide screen. */
+  .sheet {
+    width: min(100%, 28rem);
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0 0 0 auto;
+    border-width: 0 0 0 1px;
+    border-radius: 0;
+    opacity: 1;
+    transform: translateX(100%);
+  }
+  .sheet[open] { transform: none; }
+  @starting-style {
+    .sheet:modal { opacity: 1; transform: translateX(100%); }
+  }
+
+  /* Phone: dialogs fill the width; a sheet comes up from the bottom. */
+  @media (max-width: 40rem) {
+    /* The forms are display: contents, so their buttons are flex items too. */
+    .dialog-footer > .btn, .dialog-footer > form > .btn { flex: 1 1 auto; }
+    .sheet {
+      width: 100%;
+      height: fit-content; /* auto would stretch between inset 0 and 0 */
+      max-height: 85dvh;
+      margin: auto 0 0;
+      border-width: 1px 0 0;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+    }
+    @starting-style {
+      .sheet:modal { transform: translateY(100%); }
+    }
+  }
+
+  @media (forced-colors: active) {
+    .dialog { border-color: CanvasText; }
+  }
+  /* tokens.css stops transitions for *, ::before and ::after, not ::backdrop. */
+  @media (prefers-reduced-motion: reduce) {
+    .dialog, .dialog::backdrop { transition: none; transform: none; }
+  }
+}
+
+/* ── Popover and menu (#56) ───────────────────────────────────────────────
+   <button class="btn" popovertarget="trip-menu">Trip</button>
+   <div class="popover" id="trip-menu" popover>
+     <div class="menu">
+       <button class="menu-item">Rename</button>
+       <a class="menu-item" href="…">Open itinerary</a>
+       <hr class="menu-separator">
+       <button class="menu-item menu-item-danger">Delete trip</button>
+     </div>
+   </div>
+   The popover attribute (popover="auto") gives light dismiss: Esc or a click
+   outside closes it, and opening another one closes this one. Content of any
+   kind can sit in a .popover; .menu is for a list of actions or links.
+   - Position: below the button that opened it, lined up with its start edge,
+     with CSS anchor positioning. The opener is the anchor when it opens the
+     popover with popovertarget (or commandfor); otherwise set anchor-name on
+     the opener and position-anchor on the popover. Flips above or to the other
+     side when there's no room. Without anchor positioning, set --popover-top
+     and --popover-left from the opener's box on the toggle event (the preview
+     page has the four lines); with neither, the browser centres it.
+   - Menu items are <button> or <a>, never a <div>. .menu-item-danger is for
+     the destructive action, last and after a separator. .menu-item-hint
+     holds a shortcut or count at the end of the row.
+   - ARIA: without a script, leave roles off. The items are plain buttons and
+     links that Tab moves through, which needs nothing more. role="menu" and
+     role="menuitem" promise arrow keys, Home/End and focus moving into the
+     menu on open, so add them only with a script that does all of that.
+   - Open and close: a fade and a 4px slide over --dur-fast (ADR-0013).
+     Instant under prefers-reduced-motion. */
+@layer brignano.components {
+  .popover {
+    box-sizing: border-box;
+    min-width: 12rem;
+    max-width: min(100vw - 2 * var(--s4), 22rem);
+    max-height: min(100dvh - 2 * var(--s4), 28rem);
+    padding: var(--s3);
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  /* Hidden state on :not(:popover-open), so a browser without popover
+     support shows the content rather than an invisible, focusable box. */
+  .popover:not(:popover-open) { opacity: 0; transform: translateY(-4px); }
+  @starting-style {
+    .popover:popover-open { opacity: 0; transform: translateY(-4px); }
+  }
+  @supports (overlay: auto) {
+    .popover {
+      transition:
+        opacity var(--dur-fast) var(--ease),
+        transform var(--dur-fast) var(--ease),
+        overlay var(--dur-fast) allow-discrete,
+        display var(--dur-fast) allow-discrete;
+    }
+  }
+  .popover:has(> .menu) { padding: var(--s1); }
+
+  @supports (position-area: block-end) {
+    .popover {
+      inset: auto;
+      margin: var(--s1) 0;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+    }
+  }
+  @supports not (position-area: block-end) {
+    .popover[style*='--popover-top'] {
+      inset: var(--popover-top) auto auto var(--popover-left);
+      margin: var(--s1) 0 0;
+    }
+  }
+
+  .menu { display: flex; flex-direction: column; gap: 1px; }
+  .menu-item {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: var(--s2);
+    width: 100%;
+    min-height: 36px;
+    padding: var(--s2) var(--s3);
+    border: 0;
+    border-radius: var(--radius-control);
+    background-color: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    line-height: var(--leading-ui);
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .menu-item > svg { flex: none; width: 16px; height: 16px; color: var(--ink-soft); }
+  .menu-item:hover, .menu-item:focus-visible { background-color: var(--surface-hover); color: var(--ink); }
+  .menu-item:active { background-color: var(--surface-active); color: var(--ink); }
+  .menu-item:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .menu-item-hint { margin-inline-start: auto; padding-inline-start: var(--s3); color: var(--ink-soft); font-size: var(--text-xs); }
+  .menu-item-danger, .menu-item-danger > svg { color: var(--danger-ink); }
+  .menu-item-danger:is(:hover, :focus-visible, :active) { background-color: var(--danger-surface); color: var(--danger-ink); }
+  .menu-item:is(:disabled, [aria-disabled='true']) { background-color: transparent; color: var(--i-disabled-ink); cursor: not-allowed; }
+  .menu-item:is(:disabled, [aria-disabled='true']) > svg { color: inherit; }
+  .menu-separator {
+    height: 0;
+    margin: var(--s1) calc(-1 * var(--s1));
+    border: 0;
+    border-block-start: 1px solid var(--line);
+  }
+
+  @media (pointer: coarse) {
+    .menu-item { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .popover { border-color: CanvasText; }
+    /* forced-color-adjust: none, or the text backplate (Canvas) hides
+       HighlightText on the Highlight row. */
+    .menu-item:not(:disabled, [aria-disabled='true']):is(:hover, :focus-visible) {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+    .menu-item:not(:disabled, [aria-disabled='true']):is(:hover, :focus-visible) > * { color: inherit; }
+    .menu-item:focus-visible { outline-color: CanvasText; }
+    .menu-item:is(:disabled, [aria-disabled='true']) { background-color: Canvas; color: GrayText; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .popover { transition: none; transform: none; }
+  }
+}
+
+/* ── Tooltip (#57) ─────────────────────────────────────────────────────────
+   <span class="tooltip-wrap">
+     <button class="btn btn-icon" interestfor="tip-share" aria-labelledby="tip-share">…svg…</button>
+     <span class="tooltip" id="tip-share" popover="hint" role="tooltip">Share trip</span>
+   </span>
+   A tooltip only names the thing it points at, in one short phrase. Anything
+   longer, or anything a reader needs, is a popover or text on the page:
+   touch users never hover, so a tooltip is never the only place something is
+   said. The trigger takes its accessible name from the tooltip
+   (aria-labelledby), so the two can't disagree. It stays open while the
+   pointer is on it, so a magnifier user can move onto it to read it.
+   - Where interestfor is supported, the browser opens it as a hint popover on
+     hover or keyboard focus after 300ms and closes it at once when interest
+     leaves; it sits above the trigger with anchor positioning and flips below
+     when there's no room. Elsewhere, .tooltip-wrap shows it on :hover and
+     :focus-visible with the same 300ms delay in and none out. That fallback
+     can't close on Esc or flip at the top of the viewport, and an
+     overflow: hidden ancestor clips it.
+   - A 150ms fade in only. Under prefers-reduced-motion the fade goes and the
+     delay stays: it's a wait, not motion. */
+@layer brignano.components {
+  .tooltip-wrap { position: relative; display: inline-flex; vertical-align: middle; }
+  .tooltip {
+    box-sizing: border-box;
+    width: max-content;
+    max-width: 16rem;
+    margin: 0;
+    padding: 4px var(--s2);
+    overflow: visible;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background-color: var(--ink);
+    color: var(--card);
+    font-family: var(--sans);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-ui);
+    text-align: center;
+  }
+  /* A transparent strip over the gap on both block sides, so the pointer can
+     move from the trigger onto the tooltip without losing it (WCAG 1.4.13). */
+  .tooltip::before {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--s1) - 1px) 0;
+    z-index: -1;
+  }
+  .tooltip-wrap > [interestfor] { interest-delay: 300ms 0s; }
+
+  @supports selector(:interest-source) {
+    .tooltip {
+      inset: auto;
+      margin: var(--s1) 0;
+      position-area: block-start;
+      position-try-fallbacks: flip-block;
+      opacity: 0;
+      transition: opacity var(--dur-fast) var(--ease);
+    }
+    .tooltip:popover-open { opacity: 1; }
+    @starting-style {
+      .tooltip:popover-open { opacity: 0; }
+    }
+  }
+  @supports not selector(:interest-source) {
+    .tooltip {
+      display: block;
+      position: absolute;
+      inset: auto auto 100% 50%;
+      translate: -50% 0;
+      margin: 0 0 var(--s1);
+      visibility: hidden;
+      opacity: 0;
+    }
+    .tooltip-wrap:has(> :hover, > :focus-visible) > .tooltip {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity var(--dur-fast) var(--ease) 300ms, visibility 0s linear 300ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .tooltip { border-color: CanvasText; }
+  }
+}
+
+/* ── Toast (#58) ───────────────────────────────────────────────────────────
+   <section class="toast-region" aria-label="Notifications">
+     <div class="toast-list" role="status"></div>   ← success and attention
+     <div class="toast-list" role="alert"></div>    ← danger
+   </section>
+   …and what your script adds to a list:
+     <div class="toast toast-success">
+       <svg aria-hidden="true" …></svg>
+       <div class="toast-content">
+         <p class="toast-title">Trip saved</p>
+         <p class="toast-body">Lisbon, 4 days is in your list.</p>
+       </div>
+       <button class="btn btn-ghost btn-sm toast-action">Undo</button>
+       <button class="btn btn-ghost btn-icon btn-sm toast-close" aria-label="Dismiss">…</button>
+     </div>
+   A short note that something happened. Kinds: .toast-success,
+   .toast-attention, .toast-danger, each with its icon, an edge in its colour
+   and a title that says in words what happened, never colour alone. There's
+   no info toast: use a .msg on the page.
+   - The region and both lists are in the page from the start, empty. Two
+     live regions, never nested: role="status" (polite) for success and
+     attention, role="alert" for danger, which sits below them. Newest at the
+     bottom of each; bottom-centre on a phone, bottom-right from 40rem.
+   - Script is yours (design ships none): add toasts to a list; remove a
+     success toast after 5s, pausing while it's hovered or has focus; leave
+     attention and danger until dismissed. To remove one, set data-leaving,
+     then take it out on its own transitionend (or after 200ms, whichever is
+     first). The transition still runs, in 0.01ms, under reduced motion, so
+     transitionend always fires. If focus was inside it, move focus to the
+     next toast, or back to where it was before.
+   - While a modal dialog is open, everything outside it is inert, toasts
+     included: report inside the dialog with a .msg instead.
+   - Enter and leave: a fade and an 8px slide over --dur-fast (ADR-0013).
+     Instant under prefers-reduced-motion. */
+@layer brignano.components {
+  .toast-region {
+    position: fixed;
+    z-index: var(--z-toast);
+    inset: auto var(--s4) var(--s4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+  /* A flex column, not display: contents, which some browsers still drop
+     from the accessibility tree, live region and all. Never display: none
+     either: a hidden live region misses what's added as it appears. */
+  .toast-list {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    align-self: stretch;
+    gap: var(--s2);
+  }
+  .toast-list:not(:empty) ~ .toast-list:not(:empty) { margin-top: var(--s2); }
+  .toast-region .toast { pointer-events: auto; }
+  @media (min-width: 40rem) {
+    .toast-region { inset: auto var(--s5) var(--s5) auto; align-items: flex-end; }
+  }
+
+  .toast {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: min(100%, 24rem);
+    padding: 12px 10px 12px 14px;
+    border: 1px solid var(--line);
+    border-inline-start: 3px solid var(--line-control);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  @starting-style {
+    .toast { opacity: 0; transform: translateY(8px); }
+  }
+  .toast[data-leaving] { opacity: 0; transform: translateY(8px); }
+  .toast > svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
+  .toast-content { display: grid; gap: 2px; flex: 1; min-width: 0; }
+  .toast-title { margin: 0; font-weight: var(--weight-semibold); }
+  .toast-body { margin: 0; color: var(--ink-soft); }
+  .toast-action { flex: none; margin: -4px 0; }
+  .toast-close { flex: none; margin: -4px -2px -4px 0; color: var(--ink-soft); }
+
+  .toast-success { border-inline-start-color: var(--success); }
+  .toast-attention { border-inline-start-color: var(--attention); }
+  .toast-danger { border-inline-start-color: var(--danger); }
+  .toast-success > svg { color: var(--success); }
+  .toast-attention > svg { color: var(--attention); }
+  .toast-danger > svg { color: var(--danger); }
+
+  @media (forced-colors: active) {
+    .toast { border-color: CanvasText; }
+  }
+  /* tokens.css cuts the transition to 0.01ms, which keeps transitionend
+     firing for the script that removes a leaving toast; no slide either. */
+  @media (prefers-reduced-motion: reduce) {
+    .toast, .toast[data-leaving] { transform: none; }
+  }
+}
+
+/* ── Loading and empty states (#59) ─────────────────────────────────────────
+   Spinner, for a wait whose layout isn't known yet:
+     <p class="cluster"><span class="spinner" aria-hidden="true"></span> Loading trips…</p>
+     Sizes: .spinner-sm (16px), default (24px). Always with words beside it,
+     or role="img" aria-label="Loading" when there's no room for any. Under
+     reduced motion it holds still (tokens.css stops animations); the words
+     carry the meaning. .btn[aria-busy='true'] draws the same ring.
+   Skeleton, only when the layout is known ahead:
+     <div role="group" aria-busy="true" aria-label="Loading trip">
+       <span class="skeleton skeleton-circle" aria-hidden="true"></span>
+       <span class="skeleton skeleton-text" aria-hidden="true"></span>
+     </div>
+     .skeleton-text (a line of text; the last in a run is shorter),
+     .skeleton-circle (an avatar), .skeleton-rect (media, 16:9). The shimmer
+     stops under reduced motion.
+   Progress and meter: native elements, drawn from tokens.
+     <progress class="progress" value="40" max="100">40%</progress>
+     <meter class="meter" value="0.8" low="0.5" high="0.75" optimum="0.2">80%</meter>
+     Label them (<label for>, or aria-label). With no value, a progress bar is
+     indeterminate and shows a pulsing centre segment. A meter's fill is cobalt when
+     its value is in the optimum range, --attention one range off and --danger
+     two off. Bare <progress> and <meter> stay native (DESIGN.md §4).
+   Empty state: an icon, one line, at most one action, no illustration.
+     <div class="empty">
+       <svg aria-hidden="true" …></svg>
+       <p class="empty-title">No trips yet</p>
+       <p class="empty-body">Trips you save show up here.</p>
+       <a class="btn btn-primary" href="…">Plan a trip</a>
+     </div> */
+@layer brignano.components {
+  .spinner {
+    display: inline-block;
+    flex: none;
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    color: var(--i);
+    vertical-align: middle;
+    animation: spinner-spin 0.7s linear infinite;
+  }
+  .spinner-sm { width: 16px; height: 16px; border-width: 2px; }
+
+  /* The shimmer is a transformed ::after (compositor only, DESIGN.md §7).
+     At rest it sits off the block, so under reduced motion, where
+     tokens.css ends the animation at once, nothing is left showing. */
+  .skeleton {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background-color: var(--surface-hover);
+  }
+  .skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, transparent 0, var(--surface-active) 50%, transparent 100%);
+    transform: translateX(-100%);
+    animation: skeleton-shimmer 1.4s var(--ease) infinite;
+  }
+  @keyframes skeleton-shimmer { to { transform: translateX(100%); } }
+  .skeleton-text { height: 0.75em; margin-block: 0.4em; }
+  .skeleton-text:last-child:not(:first-child) { width: 60%; }
+  .skeleton-circle { width: 40px; height: 40px; flex: none; border-radius: 50%; }
+  .skeleton-rect { width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius); }
+
+  .progress, .meter {
+    appearance: none;
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 999px;
+    background-color: var(--surface-active);
+  }
+  .progress::-webkit-progress-bar { border-radius: inherit; background-color: var(--surface-active); }
+  .progress::-webkit-progress-value { border-radius: inherit; background-color: var(--i); }
+  .progress::-moz-progress-bar { border-radius: inherit; background-color: var(--i); }
+  /* Indeterminate: a centred segment that can't be read as an amount, which
+     pulses (opacity only, DESIGN.md §7). Under reduced motion it holds
+     still at full strength. */
+  .progress:indeterminate {
+    background-image: linear-gradient(90deg, transparent 35%, var(--i) 35% 65%, transparent 65%);
+    animation: progress-pulse 1.4s var(--ease) infinite alternate;
+  }
+  .progress:indeterminate::-webkit-progress-bar { background-color: transparent; }
+  .progress:indeterminate::-moz-progress-bar { background-color: transparent; }
+  @keyframes progress-pulse { to { opacity: 0.45; } }
+
+  .meter::-webkit-meter-bar { height: 8px; border: 0; border-radius: inherit; background: var(--surface-active); }
+  .meter::-webkit-meter-optimum-value { border-radius: inherit; background: var(--i); }
+  .meter::-webkit-meter-suboptimum-value { border-radius: inherit; background: var(--attention); }
+  .meter::-webkit-meter-even-less-good-value { border-radius: inherit; background: var(--danger); }
+  .meter::-moz-meter-bar { border-radius: inherit; background: var(--i); }
+  .meter:-moz-meter-sub-optimum::-moz-meter-bar { background: var(--attention); }
+  .meter:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: var(--danger); }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s2);
+    padding: var(--s7) var(--s4);
+    text-align: center;
+  }
+  .empty > svg { width: 32px; height: 32px; margin-bottom: var(--s2); color: var(--ink-soft); }
+  .empty-title { margin: 0; font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--ink); }
+  .empty-body { max-width: 32ch; margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
+  .empty > .btn { margin-top: var(--s3); }
+
+  /* Vendor pseudo-elements each get their own rule: one unknown selector in
+     a list drops the whole rule in the other engine. */
+  @media (forced-colors: active) {
+    .spinner { forced-color-adjust: none; border-color: CanvasText; border-right-color: transparent; }
+    .skeleton { background: GrayText; }
+    .skeleton::after { display: none; }
+    .progress, .meter { forced-color-adjust: none; border: 1px solid CanvasText; background: Canvas; }
+    .progress::-webkit-progress-bar { background: Canvas; }
+    .meter::-webkit-meter-bar { background: Canvas; }
+    .progress::-webkit-progress-value { background: Highlight; }
+    .progress::-moz-progress-bar { background: Highlight; }
+    .meter::-webkit-meter-optimum-value { background: Highlight; }
+    .meter::-webkit-meter-suboptimum-value { background: Highlight; }
+    .meter::-webkit-meter-even-less-good-value { background: Highlight; }
+    .meter::-moz-meter-bar { background: Highlight; }
+    .progress:indeterminate { background-image: linear-gradient(90deg, transparent 35%, Highlight 35% 65%, transparent 65%); }
+    .progress:indeterminate::-webkit-progress-bar { background: transparent; }
+  }
+}
+
+/* ── Table (#61) ───────────────────────────────────────────────────────────
+   <div class="table-wrap"><table class="table">…</table></div>
+   Numbers right-aligned with .num; sortable headers carry aria-sort and a
+   <button>; .table-sticky pins the header inside a scrolling .table-wrap.
+   On a phone the table scrolls sideways inside .table-wrap; rows are never
+   stacked into cards, so columns stay comparable. No zebra stripes. */
+@layer brignano.components {
+  .table-wrap {
+    overflow-x: auto;
+    max-width: 100%;
+    /* Scroll shadows: an edge darkens only while there is more to scroll. */
+    background:
+      linear-gradient(to right, var(--card) 30%, transparent) left / 40px 100% no-repeat local,
+      linear-gradient(to left, var(--card) 30%, transparent) right / 40px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--ink) 16%, transparent), transparent) left / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--ink) 16%, transparent), transparent) right / 12px 100% no-repeat scroll;
+    background-color: var(--card);
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .table caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: var(--weight-semibold);
+    padding: 0 0 var(--s2);
+  }
+  .table th,
+  .table td {
+    padding: var(--s2) var(--s3);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  .table th {
+    font-weight: var(--weight-semibold);
+    color: var(--ink-soft);
+    white-space: nowrap;
+    border-bottom-color: var(--line-strong);
+  }
+  .table tbody tr:hover { background: var(--surface-hover); }
+  .table .num { text-align: right; white-space: nowrap; }
+  .table th.num { font-family: inherit; } /* the figures are mono (.num); their column's label is not */
+  .table tfoot td { font-weight: var(--weight-semibold); border-top: 1px solid var(--line-strong); border-bottom: 0; }
+
+  /* Sortable header: the <button> fills the cell; the arrow is decoration,
+     aria-sort on the <th> is what assistive tech reads. */
+  .table th[aria-sort] { padding: 0; }
+  .table th[aria-sort] > button {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: var(--s1);
+    width: 100%;
+    padding: var(--s2) var(--s3);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+  .table th.num[aria-sort] > button { justify-content: flex-end; }
+  .table th[aria-sort] > button:hover { color: var(--ink); }
+  .table th[aria-sort] > button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  /* \FE0E asks for the text glyph: ↕ is one of the arrows phones draw as an emoji. */
+  .table th[aria-sort] > button::after { content: '↕\FE0E' / ''; color: var(--slate); }
+  .table th[aria-sort='ascending'] > button::after { content: '↑' / ''; color: var(--ink); }
+  .table th[aria-sort='descending'] > button::after { content: '↓' / ''; color: var(--ink); }
+  .table th[aria-sort='ascending'],
+  .table th[aria-sort='descending'] { color: var(--ink); }
+  @media (pointer: coarse) {
+    .table th[aria-sort] > button { min-height: 44px; }
+  }
+
+  /* Sticky header: .table-wrap scrolls sideways, which also makes it the
+     header's scroll container, so the header only sticks when the wrap has a
+     max-height and scrolls vertically itself. Without one, it scrolls away
+     with the page. */
+  .table-sticky thead th { position: sticky; top: 0; z-index: var(--z-raised); background: var(--card); }
+
+  .tier-marketing .table { font-size: var(--text-base); }
+  .tier-marketing .table th,
+  .tier-marketing .table td { padding: var(--s3) var(--s4); }
+  .tier-marketing .table th[aria-sort] { padding: 0; }
+  .tier-marketing .table th[aria-sort] > button { padding: var(--s3) var(--s4); }
+}
+
+/* ── Key-value list (#62) ──────────────────────────────────────────────────
+   <dl class="kv"><dt>Booked</dt><dd>7 Nov 2026</dd>…</dl>
+   Two columns when there's room, stacked on a phone. A <div> may wrap each
+   dt/dd pair (valid HTML); it doesn't affect the layout. */
+@layer brignano.components {
+  .kv {
+    display: grid;
+    grid-template-columns: minmax(8rem, max-content) 1fr;
+    gap: var(--s2) var(--s5);
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+  .kv > div { display: contents; }
+  .kv dt { color: var(--ink-soft); }
+  .kv dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 0; overflow-wrap: anywhere; }
+  @media (max-width: 480px) {
+    .kv { grid-template-columns: 1fr; row-gap: 0; }
+    .kv dd { margin-bottom: var(--s3); }
+  }
+  .tier-marketing .kv { font-size: var(--text-base); }
+}
+
+/* ── Stat tile (#62) ───────────────────────────────────────────────────────
+   <div class="stat">
+     <span class="stat-label">Visitors</span>
+     <span class="stat-value">1,284</span>
+     <span class="stat-delta" data-dir="up" data-tone="good">Up 12% from last week</span>
+   </div>
+   The number is mono with tabular figures (DESIGN.md §5). A delta always says
+   its direction in words; the arrow is decoration. data-tone="good" / "bad"
+   colours it only when up or down is good or bad for the reader; without a
+   tone it stays neutral. */
+@layer brignano.components {
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+    min-width: 0;
+    padding: var(--s4) var(--s5);
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  .stat-label { font-size: var(--text-sm); color: var(--ink-soft); }
+  .stat-value {
+    font-family: var(--mono);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-display);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-title);
+  }
+  .stat-delta { font-size: var(--text-sm); color: var(--ink-soft); }
+  .stat-delta[data-dir]::before { margin-right: var(--s1); }
+  .stat-delta[data-dir='up']::before { content: '↑' / ''; }
+  .stat-delta[data-dir='down']::before { content: '↓' / ''; }
+  .stat-delta[data-tone='good'] { color: var(--success-ink); }
+  .stat-delta[data-tone='bad'] { color: var(--danger-ink); }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+    gap: var(--s4);
+  }
+}
+
+/* ── Tabs (#63) ────────────────────────────────────────────────────────────
+   <div class="tabs">
+     <div class="tabs-list" role="tablist" aria-label="Trip">
+       <button role="tab" id="t1" aria-selected="true" aria-controls="p1">Itinerary</button>
+       <button role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">Bookings</button>
+     </div>
+     <div class="tabs-panel" role="tabpanel" id="p1" aria-labelledby="t1">…</div>
+     <div class="tabs-panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>…</div>
+   </div>
+   Tabs switch views of one thing; navigation between pages is a nav, never
+   tabs. The selected tab is underlined in cobalt. The consumer's script owns
+   selection and arrow keys (contract on previews/tabs.html). */
+@layer brignano.components {
+  .tabs-list {
+    display: flex;
+    gap: var(--s1);
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Inset hairline, not a border: a border would push the tab's 2px
+       underline past the scroll box, which clips it and scrolls by 1px. */
+    box-shadow: inset 0 -1px 0 var(--line);
+  }
+  .tabs-list::-webkit-scrollbar { display: none; }
+  .tabs-list > [role='tab'] {
+    all: unset;
+    box-sizing: border-box;
+    flex: none;
+    padding: var(--s2) var(--s3);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--ink-soft);
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  }
+  .tabs-list > [role='tab']:hover { color: var(--ink); background: var(--surface-hover); }
+  .tabs-list > [role='tab']:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .tabs-list > [role='tab'][aria-selected='true'] { color: var(--ink); border-bottom-color: var(--i); }
+  .tabs-list > [role='tab'][aria-disabled='true'] { color: var(--i-disabled-ink); cursor: not-allowed; background: none; }
+  .tabs-panel { padding-top: var(--s4); }
+  .tabs-panel:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: var(--radius-sm); }
+  .tier-marketing .tabs-list > [role='tab'] { font-size: var(--text-base); padding: var(--s3) var(--s4); }
+  @media (pointer: coarse) {
+    .tabs-list > [role='tab'] { display: inline-flex; align-items: center; min-height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tabs-list > [role='tab'] { transition: none; }
+  }
+}
+
+/* ── Breadcrumb (#64) ──────────────────────────────────────────────────────
+   <nav class="breadcrumb" aria-label="Breadcrumb"><ol>
+     <li><a href="/">Home</a></li><li><a href="/blog">Blog</a></li>
+     <li><a href="/blog/x" aria-current="page">This post</a></li>
+   </ol></nav>
+   Separators are drawn, not typed, so they aren't read aloud. On a phone the
+   middle crumbs collapse to an ellipsis: first, parent and current stay. */
+@layer brignano.components {
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s1) var(--s2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+  }
+  .breadcrumb li { display: inline-flex; align-items: center; gap: var(--s2); min-width: 0; }
+  .breadcrumb li + li::before { content: '/' / ''; color: var(--slate); }
+  .breadcrumb a { color: var(--i-ink); text-decoration: none; border-radius: var(--radius-sm); }
+  .breadcrumb a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .breadcrumb a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .breadcrumb [aria-current='page'] {
+    color: var(--ink);
+    pointer-events: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (max-width: 480px) {
+    .breadcrumb li:not(:first-child):not(:nth-last-child(-n + 2)) { display: none; }
+    /* The parent crumb's separator stands in for the hidden ones. */
+    .breadcrumb li:nth-last-child(2):not(:nth-child(2))::before { content: '/ … /' / ''; }
+  }
+  @media (pointer: coarse) {
+    .breadcrumb ol { row-gap: 0; }
+    .breadcrumb a:not([aria-current]) { display: inline-flex; align-items: center; min-height: 44px; }
+  }
+}
+
+/* ── Pagination (#64) ──────────────────────────────────────────────────────
+   <nav class="pagination" aria-label="Pages">
+     <a class="pagination-prev" href="?p=2">Previous</a>
+     <ol class="pagination-pages">
+       <li><a href="?p=1">1</a></li> <li><a href="?p=3" aria-current="page">3</a></li> …
+     </ol>
+     <span class="pagination-status">Page 3 of 9</span>
+     <a class="pagination-next" href="?p=4">Next</a>
+   </nav>
+   Numbered pages are for tables; content lists use .load-more instead. When
+   the nav itself is narrower than 34rem (a phone, a sidebar, a half-width
+   column) the numbers hide and "Page 3 of 9" shows. A missing previous or next
+   is a <span aria-disabled="true">, not a dead link. */
+@layer brignano.components {
+  .pagination {
+    container: pagination / inline-size;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s2);
+    font-size: var(--text-sm);
+  }
+  .pagination-pages { display: flex; gap: var(--s1); margin: 0; padding: 0; list-style: none; }
+  .pagination-prev,
+  .pagination-next,
+  .pagination-pages a,
+  .pagination-pages span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    padding: 0 var(--s3);
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .pagination-pages span { color: var(--slate); padding: 0; }
+  .pagination-prev:hover,
+  .pagination-next:hover,
+  .pagination-pages a:hover { background: var(--surface-hover); }
+  .pagination-prev:focus-visible,
+  .pagination-next:focus-visible,
+  .pagination-pages a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .pagination-pages [aria-current='page'] { color: var(--on-i); background: var(--i); font-weight: var(--weight-semibold); }
+  .pagination-prev,
+  .pagination-next { flex-shrink: 0; white-space: nowrap; }
+  .pagination-prev::before { content: '←' / ''; margin-right: var(--s1); }
+  .pagination-next::after { content: '→' / ''; margin-left: var(--s1); }
+  .pagination [aria-disabled='true'] { color: var(--i-disabled-ink); pointer-events: none; }
+  .pagination-status { display: none; color: var(--ink-soft); }
+  @container pagination (max-width: 34rem) {
+    .pagination-pages { display: none; }
+    .pagination-status { display: block; }
+  }
+  @media (pointer: coarse) {
+    .pagination-prev,
+    .pagination-next,
+    .pagination-pages a { min-height: 44px; min-width: 44px; }
+  }
+
+  /* Load more: the default for content lists (posts, photos, activity). */
+  .load-more { display: flex; flex-direction: column; align-items: center; gap: var(--s2); padding: var(--s5) 0; }
+  .load-more-count { font-size: var(--text-sm); color: var(--ink-soft); }
+  .load-more > button,
+  .load-more > a {
+    all: unset;
+    box-sizing: border-box;
+    padding: var(--s2) var(--s4);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-control);
+    cursor: pointer;
+  }
+  .load-more > button:hover,
+  .load-more > a:hover { background: var(--surface-hover); }
+  .load-more > button:focus-visible,
+  .load-more > a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  @media (pointer: coarse) {
+    .load-more > button,
+    .load-more > a { display: inline-flex; align-items: center; min-height: 44px; }
+  }
+}
+
+/* ── Disclosure and accordion (#65) ───────────────────────────────────────
+   <details class="disclosure"><summary>Question</summary><p>Answer</p></details>
+   <div class="accordion">
+     <details class="disclosure" name="faq">…</details>
+     <details class="disclosure" name="faq">…</details>
+   </div>
+   Native <details> only, no JS. A shared name="…" makes the group exclusive:
+   opening one closes the rest. The height doesn't animate; only the chevron
+   turns. */
+@layer brignano.components {
+  .disclosure > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3);
+    padding: var(--s3);
+    font-weight: var(--weight-medium);
+    color: var(--ink);
+    list-style: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--dur-fast) var(--ease);
+  }
+  .disclosure > summary::-webkit-details-marker { display: none; }
+  .disclosure > summary::after {
+    content: '';
+    flex: none;
+    width: .5em;
+    height: .5em;
+    margin-right: .25em;
+    border-right: 2px solid var(--ink-soft);
+    border-bottom: 2px solid var(--ink-soft);
+    transform: translateY(-25%) rotate(45deg);
+    transition: transform var(--dur-fast) var(--ease);
+  }
+  .disclosure[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+  .disclosure > summary:hover { background: var(--surface-hover); }
+  .disclosure > summary:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .disclosure > :not(summary) { margin: 0; padding: 0 var(--s3) var(--s3); color: var(--ink-soft); }
+
+  .accordion { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .accordion > .disclosure + .disclosure { border-top: 1px solid var(--line); }
+  .accordion > .disclosure > summary { border-radius: 0; }
+
+  .tier-marketing .disclosure > summary { font-size: var(--text-lg); padding: var(--s4) var(--s3); }
+  @media (pointer: coarse) {
+    .disclosure > summary { min-height: 44px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .disclosure > summary,
+    .disclosure > summary::after { transition: none; }
+  }
+}
+
+/* ── Avatar (#66) ─────────────────────────────────────────────────────────
+   <span class="avatar"><img src="…" alt="Ana Ruiz"></span>
+   <span class="avatar avatar-sm" role="img" aria-label="Ana Ruiz">AR</span>
+   A circle. Initials are the fallback when there's no photo; the wrapper
+   then carries the name for screen readers. */
+@layer brignano.components {
+  .avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    overflow: hidden;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    color: var(--ink);
+    background: var(--surface-active);
+    border-radius: 50%;
+    user-select: none;
+  }
+  .avatar > img { width: 100%; height: 100%; object-fit: cover; }
+  .avatar-sm { width: 1.5rem; height: 1.5rem; font-size: var(--text-xs); }
+  .avatar-lg { width: 4rem; height: 4rem; font-size: var(--text-lg); }
+}
+
+/* ── Keycap, inline code, code block (#66) ─────────────────────────────────
+   <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd>     <code class="code">npm run check</code>
+   <figure class="code-block">
+     <figcaption class="code-block-header">
+       <span class="code-block-file">deploy.sh</span>
+       <button type="button" class="code-block-copy">Copy</button>
+     </figcaption>
+     <pre tabindex="0"><code>…</code></pre>
+   </figure>
+   The block scrolls sideways and never wraps; tabindex="0" lets keyboard
+   users scroll it. Tokens are spans: .tok-keyword, .tok-string,
+   .tok-comment; a highlighted line is <span class="line-highlight">. Your
+   app owns the copy button's script. */
+@layer brignano.components {
+  .kbd,
+  .prose kbd {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: .1em .4em;
+    font-family: var(--mono);
+    font-size: .85em;
+    line-height: var(--leading-ui);
+    text-align: center;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line-control);
+    border-bottom-width: 2px;
+    border-radius: var(--radius-sm);
+  }
+  .code,
+  .prose :not(pre) > code {
+    padding: .1em .35em;
+    font-family: var(--mono);
+    font-size: .9em;
+    color: var(--code-ink);
+    background: var(--surface-hover);
+    border-radius: var(--radius-sm);
+  }
+
+  .code-block {
+    margin: 0;
+    overflow: hidden;
+    color: var(--code-ink);
+    background: var(--code-surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3);
+    padding: var(--s1) var(--s1) var(--s1) var(--s4);
+    font-size: var(--text-xs);
+    font-family: var(--mono);
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--line);
+  }
+  .code-block-file { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .code-block-copy {
+    all: unset;
+    box-sizing: border-box;
+    flex: none;
+    padding: var(--s1) var(--s3);
+    font-family: var(--sans);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+  }
+  .code-block-copy:hover { color: var(--ink); background: var(--surface-hover); }
+  .code-block-copy:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .code-block pre { margin: 0; }
+  .code-block pre,
+  .prose > pre {
+    padding: var(--s4);
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    tab-size: 2;
+  }
+  .code-block pre:focus-visible,
+  .prose > pre:focus-visible { outline: 2px solid var(--i-ink); outline-offset: -2px; }
+  .code-block code { font: inherit; }
+  .tok-keyword { color: var(--code-keyword); }
+  .tok-string { color: var(--code-string); }
+  .tok-comment { color: var(--code-comment); font-style: italic; }
+  /* The band reaches into the pre's padding with side shadows, not padding,
+     so a box-sizing reset in the consuming site can't shorten it. */
+  .line-highlight {
+    display: inline-block;
+    min-width: 100%;
+    background: var(--code-highlight);
+    box-shadow: calc(var(--s4) * -1) 0 0 var(--code-highlight), var(--s4) 0 0 var(--code-highlight);
+  }
+  /* Slate falls under 4.5:1 on the cobalt wash; comments step up to the
+     string ink there and keep their italics. */
+  .line-highlight .tok-comment { color: var(--code-string); }
+  @media (pointer: coarse) {
+    .code-block-copy { display: inline-flex; align-items: center; min-height: 44px; }
+  }
+}
+
+/* ── Blockquote and figure (#66) ───────────────────────────────────────────
+   <blockquote class="blockquote"><p>…</p><cite>Ana Ruiz, ops lead</cite></blockquote>
+   <figure class="figure"><img src="…" alt="…"><figcaption>…</figcaption></figure>
+   The quote bar is a neutral rule, not cobalt: a quote isn't interactive. */
+@layer brignano.components {
+  .blockquote {
+    margin: 0;
+    padding: 0 0 0 var(--s4);
+    font-size: var(--text-lg);
+    color: var(--ink);
+    border-left: 3px solid var(--line-strong);
+  }
+  .blockquote > p { margin: 0 0 var(--s2); }
+  .blockquote > cite { display: block; font-size: var(--text-sm); font-style: normal; color: var(--ink-soft); }
+  .blockquote > cite::before { content: '— ' / ''; }
+  .figure { margin: 0; }
+  .figure > img,
+  .figure > video { display: block; max-width: 100%; height: auto; border-radius: var(--radius); }
+  .figure > figcaption { margin-top: var(--s2); font-size: var(--text-sm); color: var(--slate); }
+}
+
+/* ── Prose (#67) ──────────────────────────────────────────────────────────
+   <article class="prose">…plain HTML from Markdown…</article>
+   Long-form text: blog posts, docs, legal pages. Styles the bare elements
+   a Markdown renderer emits, reusing the code, quote, figure and table
+   pieces above. Capped at the tier's --measure; spacing comes from --s*.
+   Heading anchors: <h2 id="x">Title <a class="anchor" href="#x" aria-label="Link to Title"></a></h2>. */
+@layer brignano.components {
+  .prose {
+    max-width: var(--measure);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--ink);
+    overflow-wrap: break-word;
+  }
+  .prose > * { margin: 0; }
+  .prose > * + * { margin-top: var(--s4); }
+  .prose :where(h2, h3, h4) {
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-title);
+    letter-spacing: var(--tracking-title);
+    scroll-margin-top: var(--s7);
+  }
+  .prose h2 { font-size: var(--text-xl); }
+  .prose h3 { font-size: var(--text-lg); }
+  .prose h4 { font-size: var(--text-base); }
+  .prose > * + h2 { margin-top: var(--s7); }
+  .prose > * + :where(h3, h4) { margin-top: var(--s6); }
+  .prose > :where(h2, h3, h4) + * { margin-top: var(--s2); }
+
+  /* The # follows the heading text and shows on hover or focus; on
+     devices without hover it always shows. */
+  .prose .anchor {
+    margin-left: var(--s2);
+    font-weight: var(--weight-regular);
+    color: var(--slate);
+    text-decoration: none;
+    opacity: 0;
+  }
+  .prose .anchor::before { content: '#'; }
+  .prose :where(h2, h3, h4):hover > .anchor,
+  .prose .anchor:focus-visible { opacity: 1; }
+  .prose .anchor:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: var(--radius-sm); }
+  @media (hover: none) {
+    .prose .anchor { opacity: 1; }
+  }
+  @media (pointer: coarse) {
+    /* A 44px hit area without moving the heading text. */
+    .prose .anchor { display: inline-block; min-width: 44px; padding: 12px; margin: -12px -12px -12px calc(var(--s2) - 12px); text-align: left; }
+  }
+
+  .prose a:not(.anchor) { color: var(--i-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .prose a:not(.anchor):hover { color: var(--i-ink-hover); text-decoration-thickness: 2px; }
+  .prose a:not(.anchor):focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: 2px; }
+  .prose strong { font-weight: var(--weight-semibold); }
+
+  .prose :where(ul, ol) { padding-left: var(--s5); }
+  .prose li + li { margin-top: var(--s1); }
+  .prose li > :where(ul, ol) { margin-top: var(--s1); }
+  .prose li::marker { color: var(--slate); }
+
+  .prose hr { height: 0; margin-block: var(--s7); border: 0; border-top: 1px solid var(--line); }
+
+  /* Reused pieces, applied to bare elements. Inline code, kbd and the
+     pre's type come from the #66 rules above, which list these selectors
+     too; a bare pre adds the block's frame here. */
+  .prose > pre {
+    color: var(--code-ink);
+    background: var(--code-surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .prose pre code { font: inherit; }
+  .prose > blockquote {
+    padding-left: var(--s4);
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+  }
+  .prose > blockquote > * { margin: 0; }
+  .prose > blockquote > * + * { margin-top: var(--s2); }
+  .prose > figure > :where(img, video) { display: block; max-width: 100%; height: auto; border-radius: var(--radius); }
+  .prose > figure > figcaption { margin-top: var(--s2); font-size: var(--text-sm); color: var(--slate); }
+  .prose img { max-width: 100%; height: auto; }
+  .prose > p > img { border-radius: var(--radius); }
+  .prose > :where(figure, pre, .table-wrap, .code-block) { margin-top: var(--s5); }
+  .prose > :where(figure, pre, .table-wrap, .code-block) + * { margin-top: var(--s5); }
+
+  /* Footnotes, in the shape remark-gfm and markdown-it-footnote emit. */
+  .prose sup { line-height: 0; }
+  .prose :where(.footnotes, section[data-footnotes]) {
+    margin-top: var(--s7);
+    padding-top: var(--s4);
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+  }
+  .prose :is(.footnotes, section[data-footnotes]) h2 { font-size: var(--text-sm); color: var(--ink-soft); }
+
+  .tier-marketing .prose { line-height: 1.75; }
+  .tier-marketing .prose h2 { font-size: var(--text-2xl); }
+  .tier-marketing .prose h3 { font-size: var(--text-xl); }
+}
+
+/* ── Voice (ADR-0014) ───────────────────────────────────────────────────────
+   What makes a screen read as one of these products (DESIGN.md §5):
+
+   <p class="eyebrow">Production</p>                 ← one per screen, above its heading
+   <h1>Services</h1>
+   Deployed <span class="num">2026-11-07 09:30</span>  ← any number, date or code
+   <p class="display">404</p>                        ← one heavy moment, at most
+   <span class="stamp" role="img" aria-label="Anthony Brignano">A|B</span>
+   <span class="rule"></span>                        ← the bar above a hero heading
+
+   The eyebrow is written in sentence case and uppercased here. .rule is the
+   mark in force (--mark-current: the product's, or the family amber): it inks
+   a graphic, never a control (§3). */
+@layer brignano.components {
+  .eyebrow {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-ui);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; } /* a date never breaks in two */
+  .display {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-heavy);
+    line-height: var(--leading-display);
+    letter-spacing: calc(var(--tracking-display) * 2);
+    color: var(--ink);
+  }
+  .stamp {
+    font-family: var(--sans);
+    font-weight: var(--weight-heavy);
+    letter-spacing: var(--tracking-caps); /* open, not tight: closed up, the heavy bar reads as an I */
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  .rule { display: block; width: 56px; height: 3px; border: 0; border-radius: 2px; background: var(--mark-current); }
+}
+
+/* ── Line breaks ────────────────────────────────────────────────────────────
+   A short title balances its lines, so a two-line heading doesn't end on one
+   stranded word; running text avoids a last line of one word. Both are hints:
+   a browser without text-wrap breaks lines as before. */
+@layer brignano.components {
+  :where(.card-title, .dialog-title, .empty-title, .msg-title, .toast-title, .stat-delta),
+  .prose :where(h2, h3, h4) { text-wrap: balance; }
+  :where(.empty-body, .field-hint, .choice-hint),
+  .prose :where(p, li, blockquote, figcaption) { text-wrap: pretty; }
+}
+
+/* ── Print ──────────────────────────────────────────────────────────────────
+   A receipt, a legal page or an article gets printed. tokens.css already
+   forces the light theme on paper; this drops what only works on a screen
+   (sticky chrome, shadows, popovers and sheets, controls that do nothing on
+   paper; an open dialog still prints, since it is what the reader is looking at), keeps blocks
+   whole across a page break, and writes an outside link's address after it
+   in running text, where the reader can no longer follow it. */
+@layer brignano.components {
+  @media print {
+    .site-header { position: static; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .skip-link, .site-menu-button, .toast-region, .tooltip, .popover, .sheet, .msg-close, .dialog-close,
+    .code-block-copy, .tag-remove, .pagination, .load-more { display: none; }
+    .card, .stat, .msg, .code-block, .table-wrap, .dialog { box-shadow: none; }
+    .card, .stat, .msg, .figure, .blockquote, .kv > div, .table tr { break-inside: avoid; }
+    .table-wrap { overflow: visible; }
+    .code-block pre, .prose pre { white-space: pre-wrap; overflow: visible; }
+    .prose :where(h2, h3, h4) { break-after: avoid; }
+    .prose a[href^='http']::after {
+      content: ' (' attr(href) ')';
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
+      overflow-wrap: anywhere;
+    }
+  }
+}
