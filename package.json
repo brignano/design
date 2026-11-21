@@ -27,7 +27,7 @@
     "scripts/colour.mjs",
     "tailwind.css",
     "DESIGN.md",
-    "DECISIONS.md"
+    "decisions/"
   ],
   "exports": {
     "./tokens.css": "./tokens.css",

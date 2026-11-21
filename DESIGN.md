@@ -3,7 +3,7 @@
 The visual contract for every brignano surface: `brignano.io`, `life`, `homelab`,
 `driftwood`, and whatever comes next. Values live in [`tokens.css`](./tokens.css)
 and [`tokens.chart.css`](./tokens.chart.css); the reasoning is in
-[`DECISIONS.md`](./DECISIONS.md).
+[`decisions/`](./decisions/README.md), one record per decision.
 
 **Read this before styling anything.** An agent asked to build a page in any of
 these repos should use these tokens, not invent a palette.
