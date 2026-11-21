@@ -17,7 +17,8 @@
 //   8. a class defined in components.css or templates/*.css appears on no
 //      preview page (DESIGN.md §14: if it isn't shown, it isn't reviewed).
 //      Their rules that set both a text colour and a background from tokens
-//      join the contrast floors in (1);
+//      join the contrast floors in (1), and so does a text colour in a rule
+//      nested under one that sets a background (#98);
 //   9. templates/email.html names a colour token that tokens.css can't
 //      resolve to a light-theme value, or carries a hex of its own;
 //  10. a component or template page misses part of the docs shape (#86):
@@ -322,6 +323,7 @@ const addFloor = (fg, bg, floor) => {
     floors.push([fg, bg, floor]);
   }
 };
+const INACTIVE = /:disabled|\[aria-disabled=['"]?true['"]?\]/;
 const DIVIDERS = new Set(['--line', '--line-soft', '--line-strong']);
 const tokenOf = (v) => v?.match(/var\((--[\w-]+)\)/g)?.length === 1 ? v.match(/var\((--[\w-]+)\)/)[1] : undefined;
 for (const [, rs] of layerRules)
@@ -333,7 +335,7 @@ for (const [, rs] of layerRules)
     // or aria-disabled may set exactly --i-disabled-ink on --i-disabled-bg, and
     // nothing else escapes the floor.
     const fg = decls.get('color')?.match(/^var\((--[\w-]+)\)$/)?.[1];
-    const inactive = /:disabled|\[aria-disabled=['"]?true['"]?\]/.test(selector);
+    const inactive = INACTIVE.test(selector);
     if (fg && inactive && fg === '--i-disabled-ink' && bg === '--i-disabled-bg') {
       /* exempt: inactive control */
     } else if (fg) addFloor(fg, bg, TEXT);
@@ -346,6 +348,54 @@ for (const [, rs] of layerRules)
       if (edge && !DIVIDERS.has(edge)) addFloor(edge, bg, MARK);
     }
   }
+
+// An ink on a wash its parent sets (#98). A rule that sets a background pairs
+// with the text colour of every rule nested under it in the same file: a
+// selector that starts with the background rule's selector, then a descendant
+// or child combinator. The nearest such background wins, so an ink on an inner
+// wash isn't also held to an outer one it never touches. Prefix matching, not
+// a cascade resolver: `.a .b` nests under `.a`, `.b` alone does not.
+const parts = (selector) => selector.split(',').map((s) => s.trim()).filter(Boolean);
+function nestedPairs(rs) {
+  const washes = [];
+  for (const { selector, decls } of rs) {
+    const bg = tokenOf(decls.get('background-color') ?? decls.get('background'));
+    if (bg) for (const sel of parts(selector)) washes.push([sel, bg]);
+  }
+  const out = [];
+  for (const { selector, decls } of rs) {
+    const fg = decls.get('color')?.match(/^var\((--[\w-]+)\)$/)?.[1];
+    if (!fg || tokenOf(decls.get('background-color') ?? decls.get('background'))) continue;
+    for (const sel of parts(selector)) {
+      let near;
+      for (const [w, bg] of washes)
+        if (sel.length > w.length && sel.startsWith(w) && /^[\s>]/.test(sel.slice(w.length)) && (!near || w.length > near[0].length))
+          near = [w, bg];
+      if (near) out.push([fg, near[1], sel]);
+    }
+  }
+  return out;
+}
+for (const [, rs] of layerRules)
+  for (const [fg, bg, sel] of nestedPairs(rs)) {
+    // The same exemption as above: a really inactive control's ink.
+    if (fg === '--i-disabled-ink' && INACTIVE.test(sel)) continue;
+    // An icon is a graphic, not text: 3:1 (WCAG 1.4.11), as a control's edge.
+    addFloor(fg, bg, /(^|[\s>])(svg|\.icon)$/.test(sel) ? MARK : TEXT);
+  }
+
+// Self-check: the #97 case. Slate comments on the cobalt highlight measured
+// 4.2–4.3:1 and passed, because no rule set both. The pairing must still
+// find that pair; whether it passes is the contrast loop's job, so tuning
+// either token later can't break this.
+{
+  const fixture = rules(`.line-highlight { background: var(--code-highlight); }
+    .line-highlight .tok-comment { color: var(--code-comment); }
+    .tok-comment { color: var(--code-comment); }`);
+  const found = nestedPairs(fixture);
+  const caught = found.length === 1 && found[0][0] === '--code-comment' && found[0][1] === '--code-highlight';
+  if (!caught) fail('self-check: a nested ink on a parent wash (.line-highlight .tok-comment) is no longer paired');
+}
 
 let checked = 0;
 for (const [theme, map] of [['light', light], ['dark', dark]]) {

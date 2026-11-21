@@ -6,7 +6,7 @@ The shared design system for every brignano surface — `brignano.io`, `life`,
 | File | What it is |
 |---|---|
 | [`DESIGN.md`](./DESIGN.md) | **Start here.** The rules — the three colour layers, the two tiers, type, motion. |
-| [`DECISIONS.md`](./DECISIONS.md) | Why the values are what they are. ADRs. |
+| [`decisions/`](./decisions/README.md) | Why the values are what they are. One ADR per file. |
 | [`tokens.css`](./tokens.css) | Single source of truth for colour, type, space, shape, motion. |
 | [`tokens.chart.css`](./tokens.chart.css) | Validated categorical palette for data viz. |
 | [`components.css`](./components.css) | Shared controls and patterns as plain CSS in `@layer brignano.components`: one import, any framework. DESIGN.md §14; catalog in `proposals/component-layer.md`; preview in `previews/components.html`. |
