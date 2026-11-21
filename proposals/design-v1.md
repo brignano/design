@@ -89,7 +89,7 @@ wireframe draws it that way.
 
 ## What v1.0 is
 
-Five pieces, built in this order. Each becomes its own issues once this is
+Six pieces, built in this order. Each becomes its own issues once this is
 accepted.
 
 ### 1. Tokens that tools can read
