@@ -385,20 +385,16 @@ for (const [, rs] of layerRules)
   }
 
 // Self-check: the #97 case. Slate comments on the cobalt highlight measured
-// 4.2–4.3:1; with the explicit override removed this check must catch it.
+// 4.2–4.3:1 and passed, because no rule set both. The pairing must still
+// find that pair; whether it passes is the contrast loop's job, so tuning
+// either token later can't break this.
 {
   const fixture = rules(`.line-highlight { background: var(--code-highlight); }
     .line-highlight .tok-comment { color: var(--code-comment); }
     .tok-comment { color: var(--code-comment); }`);
   const found = nestedPairs(fixture);
-  const caught = found.length === 1 && found[0][0] === '--code-comment' && found[0][1] === '--code-highlight'
-    && [light, dark].some((map) => {
-      const b = resolve('var(--code-highlight)', map);
-      const bgRgb = b.alpha < 1 ? over(b, resolve('var(--card)', map).rgb) : b.rgb;
-      const f = resolve('var(--code-comment)', map);
-      return ratio(f.alpha < 1 ? over(f, bgRgb) : f.rgb, bgRgb) < TEXT;
-    });
-  if (!caught) fail('self-check: a nested ink on a parent wash (.line-highlight .tok-comment) is no longer caught');
+  const caught = found.length === 1 && found[0][0] === '--code-comment' && found[0][1] === '--code-highlight';
+  if (!caught) fail('self-check: a nested ink on a parent wash (.line-highlight .tok-comment) is no longer paired');
 }
 
 let checked = 0;
