@@ -6,3 +6,4 @@
 | [App shell](app-shell.md) | accepted | #68 | — | — |
 | [Identity](identity.md) | accepted | #137 | — | ADR-0014 |
 | [Product identity](product-identity.md) | building | #153 | #154–#156, brignano/driftwood#160, brignano/guidebook#111, brignano/sites#78 | ADR-0017 |
+| [Design v1.0](design-v1.md) | proposed | #171 | — | — |
