@@ -1,6 +1,6 @@
 # Working on @brignano/design
 
-Read `DESIGN.md` (the rules) and `DECISIONS.md` (why) before changing a token.
+Read `DESIGN.md` (the rules) and `decisions/` (why, one ADR per file) before changing a token.
 Before every commit: `npm run check`.
 
 ## Wireframes before UI work
