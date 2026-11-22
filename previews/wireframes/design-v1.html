@@ -369,6 +369,7 @@
   .wf-sec > ul { padding-left: 20px; }
   .wf-product { margin: 28px 0 0; }
   .wf-product h3 { font-size: var(--text-lg); margin: 0 0 2px; }
+  .wf-product h3 small { font-weight: 400; color: var(--slate); }
   .wf-product pre { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 10px; white-space: pre-wrap; }
 
   /* ── The design site's new home (drawn in the house look) ── */
@@ -413,6 +414,144 @@
     .home-tile:nth-child(odd) { border-left: 1px solid var(--v-ink); }
     .home-tile:first-child { border-left: 0; }
   }
+
+  /* ════════════════════════════════════════════════════════════════════
+     SIGNATURE SCREENS. A theme changes the skin; this changes the shape.
+     Each product's main screen is built around the one thing it does, on
+     a different shell: console, canvas, player, conversation, document.
+     ════════════════════════════════════════════════════════════════════ */
+  .sig { display: grid; grid-template-rows: auto 1fr; }
+  .sig-top { display: flex; align-items: center; gap: 12px; padding: 8px 16px; min-height: 60px; border-bottom: 1px solid var(--v-line); }
+  .sig-top > :last-child { margin-left: auto; }
+  .sig-top > .v-eyebrow { display: none; }
+  .sig-body { padding: 20px 16px 28px; display: grid; gap: 20px; align-content: start; }
+  .sig-h { font-family: var(--v-display); font-size: clamp(1.9rem, 8cqi, 3.5rem); line-height: 1; letter-spacing: -0.02em; margin-top: 6px; text-wrap: balance; }
+  .sig-card { background: var(--v-surface); border: 1px solid var(--v-line); border-radius: var(--v-r-card); }
+  .sig dl { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 13px; }
+  .sig dt { color: var(--v-muted); } .sig dd { font-family: var(--v-mono); text-align: right; }
+  @container (min-width: 900px) {
+    .sig-top { padding: 10px 40px; }
+    .sig-top > .v-eyebrow { display: block; }
+    .sig-body { padding: 36px 40px 48px; gap: 28px; }
+  }
+  [data-dir='split'] .sig-h { font-weight: 800; font-stretch: 120%; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.92; }
+  [data-dir='split'] .sig-card, [data-dir='split'] .sig-top { border-color: var(--v-ink); }
+  [data-dir='ledger'] .sig-h { font-weight: 500; letter-spacing: -0.025em; }
+  [data-dir='ledger'] .sig-card { background: transparent; border-width: 1px 0 0; border-top-color: var(--v-ink); border-radius: 0; }
+  [data-dir='larch'] .sig-h { font-weight: 700; letter-spacing: -0.035em; }
+  [data-dir='larch'] .sig-card { border-color: transparent; }
+  [data-dir='larch'] .sig-top { border-color: transparent; }
+  [data-product='driftwood'] .sig-h { font-weight: 700; letter-spacing: -0.02em; font-size: clamp(1.5rem, 5cqi, 2.2rem); }
+  [data-product='guidebook'] .sig-h { font-weight: 800; letter-spacing: -0.045em; }
+  [data-product='sites'] .sig-h { font-weight: 500; letter-spacing: -0.03em; }
+
+  /* homelab: a console. No sidebar; every host is a tile you can read from across the room. */
+  .hl-tabs { display: none; gap: 4px; }
+  .hl-tabs a { padding: 8px 12px; text-decoration: none; font: 500 11px var(--v-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  .hl-tabs a[aria-current] { background: var(--v-ink); color: var(--v-bg); }
+  .hl-grid { display: grid; gap: 12px; }
+  .hl-tile { padding: 16px; display: grid; gap: 12px; }
+  .hl-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .hl-row b { font: 600 15px var(--v-mono); }
+  .hl-cpu { display: flex; align-items: baseline; gap: 10px; }
+  .hl-cpu .v-num { font-size: 40px; font-weight: 600; line-height: 1; letter-spacing: -0.03em; }
+  .hl-meter { height: 8px; background: var(--v-sunk); border: 1px solid var(--v-line); }
+  .hl-meter i { display: block; height: 100%; background: var(--v-ink); }
+  .hl-tile.warn .hl-meter i { background: var(--v-warn); }
+  .hl-tile.off { background: var(--v-sunk); }
+  .hl-tile.off .hl-cpu .v-num { color: var(--v-muted); }
+  @container (min-width: 900px) {
+    .hl-tabs { display: flex; margin-left: 24px; }
+    .hl-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .hl-tile:first-child { grid-column: span 2; }
+    .hl-tile:first-child .hl-cpu .v-num { font-size: 72px; }
+  }
+
+  /* Driftwood: a canvas. The system map is the screen; what drifted is the only colour. */
+  .dw-split { display: grid; align-content: start; }
+  .dw-map { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 84px); padding: 12px; border-bottom: 1px solid var(--v-line);
+    background-image: radial-gradient(var(--v-line) 1px, transparent 1px); background-size: 20px 20px; }
+  .v svg.dw-lines { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); color: var(--v-muted); stroke-width: 1; }
+  .dw-node { position: relative; place-self: center; padding: 8px 10px; background: var(--v-bg); border: 1px solid var(--v-ink); font: 500 11px var(--v-mono); white-space: nowrap; }
+  .dw-node.warn { border-color: var(--v-warn); color: var(--v-warn); box-shadow: 0 0 0 3px color-mix(in oklch, var(--v-warn) 25%, transparent); }
+  .dw-node.bad { border: 1px dashed var(--v-bad); color: var(--v-bad); }
+  .dw-node[aria-current] { background: var(--v-warn); color: var(--v-bg); }
+  .dw-inspect { padding: 20px 16px 28px; display: grid; gap: 16px; align-content: start; }
+  .dw-diff { margin: 0; font: 500 12.5px/1.9 var(--v-mono); border: 1px solid var(--v-line); overflow-x: auto; }
+  .dw-diff span { display: block; padding: 0 12px; white-space: pre; }
+  .dw-diff .del { color: var(--v-bad); background: color-mix(in oklch, var(--v-bad) 12%, transparent); }
+  .dw-diff .add { color: var(--v-ok); background: color-mix(in oklch, var(--v-ok) 12%, transparent); }
+  .dw-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  @container (min-width: 900px) {
+    .dw-split { grid-template-columns: 1fr 420px; align-content: stretch; }
+    .dw-map { grid-template-rows: repeat(3, 1fr); min-height: 640px; padding: 40px; border-bottom: 0; border-right: 1px solid var(--v-line); }
+    .v svg.dw-lines { inset: 40px; width: calc(100% - 80px); height: calc(100% - 80px); }
+    .dw-node { font-size: 13px; padding: 12px 16px; }
+    .dw-inspect { padding: 36px 32px; }
+  }
+
+  /* Guidebook: a player. One guide, its steps, and where people stop. */
+  .gb-split { display: grid; gap: 24px; }
+  .gb-steps { list-style: none; padding: 0; display: grid; gap: 10px; margin-top: 20px; }
+  .gb-steps li { display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; background: var(--v-surface); border-radius: var(--v-r-card); }
+  .gb-n { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--v-action); color: var(--v-on-action); font: 700 16px var(--v-display); }
+  .gb-steps b { display: block; font-weight: 600; margin-bottom: 6px; }
+  .gb-bar { height: 8px; border-radius: 99px; background: var(--v-sunk); overflow: hidden; }
+  .gb-bar i { display: block; height: 100%; border-radius: 99px; background: var(--v-action); }
+  .gb-steps .stuck { outline: 2px solid var(--v-warn); }
+  .gb-steps .stuck .gb-n, .gb-steps .stuck .gb-bar i { background: var(--v-warn); color: var(--v-bg); }
+  .gb-stuck { grid-column: 2 / -1; font-size: 13px; font-weight: 600; color: var(--v-warn); }
+  .gb-stage { padding: 20px; display: grid; gap: 10px; align-content: start; }
+  .gb-fake { padding: 12px 14px; background: var(--v-sunk); border-radius: var(--v-r-control); font-size: 14px; color: var(--v-ink-soft); display: flex; justify-content: space-between; }
+  .gb-fake.on { outline: 3px solid var(--v-action); outline-offset: 2px; color: var(--v-ink); font-weight: 600; }
+  .gb-coach { justify-self: end; max-width: 260px; margin-top: 6px; padding: 14px 16px; background: var(--v-ink); color: var(--v-bg); border-radius: var(--v-r-control); font-size: 14px; display: grid; gap: 4px; }
+  .gb-coach .v-eyebrow { color: inherit; opacity: 0.75; }
+  @container (min-width: 900px) {
+    .gb-split { grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .gb-stage { padding: 32px; margin-top: 12px; }
+  }
+
+  /* Sites: a conversation. You ask on the left; your site changes on the right. */
+  .st-split { display: grid; gap: 24px; }
+  .st-thread { display: grid; gap: 8px; margin-top: 20px; }
+  .st-msg { justify-self: end; max-width: 32ch; padding: 12px 16px; background: var(--v-action); color: var(--v-on-action); border-radius: var(--v-r-card); border-bottom-right-radius: 6px; }
+  .st-reply { justify-self: start; padding: 8px 14px; background: var(--v-surface); border-radius: var(--v-r-card); border-bottom-left-radius: 6px; font-size: 14px; margin-bottom: 8px; }
+  .st-ask { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 8px; }
+  .st-site { padding: 0; overflow: hidden; align-self: start; }
+  .st-url { padding: 10px 16px; font: 500 12px var(--v-mono); color: var(--v-muted); border-bottom: 1px solid var(--v-line); }
+  .st-page { padding: 20px; display: grid; gap: 14px; }
+  .st-page h3 { font: 700 24px/1.1 var(--v-display); letter-spacing: -0.02em; }
+  .st-photo { display: grid; place-items: center; min-height: 110px; background: var(--v-bg); border-radius: var(--v-r-control); font: 500 12px var(--v-mono); color: var(--v-muted); }
+  .st-page dl { font-size: 14px; gap: 0; }
+  .st-page dt, .st-page dd { padding: 7px 8px; }
+  .st-page dt { color: var(--v-ink); }
+  .st-page .new { background: var(--v-accent); color: var(--v-on-accent); }
+  @container (min-width: 900px) {
+    .st-split { grid-template-columns: 1fr 1fr; gap: 56px; }
+    .st-page { padding: 32px; }
+  }
+
+  /* Receipts: a document. The month is a page you read top to bottom. */
+  .rc-page { max-width: 760px; width: 100%; margin: 0 auto; }
+  .rc-months { display: none; gap: 16px; font-size: 14px; color: var(--v-muted); }
+  .rc-months b { color: var(--v-ink); }
+  .rc-page .sig-h { font-size: clamp(3rem, 15cqi, 6.5rem); }
+  .rc-total { font: 400 20px/1.4 var(--v-display); margin-top: 10px; }
+  .rc-total .v-num { font: 500 20px var(--v-mono); background: linear-gradient(transparent 60%, var(--v-accent) 60% 92%, transparent 92%); }
+  .rc-ledger { width: 100%; border-collapse: collapse; border-top: 3px double var(--v-ink); border-bottom: 1px solid var(--v-ink); font-size: 15px; }
+  .rc-ledger td { padding: 12px 6px; border-bottom: 1px solid var(--v-line); vertical-align: baseline; }
+  .rc-ledger td:first-child { font: 400 13px var(--v-mono); color: var(--v-muted); white-space: nowrap; width: 1%; padding-right: 16px; }
+  .rc-ledger td:last-child { font-family: var(--v-mono); text-align: right; }
+  .rc-ledger .cat { display: none; color: var(--v-muted); font-style: italic; font-family: var(--v-display); }
+  .rc-ledger .more td { color: var(--v-muted); border-bottom: 0; }
+  .rc-cats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+  .rc-cat { border-top: 1px solid var(--v-ink); padding-top: 8px; }
+  .rc-cat b { display: block; font: 500 28px/1.1 var(--v-display); margin-top: 4px; }
+  @container (min-width: 900px) {
+    .rc-months { display: flex; margin-left: 32px; }
+    .rc-ledger .cat { display: table-cell; }
+    .rc-cats { grid-template-columns: repeat(4, 1fr); }
+  }
 </style>
 </head>
 <body>
@@ -426,18 +565,20 @@
 
   <section class="wf-sec">
     <h2>Five products, one system</h2>
-    <p>Anthony's call on 2026-11-22: one house look, plus a theme for each product, so the apps differ from one another inside and not only on their marketing pages. Each screen below is the same markup and the same components. Only the theme changes.</p>
+    <p>Anthony's calls on 2026-11-22: one house look plus a theme for each product; then, on seeing the first drawing (every product on the same sidebar, stats and table), "still really cookie cutter". He was right: a theme changed the skin and nothing else. So each product's main screen is now built around the one thing that product does, on a shell of its own.</p>
     <ul>
-      <li><b>The house (shared by all):</b> the layout, how every control behaves, mono for data, the <code>product | section</code> bar above each heading, the <code>A|B</code> stamp, and the accessibility floor.</li>
-      <li><b>A theme (per product):</b> a kit, a ground, an action hue, a typeface and corners. The whole file is printed above each product.</li>
-      <li>Receipts' screen is a guess at its content, with demo data, to show the Ledger kit on an app. The other four use each product's own words.</li>
+      <li><b>The house (shared by all):</b> how every control behaves, mono for data, the <code>product | section</code> bar above each heading, the <code>A|B</code> stamp, and the accessibility floor.</li>
+      <li><b>A theme (per product):</b> a kit, a ground, an action hue, a typeface, corners, and a shell. The whole file is printed above each product.</li>
+      <li><b>A shell</b> is the shape of the main screen: a console of tiles, a canvas, a player, a conversation, a document. The system ships the shells; a product picks one.</li>
+      <li>Driftwood's diff, Guidebook's counts and all of Receipts are demo data. Sites and homelab use the words and data already in this repo.</li>
     </ul>
+    <p>Rejected: the same sidebar, four stats and a table in five colours (the first drawing; it is what "cookie cutter" described).</p>
     <div id="wf-products"></div>
   </section>
 
   <section class="wf-sec">
     <h2>The design site's new home</h2>
-    <p>Today's home is 40 identical cards. This one opens on the system doing its job: tap a product and the screen re-themes, then build a theme of your own and read the file it makes. It works here: try the chips, the slider and the two menus.</p>
+    <p>Today's home is 40 identical cards. This one opens on the system doing its job: tap a product and the screen re-themes, shape and all, then build a theme of your own and read the file it makes. It works here: try the chips, the slider and the two menus.</p>
     <p>Rejected: a longer card grid with filters (still a catalogue); an animated hero with no controls (shows nothing true about the system).</p>
     <div class="wf-frames" id="wf-home"></div>
   </section>
@@ -642,87 +783,149 @@
     hydrate(document);
 
     // ── Product themes and the home page ──────────────────────────────────
-    const PRODUCTS = {
-      homelab: {
-        kit: 'split', file: 'kit: split   # the house look, unchanged',
-        name: 'homelab', icon: 'house', section: 'Infrastructure', title: 'Hosts', action: ['plus', 'Add host'], search: 'Search hosts',
-        nav: [['Infrastructure', [['monitor', 'Hosts'], ['download', 'Backups'], ['refresh-cw', 'Updates']]], ['Network', [['link', 'Tunnels'], ['lock', 'Certificates']]], ['System', [['bell', 'Alerts'], ['settings', 'Settings']]]],
-        stats: [['Hosts', '5'], ['Running', '3'], ['Average CPU', '34%'], ['Longest uptime', '41 days']],
-        chips: [['All', 5], ['Running', 3], ['Degraded', 1], ['Stopped', 1]],
-        cols: ['Host', 'Status', 'CPU', 'Uptime', 'Last backup'],
-        rows: [['pve-01', 'ok', 'Running', '23%', '41 days', 'Today, 03:00'], ['nas', 'ok', 'Running', '8%', '41 days', 'Today, 03:10'], ['pi-dns', 'warn', 'Degraded', '71%', '3 days', 'Yesterday, 03:00'], ['media', 'ok', 'Running', '35%', '12 days', 'Today, 03:20'], ['backup-offsite', 'bad', 'Stopped', '–', '–', '6 days ago']],
-      },
-      driftwood: {
-        kit: 'split', file: 'kit: split\nscheme: dark\nhue: 195        # teal\ntypeface: mono',
-        name: 'driftwood', icon: 'refresh-cw', section: 'System', title: 'Drift', action: ['refresh-cw', 'Scan now'], search: 'Search resources',
-        nav: [['System', [['triangle-alert', 'Drift'], ['map-pin', 'Map'], ['clock', 'History']]], ['Sources', [['link', 'Repos'], ['lock', 'Accounts']]], ['Setup', [['settings', 'Settings']]]],
-        stats: [['Resources', '48'], ['In sync', '45'], ['Drifted', '2'], ['Last scan', '4 min']],
-        chips: [['All', 48], ['In sync', 45], ['Drifted', 2], ['Missing', 1]],
-        cols: ['Resource', 'Status', 'Changed', 'Last seen', 'Source'],
-        rows: [['orders-db', 'warn', 'Drifted', '2 fields', '4 min ago', 'architecture.yaml'], ['auth-service', 'warn', 'Drifted', '1 field', '4 min ago', 'architecture.yaml'], ['cdn-edge', 'bad', 'Missing', '–', '2 days ago', 'architecture.yaml'], ['api-gateway', 'ok', 'In sync', '–', '4 min ago', 'architecture.yaml'], ['worker-queue', 'ok', 'In sync', '–', '4 min ago', 'architecture.yaml']],
-      },
-      guidebook: {
-        kit: 'larch', file: 'kit: larch\nground: bright\nhue: 290        # violet\nheading-weight: 800',
-        name: 'Guidebook', icon: 'map-pin', section: 'Guides', title: 'Guides', action: ['plus', 'New guide'], search: 'Search guides',
-        nav: [['Training', [['map-pin', 'Guides'], ['user', 'New hires'], ['circle-check', 'Results']]], ['Setup', [['download', 'Install'], ['settings', 'Settings']]]],
-        stats: [['Guides', '3'], ['New hires', '12'], ['Finished', '9'], ['Stuck', '2']],
-        chips: [['All', 3], ['Live', 2], ['Draft', 1]],
-        cols: ['Guide', 'Status', 'Steps', 'Finished', 'Most get stuck at'],
-        rows: [['Invite a teammate', 'ok', 'Live', '4', '9 of 12', 'Step 3: Press Invite'], ['Set up billing', 'ok', 'Live', '6', '7 of 12', 'Step 2: Open Billing'], ['Export data', '', 'Draft', '5', '–', '–']],
-      },
-      sites: {
-        kit: 'larch', file: 'kit: larch\nground: wash\nhue: 355        # magenta\nheading-weight: 500\ncorners: 16',
-        name: 'Sites', icon: 'pencil', section: 'Maple Street Plumbing', title: 'Requests', action: ['plus', 'Ask for a change'], search: 'Search requests',
-        nav: [['Your site', [['bell', 'Requests'], ['monitor', 'Pages'], ['eye', 'Photos']]], ['Your business', [['clock', 'Hours'], ['pencil', 'Prices'], ['settings', 'Settings']]]],
-        stats: [['Requests', '3'], ['Live', '3'], ['Average time', '41s'], ['Site', 'Up']],
-        chips: [['All', 3], ['Live', 3], ['Working', 0]],
-        cols: ['Request', 'Status', 'Time', 'Asked', 'Page'],
-        rows: [['Can you add Saturday hours? 9 to 1.', 'ok', 'Live', '40s', 'Today', 'Hours'], ['Put a photo of the van at the top?', 'ok', 'Live', '52s', 'Yesterday', 'Home'], ['Drain clearing is $120 now.', 'ok', 'Live', '31s', 'Monday', 'Prices']],
-      },
-      receipts: {
-        kit: 'ledger', file: 'kit: ledger   # unchanged',
-        name: 'Receipts', icon: 'copy', section: 'November', title: 'Receipts', action: ['upload', 'Add receipt'], search: 'Search receipts',
-        nav: [['Records', [['copy', 'Receipts'], ['calendar', 'Months'], ['download', 'Exports']]], ['Setup', [['funnel', 'Categories'], ['settings', 'Settings']]]],
-        stats: [['This month', '$612.40'], ['Receipts', '14'], ['Filed', '12'], ['Needs a look', '2']],
-        chips: [['All', 14], ['Filed', 12], ['Needs a look', 2]],
-        cols: ['From', 'Status', 'Amount', 'Date', 'Category'],
-        rows: [['Hardware store', 'ok', 'Filed', '$48.20', '7 Nov', 'Home'], ['Internet', 'ok', 'Filed', '$70.00', '5 Nov', 'Bills'], ['Parking', 'warn', 'Needs a look', '$12.00', '4 Nov', '–'], ['Groceries', 'ok', 'Filed', '$93.15', '2 Nov', 'Food'], ['Train ticket', 'warn', 'Needs a look', '$31.50', '1 Nov', '–']],
-      },
-    };
     const icon = (n) => `<i data-icon="${n}"></i>`;
-    const appHTML = (p) => `
-      <div class="v app">
-        <div class="app-bar">
-          <button class="v-btn ghost icon" type="button" aria-label="Menu">${icon('menu')}</button>
-          <span class="app-brand">${icon(p.icon)}${p.name}</span>
-          <button class="v-btn ghost icon" type="button" aria-label="Account">${icon('user')}</button>
-        </div>
-        <nav class="app-side" aria-label="Main">
-          <span class="app-brand">${icon(p.icon)}${p.name}</span>
-          <div class="app-nav">${p.nav.map(([h, items], g) => `<h2>${h}</h2>` + items.map(([ic, label], i) => `<a href="#"${g + i === 0 ? ' aria-current="page"' : ''}>${icon(ic)}${label}</a>`).join('')).join('')}</div>
-        </nav>
-        <main class="app-main">
-          <div class="app-title">
-            <div><p class="v-eyebrow">${p.name}<b>${p.section}</b></p><h1>${p.title}</h1></div>
-            <button class="v-btn primary" type="button">${icon(p.action[0])}${p.action[1]}</button>
+    const eyebrow = (a, b) => `<p class="v-eyebrow">${a}<b>${b}</b></p>`;
+    const PRODUCTS = {
+      homelab: { name: 'homelab', kit: 'split', shell: 'Console', file: 'kit: split        # the house look, unchanged\nshell: console' },
+      driftwood: { name: 'Driftwood', kit: 'split', shell: 'Canvas', file: 'kit: split\nscheme: dark\nhue: 195          # teal\ntypeface: mono\nshell: canvas' },
+      guidebook: { name: 'Guidebook', kit: 'larch', shell: 'Player', file: 'kit: larch\nground: bright\nhue: 290          # violet\nheading-weight: 800\nshell: player' },
+      sites: { name: 'Sites', kit: 'larch', shell: 'Conversation', file: 'kit: larch\nground: wash\nhue: 355          # magenta\nheading-weight: 500\ncorners: 16\nshell: conversation' },
+      receipts: { name: 'Receipts', kit: 'ledger', shell: 'Document', file: 'kit: ledger       # unchanged\nshell: document' },
+    };
+    const HOSTS = [['pve-01', 'ok', 'Running', '23%', 23, '41 days', 'Today, 03:00', ''], ['pi-dns', 'warn', 'Degraded', '71%', 71, '3 days', 'Yesterday, 03:00', 'warn'], ['nas', 'ok', 'Running', '8%', 8, '41 days', 'Today, 03:10', ''], ['media', 'ok', 'Running', '35%', 35, '12 days', 'Today, 03:20', ''], ['backup-offsite', 'bad', 'Stopped', '–', 0, '–', '6 days ago', 'off']];
+    const SCREENS = {
+      homelab: () => `
+        <div class="v sig">
+          <header class="sig-top">
+            <span class="app-brand">${icon('house')}homelab</span>
+            <nav class="hl-tabs" aria-label="Main"><a href="#" aria-current="page">Hosts</a><a href="#">Backups</a><a href="#">Tunnels</a><a href="#">Alerts</a></nav>
+            <button class="v-btn primary" type="button">${icon('plus')}Add host</button>
+          </header>
+          <div class="sig-body">
+            <div>${eyebrow('homelab', 'Infrastructure')}<h1 class="sig-h">5 hosts. 2 need you.</h1></div>
+            <div class="hl-grid">${HOSTS.map(([n, tone, st, cpu, w, up, bk, cls]) => `
+              <article class="sig-card hl-tile ${cls}">
+                <div class="hl-row"><b>${n}</b><span class="v-pill ${tone}">${st}</span></div>
+                <div class="hl-cpu"><span class="v-num">${cpu}</span><span class="v-eyebrow">CPU</span></div>
+                <div class="hl-meter"><i style="width:${w}%"></i></div>
+                <dl><dt>Uptime</dt><dd>${up}</dd><dt>Last backup</dt><dd>${bk}</dd></dl>
+              </article>`).join('')}
+            </div>
           </div>
-          <div class="app-stats">${p.stats.map(([l, v]) => `<div class="app-stat"><span class="v-eyebrow">${l}</span><b>${v}</b></div>`).join('')}</div>
-          <div class="app-tools">
-            <input class="v-field" placeholder="${p.search}" aria-label="${p.search}">
-            <div class="app-chips">${p.chips.map(([l, n], i) => `<button class="v-chip" type="button" aria-pressed="${i === 0}">${l} <span class="v-num">${n}</span></button>`).join('')}</div>
+        </div>`,
+      driftwood: () => `
+        <div class="v sig">
+          <header class="sig-top">
+            <span class="app-brand">${icon('refresh-cw')}driftwood</span>
+            ${eyebrow('Last scan', '4 min ago')}
+            <button class="v-btn primary" type="button">${icon('refresh-cw')}Scan now</button>
+          </header>
+          <div class="dw-split">
+            <div class="dw-map" role="img" aria-label="System map: 6 resources, 2 drifted, 1 missing">
+              <svg class="dw-lines" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M50 50H250M250 50V250M250 50L150 150M150 150V250"/></svg>
+              <span class="dw-node bad">cdn-edge</span><span class="dw-node">web-app</span><span class="dw-node">api-gateway</span>
+              <span></span><span class="dw-node warn">auth-service</span><span class="dw-node warn" aria-current="true">orders-db</span>
+              <span></span><span class="dw-node">sessions</span><span class="dw-node">worker-queue</span>
+            </div>
+            <aside class="dw-inspect">
+              <div>${eyebrow('driftwood', 'orders-db')}<h1 class="sig-h">2 fields drifted</h1></div>
+              <pre class="dw-diff"><span>  engine: postgres 16</span><span class="del">- instance: db.t3.medium</span><span class="add">+ instance: db.t3.large</span><span class="del">- backups: 7 days</span><span class="add">+ backups: 1 day</span></pre>
+              <p class="v-muted">The file says one thing and the live system says another.</p>
+              <div class="dw-actions"><button class="v-btn primary" type="button">Update the file</button><button class="v-btn" type="button">Change it back</button></div>
+            </aside>
           </div>
-          <table class="app-table">
-            <thead><tr><th>${p.cols[0]}</th><th>${p.cols[1]}</th><th class="r">${p.cols[2]}</th><th class="r wide">${p.cols[3]}</th><th class="wide">${p.cols[4]}</th></tr></thead>
-            <tbody>${p.rows.map(([a, tone, st, c, d, e]) => `<tr><td>${a}</td><td><span class="v-pill ${tone}">${st}</span></td><td class="r">${c}</td><td class="r wide">${d}</td><td class="wide v-muted">${e}</td></tr>`).join('')}</tbody>
-          </table>
-        </main>
-      </div>`;
+        </div>`,
+      guidebook: () => `
+        <div class="v sig">
+          <header class="sig-top">
+            <span class="app-brand">${icon('map-pin')}Guidebook</span>
+            <button class="v-btn primary" type="button">${icon('plus')}New guide</button>
+          </header>
+          <div class="sig-body gb-split">
+            <div>
+              ${eyebrow('Guidebook', 'Invite a teammate')}
+              <h1 class="sig-h">9 of 12 finished.</h1>
+              <ol class="gb-steps">
+                <li><span class="gb-n">1</span><div><b>Open Team</b><div class="gb-bar"><i style="width:100%"></i></div></div><span class="v-num">12</span></li>
+                <li><span class="gb-n">2</span><div><b>Press Invite</b><div class="gb-bar"><i style="width:92%"></i></div></div><span class="v-num">11</span></li>
+                <li class="stuck"><span class="gb-n">3</span><div><b>Type their email</b><div class="gb-bar"><i style="width:75%"></i></div></div><span class="v-num">9</span><span class="gb-stuck">2 people stopped here</span></li>
+                <li><span class="gb-n">4</span><div><b>Send</b><div class="gb-bar"><i style="width:75%"></i></div></div><span class="v-num">9</span></li>
+              </ol>
+            </div>
+            <div class="sig-card gb-stage">
+              <p class="v-eyebrow">What a new hire sees</p>
+              <div class="gb-fake">Overview</div>
+              <div class="gb-fake on">Invite teammate ${icon('plus')}</div>
+              <div class="gb-coach"><span class="v-eyebrow">Step 2 of 4</span><b>Press Invite</b><span>On your app, not a screenshot of it.</span></div>
+              <div class="gb-fake">Billing</div>
+            </div>
+          </div>
+        </div>`,
+      sites: () => `
+        <div class="v sig">
+          <header class="sig-top">
+            <span class="app-brand">${icon('pencil')}Sites</span>
+            <span class="v-muted">Maple Street Plumbing</span>
+            <span class="v-pill ok">Site is up</span>
+          </header>
+          <div class="sig-body st-split">
+            <div>
+              ${eyebrow('Sites', 'Requests')}
+              <h1 class="sig-h">What should change?</h1>
+              <div class="st-thread">
+                <p class="st-msg">Put a photo of the van at the top?</p><p class="st-reply">Done. It's live. <span class="v-num v-muted">52s</span></p>
+                <p class="st-msg">Drain clearing is $120 now.</p><p class="st-reply">Done. It's live. <span class="v-num v-muted">31s</span></p>
+                <p class="st-msg">Can you add Saturday hours? 9 to 1.</p><p class="st-reply">Done. It's live. <span class="v-num v-muted">40s</span></p>
+              </div>
+              <div class="st-ask"><input class="v-field" placeholder="Ask for a change" aria-label="Ask for a change"><button class="v-btn primary icon" type="button" aria-label="Send">${icon('arrow-up')}</button></div>
+            </div>
+            <div class="sig-card st-site">
+              <p class="st-url">maplestreetplumbing.com</p>
+              <div class="st-page">
+                <div class="st-photo">photo: the van</div>
+                <h3>Maple Street Plumbing</h3>
+                <dl><dt>Mon to Fri</dt><dd>8 – 5</dd><dt class="new">Saturday</dt><dd class="new">9 – 1</dd><dt>Sunday</dt><dd>Closed</dd></dl>
+                <dl><dt>Leak repair</dt><dd>$95</dd><dt>Drain clearing</dt><dd>$120</dd></dl>
+              </div>
+            </div>
+          </div>
+        </div>`,
+      receipts: () => `
+        <div class="v sig">
+          <header class="sig-top">
+            <span class="app-brand">${icon('copy')}Receipts</span>
+            <span class="rc-months"><span>October</span><b>November</b><span>December</span></span>
+            <button class="v-btn primary" type="button">${icon('upload')}Add receipt</button>
+          </header>
+          <div class="sig-body rc-page">
+            <div>
+              ${eyebrow('Receipts', '2026')}
+              <h1 class="sig-h">November</h1>
+              <p class="rc-total"><span class="v-num">$612.40</span> across 14 receipts. Two need a look.</p>
+            </div>
+            <table class="rc-ledger"><tbody>
+              <tr><td>7 Nov</td><td>Hardware store</td><td class="cat">Home</td><td>$48.20</td></tr>
+              <tr><td>5 Nov</td><td>Internet</td><td class="cat">Bills</td><td>$70.00</td></tr>
+              <tr><td>4 Nov</td><td>Parking <span class="v-pill warn">Needs a look</span></td><td class="cat">–</td><td>$12.00</td></tr>
+              <tr><td>2 Nov</td><td>Groceries</td><td class="cat">Food</td><td>$93.15</td></tr>
+              <tr><td>1 Nov</td><td>Train ticket <span class="v-pill warn">Needs a look</span></td><td class="cat">–</td><td>$31.50</td></tr>
+              <tr class="more"><td></td><td><a href="#">9 more</a></td><td class="cat"></td><td></td></tr>
+            </tbody></table>
+            <div class="rc-cats">
+              <div class="rc-cat"><span class="v-eyebrow">Food</span><b>$241.10</b></div>
+              <div class="rc-cat"><span class="v-eyebrow">Bills</span><b>$190.00</b></div>
+              <div class="rc-cat"><span class="v-eyebrow">Home</span><b>$118.30</b></div>
+              <div class="rc-cat"><span class="v-eyebrow">Travel</span><b>$63.00</b></div>
+            </div>
+          </div>
+        </div>`,
+    };
     const dress = (el, key) => {
       el.dataset.dir = PRODUCTS[key].kit;
       if (key === 'homelab') delete el.dataset.product; else el.dataset.product = key;
       el.removeAttribute('style');
       delete el.dataset.built;
-      el.innerHTML = appHTML(PRODUCTS[key]);
+      el.innerHTML = SCREENS[key]();
       hydrate(el);
     };
 
@@ -731,7 +934,7 @@
     for (const key of Object.keys(PRODUCTS)) {
       const block = document.createElement('div');
       block.className = 'wf-product';
-      block.innerHTML = `<h3>${PRODUCTS[key].name}</h3><pre>${PRODUCTS[key].file}</pre>
+      block.innerHTML = `<h3>${PRODUCTS[key].name} <small>· ${PRODUCTS[key].shell}</small></h3><pre>${PRODUCTS[key].file}</pre>
         <div class="wf-frames">
           <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
           <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>

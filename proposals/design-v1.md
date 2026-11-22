@@ -27,8 +27,10 @@ per product, so the apps differ from one another (2026-11-22).
 [`previews/wireframes/design-v1.html`](../previews/wireframes/design-v1.html)
 draws, at 390px and 1280px:
 
-- **five products in their themes**: homelab, Driftwood, Guidebook, Sites and
-  Receipts, each on its own app screen, same markup and components;
+- **five products, each on its own signature screen**: homelab as a console
+  of tiles, Driftwood as a map with a diff, Guidebook as a guide's steps,
+  Sites as a conversation beside the live site, Receipts as a month you read
+  like a page;
 - **the design site's new home**, working: tap a product to re-theme the
   screen, or build a theme and read the file it makes;
 - **the three kits** the themes are built from, each on Sites' product page
@@ -60,6 +62,29 @@ The system generates the full palette, light and dark, from those values and
 refuses a theme whose colours fail contrast. Adding a product is choosing a
 few values; it never adds a component or a rule.
 
+### A shell per product, so the shape differs too
+
+The first drawing put every product on the same sidebar, four stats and a
+table, in five skins. Anthony's verdict: "still really cookie cutter". Colour
+and type alone don't make two apps different; the shape of the main screen
+does. So a theme also names a **shell**, and the system ships five:
+
+| Shell | The main screen is | First used by |
+|---|---|---|
+| **Console** | a grid of large tiles, one per thing you watch, no sidebar | homelab |
+| **Canvas** | a full-bleed map or diagram, with an inspector beside it | Driftwood |
+| **Player** | one thing's steps in order, with a preview of the current one | Guidebook |
+| **Conversation** | a thread and a composer, with the result shown beside it | Sites |
+| **Document** | a single centred page you read top to bottom | Receipts |
+
+A shell is a template in this repo (like today's `app-shell.css`), built from
+the shared components, so two products on the same shell still behave the
+same. The rule that goes with it: **a product's main screen is built around
+the one thing the product does**, the way its marketing page already is
+(ADR-0017's "the page does the thing"). The sidebar-and-table layout stays for
+settings and lists, where it belongs, and is no longer the default first
+screen.
+
 ### The three kits
 
 A kit sets the character a theme starts from.
@@ -82,14 +107,15 @@ Larch.
 
 ### Who gets what
 
-| Product | Kit | What its theme changes | Why |
-|---|---|---|---|
-| homelab, life, brignano.io, this site | Split | nothing: the house look, lime signal | dense tools and the family's own face |
-| Driftwood | Split | always dark, all mono, teal signal | it already reads as an incident console (ADR-0017) |
-| Guidebook | Larch | bright ground, violet, 800-weight headings | loud and friendly, for new hires |
-| Sites | Larch | pink wash, magenta, medium headings, rounder | soft, for local businesses |
-| Receipts, Breakeven | Ledger | nothing yet | money and records suit paper and a serif |
-| Card | undecided | | |
+| Product | Kit | Shell | What its theme changes | Why |
+|---|---|---|---|---|
+| homelab | Split | Console | nothing: the house look, lime signal | dense, glanceable |
+| life, brignano.io, this site | Split | undecided | nothing | the family's own face |
+| Driftwood | Split | Canvas | always dark, all mono, teal signal | it already reads as an incident console (ADR-0017) |
+| Guidebook | Larch | Player | bright ground, violet, 800-weight headings | loud and friendly, for new hires |
+| Sites | Larch | Conversation | pink wash, magenta, medium headings, rounder | soft, for local businesses |
+| Receipts | Ledger | Document | nothing yet | money and records suit paper and a serif |
+| Breakeven, Card | undecided | undecided | | |
 
 These follow the marks and choices each product already has (teal, violet,
 magenta; ADR-0017), so a product's app now matches its marketing page.
@@ -127,6 +153,8 @@ wireframe draws it that way.
 
 - More combinations to keep accessible. The generator and `npm run check`
   measure every theme, so this is machine work, not review work.
+- Five shells to build and keep, instead of one app shell. This is the real
+  cost of not being cookie cutter, and the main addition to the build.
 - Three kits to maintain instead of one look. Each kit is a set of token
   values over the same components, not a second set of components.
 - A shared component has to look right in all three kits, so each component's
@@ -228,7 +256,8 @@ flowchart LR
 
 ## What it costs
 
-- **Build:** large. About 25 to 35 size S and M issues across the six pieces.
+- **Build:** large. About 30 to 40 size S and M issues across the six pieces,
+  five of them the shells.
 - **Running:** nothing. Static files on the existing Worker; fonts self-hosted.
 - **Maintenance:** one new build step (the token generator) and an icon set we
   now own. The audit removes more upkeep than both add, because drift is
@@ -249,8 +278,9 @@ flowchart LR
 
 ## Open questions
 
-1. **Are the themes assigned to the right products?** Recommended: as in "Who
-   gets what". Receipts, Breakeven and Card are the ones to check.
+1. **Are the kits and shells assigned to the right products?** Recommended: as
+   in "Who gets what". Receipts' screen is a guess at what the app shows;
+   Breakeven, Card, life and brignano.io are undecided.
 2. **Tokens generated from JSON, with a build step in this repo?** Recommended:
    yes. Themes need a generator either way, so this is close to settled.
 
@@ -264,6 +294,7 @@ Filed once this is accepted, each with Decisions taken from here.
 1. Tokens: JSON source, generator, three tiers, old names as aliases (0.13)
 2. Foundations: the three kits' colour, type, shape, motion (1.0.0-next)
 2a. Themes: the file format, the generator and its contrast gate; one theme per product
+2b. Shells: console, canvas, player, conversation, document, one issue each, wireframed first
 3. Icons: the stroke rule and check; the selected variant
 4. Icons: grow the set to what the apps use; product marks
 5. Components: restyle the existing set, one issue per gallery section
