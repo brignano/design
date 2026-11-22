@@ -1,7 +1,7 @@
 {
-  "$description": "Larch: soft and friendly. Cream ground, surfaces separated by tint instead of borders, pill buttons, amber for the one highlight. Night is deep green, not black.",
+  "$description": "Larch: soft and friendly. A cream page with lighter surfaces on it, separated by tint instead of borders, pill buttons, amber for the one highlight. Night is deep green, not black.",
   "kit": {
-    "$description": "Larch: soft and friendly. Cream ground, surfaces separated by tint instead of borders, pill buttons, amber for the one highlight. Night is deep green, not black.",
+    "$description": "Larch: soft and friendly. A cream page with lighter surfaces on it, separated by tint instead of borders, pill buttons, amber for the one highlight. Night is deep green, not black.",
     "$extensions": {
       "io.brignano": {
         "selector": "[data-kit='larch']"
@@ -10,7 +10,7 @@
     "bg": {
       "$type": "color",
       "$value": {
-        "light": "#f9f4ea",
+        "light": "#f1eadc",
         "dark": "#0d1611"
       },
       "$description": "── Ground and surfaces ──"
@@ -18,32 +18,32 @@
     "card": {
       "$type": "color",
       "$value": {
-        "light": "#f3ecde",
+        "light": "#faf6ee",
         "dark": "#16211b"
       }
     },
     "surface-hover": {
       "$type": "color",
       "$value": {
-        "light": "#eae2d3",
+        "light": "#f4eee1",
         "dark": "#1e2b24"
       }
     },
     "surface-active": {
       "$type": "color",
       "$value": {
-        "light": "#ddd5c4",
+        "light": "#ece6d8",
         "dark": "#27342c"
       }
     },
     "surface-sticky": {
-      "$value": "light-dark(color-mix(in srgb, #f3ecde 92%, transparent), color-mix(in srgb, #0d1611 92%, transparent))",
+      "$value": "light-dark(color-mix(in srgb, #faf6ee 92%, transparent), color-mix(in srgb, #0d1611 92%, transparent))",
       "$description": "92% of the card in light, of the page in dark, as on :root."
     },
     "on-dark": {
       "$type": "color",
       "$value": {
-        "light": "#f9f4ea",
+        "light": "#f1eadc",
         "dark": "#0d1611"
       }
     },
@@ -162,7 +162,7 @@
     "disabled": {
       "$type": "color",
       "$value": {
-        "light": "#ddd5c4",
+        "light": "#ece6d8",
         "dark": "#27342c"
       },
       "$description": "Disabled is neutral, never hued."
@@ -235,6 +235,14 @@
     },
     "shadow-1": {
       "$value": "none"
+    },
+    "chart-surface": {
+      "$type": "color",
+      "$value": {
+        "light": "#fefcf7",
+        "dark": "#16211b"
+      },
+      "$description": "── Charts ──\nA chart sits on near-white paper in light: the orange series needs it to\nreach 3:1, which the tinted page and card cannot give it."
     }
   }
 }

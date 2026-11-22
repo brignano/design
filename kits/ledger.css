@@ -111,4 +111,9 @@
   --pill-radius: var(--radius-sm);
   --dialog-radius: var(--radius-lg);
   --focus-ring: var(--action-ink);
+  --chart-surface: var(--card);
+  --chart-other: var(--slate);
+  --chart-grid: var(--line);
+  --chart-axis: var(--slate);
+  --seq-0: var(--line);
 }

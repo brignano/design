@@ -290,6 +290,10 @@ for (const fg of ['--action', '--success', '--attention', '--danger', '--line-co
 // Chart series: light slots 3–5 are exempt by the relief rule in tokens.chart.css.
 for (let n = 1; n <= 8; n++) floors.push([`--chart-${n}`, '--chart-surface', MARK, n >= 3 && n <= 5 ? 'dark' : null]);
 
+// The floors that come from tokens alone, before the component layer adds its
+// own pairs. Every kit is held to these too (section 16).
+const TOKEN_FLOORS = floors.slice();
+
 // Component layer (DESIGN.md §14): components.css and templates/*.css.
 const LAYER_FILES = ['components.css'];
 if (existsSync(new URL('templates/', root)))
@@ -566,14 +570,14 @@ else {
   const text = (h) => h.replace(/\splaceholder="([^"]*)"/g, '>$1<').replace(/<[^>]+>/g, ' ')
     .replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&').replace(/\s+/g, ' ');
-  const shown = [...page.matchAll(/<section class="rule"[^>]*>([\s\S]*?)<\/section>/g)].map(([, body]) => {
+  const shown = [...page.matchAll(/<section class="guideline"[^>]*>([\s\S]*?)<\/section>/g)].map(([, body]) => {
     const h = body.match(/<h2[^>]*\sid="([\w-]+)"[^>]*>([^<]+)<\/h2>/);
     const part = (cls) => [...body.matchAll(new RegExp(`<div class="ex ${cls}">`, 'g'))].length;
     const panel = (cls) => body.split(`<div class="ex ${cls}">`)[1]?.split('<div class="ex ')[0] ?? '';
     return { id: h?.[1], title: h?.[2].trim(), dos: part('ex-do'), donts: part('ex-dont'), doText: text(panel('ex-do')), dontText: text(panel('ex-dont')) };
   });
   const sections = (page.match(/<section\b/g) || []).length;
-  if (sections !== shown.length) fail(`previews/writing.html: ${sections} sections, ${shown.length} of them <section class="rule">; every section is a rule`);
+  if (sections !== shown.length) fail(`previews/writing.html: ${sections} sections, ${shown.length} of them <section class="guideline">; every section is a rule`);
   const dup = (xs) => xs.filter((x, i) => xs.indexOf(x) !== i);
   for (const d of dup(rules.map((r) => r.slug))) fail(`DESIGN.md §15: rule "${d}" appears twice`);
   for (const d of dup(shown.map((h) => h.id))) fail(`previews/writing.html: section "${d}" appears twice`);
@@ -605,23 +609,20 @@ if (!existsSync(new URL('controls.css', root)) || read('controls.css') !== contr
 
 // ── 16. Every kit holds the floors ───────────────────────────────────────────
 // A kit re-declares :root's colours under [data-kit], so it is measured the
-// way :root is: its values laid over :root's, each scheme on its own.
+// way :root is: its values laid over :root's, each scheme on its own, against
+// every token floor in section 1 (TOKEN_FLOORS). State, code, mark and chart
+// colours are the same tokens in every kit, so they are measured again on the
+// kit's surfaces.
 //
-// These are the floors a kit owes whatever the components do with it: text on
-// its surfaces, a label on each fill, a control found on its page. The pairs
-// the check reads out of components.css (section 1) are measured against the
-// default look only until #183 restyles the components for the kits; they
-// join here then.
-const KIT_FLOORS = [];
-for (const bg of ['--card', '--bg']) {
-  for (const fg of ['--ink', '--ink-soft', '--slate', '--action-ink', '--action-ink-hover', '--success-ink', '--attention-ink', '--danger-ink']) KIT_FLOORS.push([fg, bg, TEXT]);
-  for (const fg of ['--line-control', '--danger-fill', '--success', '--attention', '--danger']) KIT_FLOORS.push([fg, bg, MARK]);
-}
-for (const bg of ['--surface-hover', '--surface-sticky']) for (const fg of ['--ink', '--ink-soft']) KIT_FLOORS.push([fg, bg, TEXT]);
-KIT_FLOORS.push(['--ink', '--surface-active', TEXT], ['--on-accent', '--accent', TEXT], ['--action-ink', '--action-surface', TEXT]);
-for (const bg of ['--action', '--action-hover', '--action-pressed']) KIT_FLOORS.push(['--on-action', bg, TEXT]);
-for (const bg of ['--danger-fill', '--danger-fill-hover', '--danger-fill-pressed']) KIT_FLOORS.push(['--on-danger', bg, TEXT]);
-for (const s of ['success', 'attention', 'danger']) KIT_FLOORS.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
+// Two named differences from :root, and no others:
+//   - `--action` as a MARK (3:1) passes if `--action` OR `--action-edge`
+//     reaches it. A kit whose fill can't be found on its page (Split's lime
+//     in light) names the colour that stands in: its button's border, and
+//     what #183 must draw an action-coloured mark with (ADR-0020).
+//   - the pairs the check reads out of components.css are not here yet. They
+//     are measured against the default look only until #183 restyles the
+//     components for the kits, and join then.
+const STATE_TOKEN = /^--(success|attention|danger)(-|$)/;
 
 let kitsChecked = 0;
 const kitFiles = existsSync(new URL('kits/', root)) ? readdirSync(new URL('kits/', root)).filter((f) => f.endsWith('.css')) : [];
@@ -632,7 +633,11 @@ for (const file of kitFiles) {
     if (b.selector !== `[data-kit='${name}']`) fail(`kit ${name}: kits/${file} has a rule for \`${b.selector}\`; a kit is scoped to [data-kit='${name}'] and nothing else`);
     for (const [k, v] of b.decls) decls.set(k, v);
   }
-  for (const k of decls.keys()) if (!tokens.has(k)) fail(`kit ${name}: ${k} is not a token :root defines`);
+  for (const k of decls.keys()) {
+    if (!tokens.has(k)) fail(`kit ${name}: ${k} is not a token :root defines`);
+    // State hues are the same in every kit (ADR-0020).
+    if (STATE_TOKEN.test(k)) fail(`kit ${name}: ${k} is a state colour; a kit may not set one`);
+  }
   [['light', light], ['dark', dark]].forEach(([theme, base], i) => {
     const map = new Map([...base, ...[...decls].map(([k, v]) => [k, side(v, i)])]);
     const at = (token, under) => {
@@ -644,16 +649,15 @@ for (const file of kitFiles) {
       return [ratio(at(fg, b), b), b];
     };
     try {
-      for (const [fg, bg, floor] of KIT_FLOORS) {
+      for (const [fg, bg, floor, only] of [...TOKEN_FLOORS, ['--on-accent', '--accent', TEXT]]) {
+        if (only && only !== theme) continue;
         const [r, b] = measure(fg, bg);
         kitsChecked++;
-        if (r < floor) fail(`kit ${name} (${theme}): ${fg} on ${bg} is ${r.toFixed(2)}:1 (${toHex(at(fg, b))} on ${toHex(b)}), needs ${floor}:1`);
-      }
-      // The primary button is found by its fill or, failing that, its edge.
-      for (const bg of ['--card', '--bg']) {
-        const found = Math.max(measure('--action', bg)[0], measure('--action-edge', bg)[0]);
-        kitsChecked++;
-        if (found < MARK) fail(`kit ${name} (${theme}): neither --action nor --action-edge reaches ${MARK}:1 on ${bg} (${found.toFixed(2)}:1); the primary button can't be found`);
+        if (r >= floor) continue;
+        if (fg === '--action' && floor === MARK) {
+          const edge = measure('--action-edge', bg)[0];
+          if (edge < MARK) fail(`kit ${name} (${theme}): neither --action (${r.toFixed(2)}:1) nor --action-edge (${edge.toFixed(2)}:1) reaches ${MARK}:1 on ${bg}; an action can't be found there`);
+        } else fail(`kit ${name} (${theme}): ${fg} on ${bg} is ${r.toFixed(2)}:1 (${toHex(at(fg, b))} on ${toHex(b)}), needs ${floor}:1`);
       }
       // A wash still mixes the colour it is named for.
       for (const [wash, src] of [['--action-surface', '--action'], ['--action-line', '--action'], ['--action-selection', '--action'], ['--surface-sticky', i ? '--bg' : '--card']]) {

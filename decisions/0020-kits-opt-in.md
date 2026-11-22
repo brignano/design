@@ -31,13 +31,19 @@ are opt-in until 1.0.
 - **The primary button is found by its fill or by its edge.** `--action-edge`
   is the fill everywhere except Split in light, where lime is 1.24:1 on white
   and the edge is ink. There, lime is a fill only: marks, lines and links take
-  `--action-ink`.
+  `--action-ink`. The check accepts `--action` as a mark where its edge
+  reaches 3:1 instead.
 - **Larch's action colour is spruce**, a blue-green about 40° from the forest
   green of `--success`, so "act" and "settled" stay two colours (ADR-0004).
+- **Larch's surfaces are lighter than its page**, not darker as the wireframe
+  drew them. On a tinted card the amber "attention" mark fell to 2.89:1 on its
+  own wash; it needs a surface near white. Charts sit on Larch's lightest
+  paper for the same reason (the orange series was 2.72:1 on the card).
 - **ADR-0016 stands in every kit**: the danger fills and every state hue are
   the same tokens, measured again on each kit's surfaces.
-- `npm run check` holds each kit to the contrast floors in both schemes, to
-  its washes, and to the act-versus-settled hue gap.
+- `npm run check` holds each kit, in both schemes, to every token floor the
+  default look is held to, to its washes, and to the act-versus-settled hue
+  gap. A kit may not set a state colour.
 
 ## Consequences
 

@@ -63,9 +63,12 @@ subset, in [`fonts/`](./fonts) with their licences:
 
 | Kit | Load | Size |
 |---|---|---|
-| `split` | `archivo-latin-wdth-normal.woff2`, `martian-mono-latin-wght-normal.woff2` | 110 KB |
-| `ledger` | `newsreader-latin-wght-normal.woff2` (and `-italic`), `instrument-sans-latin-wght-normal.woff2`, IBM Plex Mono | 148 KB, plus Plex Mono |
-| `larch` | `bricolage-grotesque-latin-wght-normal.woff2`, `onest-latin-wght-normal.woff2`, IBM Plex Mono | 72 KB, plus Plex Mono |
+| `split` | `archivo-latin-wdth-normal.woff2`, `martian-mono-latin-wght-normal.woff2` | 111 KB |
+| `ledger` | `newsreader-latin-wght-normal.woff2`, `newsreader-latin-wght-italic.woff2`, `instrument-sans-latin-wght-normal.woff2`, and Plex Mono | 149 KB + 44 KB |
+| `larch` | `bricolage-grotesque-latin-wght-normal.woff2`, `onest-latin-wght-normal.woff2`, and Plex Mono | 73 KB + 44 KB |
+
+Plex Mono is `ibm-plex-mono-latin-400-normal.woff2`, `-500-` and `-600-` (44 KB
+together), which a surface on today's look already loads.
 
 The `@font-face` rules are in [`previews/_fonts.css`](./previews/_fonts.css) to
 copy. Components are not restyled for the kits yet.

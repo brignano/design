@@ -160,9 +160,11 @@ export function build() {
     read('tokens/base.css').trimEnd(),
   ].join('\n\n') + '\n';
 
-  // :root's own tokens, by name, for the kits. Old names are aliases too.
+  // :root's own tokens, by name, for the kits: tokens.css and the chart file,
+  // whose aliases (--chart-surface: var(--card)) must follow a kit too. Old
+  // names are aliases as well.
   const rootTokens = new Map();
-  for (const f of FAMILIES)
+  for (const f of [...FAMILIES, 'chart'])
     for (const g of groups(f))
       if (g.selector === ':root' && !g.media)
         for (const [name, t] of g.tokens) {

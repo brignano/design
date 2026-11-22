@@ -459,8 +459,9 @@ until 1.0** (ADR-0020): today's look is the default, and `data-kit="split"` on
 - **Density.** `data-density="compact"` tightens `--control-height` for a
   dense tool screen. Touch targets stay 44px.
 
-`npm run check` measures every kit, both schemes: the contrast floors, the
-washes, and the gap between act and settled.
+`npm run check` measures every kit, both schemes, against every token floor
+the default look is held to, plus its washes and the gap between act and
+settled. A kit may not set a state colour.
 
 ### How the theme is chosen
 
