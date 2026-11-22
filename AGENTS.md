@@ -4,7 +4,8 @@ Read `DESIGN.md` (the rules) and `decisions/` (why, one ADR per file) before cha
 Before every commit: `npm run check`.
 
 Tokens are generated. Edit `tokens/*.json` (never `tokens.css`,
-`tokens.chart.css` or `tailwind.css`), then `npm run build`.
+`tokens.chart.css`, `tailwind.css`, `kits/*.css` or `themes/*.css`), then
+`npm run build`. A product's look is `themes/<product>.theme`.
 
 ## Wireframes before UI work
 

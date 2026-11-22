@@ -73,6 +73,24 @@ together), which a surface on today's look already loads.
 The `@font-face` rules are in [`previews/_fonts.css`](./previews/_fonts.css) to
 copy. Components are not restyled for the kits yet.
 
+### Product themes
+
+A product's look is a few lines in [`themes/`](./themes) (a kit, a ground, a
+hue, a face, corners), built into one CSS file. Import it and name the product;
+there is no kit file to import as well:
+
+```css
+@import '@brignano/design/themes/sites.css';
+```
+
+```html
+<html data-product="sites">
+```
+
+Shipped: `homelab`, `driftwood`, `guidebook`, `sites`, `receipts`. Adding one
+is a new `.theme` file and `npm run build` (DESIGN.md §11, "Product themes").
+Load the fonts of the theme's kit, plus any face its `typeface` names.
+
 The tool tier is the default. A marketing surface opts in with
 `class="tier-marketing"` on `<html>`, which unlocks the display face and opens the
 type scale. Colour is identical across tiers.

@@ -42,7 +42,10 @@
 //  15. tokens.css, tokens.chart.css, tailwind.css, tokens/names.d.ts or a
 //      kits/*.css is not exactly what scripts/build.mjs makes from tokens/
 //      (they are generated: edit the JSON, then `npm run build`).
-//  16. a kit (kits/*.css, ADR-0019) misses a contrast floor in either scheme,
+//  17. the theme generator's gate stops refusing unreadable text, or any hue
+//      on any kit and ground produces a theme that misses a floor.
+//  16. a kit (kits/*.css) or a product's theme (themes/*.css; ADR-0019) misses
+//      a contrast floor in either scheme,
 //      sets a name :root doesn't define, lets a wash drift from the colour it
 //      mixes, or uses one hue for both "you can act on this" and "settled".
 //
@@ -54,6 +57,7 @@ import { hex, toHex, resolve } from './colour.mjs';
 import { TOKEN, resolveLight } from './email-tokens.mjs';
 import { controls } from './controls.mjs';
 import { build } from './build.mjs';
+import { derive, gate, parse } from './theme.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -625,12 +629,20 @@ if (!existsSync(new URL('controls.css', root)) || read('controls.css') !== contr
 const STATE_TOKEN = /^--(success|attention|danger)(-|$)/;
 
 let kitsChecked = 0;
-const kitFiles = existsSync(new URL('kits/', root)) ? readdirSync(new URL('kits/', root)).filter((f) => f.endsWith('.css')) : [];
-for (const file of kitFiles) {
-  const name = file.slice(0, -4);
+// A product's theme (themes/*.css, generated from themes/*.theme) is a kit
+// with a hue, a ground and a face laid over it, so it is held to the same
+// floors. A theme pinned dark (`color-scheme: dark`) is measured dark only.
+const cssIn = (dir) => (existsSync(new URL(dir, root)) ? readdirSync(new URL(dir, root)).filter((f) => f.endsWith('.css')).map((f) => [dir, f]) : []);
+const kitFiles = [...cssIn('kits/'), ...cssIn('themes/')];
+for (const [dir, file] of kitFiles) {
+  const isTheme = dir === 'themes/';
+  const name = `${isTheme ? 'theme ' : ''}${file.slice(0, -4)}`;
+  const selector = isTheme ? `[data-product='${file.slice(0, -4)}']` : `[data-kit='${file.slice(0, -4)}']`;
+  const text = read(dir + file);
+  const darkOnly = /^\s*color-scheme:\s*dark;/m.test(text);
   const decls = new Map();
-  for (const b of blocks(read(`kits/${file}`))) {
-    if (b.selector !== `[data-kit='${name}']`) fail(`kit ${name}: kits/${file} has a rule for \`${b.selector}\`; a kit is scoped to [data-kit='${name}'] and nothing else`);
+  for (const b of blocks(text)) {
+    if (b.selector !== selector) fail(`kit ${name}: ${dir}${file} has a rule for \`${b.selector}\`; it is scoped to ${selector} and nothing else`);
     for (const [k, v] of b.decls) decls.set(k, v);
   }
   for (const k of decls.keys()) {
@@ -639,6 +651,7 @@ for (const file of kitFiles) {
     if (STATE_TOKEN.test(k)) fail(`kit ${name}: ${k} is a state colour; a kit may not set one`);
   }
   [['light', light], ['dark', dark]].forEach(([theme, base], i) => {
+    if (darkOnly && theme === 'light') return;
     const map = new Map([...base, ...[...decls].map(([k, v]) => [k, side(v, i)])]);
     const at = (token, under) => {
       const c = resolve(`var(${token})`, map);
@@ -677,6 +690,37 @@ for (const file of kitFiles) {
   });
 }
 
+// ── 17. The theme generator refuses what it should, and nothing it shouldn't ──
+// build.mjs won't write a theme that gate() faults. Two self-checks keep that
+// honest: a theme with unreadable text is refused, and every hue, on every
+// kit and ground, passes, so "a theme is a hue" can't produce a bad palette.
+{
+  const kitTokens = (kit) => {
+    const [, body] = read(`kits/${kit}.css`).match(/\{([\s\S]*?)\}/);
+    return new Map([...body.matchAll(/--([\w-]+)\s*:\s*([^;]+);/g)].map(([, k, v]) => [k, v.trim()]));
+  };
+  try {
+    const split = kitTokens('split');
+    const broken = new Map([...split, ['ink', split.get('bg')]]);
+    if (!gate('self-check', broken, [['light', 0], ['dark', 1]]).some((f) => f.includes('--ink on --bg')))
+      fail('self-check: the theme gate no longer refuses text the same colour as its page');
+    let swept = 0;
+    for (const kit of ['split', 'ledger', 'larch']) {
+      const base = kitTokens(kit);
+      for (const ground of ['plain', 'bright', 'wash'])
+        for (let hue = 0; hue < 360; hue += 5) {
+          const t = parse('sweep', `kit: ${kit}\nground: ${ground}\nhue: ${hue}`);
+          const faults = gate('sweep', new Map([...base, ...derive(t, base)]), [['light', 0], ['dark', 1]]);
+          swept++;
+          if (faults.length) fail(`theme steps: kit ${kit}, ground ${ground}, hue ${hue} misses a floor: ${faults[0].replace('themes/sweep.theme ', '')}`);
+        }
+    }
+    if (swept !== 648) fail(`self-check: the hue sweep ran ${swept} combinations, expected 648`);
+  } catch (e) {
+    fail(`theme generator: ${e.message}`);
+  }
+}
+
 // ── 15. The token files are generated ────────────────────────────────────────
 // tokens/ is the source. A hand edit to a generated file, or a JSON change
 // without a rebuild, would ship a file that disagrees with its source.
@@ -693,4 +737,4 @@ if (failures.length) {
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength, controls.css and the token files in step, ${kitFiles.length} kits on ${kitsChecked} pairs`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength, controls.css and the token files in step, ${kitFiles.length} kits and themes on ${kitsChecked} pairs`);

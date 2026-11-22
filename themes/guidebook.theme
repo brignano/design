@@ -1,0 +1,5 @@
+kit: larch
+ground: bright
+hue: 290          # violet
+heading-weight: 800
+shell: player
