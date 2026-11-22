@@ -1,6 +1,6 @@
 # ADR-0001 — The interactive hue is cobalt
 
-**Status:** accepted · 2026-08-23
+**Status:** superseded by ADR-0019 from v1.0 · accepted 2026-08-23
 **Supersedes:** `brignano.io/docs/tsd-site-modernization.md` §10.3
 
 ## Context

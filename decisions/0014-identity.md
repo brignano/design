@@ -1,6 +1,6 @@
 # ADR-0014 — Identity is a mono voice, a product's mark inside its app, and heavy Geist
 
-**Status:** accepted · 2026-11-12 · #137, [`proposals/identity.md`](../proposals/identity.md)
+**Status:** superseded in part by ADR-0019 from v1.0 · accepted 2026-11-12 · #137, [`proposals/identity.md`](../proposals/identity.md)
 **Supersedes:** the identity elements named in ADR-0004 (the trail, Silkscreen)
 
 ## Context

@@ -1,6 +1,6 @@
 # ADR-0008 — Cobalt is our own: OKLCH hue 256°, not Tailwind's blue
 
-**Status:** accepted · 2026-10-25
+**Status:** superseded by ADR-0019 from v1.0 · accepted 2026-10-25
 **Amends:** ADR-0001 (the hue stays cobalt; the values change)
 
 ## Context
