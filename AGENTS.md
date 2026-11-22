@@ -3,6 +3,9 @@
 Read `DESIGN.md` (the rules) and `decisions/` (why, one ADR per file) before changing a token.
 Before every commit: `npm run check`.
 
+Tokens are generated. Edit `tokens/*.json` (never `tokens.css`,
+`tokens.chart.css` or `tailwind.css`), then `npm run build`.
+
 ## Wireframes before UI work
 
 The fleet rule applies ("Wireframes before build" in brignano/ai-tools

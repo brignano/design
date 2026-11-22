@@ -1,0 +1,343 @@
+{
+  "$description": "Tailwind v4 bridge for @brignano/design.\nImport AFTER tokens.css and after `@import \"tailwindcss\"`:\n\n  @import \"tailwindcss\";\n  @import \"@brignano/design/tokens.css\";\n  @import \"@brignano/design/tailwind.css\";\n\n`@theme inline` is load-bearing: it makes the generated utilities emit\n`var(--i)` rather than baking a literal at build time, so `bg-interactive`\nfollows the light/dark switch instead of freezing one theme's value.\n\nThe bare `--radius` key is what drives `rounded`. Tailwind v4 has no\n`-DEFAULT` suffix; with one, `rounded` silently stayed at 0.25rem.",
+  "block": "@theme inline",
+  "keys": [
+    {
+      "key": "--color-ink",
+      "value": "var(--ink)"
+    },
+    {
+      "key": "--color-ink-soft",
+      "value": "var(--ink-soft)"
+    },
+    {
+      "key": "--color-slate",
+      "value": "var(--slate)"
+    },
+    {
+      "key": "--color-bg",
+      "value": "var(--bg)"
+    },
+    {
+      "key": "--color-card",
+      "value": "var(--card)"
+    },
+    {
+      "key": "--color-line",
+      "value": "var(--line)"
+    },
+    {
+      "key": "--color-line-soft",
+      "value": "var(--line-soft)"
+    },
+    {
+      "key": "--color-line-strong",
+      "value": "var(--line-strong)"
+    },
+    {
+      "key": "--color-line-control",
+      "value": "var(--line-control)"
+    },
+    {
+      "key": "--color-surface-hover",
+      "value": "var(--surface-hover)"
+    },
+    {
+      "key": "--color-surface-active",
+      "value": "var(--surface-active)"
+    },
+    {
+      "key": "--color-surface-sticky",
+      "value": "var(--surface-sticky)"
+    },
+    {
+      "key": "--color-on-dark",
+      "value": "var(--on-dark)"
+    },
+    {
+      "key": "--color-interactive",
+      "value": "var(--action)"
+    },
+    {
+      "key": "--color-interactive-ink",
+      "value": "var(--action-ink)"
+    },
+    {
+      "key": "--color-interactive-ink-hover",
+      "value": "var(--action-ink-hover)"
+    },
+    {
+      "key": "--color-interactive-hover",
+      "value": "var(--action-hover)"
+    },
+    {
+      "key": "--color-interactive-pressed",
+      "value": "var(--action-pressed)"
+    },
+    {
+      "key": "--color-interactive-surface",
+      "value": "var(--action-surface)"
+    },
+    {
+      "key": "--color-interactive-line",
+      "value": "var(--action-line)"
+    },
+    {
+      "key": "--color-on-interactive",
+      "value": "var(--on-action)"
+    },
+    {
+      "key": "--color-danger-fill",
+      "value": "var(--danger-fill)"
+    },
+    {
+      "key": "--color-danger-fill-hover",
+      "value": "var(--danger-fill-hover)"
+    },
+    {
+      "key": "--color-danger-fill-pressed",
+      "value": "var(--danger-fill-pressed)"
+    },
+    {
+      "key": "--color-on-danger",
+      "value": "var(--on-danger)"
+    },
+    {
+      "key": "--color-success",
+      "value": "var(--success)"
+    },
+    {
+      "key": "--color-success-ink",
+      "value": "var(--success-ink)"
+    },
+    {
+      "key": "--color-success-surface",
+      "value": "var(--success-surface)"
+    },
+    {
+      "key": "--color-success-line",
+      "value": "var(--success-line)"
+    },
+    {
+      "key": "--color-attention",
+      "value": "var(--attention)"
+    },
+    {
+      "key": "--color-attention-ink",
+      "value": "var(--attention-ink)"
+    },
+    {
+      "key": "--color-attention-surface",
+      "value": "var(--attention-surface)"
+    },
+    {
+      "key": "--color-attention-line",
+      "value": "var(--attention-line)"
+    },
+    {
+      "key": "--color-danger",
+      "value": "var(--danger)"
+    },
+    {
+      "key": "--color-danger-ink",
+      "value": "var(--danger-ink)"
+    },
+    {
+      "key": "--color-danger-surface",
+      "value": "var(--danger-surface)"
+    },
+    {
+      "key": "--color-danger-line",
+      "value": "var(--danger-line)"
+    },
+    {
+      "key": "--color-info",
+      "value": "var(--info)"
+    },
+    {
+      "key": "--color-info-ink",
+      "value": "var(--info-ink)"
+    },
+    {
+      "key": "--color-info-surface",
+      "value": "var(--info-surface)"
+    },
+    {
+      "key": "--color-info-line",
+      "value": "var(--info-line)"
+    },
+    {
+      "key": "--color-diff-added",
+      "value": "var(--diff-added)"
+    },
+    {
+      "key": "--color-diff-added-ink",
+      "value": "var(--diff-added-ink)"
+    },
+    {
+      "key": "--color-diff-added-surface",
+      "value": "var(--diff-added-surface)"
+    },
+    {
+      "key": "--color-diff-changed",
+      "value": "var(--diff-changed)"
+    },
+    {
+      "key": "--color-diff-changed-ink",
+      "value": "var(--diff-changed-ink)"
+    },
+    {
+      "key": "--color-diff-changed-surface",
+      "value": "var(--diff-changed-surface)"
+    },
+    {
+      "key": "--color-diff-removed",
+      "value": "var(--diff-removed)"
+    },
+    {
+      "key": "--color-diff-removed-ink",
+      "value": "var(--diff-removed-ink)"
+    },
+    {
+      "key": "--color-diff-removed-surface",
+      "value": "var(--diff-removed-surface)"
+    },
+    {
+      "key": "--color-code-surface",
+      "value": "var(--code-surface)"
+    },
+    {
+      "key": "--color-code-ink",
+      "value": "var(--code-ink)"
+    },
+    {
+      "key": "--color-code-keyword",
+      "value": "var(--code-keyword)"
+    },
+    {
+      "key": "--color-code-string",
+      "value": "var(--code-string)"
+    },
+    {
+      "key": "--color-code-comment",
+      "value": "var(--code-comment)"
+    },
+    {
+      "key": "--color-code-highlight",
+      "value": "var(--code-highlight)"
+    },
+    {
+      "key": "--color-mark",
+      "value": "var(--mark)"
+    },
+    {
+      "key": "--color-mark-ink",
+      "value": "var(--mark-ink)"
+    },
+    {
+      "key": "--color-mark-fill",
+      "value": "var(--mark-fill)"
+    },
+    {
+      "key": "--color-mark-fill-hover",
+      "value": "var(--mark-fill-hover)"
+    },
+    {
+      "key": "--color-mark-fill-pressed",
+      "value": "var(--mark-fill-pressed)"
+    },
+    {
+      "key": "--color-mark-surface",
+      "value": "var(--mark-surface)"
+    },
+    {
+      "key": "--color-on-mark",
+      "value": "var(--on-mark)"
+    },
+    {
+      "key": "--font-sans",
+      "value": "var(--sans)"
+    },
+    {
+      "key": "--font-mono",
+      "value": "var(--mono)"
+    },
+    {
+      "key": "--font-display",
+      "value": "var(--display)"
+    },
+    {
+      "key": "--font-weight-normal",
+      "value": "var(--weight-regular)",
+      "comment": "Weights match Tailwind's own, so font-medium and font-semibold are\nunchanged. Leading and tracking are named by role, not tight/snug/…,\nso they ADD leading-display, tracking-title and the rest and leave\nTailwind's leading-tight, tracking-tight and friends as they were."
+    },
+    {
+      "key": "--font-weight-medium",
+      "value": "var(--weight-medium)"
+    },
+    {
+      "key": "--font-weight-semibold",
+      "value": "var(--weight-semibold)"
+    },
+    {
+      "key": "--leading-display",
+      "value": "var(--leading-display)"
+    },
+    {
+      "key": "--leading-title",
+      "value": "var(--leading-title)"
+    },
+    {
+      "key": "--leading-ui",
+      "value": "var(--leading-ui)"
+    },
+    {
+      "key": "--leading-body",
+      "value": "var(--leading-body)"
+    },
+    {
+      "key": "--tracking-title",
+      "value": "var(--tracking-title)"
+    },
+    {
+      "key": "--tracking-display",
+      "value": "var(--tracking-display)"
+    },
+    {
+      "key": "--tracking-caps",
+      "value": "var(--tracking-caps)"
+    },
+    {
+      "key": "--radius-sm",
+      "value": "var(--radius-sm)"
+    },
+    {
+      "key": "--radius-control",
+      "value": "var(--radius-control)"
+    },
+    {
+      "key": "--radius",
+      "value": "var(--radius-card)"
+    },
+    {
+      "key": "--radius-lg",
+      "value": "var(--radius-lg)"
+    },
+    {
+      "key": "--shadow-1",
+      "value": "var(--shadow-1)"
+    },
+    {
+      "key": "--shadow-2",
+      "value": "var(--shadow-2)"
+    },
+    {
+      "key": "--shadow-3",
+      "value": "var(--shadow-3)"
+    },
+    {
+      "key": "--ease-brand",
+      "value": "var(--ease)"
+    }
+  ]
+}

@@ -24,28 +24,28 @@
     max-width: calc(var(--measure) + 12rem);
     margin-inline: auto;
   }
-  .changelog-header { margin-bottom: var(--s7); }
+  .changelog-header { margin-bottom: var(--space-7); }
   .changelog-header > h1 { margin: 0; font-size: var(--text-3xl); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: var(--leading-display); text-wrap: balance; }
-  .changelog-header > p { margin: var(--s2) 0 0; color: var(--ink-soft); }
+  .changelog-header > p { margin: var(--space-2) 0 0; color: var(--ink-soft); }
 
   .release {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--s3);
-    padding-block: var(--s6);
+    gap: var(--space-3);
+    padding-block: var(--space-6);
     border-top: 1px solid var(--line);
-    scroll-margin-top: var(--s5);
+    scroll-margin-top: var(--space-5);
   }
-  .release-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s1) var(--s3); }
+  .release-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); }
   .release-version { margin: 0; font-family: var(--mono); font-size: var(--text-lg); font-weight: var(--weight-semibold); }
   .release-version > a { color: var(--ink); text-decoration: none; border-radius: var(--radius-sm); }
   .release-version > a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .release-version > a:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .release-version > a:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; }
   .release-date { font-family: var(--mono); font-size: var(--text-sm); color: var(--slate); }
 
   @container changelog (min-width: 44rem) {
-    .release { grid-template-columns: 10rem minmax(0, 1fr); gap: var(--s6); }
-    .release-meta { flex-direction: column; align-self: start; position: sticky; top: var(--s5); }
+    .release { grid-template-columns: 10rem minmax(0, 1fr); gap: var(--space-6); }
+    .release-meta { flex-direction: column; align-self: start; position: sticky; top: var(--space-5); }
   }
   @media (pointer: coarse) {
     .release-version > a { display: inline-flex; align-items: center; min-height: 44px; }

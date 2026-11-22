@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="_docs.css">
 <style>
   .pair { grid-template-columns: minmax(0, 1fr); }
-  .fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: var(--s4); margin-top: var(--s3); }
+  .fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: var(--space-4); margin-top: var(--space-3); }
   .field-wide { grid-column: 1 / -1; }
 </style>
 </head>
@@ -177,7 +177,7 @@
       <h2>States</h2>
       <ul>
         <li>Rest is a <code>--line-control</code> edge on <code>--card</code>; hover darkens it to <code>--ink-soft</code>.</li>
-        <li>Focus is the 2px <code>--i-ink</code> ring, 2px out; on an affix it rings the whole wrapper.</li>
+        <li>Focus is the 2px <code>--action-ink</code> ring, 2px out; on an affix it rings the whole wrapper.</li>
         <li><code>aria-invalid="true"</code> turns the edge to <code>--danger</code>. Show <code>.field-error</code> with it; hide it with <code>hidden</code>.</li>
         <li><code>disabled</code> drops the edge and fills with <code>--surface-hover</code>. The value stays readable at 4.5:1.</li>
       </ul>

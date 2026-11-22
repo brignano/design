@@ -11,9 +11,9 @@
 <link rel="stylesheet" href="_docs.css">
 <style>
   .pair { grid-template-columns: minmax(0, 1fr); }
-  .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: var(--s5); align-items: start; margin-top: var(--s3); }
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: var(--space-5); align-items: start; margin-top: var(--space-3); }
   /* .focused draws the ring on the preview; a segment shows it on its label. */
-  .segmented > label:has(.focused) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .segmented > label:has(.focused) { outline: 2px solid var(--action-ink); outline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -198,9 +198,9 @@
   <section>
     <h2>States</h2>
     <ul>
-      <li>Checkboxes and radios are native, coloured by <code>accent-color: var(--i)</code> from <code>tokens.css</code>.</li>
+      <li>Checkboxes and radios are native, coloured by <code>accent-color: var(--action)</code> from <code>tokens.css</code>.</li>
       <li>The switch knob moves right when on, so the state reads without colour.</li>
-      <li>Focus is the 2px <code>--i-ink</code> ring; on a segment it rings the label.</li>
+      <li>Focus is the 2px <code>--action-ink</code> ring; on a segment it rings the label.</li>
       <li><code>disabled</code> goes neutral (<code>--i-disabled-*</code>), and the row's text dims with it.</li>
     </ul>
   </section>

@@ -24,51 +24,51 @@
   .st .pp-header { background: var(--mark-surface); border-bottom: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
   .st-who { margin-left: auto; font-size: var(--text-sm); color: var(--ink-soft); }
 
-  .st-hero { padding: var(--s3) 0 0; overflow: hidden; }
-  .st-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-areas: "head" "body" "media"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; gap: var(--s5); align-items: start; }
+  .st-hero { padding: var(--space-3) 0 0; overflow: hidden; }
+  .st-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-areas: "head" "body" "media"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; gap: var(--space-5); align-items: start; }
   .st-hero .pp-hero-head::before { display: none; }
-  .st .pp-audience { margin: 0 0 var(--s2); }
+  .st .pp-audience { margin: 0 0 var(--space-2); }
   .st .pp-thesis { font-size: 2.5rem; font-weight: var(--weight-medium); line-height: 1.05; letter-spacing: -0.03em; max-width: 13ch; }
   .st-thesis-mark { box-shadow: inset 0 -0.2em 0 var(--mark-current); }
-  .st-hero .pp-hero-body { display: grid; gap: var(--s4); }
-  .st-hero .pp-actions { margin-top: var(--s2); }
+  .st-hero .pp-hero-body { display: grid; gap: var(--space-4); }
+  .st-hero .pp-actions { margin-top: var(--space-2); }
   .st .pp-note { margin: 0; }
 
   /* Messages: the customer's in the mark, the reply on a card. */
-  .st-pair { display: grid; gap: var(--s2); margin: 0; }
-  .st-msg { justify-self: end; max-width: 300px; margin: 0; padding: var(--s3) var(--s4); border-radius: 22px 22px 6px 22px; background: var(--mark-fill); color: var(--on-mark); line-height: 1.35; }
+  .st-pair { display: grid; gap: var(--space-2); margin: 0; }
+  .st-msg { justify-self: end; max-width: 300px; margin: 0; padding: var(--space-3) var(--space-4); border-radius: 22px 22px 6px 22px; background: var(--mark-fill); color: var(--on-mark); line-height: 1.35; }
   .st-reply { justify-self: start; margin: 0; padding: 10px 14px; border-radius: 22px 22px 22px 6px; background: var(--card); font-size: var(--text-sm); box-shadow: var(--shadow-1); }
   .st-reply .num { color: var(--ink-soft); }
 
   /* The proof: the customer's site on a phone, leaning in from the bottom edge. */
   .st-hero .pp-media { justify-self: center; width: 250px; height: 300px; margin-bottom: -40px; padding: 10px 10px 0; border-radius: 34px 34px 0 0;
     background: var(--device); rotate: -3deg; box-shadow: var(--shadow-3); }
-  .st-site { height: 100%; display: grid; gap: var(--s2); align-content: start; padding: var(--s4); border-radius: 24px 24px 0 0; background: var(--card); font-size: var(--text-sm); }
+  .st-site { height: 100%; display: grid; gap: var(--space-2); align-content: start; padding: var(--space-4); border-radius: 24px 24px 0 0; background: var(--card); font-size: var(--text-sm); }
   .st-site b { font-size: var(--text-lg); line-height: 1.2; }
   .st-site p { display: flex; justify-content: space-between; margin: 0; padding: 4px 6px; color: var(--ink-soft); }
   .st-site .new { color: var(--ink); border-radius: var(--radius-sm); outline: 2px solid var(--mark-current); }
   @media (min-width: 960px) {
-    .st-hero { padding-top: var(--s6); }
-    .st-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "head media" "body media"; column-gap: var(--s8); }
+    .st-hero { padding-top: var(--space-6); }
+    .st-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "head media" "body media"; column-gap: var(--space-8); }
     .st .pp-thesis { font-size: 5.25rem; }
-    .st-msg { justify-self: start; max-width: 440px; font-size: var(--text-xl); padding: var(--s4) var(--s5); margin-left: var(--s8); }
+    .st-msg { justify-self: start; max-width: 440px; font-size: var(--text-xl); padding: var(--space-4) var(--space-5); margin-left: var(--space-8); }
     .st-hero .pp-media { width: 400px; height: 640px; padding: 14px 14px 0; border-radius: 52px 52px 0 0; rotate: 3deg; align-self: end; margin-bottom: -80px; }
-    .st-site { padding: var(--s6) var(--s5); border-radius: 38px 38px 0 0; font-size: var(--text-lg); gap: var(--s3); }
+    .st-site { padding: var(--space-6) var(--space-5); border-radius: 38px 38px 0 0; font-size: var(--text-lg); gap: var(--space-3); }
     .st-site b { font-size: var(--text-3xl); }
   }
 
   /* The band: more asks, each answered, each change ringed on the site. */
-  .st-band { position: relative; padding: var(--s8) 0; background: var(--mark-surface); }
-  .st h2 { margin: 0 0 var(--s6); font-size: 2.125rem; font-weight: var(--weight-medium); line-height: 1.05; letter-spacing: -0.03em; max-width: 18ch; text-wrap: balance; }
-  .st-thread { display: grid; gap: var(--s7); }
-  .st-snip { justify-self: start; width: 260px; margin: var(--s2) 0 0; padding: var(--s4); border-radius: 20px; background: var(--card); box-shadow: var(--shadow-2); font-size: var(--text-sm); display: grid; gap: 6px; }
+  .st-band { position: relative; padding: var(--space-8) 0; background: var(--mark-surface); }
+  .st h2 { margin: 0 0 var(--space-6); font-size: 2.125rem; font-weight: var(--weight-medium); line-height: 1.05; letter-spacing: -0.03em; max-width: 18ch; text-wrap: balance; }
+  .st-thread { display: grid; gap: var(--space-7); }
+  .st-snip { justify-self: start; width: 260px; margin: var(--space-2) 0 0; padding: var(--space-4); border-radius: 20px; background: var(--card); box-shadow: var(--shadow-2); font-size: var(--text-sm); display: grid; gap: 6px; }
   .st-snip b { font-size: var(--text-base); }
   .st-snip p { display: flex; justify-content: space-between; margin: 0; padding: 4px 6px; }
   .st-snip .new { border-radius: var(--radius-sm); outline: 2px solid var(--mark-current); }
   .st-pic { display: grid; place-items: center; height: 72px; border-radius: 12px; background: var(--line); color: var(--ink-soft); font: var(--text-xs) var(--mono); }
   @media (min-width: 960px) {
     .st h2 { font-size: 3.5rem; }
-    .st-band .st-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--s8); align-items: center; }
+    .st-band .st-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--space-8); align-items: center; }
     .st-band .st-msg, .st-band .st-reply { grid-column: 1; }
     .st-band .st-msg { margin-left: 0; font-size: var(--text-lg); }
     .st-snip { grid-column: 2; grid-row: 1 / span 2; justify-self: center; width: 320px; rotate: 2deg; }
@@ -80,13 +80,13 @@
   .st .pp-close > .pp-wrap { grid-template-columns: minmax(0, 1fr); }
   .st .pp-close h2 { margin: 0; font-size: 2.125rem; font-weight: var(--weight-medium); letter-spacing: -0.03em; }
   .st .pp-panel { width: min(600px, 100%); padding: 6px; border: 0; border-radius: 28px; box-shadow: var(--shadow-2); }
-  .st .pp-form { grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
+  .st .pp-form { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
   .st .pp-form .pp-actions { margin: 0; }
   .st .pp-field > label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .st .pp-field input { border: 0; border-radius: 999px; min-height: 48px; padding-inline: var(--s4); }
+  .st .pp-field input { border: 0; border-radius: 999px; min-height: 48px; padding-inline: var(--space-4); }
   .st .pp-close .pp-button { width: 100%; }
-  .st .pp-done { padding: var(--s4); }
-  .st-close-note { margin: var(--s3) 0 0; color: var(--ink-soft); font-size: var(--text-sm); }
+  .st .pp-done { padding: var(--space-4); }
+  .st-close-note { margin: var(--space-3) 0 0; color: var(--ink-soft); font-size: var(--text-sm); }
   @media (min-width: 960px) {
     .st .pp-close h2 { font-size: 3.5rem; }
     .st .pp-panel { border-radius: 999px; }

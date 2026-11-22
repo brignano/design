@@ -11,12 +11,12 @@
 <link rel="stylesheet" href="_docs.css">
 <style>
   .states { border-collapse: collapse; font-size: var(--text-xs); }
-  .states th { font-weight: 500; color: var(--slate); text-align: left; padding: 0 var(--s2) var(--s2) 0; white-space: nowrap; }
-  .states td { padding: 0 var(--s2) var(--s2) 0; }
+  .states th { font-weight: 500; color: var(--slate); text-align: left; padding: 0 var(--space-2) var(--space-2) 0; white-space: nowrap; }
+  .states td { padding: 0 var(--space-2) var(--space-2) 0; }
   .states-wrap { overflow-x: auto; }
-  .panel > .row, .panel > .btn-block { margin-top: var(--s3); }
+  .panel > .row, .panel > .btn-block { margin-top: var(--space-3); }
   .pair { grid-template-columns: minmax(0, 1fr); }
-  .prose-line { margin: var(--s3) 0 0; font-size: var(--text-sm); }
+  .prose-line { margin: var(--space-3) 0 0; font-size: var(--text-sm); }
 </style>
 </head>
 <body>
@@ -29,8 +29,8 @@
       <tbody>
         <tr><th scope="row">Primary</th>
           <td><button type="button" class="btn btn-primary">Primary</button></td>
-          <td><button type="button" class="btn btn-primary" style="background:var(--i-hover)">Primary</button></td>
-          <td><button type="button" class="btn btn-primary" style="background:var(--i-pressed)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--action-hover)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--action-pressed)">Primary</button></td>
           <td><button type="button" class="btn btn-primary focused">Primary</button></td>
           <td><button type="button" class="btn btn-primary" disabled>Primary</button></td>
           <td><button type="button" class="btn btn-primary" aria-busy="true">Primary</button></td>
@@ -45,8 +45,8 @@
         </tr>
         <tr><th scope="row">Ghost</th>
           <td><button type="button" class="btn btn-ghost">Ghost</button></td>
-          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
-          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--action-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--action-surface)">Ghost</button></td>
           <td><button type="button" class="btn btn-ghost focused">Ghost</button></td>
           <td><button type="button" class="btn btn-ghost" disabled>Ghost</button></td>
           <td><button type="button" class="btn btn-ghost" aria-busy="true">Ghost</button></td>
@@ -78,8 +78,8 @@
       <tbody>
         <tr><th scope="row">Primary</th>
           <td><button type="button" class="btn btn-primary">Primary</button></td>
-          <td><button type="button" class="btn btn-primary" style="background:var(--i-hover)">Primary</button></td>
-          <td><button type="button" class="btn btn-primary" style="background:var(--i-pressed)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--action-hover)">Primary</button></td>
+          <td><button type="button" class="btn btn-primary" style="background:var(--action-pressed)">Primary</button></td>
           <td><button type="button" class="btn btn-primary focused">Primary</button></td>
           <td><button type="button" class="btn btn-primary" disabled>Primary</button></td>
           <td><button type="button" class="btn btn-primary" aria-busy="true">Primary</button></td>
@@ -94,8 +94,8 @@
         </tr>
         <tr><th scope="row">Ghost</th>
           <td><button type="button" class="btn btn-ghost">Ghost</button></td>
-          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
-          <td><button type="button" class="btn btn-ghost" style="background:var(--i-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--action-surface)">Ghost</button></td>
+          <td><button type="button" class="btn btn-ghost" style="background:var(--action-surface)">Ghost</button></td>
           <td><button type="button" class="btn btn-ghost focused">Ghost</button></td>
           <td><button type="button" class="btn btn-ghost" disabled>Ghost</button></td>
           <td><button type="button" class="btn btn-ghost" aria-busy="true">Ghost</button></td>
@@ -181,8 +181,8 @@
   <section>
     <h2>States</h2>
     <ul>
-      <li>Hover and pressed swap the fill: <code>--i-hover</code>, <code>--i-pressed</code> on primary; neutral surfaces on secondary.</li>
-      <li>Focus is the 2px <code>--i-ink</code> ring, 2px out. Never removed.</li>
+      <li>Hover and pressed swap the fill: <code>--action-hover</code>, <code>--action-pressed</code> on primary; neutral surfaces on secondary.</li>
+      <li>Focus is the 2px <code>--action-ink</code> ring, 2px out. Never removed.</li>
       <li><code>disabled</code> on a button, <code>aria-disabled="true"</code> on a link or a button that must stay focusable (so its tooltip can explain why). Both get the neutral disabled fill; your script ignores clicks on <code>aria-disabled</code>.</li>
       <li><code>aria-busy="true"</code> hides the label behind a spinner without changing the width.</li>
     </ul>

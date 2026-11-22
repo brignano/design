@@ -27,7 +27,7 @@
 
   /* The header is a status line. */
   .dw .pp-header { background: var(--bg); }
-  .dw .pp-header > .pp-wrap { min-height: 52px; gap: var(--s2) var(--s4); flex-wrap: wrap; padding-block: var(--s2); font-size: var(--text-xs); color: var(--ink-soft); }
+  .dw .pp-header > .pp-wrap { min-height: 52px; gap: var(--space-2) var(--space-4); flex-wrap: wrap; padding-block: var(--space-2); font-size: var(--text-xs); color: var(--ink-soft); }
   .dw .pp-brand { font: var(--weight-semibold) var(--text-sm) var(--mono); letter-spacing: 0; }
   .dw .pp-brand svg { width: 20px; height: 20px; }
   .dw-down { color: var(--danger); white-space: nowrap; }
@@ -50,14 +50,14 @@
   .dw-map .bad rect { stroke: var(--danger); stroke-width: 2.5; fill: var(--danger-surface); }
   .dw-map .bad text { fill: var(--danger-ink); }
   .dw-map .hot { stroke: var(--danger); stroke-dasharray: 6 6; }
-  .dw-panel { display: grid; gap: var(--s4); padding: var(--s5) var(--pp-gutter) var(--s6); border-top: 1px solid var(--line); background: var(--bg); }
+  .dw-panel { display: grid; gap: var(--space-4); padding: var(--space-5) var(--pp-gutter) var(--space-6); border-top: 1px solid var(--line); background: var(--bg); }
   /* The shared hero names grid areas; inside the panel the parts just stack. */
   .dw-panel > .pp-hero-head, .dw-panel > .pp-hero-body { grid-area: auto; align-self: auto; }
   .dw-hero .pp-hero-head::before { display: none; }
-  .dw-hero .pp-hero-head { display: grid; gap: var(--s3); }
+  .dw-hero .pp-hero-head { display: grid; gap: var(--space-3); }
   .dw-hero .pp-media.dw-diff { padding: 0; border-radius: 0; background: none; }
   .dw-diff pre { margin: 0; font: var(--text-sm) / 1.7 var(--mono); }
-  .dw-diff span { display: block; padding: 0 var(--s2); }
+  .dw-diff span { display: block; padding: 0 var(--space-2); }
   .rm { background: var(--diff-removed-surface); color: var(--diff-removed-ink); }
   .ad { background: var(--diff-added-surface); color: var(--diff-added-ink); }
   .dw .pp-audience { font: var(--weight-medium) var(--text-sm) var(--mono); }
@@ -65,30 +65,30 @@
   /* The added line, marked the way a diff marks it: a bar in the mark under the words. */
   .dw-thesis-mark { box-shadow: inset 0 -0.18em 0 var(--mark-current); }
   .dw .pp-subhead { font-size: var(--text-sm); max-width: 52ch; margin: 0; }
-  .dw .pp-actions { gap: var(--s5); }
-  .dw-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--i-ink); font-size: var(--text-sm); }
-  .dw-link:hover { color: var(--i-ink-hover); }
-  .dw-link:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .dw .pp-actions { gap: var(--space-5); }
+  .dw-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--action-ink); font-size: var(--text-sm); }
+  .dw-link:hover { color: var(--action-ink-hover); }
+  .dw-link:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; }
   @media (min-width: 960px) {
     .dw-hero { min-height: 640px; }
     .dw-hero .pp-media.dw-map { position: absolute; inset: 0; height: auto; }
-    .dw-panel { position: relative; width: 620px; margin: 300px 0 var(--s8) var(--s8); padding: var(--s6); border: 1px solid var(--line-strong); }
+    .dw-panel { position: relative; width: 620px; margin: 300px 0 var(--space-8) var(--space-8); padding: var(--space-6); border: 1px solid var(--line-strong); }
     .dw .pp-thesis { font-size: var(--text-3xl); }
   }
 
   /* The band: the last deploy, as a log. */
-  .dw-band { padding: var(--s8) 0; border-top: 1px solid var(--line); }
-  .dw-band > .pp-wrap { display: grid; gap: var(--s6); }
+  .dw-band { padding: var(--space-8) 0; border-top: 1px solid var(--line); }
+  .dw-band > .pp-wrap { display: grid; gap: var(--space-6); }
   .dw h2 { margin: 0; font: var(--weight-semibold) 1.625rem / 1.2 var(--mono); letter-spacing: -0.02em; text-wrap: balance; }
-  .dw-lede { margin: var(--s3) 0 0; color: var(--ink-soft); font-size: var(--text-sm); }
+  .dw-lede { margin: var(--space-3) 0 0; color: var(--ink-soft); font-size: var(--text-sm); }
   .dw-log { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line-strong); font-size: var(--text-sm); }
-  .dw-log > li { display: grid; gap: var(--s2); padding: var(--s4); border-top: 1px solid var(--line); }
+  .dw-log > li { display: grid; gap: var(--space-2); padding: var(--space-4); border-top: 1px solid var(--line); }
   .dw-log > li:first-child { border-top: 0; }
   .dw-log b { font-weight: var(--weight-semibold); }
-  .dw-log code { display: block; padding: 2px var(--s2); font: inherit; }
+  .dw-log code { display: block; padding: 2px var(--space-2); font: inherit; }
   .dw-eff { color: var(--ink-soft); }
   .dw-eff.bad { color: var(--danger); }
-  .dw-how { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s2); font-size: var(--text-sm); }
+  .dw-how { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-2); font-size: var(--text-sm); }
   .dw-how li::before { content: "$ "; color: var(--mark-current); }
   .dw-how span { color: var(--ink-soft); }
   @media (min-width: 960px) {
@@ -98,8 +98,8 @@
   }
 
   /* The close: a plain mono form. */
-  .dw .pp-close { padding: var(--s8) 0; }
-  .dw .pp-close h2 { font: var(--weight-semibold) 1.625rem / 1.2 var(--mono); margin: 0 0 var(--s3); }
+  .dw .pp-close { padding: var(--space-8) 0; }
+  .dw .pp-close h2 { font: var(--weight-semibold) 1.625rem / 1.2 var(--mono); margin: 0 0 var(--space-3); }
   .dw .pp-panel { border-radius: 0; box-shadow: none; border-color: var(--line-strong); background: var(--bg); }
   .dw .pp-field input { border-radius: 0; font-family: var(--mono); }
   @media (min-width: 960px) { .dw .pp-close h2 { font-size: 2.125rem; } }

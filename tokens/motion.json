@@ -1,0 +1,38 @@
+{
+  "$description": "One easing and three durations. Content is visible by default; motion is layered on top.",
+  "root": {
+    "$extensions": {
+      "io.brignano": {
+        "selector": ":root"
+      }
+    },
+    "ease": {
+      "$value": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "$description": "── Motion ───────────────────────────────────────────────────────────\nContent is ALWAYS visible by default; motion is enhancement layered on\ntop, never the thing that makes content appear. brignano.io shipped a\nhomepage whose contact CTA was invisible on 100% of loads because an\nanimation library owned the visible state. See DESIGN.md §7."
+    },
+    "duration-fast": {
+      "$value": "150ms",
+      "$extensions": {
+        "io.brignano": {
+          "was": "dur-fast"
+        }
+      }
+    },
+    "duration": {
+      "$value": "250ms",
+      "$extensions": {
+        "io.brignano": {
+          "was": "dur"
+        }
+      }
+    },
+    "duration-slow": {
+      "$value": "600ms",
+      "$extensions": {
+        "io.brignano": {
+          "was": "dur-slow"
+        }
+      }
+    }
+  }
+}

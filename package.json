@@ -8,6 +8,7 @@
     "url": "git+https://github.com/brignano/design.git"
   },
   "scripts": {
+    "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
     "controls": "node scripts/controls.mjs"
   },
@@ -18,6 +19,7 @@
   "files": [
     "tokens.css",
     "tokens.chart.css",
+    "tokens/",
     "components.css",
     "controls.css",
     "product-page.css",
@@ -34,6 +36,7 @@
   "exports": {
     "./tokens.css": "./tokens.css",
     "./tokens.chart.css": "./tokens.chart.css",
+    "./tokens/*": "./tokens/*",
     "./tailwind.css": "./tailwind.css",
     "./components.css": "./components.css",
     "./controls.css": "./controls.css",

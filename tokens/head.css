@@ -1,0 +1,84 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   tokens.css — the shared foundation for every brignano surface.
+
+   Consumers:
+     brignano.io   (Next / Tailwind v4)  — marketing tier
+     life          (Astro)               — tool tier
+     homelab, driftwood, future tools    — tool tier
+
+   ── ONE HUE, ONE MEANING ───────────────────────────────────────────────
+   Every colour here answers exactly one question, everywhere it appears,
+   on every surface. That is the whole design of this file.
+
+     NEUTRAL     the page. Most of every screen.
+     --action-*  "you can act on this"      cobalt
+     --success   "settled, confirmed, done" forest
+     --attention "this wants you"           larch amber
+     --danger    "this has gone wrong"      rust
+     --mark      identity — a drawn mark, not a UI colour
+
+   Two consequences worth stating out loud, because both were mistakes in
+   earlier drafts of this system:
+
+   1. ATTENTION IS ONE MEANING. A warning toast, the NEXT UP strip, and a
+      deposit closing in six days are the same message at different
+      volumes, so they are the same colour. There is no separate "warning"
+      hue and no separate "now/next" hue.
+
+   2. IDENTITY IS NOT A FILL. Amber used to be the brand colour AND the
+      warning colour, managed by a rule about scale. Rules enforced by
+      remembering get forgotten. So identity moved to the thing that was
+      always carrying it — the monogram, the type, restraint — and --mark
+      exists only to ink a graphic. It is never a button, chip, wash, or
+      border. The naming is the enforcement.
+
+   ── RULES THAT MAKE THIS FILE TRUSTWORTHY ──────────────────────────────
+   1. NEVER hardcode a hex outside this file. A literal survives a theme
+      change silently — that is how `life`'s status pills sat light grey in
+      dark mode for months.
+   2. Every colour is ONE declaration holding both themes:
+      `light-dark(<light>, <dark>)`. There is no dark list to keep in step.
+      The arguments are always concrete colours, never a var() to another
+      theme-dependent token — nested light-dark() is legal CSS, but not
+      every engine has been verified to resolve it. Where that forces a
+      value to repeat (a wash repeats its hue), `npm run check` holds the
+      copies to their source.
+   3. Ratios in the comments are MEASURED. Change a value, re-measure it.
+
+   See DESIGN.md for the rules that govern use, decisions/ for why.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── Themes ─────────────────────────────────────────────────────────────
+   One declaration per colour, light value first: light-dark(<light>, <dark>).
+   The browser picks the side from the element's color-scheme:
+
+     default            follows the OS (light dark below)
+     [data-theme]       the in-app toggle, which must WIN over the OS
+                        — `light` forces light under a dark OS
+
+   Because the pick happens where a colour is USED, not where it's declared,
+   [data-theme] (or color-scheme) on ANY element themes that subtree — a dark
+   hero band on a light page is one attribute. Give that element its own
+   `background: var(--bg)`; it doesn't inherit the page's.
+
+   Dark is selected, not inverted:
+   1. Not pure black. #0d0d0f — pure black behind bright text causes
+      halation and is fatiguing at night, which is when a personal tool
+      actually gets opened.
+   2. Surfaces LIGHTEN with elevation instead of gaining borders.
+   3. Accents lift in luminance rather than shifting hue, and washes carry
+      a higher mix — 12% over #0d0d0f is invisible where it reads on white.
+
+   Ratios are given light / dark. */
+
+:root {
+  color-scheme: light dark;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}

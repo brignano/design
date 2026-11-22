@@ -33,7 +33,7 @@ family, motion and shape are identical; what changes is how much room things get
 |---|---|---|
 | Opt in | `class="tier-marketing"` on `<html>` | default, no class |
 | Body size | 17px | 15px |
-| Section rhythm | `--s9` (96px) | `--s6` (32px) |
+| Section rhythm | `--space-9` (96px) | `--space-6` (32px) |
 | Measure | 68ch | 780px |
 | Display face | Silkscreen — hero eyebrows | none (aliases to `--sans`) |
 | Motion | scroll reveal, overlays opening and closing (ADR-0013), a press and a switch of view (ADR-0015) | none, except overlays opening and closing (ADR-0013), a press and a switch of view (ADR-0015) |
@@ -50,7 +50,7 @@ Every hue answers exactly one question, on every surface, in both tiers:
 | Token | Answers | Hue |
 |---|---|---|
 | neutral ramp | the page itself | cool grey |
-| `--i-*` | *you can act on this* | cobalt |
+| `--action-*` | *you can act on this* | cobalt |
 | `--success` | *settled, confirmed, done* | forest |
 | `--attention` | *this wants you* | larch amber |
 | `--danger` | *this has gone wrong* | rust |
@@ -107,18 +107,18 @@ graphic (ADR-0017). There, and only there, it may do two more things:
 - **Fill the one primary button**: `--mark-fill` under a white `--on-mark`
   label, stepping darker to `--mark-fill-hover` and `--mark-fill-pressed`.
 - **Wash the page ground**: `--mark-surface`, a faint opaque tint that
-  `--ink`, `--ink-soft` and links in `--i-ink` all read on.
+  `--ink`, `--ink-soft` and links in `--action-ink` all read on.
 
 `data-mark` points all four at the product's, as it does `--mark-current`;
 with no attribute they are the family amber. The fill is its own step, the
-way `--i` sits beside `--i-ink`: in light it is the mark (amber is deepened
+way `--action` sits beside `--action-ink`: in light it is the mark (amber is deepened
 to carry the label), in dark it is the mark's hue as light as a white label
 allows. Never fill or wash with
 `--mark-teal` and its siblings directly: in dark they are pale, for drawing.
 
 This is a scoped exception to "identity is not a fill", as the stage behind a
 hero proof was (ADR-0011). It never reaches an app, a link, text or a state,
-and the focus ring stays `--i-ink`.
+and the focus ring stays `--action-ink`.
 
 ### On a card that stands for a product, the stage
 
@@ -131,7 +131,7 @@ without a product page has none and stays on the family amber.
 
 The stage is the picture's ground and nothing else. On that card the mark
 still never colours a button, link, text, chip, badge, border or state, and
-the focus ring stays `--i-ink`. A card that doesn't stand for a product (a
+the focus ring stays `--action-ink`. A card that doesn't stand for a product (a
 trip, a post) never gets a stage.
 
 ### Colour is a surface, not text
@@ -169,26 +169,26 @@ type is already carried by a text label. Nor `idea`, `planning`, `someday`, or
 
 The part that makes an interface feel built rather than styled.
 
-- `--i` fill, `--i-hover`, `--i-pressed`, `--i-ink` for links/icons/focus. The
-  fill is a saturated cobalt with a white label (`--on-i`) in both themes, and
+- `--action` fill, `--action-hover`, `--action-pressed`, `--action-ink` for links/icons/focus. The
+  fill is a saturated cobalt with a white label (`--on-action`) in both themes, and
   hover and pressed step darker in both. In dark the fill and the ink are
-  different steps: fill a surface with `--i`, write or draw on a surface with
-  `--i-ink`, and a hovered link takes `--i-ink-hover`, never the fill's hover. A destructive button fills with `--danger-fill` (and its
+  different steps: fill a surface with `--action`, write or draw on a surface with
+  `--action-ink`, and a hovered link takes `--action-ink-hover`, never the fill's hover. A destructive button fills with `--danger-fill` (and its
   `-hover` and `-pressed` steps) under a white `--on-danger` label, not with
   the state hue `--danger`, which in dark is a pale rust for reading.
-- **Disabled is neutral, never hued** (`--i-disabled-bg` / `--i-disabled-ink`). A
+- **Disabled is neutral, never hued** (`--disabled` / `--disabled-ink`). A
   greyed-out control must stop signalling "click me". Its low contrast is allowed
   only because WCAG 1.4.3 exempts *inactive* controls, so the state must be real:
   `disabled` on a button or input, `aria-disabled="true"` otherwise. Disabled
   styling on an element that isn't marked disabled is just low-contrast text.
-- Focus is always visible: 2px `--i-ink` outline, 2px offset. Never remove it.
+- Focus is always visible: 2px `--action-ink` outline, 2px offset. Never remove it.
 - Hover and pressed surfaces on neutral elements come from `--surface-hover` and
   `--surface-active`, not from opacity tricks.
 - A control's own edge — an input, a secondary button — is `--line-control`
   (≥ 3:1). `--line-strong` is a divider, too faint to tell you a control is there.
 - Checkboxes and radios in a `.choice` row are drawn from tokens
   (`components.css`), so they look the same on every OS. Bare ones, ranges and
-  progress bars stay native and inherit `accent-color: var(--i)` from
+  progress bars stay native and inherit `accent-color: var(--action)` from
   `tokens.css`; don't restyle those just to recolour them. `.progress` and
   `.meter` on a native `<progress>` or `<meter>` draw it from tokens, for
   when a bar must look the same everywhere.
@@ -275,10 +275,10 @@ avoids a one-word last line (`pretty`). On a touch screen the tool tier's
 
 ## 6. Space, shape, elevation
 
-4px base (`--s1` … `--s9`). Radius steps by what the thing is, so a control
+4px base (`--space-1` … `--space-9`). Radius steps by what the thing is, so a control
 inside a card reads as nested rather than as a smaller card: `--radius-sm`
 (6px) for chips and pills, `--radius-control` (8px) for buttons, inputs,
-selects, the segmented control and menu items, `--radius` (12px) for cards,
+selects, the segmented control and menu items, `--radius-card` (12px) for cards,
 messages, popovers and code blocks, `--radius-lg` (18px) for dialogs and
 hero surfaces.
 
@@ -330,7 +330,7 @@ except the overlay case below.
 **The second: overlays may move as they open and close, in both tiers**
 (ADR-0013). A dialog, sheet, popover, menu or toast that someone opened, or that answers what they
 just did, fades and slides a few pixels (a sheet from its own edge) over
-`--dur-fast`. Only opacity and transform move; the open state is always fully
+`--duration-fast`. Only opacity and transform move; the open state is always fully
 shown, so a browser without `@starting-style` shows it at once; and under
 `prefers-reduced-motion` it is instant, backdrop included. An overlay that is
 already open when the page loads doesn't animate. That is the whole
@@ -339,12 +339,12 @@ exception: content on the page itself still never animates in.
 **The third: a control may answer the person who used it** (ADR-0015). Two
 cases, both only ever started by the person:
 
-- **A press.** A `.btn` settles by 2% over `--dur-fast` while it is held down. Not when it is
+- **A press.** A `.btn` settles by 2% over `--duration-fast` while it is held down. Not when it is
   disabled or busy.
 - **A switch of view.** When someone picks a tab or a segment, the script that
   swaps the content may wrap the swap in `document.startViewTransition()`, and
   the old view cross-fades to the new one at the browser's default, 250ms
-  (the same as `--dur`). The package sets nothing on the transition, so a
+  (the same as `--duration`). The package sets nothing on the transition, so a
   site that already uses view transitions is not affected. Opt in per switch;
   a browser without the API swaps at once.
 
@@ -379,7 +379,7 @@ the chart exception: node *type* is a category like event type, and is carried b
 an icon and a label, never a hue. A diagram where every node is tinted by family
 is thirty coloured things, and the one that is down disappears among them.
 
-- **Nodes are neutral.** `--card` fill, `--line-strong` edge, `--radius` corners,
+- **Nodes are neutral.** `--card` fill, `--line-strong` edge, `--radius-card` corners,
   an icon in `--ink-soft`, the name in `--ink`, the kind in `--mono` at
   `--text-xs` in `--ink-soft`. Grouping is a zone: `--line` hairline, no fill or
   a faint one, a `--mono` eyebrow label.
@@ -401,7 +401,7 @@ is thirty coloured things, and the one that is down disappears among them.
   `--code-string` (`--ink-soft`), comments `--code-comment` (`--slate`, italic),
   everything else `--code-ink`. A highlighted line is `--code-highlight`. No
   syntax rainbow: a reader scanning code needs the keywords, not a palette.
-- **Selection** is the focus treatment: a 2px `--i-ink` outline, offset. Asking
+- **Selection** is the focus treatment: a 2px `--action-ink` outline, offset. Asking
   "what depends on this?" dims everything unrelated to ~30% opacity and inks the
   connecting edges in `--ink`; it never introduces a colour.
 - **A path is numbered, not coloured.** A request path drawn over a diagram
@@ -422,7 +422,7 @@ is thirty coloured things, and the one that is down disappears among them.
 Non-negotiable in both themes:
 
 - Body text ≥ 4.5:1; large text and UI marks ≥ 3:1. `--slate` is the quietest
-  text step and clears 4.5:1 in both themes; `--n-500` in light does not, so it
+  text step and clears 4.5:1 in both themes; `--neutral-500` in light does not, so it
   is never text.
 - Touch targets ≥ 44px on coarse pointers, with a `.touch-hit` opt-out for controls
   whose shape is meaningful (a 22px circular checkbox forced to 44px becomes an
@@ -539,7 +539,46 @@ To use the components in a Tailwind site, import **`controls.css`**, not
 
 ## 12. The one rule that keeps this true
 
-**Never hardcode a hex outside `tokens.css`.**
+**Never hardcode a hex outside the token files.**
+
+### Where a token lives
+
+`tokens/*.json` is the source, one file per family (`color`, `type`, `space`,
+`shape`, `motion`, `component`, `chart`), in the W3C design-tokens shape so
+other tools can read it. `npm run build` writes `tokens.css`,
+`tokens.chart.css`, `tailwind.css` and `tokens/names.d.ts` from it, and
+`npm run check` fails if any of them is stale. Never edit a generated file.
+The rules that aren't tokens (`color-scheme`, `::selection`, print, reduced
+motion) are `tokens/head.css` and `tokens/base.css`.
+
+Three tiers, and a rule for which one to read:
+
+| Tier | Example | Read it from |
+|---|---|---|
+| **Primitive** | `--neutral-300` | other tokens only |
+| **Semantic** | `--ink`, `--line`, `--action`, `--success-surface` | anything |
+| **Component** | `--button-radius`, `--card-line`, `--focus-ring` | that component |
+
+A component token starts as an alias of a semantic one. It exists so a kit or
+a product's theme can restyle a component without touching a colour (ADR-0019).
+
+**Names that changed in 0.13.** The old name still resolves until 1.0;
+`DeprecatedTokenName` in `tokens/names.d.ts` lists them.
+
+| Before | Now |
+|---|---|
+| `--n-0` … `--n-900` | `--neutral-0` … `--neutral-900` |
+| `--i`, `--i-hover`, `--i-pressed` | `--action`, `--action-hover`, `--action-pressed` |
+| `--i-ink`, `--i-ink-hover` | `--action-ink`, `--action-ink-hover` |
+| `--i-surface`, `--i-line`, `--i-selection` | `--action-surface`, `--action-line`, `--action-selection` |
+| `--on-i` | `--on-action` |
+| `--i-disabled-bg`, `--i-disabled-ink` | `--disabled`, `--disabled-ink` |
+| `--s1` … `--s9` | `--space-1` … `--space-9` |
+| `--dur-fast`, `--dur`, `--dur-slow` | `--duration-fast`, `--duration`, `--duration-slow` |
+| `--radius` | `--radius-card` |
+
+Reading an old name works. **Setting** one no longer reaches the components,
+which read the new names: set the new name instead.
 
 Hardcoded values silently survive a theme change. `life`'s status pills carried
 literal greys for months and would have stayed light grey in dark mode.
@@ -668,7 +707,7 @@ The attributes `product-page.css` gives every page:
   **stage** (a faint field behind the hero proof), the clip's current step and
   the how-it-works numerals, and it **fills the one primary button**
   (`--mark-fill` under `--on-mark`, §3). It is never a link, text or state,
-  and the focus ring stays `--i-ink`.
+  and the focus ring stays `--action-ink`.
 - **An ink button** (`data-button="ink"` on `.pp`) when the mark is better
   kept for the picture. A page with no `data-mark` is ink too.
 - **A mark ground** (`data-ground="mark"` on `.pp`): the page washes in
