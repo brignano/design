@@ -473,7 +473,7 @@ product imports one file and sets one attribute. Opt-in until 1.0, like kits.
 ```
 kit: larch            # split, ledger or larch: the look it starts from
 ground: wash          # plain (the kit's), bright, or wash
-scheme: dark          # leave out for both; dark pins the product dark
+scheme: dark          # both (the default) or dark, which pins the product dark
 hue: 355              # what acts: an OKLCH hue, 0 to 360
 typeface: onest       # headings; `mono` sets everything in the kit's mono
 heading-weight: 500

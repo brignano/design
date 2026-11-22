@@ -4,7 +4,7 @@
 //
 //   kit: larch            # split, ledger or larch: the look it starts from
 //   ground: wash          # plain (the kit's), bright or wash
-//   scheme: dark          # leave out for both; dark pins the product dark
+//   scheme: dark          # both (the default) or dark, which pins the product dark
 //   hue: 355              # what acts, as an OKLCH hue, 0 to 360
 //   typeface: onest       # headings; `mono` sets everything in the kit's mono
 //   heading-weight: 500
@@ -64,7 +64,7 @@ const DEEP = {
 };
 
 export function parse(name, text) {
-  const out = {};
+  const out = {}, at = {};
   text.split('\n').forEach((raw, i) => {
     const line = raw.replace(/#.*$/, '').trim();
     if (!line) return;
@@ -73,18 +73,19 @@ export function parse(name, text) {
     if (!KEYS.includes(m[1])) throw new Error(`themes/${name}.theme:${i + 1}: \`${m[1]}\` is not a theme key (${KEYS.join(', ')})`);
     if (m[1] in out) throw new Error(`themes/${name}.theme:${i + 1}: \`${m[1]}\` is set twice`);
     out[m[1]] = m[2].trim();
+    at[m[1]] = i + 1;
   });
-  const need = (ok, key, hint) => { if (!ok) throw new Error(`themes/${name}.theme: \`${key}: ${out[key]}\` ${hint}`); };
+  const need = (ok, key, hint) => { if (!ok) throw new Error(`themes/${name}.theme:${at[key]}: \`${key}: ${out[key]}\` ${hint}`); };
   if (!out.kit) throw new Error(`themes/${name}.theme: a theme names its \`kit\` (${KITS.join(', ')})`);
   need(KITS.includes(out.kit), 'kit', `is not a kit (${KITS.join(', ')})`);
   if ('ground' in out) need(GROUNDS.includes(out.ground), 'ground', `is not a ground (${GROUNDS.join(', ')})`);
-  if ('scheme' in out) need(out.scheme === 'dark', 'scheme', 'must be `dark`; leave the key out for both schemes');
+  if ('scheme' in out) need(['both', 'dark'].includes(out.scheme), 'scheme', 'must be `both` or `dark`');
   if ('hue' in out) need(/^\d+(\.\d+)?$/.test(out.hue) && +out.hue <= 360, 'hue', 'must be a number from 0 to 360');
   if ('typeface' in out) need(out.typeface === 'mono' || out.typeface in FACES, 'typeface', `is not a face this system ships (mono, ${Object.keys(FACES).join(', ')})`);
   if ('heading-weight' in out) need(/^[1-9]00$/.test(out['heading-weight']), 'heading-weight', 'must be 100 to 900');
   if ('corners' in out) need(out.corners === 'pill' || /^\d+$/.test(out.corners), 'corners', 'must be a number of px, or `pill`');
   if ('shell' in out) need(SHELLS.includes(out.shell), 'shell', `is not a shell (${SHELLS.join(', ')})`);
-  if ((out.ground ?? 'plain') !== 'plain' && !('hue' in out)) throw new Error(`themes/${name}.theme: \`ground: ${out.ground}\` is tinted with the theme's hue, so it needs a \`hue\``);
+  if ((out.ground ?? 'plain') !== 'plain' && !('hue' in out)) throw new Error(`themes/${name}.theme:${at.ground}: \`ground: ${out.ground}\` is tinted with the theme's hue, so it needs a \`hue\``);
   return out;
 }
 

@@ -105,11 +105,12 @@ function again(selector, set, rootTokens, what) {
 // attribute. A theme that misses a contrast floor is refused here, before
 // anything is written.
 const THEMES = readdirSync(new URL('themes/', root)).filter((f) => f.endsWith('.theme')).map((f) => f.slice(0, -6)).sort();
-function theme(name, rootTokens) {
-  const source = read(`themes/${name}.theme`);
+const kitTokensOf = (kit) => new Map(groups(`kits/${kit}`)[0].tokens.map(([n, tok]) => [n, value(tok)]));
+// `kitTokens` is a parameter so `npm run check` can hand this a kit with one
+// colour just under a floor and see the theme refused (rule 17).
+export function theme(name, source, rootTokens, kitTokens) {
   const t = parse(name, source);
-  const [g] = groups(`kits/${t.kit}`);
-  const kitTokens = new Map(g.tokens.map(([n, tok]) => [n, value(tok)]));
+  kitTokens ??= kitTokensOf(t.kit);
   const own = derive(t, kitTokens);
   for (const n of own.keys()) if (!rootTokens.has(n)) throw new Error(`themes/${name}.theme: the generator set --${n}, which :root does not define`);
   const all = new Map([...kitTokens, ...own]);
@@ -165,6 +166,21 @@ function tailwind(known) {
   return `${BANNER('tokens/tailwind.json')}\n${comment(doc.$description, '')}\n\n${doc.block} {\n${lines.join('\n')}\n}\n`;
 }
 
+// :root's own tokens, by name, for the kits and themes: tokens.css and the
+// chart file, whose aliases (--chart-surface: var(--card)) must follow a kit
+// too. Old names are aliases as well.
+export function rootTokenMap() {
+  const rootTokens = new Map();
+  for (const f of [...FAMILIES, 'chart'])
+    for (const g of groups(f))
+      if (g.selector === ':root' && !g.media)
+        for (const [name, t] of g.tokens) {
+          rootTokens.set(name, value(t));
+          if (ext(t).was) rootTokens.set(ext(t).was, `var(--${name})`);
+        }
+  return rootTokens;
+}
+
 export function build() {
   const known = new Set();
   for (const f of [...FAMILIES, 'chart'])
@@ -194,21 +210,11 @@ export function build() {
     read('tokens/base.css').trimEnd(),
   ].join('\n\n') + '\n';
 
-  // :root's own tokens, by name, for the kits: tokens.css and the chart file,
-  // whose aliases (--chart-surface: var(--card)) must follow a kit too. Old
-  // names are aliases as well.
-  const rootTokens = new Map();
-  for (const f of [...FAMILIES, 'chart'])
-    for (const g of groups(f))
-      if (g.selector === ':root' && !g.media)
-        for (const [name, t] of g.tokens) {
-          rootTokens.set(name, value(t));
-          if (ext(t).was) rootTokens.set(ext(t).was, `var(--${name})`);
-        }
+  const rootTokens = rootTokenMap();
 
   return {
     ...Object.fromEntries(KITS.map((k) => [`kits/${k}.css`, kit(k, rootTokens)])),
-    ...Object.fromEntries(THEMES.map((n) => [`themes/${n}.css`, theme(n, rootTokens)])),
+    ...Object.fromEntries(THEMES.map((n) => [`themes/${n}.css`, theme(n, read(`themes/${n}.theme`), rootTokens)])),
     'tokens.css': tokens,
     'tokens.chart.css': BANNER('tokens/chart.json') + '\n' + groups('chart').map(rule).join('\n\n') + '\n',
     'tailwind.css': tailwind(known),

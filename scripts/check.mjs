@@ -42,8 +42,9 @@
 //  15. tokens.css, tokens.chart.css, tailwind.css, tokens/names.d.ts or a
 //      kits/*.css is not exactly what scripts/build.mjs makes from tokens/
 //      (they are generated: edit the JSON, then `npm run build`).
-//  17. the theme generator's gate stops refusing unreadable text, or any hue
-//      on any kit and ground produces a theme that misses a floor.
+//  17. the theme generator's gate lets through a pair just under its floor,
+//      the build writes a theme the gate faults, or any hue on any kit and
+//      ground produces a theme that misses a floor.
 //  16. a kit (kits/*.css) or a product's theme (themes/*.css; ADR-0019) misses
 //      a contrast floor in either scheme,
 //      sets a name :root doesn't define, lets a wash drift from the colour it
@@ -56,7 +57,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { hex, toHex, resolve } from './colour.mjs';
 import { TOKEN, resolveLight } from './email-tokens.mjs';
 import { controls } from './controls.mjs';
-import { build } from './build.mjs';
+import { build, rootTokenMap, theme as buildTheme } from './build.mjs';
 import { derive, gate, parse } from './theme.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -691,26 +692,73 @@ for (const [dir, file] of kitFiles) {
 }
 
 // ── 17. The theme generator refuses what it should, and nothing it shouldn't ──
-// build.mjs won't write a theme that gate() faults. Two self-checks keep that
-// honest: a theme with unreadable text is refused, and every hue, on every
-// kit and ground, passes, so "a theme is a hue" can't produce a bad palette.
+// build.mjs won't write a theme that gate() faults. Three self-checks keep
+// that honest:
+//   a. each pair the gate owes is refused when it sits JUST under its floor
+//      (so a loosened floor or a dropped pair is noticed, not only a gate
+//      that has been switched off);
+//   b. the build's own theme() refuses such a theme, so the refusal can't be
+//      unhooked from the build;
+//   c. every hue, on every kit and ground, passes: "a theme is a hue" can't
+//      produce a bad palette.
 {
   const kitTokens = (kit) => {
     const [, body] = read(`kits/${kit}.css`).match(/\{([\s\S]*?)\}/);
     return new Map([...body.matchAll(/--([\w-]+)\s*:\s*([^;]+);/g)].map(([, k, v]) => [k, v.trim()]));
   };
+  const sidesOf = (v) => v.match(/#[0-9a-f]{6}/gi);
+  // The grey that comes closest to `floor` against `bg` without reaching it.
+  const justUnder = (bg, floor) => {
+    let best = null;
+    for (let g = 0; g < 256; g++) {
+      const c = toHex([g, g, g]), r = ratio(hex(c), hex(bg));
+      if (r < floor && (!best || r > best[1])) best = [c, r];
+    }
+    return best;
+  };
+  const both = [['light', 0], ['dark', 1]];
   try {
     const split = kitTokens('split');
-    const broken = new Map([...split, ['ink', split.get('bg')]]);
-    if (!gate('self-check', broken, [['light', 0], ['dark', 1]]).some((f) => f.includes('--ink on --bg')))
-      fail('self-check: the theme gate no longer refuses text the same colour as its page');
+    if (gate('self-check', split, both).length) fail('self-check: the theme gate faults the Split kit itself, so its fixtures prove nothing');
+    // a. The pairs the gate owes, written out here on purpose: reading them
+    //    from theme.mjs would let a pair be dropped there unnoticed.
+    const OWED = [];
+    for (const bg of ['bg', 'card']) {
+      for (const fg of ['ink', 'ink-soft', 'slate', 'action-ink', 'action-ink-hover']) OWED.push([fg, bg, 4.5]);
+      OWED.push(['line-control', bg, 3]);
+    }
+    for (const bg of ['action', 'action-hover', 'action-pressed']) OWED.push(['on-action', bg, 4.5]);
+    OWED.push(['on-accent', 'accent', 4.5], ['ink', 'surface-hover', 4.5], ['ink', 'surface-active', 4.5]);
+    for (const [fg, bg, floor] of OWED) {
+      const under = sidesOf(split.get(bg)).map((c) => justUnder(c, floor));
+      if (under.some(([, r]) => r < floor - 0.4)) fail(`self-check: no grey sits just under ${floor}:1 on --${bg}; the fixture is too easy`);
+      const doctored = new Map([...split, [fg, `light-dark(${under[0][0]}, ${under[1][0]})`]]);
+      const said = gate('self-check', doctored, both).filter((f) => f.includes(`--${fg} on --${bg} `));
+      if (said.length !== 2) fail(`self-check: the theme gate lets --${fg} on --${bg} through at ${under[0][1].toFixed(2)}:1 and ${under[1][1].toFixed(2)}:1; it must refuse under ${floor}:1 in both schemes`);
+    }
+    for (const bg of ['bg', 'card']) {
+      const under = sidesOf(split.get(bg)).map((c) => justUnder(c, 3));
+      const v = `light-dark(${under[0][0]}, ${under[1][0]})`;
+      const said = gate('self-check', new Map([...split, ['action', v], ['action-edge', v]]), both).filter((f) => f.includes('neither --action nor --action-edge') && f.includes(`--${bg} `));
+      if (said.length !== 2) fail(`self-check: the theme gate lets a primary button through that can't be found on --${bg}`);
+    }
+    // b. Through the build's own path.
+    const [slateLight, slateDark] = sidesOf(split.get('card')).map((c) => justUnder(c, 4.5)[0]);
+    let refused = false;
+    try {
+      buildTheme('self-check', 'kit: split\n', rootTokenMap(), new Map([...split, ['slate', `light-dark(${slateLight}, ${slateDark})`]]));
+    } catch (e) {
+      refused = /--slate on --card/.test(e.message);
+    }
+    if (!refused) fail('self-check: scripts/build.mjs wrote a theme whose muted text is under 4.5:1; the gate is no longer hooked to the build');
+    // c. Every hue.
     let swept = 0;
     for (const kit of ['split', 'ledger', 'larch']) {
       const base = kitTokens(kit);
       for (const ground of ['plain', 'bright', 'wash'])
         for (let hue = 0; hue < 360; hue += 5) {
           const t = parse('sweep', `kit: ${kit}\nground: ${ground}\nhue: ${hue}`);
-          const faults = gate('sweep', new Map([...base, ...derive(t, base)]), [['light', 0], ['dark', 1]]);
+          const faults = gate('sweep', new Map([...base, ...derive(t, base)]), both);
           swept++;
           if (faults.length) fail(`theme steps: kit ${kit}, ground ${ground}, hue ${hue} misses a floor: ${faults[0].replace('themes/sweep.theme ', '')}`);
         }
