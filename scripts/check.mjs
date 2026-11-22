@@ -39,9 +39,12 @@
 //      strengths: a product looks the same on its card and its page (ADR-0018).
 //  14. controls.css is not exactly what scripts/controls.mjs makes from
 //      components.css (it is generated, never edited).
-//  15. tokens.css, tokens.chart.css, tailwind.css or tokens/names.d.ts is not
-//      exactly what scripts/build.mjs makes from tokens/ (they are generated:
-//      edit the JSON, then `npm run build`).
+//  15. tokens.css, tokens.chart.css, tailwind.css, tokens/names.d.ts or a
+//      kits/*.css is not exactly what scripts/build.mjs makes from tokens/
+//      (they are generated: edit the JSON, then `npm run build`).
+//  16. a kit (kits/*.css, ADR-0019) misses a contrast floor in either scheme,
+//      sets a name :root doesn't define, lets a wash drift from the colour it
+//      mixes, or uses one hue for both "you can act on this" and "settled".
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -116,7 +119,7 @@ function side(value, i) {
   return c ? side(value.slice(0, c.start) + c.args[i] + value.slice(c.end), i) : value;
 }
 
-const SCALE_BLOCKS = ['.tier-marketing', '@media (pointer: coarse) > :root:not(.tier-marketing)'];
+const SCALE_BLOCKS = ['.tier-marketing', '@media (pointer: coarse) > :root:not(.tier-marketing)', "[data-density='compact']"];
 // [data-mark] points --mark-current at an existing mark token (ADR-0014). Same
 // terms as the blocks above: a var() to a token, never a colour of its own.
 const MARK_BLOCKS = ["[data-mark='teal']", "[data-mark='violet']", "[data-mark='magenta']"];
@@ -600,6 +603,76 @@ else {
 if (!existsSync(new URL('controls.css', root)) || read('controls.css') !== controls(read('components.css')))
   fail('controls.css is out of date with components.css: run `npm run controls` and commit it');
 
+// ── 16. Every kit holds the floors ───────────────────────────────────────────
+// A kit re-declares :root's colours under [data-kit], so it is measured the
+// way :root is: its values laid over :root's, each scheme on its own.
+//
+// These are the floors a kit owes whatever the components do with it: text on
+// its surfaces, a label on each fill, a control found on its page. The pairs
+// the check reads out of components.css (section 1) are measured against the
+// default look only until #183 restyles the components for the kits; they
+// join here then.
+const KIT_FLOORS = [];
+for (const bg of ['--card', '--bg']) {
+  for (const fg of ['--ink', '--ink-soft', '--slate', '--action-ink', '--action-ink-hover', '--success-ink', '--attention-ink', '--danger-ink']) KIT_FLOORS.push([fg, bg, TEXT]);
+  for (const fg of ['--line-control', '--danger-fill', '--success', '--attention', '--danger']) KIT_FLOORS.push([fg, bg, MARK]);
+}
+for (const bg of ['--surface-hover', '--surface-sticky']) for (const fg of ['--ink', '--ink-soft']) KIT_FLOORS.push([fg, bg, TEXT]);
+KIT_FLOORS.push(['--ink', '--surface-active', TEXT], ['--on-accent', '--accent', TEXT], ['--action-ink', '--action-surface', TEXT]);
+for (const bg of ['--action', '--action-hover', '--action-pressed']) KIT_FLOORS.push(['--on-action', bg, TEXT]);
+for (const bg of ['--danger-fill', '--danger-fill-hover', '--danger-fill-pressed']) KIT_FLOORS.push(['--on-danger', bg, TEXT]);
+for (const s of ['success', 'attention', 'danger']) KIT_FLOORS.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
+
+let kitsChecked = 0;
+const kitFiles = existsSync(new URL('kits/', root)) ? readdirSync(new URL('kits/', root)).filter((f) => f.endsWith('.css')) : [];
+for (const file of kitFiles) {
+  const name = file.slice(0, -4);
+  const decls = new Map();
+  for (const b of blocks(read(`kits/${file}`))) {
+    if (b.selector !== `[data-kit='${name}']`) fail(`kit ${name}: kits/${file} has a rule for \`${b.selector}\`; a kit is scoped to [data-kit='${name}'] and nothing else`);
+    for (const [k, v] of b.decls) decls.set(k, v);
+  }
+  for (const k of decls.keys()) if (!tokens.has(k)) fail(`kit ${name}: ${k} is not a token :root defines`);
+  [['light', light], ['dark', dark]].forEach(([theme, base], i) => {
+    const map = new Map([...base, ...[...decls].map(([k, v]) => [k, side(v, i)])]);
+    const at = (token, under) => {
+      const c = resolve(`var(${token})`, map);
+      return c.alpha < 1 ? over(c, under) : c.rgb;
+    };
+    const measure = (fg, bg) => {
+      const b = at(bg, at('--card', [255, 255, 255]));
+      return [ratio(at(fg, b), b), b];
+    };
+    try {
+      for (const [fg, bg, floor] of KIT_FLOORS) {
+        const [r, b] = measure(fg, bg);
+        kitsChecked++;
+        if (r < floor) fail(`kit ${name} (${theme}): ${fg} on ${bg} is ${r.toFixed(2)}:1 (${toHex(at(fg, b))} on ${toHex(b)}), needs ${floor}:1`);
+      }
+      // The primary button is found by its fill or, failing that, its edge.
+      for (const bg of ['--card', '--bg']) {
+        const found = Math.max(measure('--action', bg)[0], measure('--action-edge', bg)[0]);
+        kitsChecked++;
+        if (found < MARK) fail(`kit ${name} (${theme}): neither --action nor --action-edge reaches ${MARK}:1 on ${bg} (${found.toFixed(2)}:1); the primary button can't be found`);
+      }
+      // A wash still mixes the colour it is named for.
+      for (const [wash, src] of [['--action-surface', '--action'], ['--action-line', '--action'], ['--action-selection', '--action'], ['--surface-sticky', i ? '--bg' : '--card']]) {
+        const base = map.get(wash)?.match(/^color-mix\(in srgb,\s*(#[0-9a-f]{3,6})\s/i)?.[1];
+        if (decls.has(wash) && (!base || toHex(hex(base)) !== hexOf(src, map)))
+          fail(`kit ${name} (${theme}): ${wash} mixes ${base ?? 'no hex'}, but ${src} is ${hexOf(src, map)}`);
+      }
+      // One hue acts and another says "settled" (ADR-0004). A fill with almost
+      // no chroma (ink, paper) has no hue to confuse.
+      const act = oklch(at('--action', [255, 255, 255]));
+      const ok = oklch(at('--success', [255, 255, 255]));
+      const apart = Math.min(Math.abs(act.H - ok.H), 360 - Math.abs(act.H - ok.H));
+      if (act.C > 0.04 && apart < 25) fail(`kit ${name} (${theme}): --action sits ${apart.toFixed(0)}° from --success; within 25° the two read as one colour`);
+    } catch (e) {
+      fail(`kit ${name} (${theme}): ${e.message}`);
+    }
+  });
+}
+
 // ── 15. The token files are generated ────────────────────────────────────────
 // tokens/ is the source. A hand edit to a generated file, or a JSON change
 // without a rebuild, would ship a file that disagrees with its source.
@@ -616,4 +689,4 @@ if (failures.length) {
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength, controls.css and the token files in step`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength, controls.css and the token files in step, ${kitFiles.length} kits on ${kitsChecked} pairs`);

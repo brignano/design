@@ -371,6 +371,18 @@
   --rust: var(--danger);
   --rust-deep: var(--danger-ink);
   --gold: var(--slate);
+
+  /* ── Tokens the kits set (ADR-0019) ──
+     Each is an alias here, so today's look is unchanged; a kit in kits/*.css
+     gives it a value of its own.
+
+     The primary button's border. The fill carries itself, except in a kit
+     whose fill can't be found on its page (Split in light). */
+  --action-edge: var(--action);
+
+  /* The one highlight a screen may carry, and its label. */
+  --accent: var(--mark-fill);
+  --on-accent: var(--on-mark);
 }
 
 /* ── A product's mark, wherever the product is ──────────────────────────
@@ -437,6 +449,32 @@
   --tracking-title: -0.01em;
   --tracking-display: -0.025em;
   --tracking-caps: 0.08em;
+
+  /* How the display treatment is set: a kit may ask for capitals and a wider
+     cut of its face (Split). `text-transform` and `font-stretch` read these. */
+  --display-case: none;
+  --display-stretch: normal;
+
+  /* ── One line height and one tracking per size ──
+     A step of the scale is three tokens: --text-N, --leading-N, --tracking-N.
+     Each starts as the role token it used already, so nothing moves; a kit
+     retunes a step without touching the others. */
+  --leading-xs: var(--leading-ui);
+  --tracking-xs: 0;
+  --leading-sm: var(--leading-ui);
+  --tracking-sm: 0;
+  --leading-base: var(--leading-body);
+  --tracking-base: 0;
+  --leading-lg: var(--leading-body);
+  --tracking-lg: 0;
+  --leading-xl: var(--leading-title);
+  --tracking-xl: var(--tracking-title);
+  --leading-2xl: var(--leading-title);
+  --tracking-2xl: var(--tracking-title);
+  --leading-3xl: var(--leading-display);
+  --tracking-3xl: var(--tracking-display);
+  --leading-4xl: var(--leading-display);
+  --tracking-4xl: var(--tracking-display);
 }
 
 :root {
@@ -554,6 +592,21 @@
   --pill-radius: var(--radius-sm);
   --dialog-radius: var(--radius-lg);
   --focus-ring: var(--action-ink);
+
+  /* ── Density ──
+     The height of a button, input or select at each size. `data-density="compact"`
+     on <html> or any element tightens them for a dense tool screen. Touch
+     screens keep their 44px targets either way (DESIGN.md §10). */
+  --control-height: 40px;
+  --control-height-sm: 32px;
+  --control-height-lg: 48px;
+}
+
+/* A dense tool screen: one step tighter. */
+[data-density='compact'] {
+  --control-height: 32px;
+  --control-height-sm: 28px;
+  --control-height-lg: 40px;
 }
 
 /* ── Deprecated names ───────────────────────────────────────────────────

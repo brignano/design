@@ -8,6 +8,7 @@
 //   tokens.chart.css    tokens/chart.json
 //   tailwind.css        tokens/tailwind.json
 //   tokens/names.d.ts   every token name, typed
+//   kits/<kit>.css      tokens/kits/<kit>.json: one look, under [data-kit='<kit>']
 //
 // The JSON follows the W3C design-tokens shape ($value, $type, $description,
 // groups), with two things it has no word for yet, kept under
@@ -18,7 +19,7 @@
 // A token's `was` is its name before 0.13; it is emitted as an alias until 1.0.
 //
 // No dependencies, like check.mjs: a build that needs an install stops being run.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const root = new URL('../', import.meta.url);
@@ -61,6 +62,37 @@ function rule(g) {
 }
 
 const FAMILIES = ['color', 'type', 'space', 'shape', 'motion', 'component'];
+const KITS = readdirSync(new URL('tokens/kits/', root)).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)).sort();
+
+// A kit is one rule, scoped to [data-kit]. Two things make it hold on any
+// element, not only <html>:
+//   - it may set only names :root already defines, so no component has to
+//     know which kit it is in;
+//   - a :root token that is an alias (--card-radius: var(--radius-card)) was
+//     resolved on :root, so it would keep the default inside a kit on a
+//     subtree. Every alias that leads to a token the kit sets is declared
+//     again here, where it resolves against the kit's values.
+function kit(name, rootTokens) {
+  const all = groups(`kits/${name}`);
+  if (all.length !== 1 || all[0].selector !== `[data-kit='${name}']` || all[0].media)
+    throw new Error(`tokens/kits/${name}.json: a kit is one group with the selector [data-kit='${name}']`);
+  const [g] = all;
+  const set = new Set(g.tokens.map(([n]) => n));
+  for (const n of set) if (!rootTokens.has(n)) throw new Error(`tokens/kits/${name}.json: --${n} is not a token :root defines; add it to tokens/ first`);
+  const refs = (v) => [...v.matchAll(/var\(--([\w-]+)/g)].map((m) => m[1]);
+  const follows = new Set(set);
+  for (let grew = true; grew; ) {
+    grew = false;
+    for (const [n, v] of rootTokens)
+      if (!follows.has(n) && refs(v).some((r) => follows.has(r))) { follows.add(n); grew = true; }
+  }
+  const again = [...rootTokens].filter(([n]) => follows.has(n) && !set.has(n));
+  const lines = again.map(([n, v]) => `  --${n}: ${v};`);
+  const tail = again.length
+    ? `\n\n/* Aliases from :root that lead to a token this kit sets, declared again so\n   they resolve against the kit's values on whatever element carries it. */\n${g.selector} {\n${lines.join('\n')}\n}`
+    : '';
+  return `${BANNER(`tokens/kits/${name}.json`)}\n${rule(g)}${tail}\n`;
+}
 
 // Names that changed in 0.13. The old one still works, pointing at the new.
 function aliases() {
@@ -128,7 +160,18 @@ export function build() {
     read('tokens/base.css').trimEnd(),
   ].join('\n\n') + '\n';
 
+  // :root's own tokens, by name, for the kits. Old names are aliases too.
+  const rootTokens = new Map();
+  for (const f of FAMILIES)
+    for (const g of groups(f))
+      if (g.selector === ':root' && !g.media)
+        for (const [name, t] of g.tokens) {
+          rootTokens.set(name, value(t));
+          if (ext(t).was) rootTokens.set(ext(t).was, `var(--${name})`);
+        }
+
   return {
+    ...Object.fromEntries(KITS.map((k) => [`kits/${k}.css`, kit(k, rootTokens)])),
     'tokens.css': tokens,
     'tokens.chart.css': BANNER('tokens/chart.json') + '\n' + groups('chart').map(rule).join('\n\n') + '\n',
     'tailwind.css': tailwind(known),
@@ -138,6 +181,7 @@ export function build() {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   for (const [file, text] of Object.entries(build())) {
+    mkdirSync(new URL('.', new URL(file, root)), { recursive: true });
     writeFileSync(new URL(file, root), text);
     console.log('wrote', file);
   }

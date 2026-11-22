@@ -1,6 +1,6 @@
 # ADR-0015 — A white label on cobalt in both themes; controls answer a press and a switch
 
-**Status:** accepted · 2026-11-12 · #136
+**Status:** superseded in part by ADR-0020, inside a kit · accepted 2026-11-12 · #136
 **Amends:** ADR-0001 (the dark steps of cobalt), ADR-0013 (what may move)
 
 ## Context
