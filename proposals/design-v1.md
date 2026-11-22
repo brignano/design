@@ -54,9 +54,14 @@ file, not CSS:
 kit: larch            # split, ledger or larch
 ground: wash          # plain, bright or wash
 hue: 355              # what acts: buttons, links, the selected item
+typeface: onest       # headings; omit to keep the kit's
 heading-weight: 500
 corners: 16
+shell: conversation   # the shape of the main screen, below
 ```
+
+Those are all the keys but one: `scheme: dark` pins a product to one scheme,
+as Driftwood does. A key left out takes the kit's value.
 
 The system generates the full palette, light and dark, from those values and
 refuses a theme whose colours fail contrast. Adding a product is choosing a
@@ -102,8 +107,8 @@ A kit sets the character a theme starts from.
 | **Icon stroke** | 1.5px, square ends | 1.5px, flat ends | 1.75px, round ends |
 
 All typefaces are open-licensed (SIL OFL) and self-hosted. An app loads only
-its own kit's fonts: about 115 KB for Split, 150 KB for Ledger, 75 KB for
-Larch.
+its own kit's fonts: about 115 KB for Split, 195 KB for Ledger and 120 KB for
+Larch. The last two include IBM Plex Mono (45 KB), which apps already load.
 
 ### Who gets what
 
@@ -263,6 +268,22 @@ flowchart LR
   now own. The audit removes more upkeep than both add, because drift is
   caught in CI instead of in review.
 
+## ADRs
+
+Accepting this reverses decisions already on record. It should be approved
+knowing that.
+
+| ADR | What it says today | What changes |
+|---|---|---|
+| ADR-0001, ADR-0008 (cobalt) | cobalt is the interactive colour, at hue 256° | superseded: each theme has its own action hue; cobalt is no longer in the house |
+| ADR-0004 (one hue, one meaning) | every colour answers one question | kept, per theme: within a product one hue still means "you can act on this", and state colours never change |
+| ADR-0014 (identity) | "Cobalt stays the only colour that means you can act on this"; heavy Geist is the display treatment | superseded in part: the action colour and the typeface come from the theme. The voice rules (one eyebrow, numbers in mono, one heavy moment) stay |
+| ADR-0017 (product identity) | "Inside the apps, buttons and links stay cobalt"; "No typeface per product for now"; the mark "never appears as a fill in an app" | superseded in part: all three are reversed inside apps. Its five choices per product page stay, now supplied by the theme |
+| ADR-0015, ADR-0016 (white label on cobalt, danger fills) | label and fill rules for today's buttons | rewritten per kit from the measured values |
+
+On acceptance, one new ADR records "a house look, with a theme and a shell
+per product" and marks the rows above superseded, in whole or in part.
+
 ## Rejected
 
 - **One look for every app:** simplest, but the apps would look alike again.
@@ -285,7 +306,8 @@ flowchart LR
    yes. Themes need a generator either way, so this is close to settled.
 
 Settled: Split is the house (2026-11-22). Product pages keep their five
-choices (ADR-0017); a product's theme now supplies them.
+choices (ADR-0017); a product's theme now supplies them. What this reverses is
+listed under "ADRs".
 
 ## Proposed issues
 
@@ -293,14 +315,14 @@ Filed once this is accepted, each with Decisions taken from here.
 
 1. Tokens: JSON source, generator, three tiers, old names as aliases (0.13)
 2. Foundations: the three kits' colour, type, shape, motion (1.0.0-next)
-2a. Themes: the file format, the generator and its contrast gate; one theme per product
-2b. Shells: console, canvas, player, conversation, document, one issue each, wireframed first
-3. Icons: the stroke rule and check; the selected variant
-4. Icons: grow the set to what the apps use; product marks
-5. Components: restyle the existing set, one issue per gallery section
-6. Components: the ten planned (#75–#84 move from "later" to ready)
-7. Gallery: a real home page
-8. Product page kit: sections library and the art-direction brief
-9. Audit: the command, the exception comment, the docs
-10. Fleet: an audit workflow apps can call (brignano/ai-tools)
-11. Release 1.0.0, then one migration issue per app
+3. Themes: the file format, the generator and its contrast gate; one theme per product
+4. Shells: console, canvas, player, conversation, document, one issue each, wireframed first
+5. Icons: the stroke rule and check; the selected variant
+6. Icons: grow the set to what the apps use; product marks
+7. Components: restyle the existing set, one issue per gallery section
+8. Components: the ten planned (#75–#84 move from "later" to ready)
+9. Gallery: a real home page
+10. Product page kit: sections library and the art-direction brief
+11. Audit: the command, the exception comment, the docs
+12. Fleet: an audit workflow apps can call (brignano/ai-tools)
+13. Release 1.0.0, then one migration issue per app
