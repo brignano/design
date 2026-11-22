@@ -8,7 +8,7 @@
      @import "@brignano/design/tailwind.css";
 
    `@theme inline` is load-bearing: it makes the generated utilities emit
-   `var(--i)` rather than baking a literal at build time, so `bg-interactive`
+   `var(--action)` rather than baking a literal at build time, so `bg-interactive`
    follows the light/dark switch instead of freezing one theme's value.
 
    The bare `--radius` key is what drives `rounded`. Tailwind v4 has no

@@ -98,7 +98,7 @@
      ONE TEMPERATURE, top to bottom, both themes: every tinted step sits at
      OKLCH hue 286° (±3°, `npm run check` holds it). Chroma is a whisper at
      the ends (~0.0015 at neutral-25) and peaks in the mid-tones (~0.015 at
-     n-700), where a grey reads most neutral-flat without it. Only pure
+     neutral-700), where a grey reads most neutral-flat without it. Only pure
      white (light neutral-0) is untinted. An earlier ramp mixed warm hairlines
      (106°) with cool text, so a border and the label beside it disagreed.
 

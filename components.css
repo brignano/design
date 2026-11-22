@@ -29,7 +29,7 @@
    .btn-block fills its row. Works the same on <button> and <a>.
    State comes from attributes:
    - disabled, or aria-disabled="true" on a link or a button that must stay
-     focusable: neutral --i-disabled-*, never opacity, no hover;
+     focusable: neutral --disabled and --disabled-ink, never opacity, no hover;
    - aria-busy="true": the label hides behind a spinner and the button keeps
      its width. Your script sets it and ignores clicks while it is set.
    .link is the inline link for running text. */

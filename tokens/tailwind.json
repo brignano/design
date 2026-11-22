@@ -1,5 +1,5 @@
 {
-  "$description": "Tailwind v4 bridge for @brignano/design.\nImport AFTER tokens.css and after `@import \"tailwindcss\"`:\n\n  @import \"tailwindcss\";\n  @import \"@brignano/design/tokens.css\";\n  @import \"@brignano/design/tailwind.css\";\n\n`@theme inline` is load-bearing: it makes the generated utilities emit\n`var(--i)` rather than baking a literal at build time, so `bg-interactive`\nfollows the light/dark switch instead of freezing one theme's value.\n\nThe bare `--radius` key is what drives `rounded`. Tailwind v4 has no\n`-DEFAULT` suffix; with one, `rounded` silently stayed at 0.25rem.",
+  "$description": "Tailwind v4 bridge for @brignano/design.\nImport AFTER tokens.css and after `@import \"tailwindcss\"`:\n\n  @import \"tailwindcss\";\n  @import \"@brignano/design/tokens.css\";\n  @import \"@brignano/design/tailwind.css\";\n\n`@theme inline` is load-bearing: it makes the generated utilities emit\n`var(--action)` rather than baking a literal at build time, so `bg-interactive`\nfollows the light/dark switch instead of freezing one theme's value.\n\nThe bare `--radius` key is what drives `rounded`. Tailwind v4 has no\n`-DEFAULT` suffix; with one, `rounded` silently stayed at 0.25rem.",
   "block": "@theme inline",
   "keys": [
     {

@@ -107,6 +107,12 @@ export function build() {
         known.add(name);
         if (ext(t).was) known.add(ext(t).was);
       }
+  // An old name is aliased on :root only, so a renamed token must live there.
+  for (const f of [...FAMILIES, 'chart'])
+    for (const g of groups(f))
+      for (const [name, t] of g.tokens)
+        if (ext(t).was && (f === 'chart' || g.selector !== ':root' || g.media))
+          throw new Error(`tokens/${f}.json: --${name} has a \`was\` but is not in a plain :root group of tokens.css, so its old name would get no alias`);
   // A var() that names nothing would silently compute to nothing.
   for (const f of [...FAMILIES, 'chart'])
     for (const g of groups(f))
