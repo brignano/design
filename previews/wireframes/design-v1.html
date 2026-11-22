@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wireframe: design v1.0 directions</title>
+<title>Wireframe: design v1.0</title>
 <!-- proposals/design-v1.md, issue #171. The rule: "Wireframes before build" in brignano/ai-tools fleet/README.md.
 
      This file is the one wireframe that does NOT style from components.css: it
@@ -150,7 +150,7 @@
   .v-chip[aria-pressed='true'] { color: var(--v-ink); border-color: var(--v-ink); }
   .v-eyebrow { font: 500 11px/1.4 var(--v-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--v-muted); }
   .v-eyebrow b { font-weight: inherit; }
-  .v-eyebrow b::before { content: '/'; margin: 0 0.5em; }
+  .v-eyebrow b::before { content: '|'; margin: 0 0.6em; }
   .v-stamp { font: 800 15px/1 var(--v-ui); letter-spacing: 0.08em; }
 
   /* ── Product page (Sites' own words: its BRIEF, previews/product-page-sites.html) ── */
@@ -186,7 +186,7 @@
   }
 
   /* ── App shell (homelab's demo data, from previews/app-shell.html) ── */
-  .app { display: grid; min-height: inherit; align-content: start; }
+  .app { display: grid; min-height: inherit; grid-template-rows: auto 1fr; }
   .app-side { display: none; }
   .app-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid var(--v-line); }
   .app-brand { display: flex; align-items: center; gap: 8px; font: 700 16px var(--v-ui); }
@@ -210,7 +210,7 @@
   .app-nav a { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 10px; color: var(--v-ink-soft); text-decoration: none; border-radius: var(--v-r-control); font-weight: 500; }
   .app-nav a[aria-current] { color: var(--v-ink); background: var(--v-sunk); font-weight: 600; }
   @container (min-width: 900px) {
-    .app { grid-template-columns: 240px 1fr; }
+    .app { grid-template-columns: 240px 1fr; grid-template-rows: 1fr; }
     .app-bar { display: none; }
     .app-side { display: block; padding: 20px 12px; border-right: 1px solid var(--v-line); }
     .app-side .app-brand { padding: 0 10px 8px; }
@@ -261,8 +261,8 @@
   [data-dir='split'] .app-table th { color: var(--v-ink); border-bottom: 1px solid var(--v-ink); background: var(--v-sunk); }
   [data-dir='split'] .app-side, [data-dir='split'] .app-bar, [data-dir='split'] .pp-foot { border-color: var(--v-ink); }
   [data-dir='split'] .app-nav a[aria-current] { background: var(--v-ink); color: var(--v-bg); }
-  [data-dir='split'] .app-stats { gap: 0; border: 1px solid var(--v-ink); }
-  [data-dir='split'] .app-stat { border: 0; border-left: 1px solid var(--v-ink); background: var(--v-surface); display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 8px; }
+  [data-dir='split'] .app-stats { gap: 0; border: 1px solid var(--v-ink); border-radius: var(--v-r-card); overflow: hidden; }
+  [data-dir='split'] .app-stat { border: 0; border-radius: 0; border-left: 1px solid var(--v-ink); background: var(--v-surface); display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 8px; }
   [data-dir='split'] .app-stat:first-child { border-left: 0; }
   [data-dir='split'] .app-stat b { margin: 0; font-weight: 600; font-size: 18px; white-space: nowrap; }
   [data-dir='split'] .v-eyebrow b { color: var(--v-ink); font-weight: 500; }
@@ -300,15 +300,152 @@
   [data-dir='larch'] .pp-site .new { border-radius: 8px; }
   [data-dir='larch'] .pp-site dt.new { border-radius: 8px 0 0 8px; } [data-dir='larch'] .pp-site dd.new { border-radius: 0 8px 8px 0; }
   [data-dir='larch'] .spec-aa { font-weight: 700; letter-spacing: -0.04em; }
+
+  /* ════════════════════════════════════════════════════════════════════
+     PRODUCT THEMES. A theme is a kit (one of the three above) plus a few
+     seed values: ground, action hue, typeface, corners. Nothing else is
+     written per product. Contrast is measured in the proposal.
+     ════════════════════════════════════════════════════════════════════ */
+
+  /* Driftwood: the Split kit, always dark, all mono, teal signal. */
+  [data-product='driftwood'] {
+    color-scheme: dark;
+    --v-bg: oklch(0.15 0.012 220);
+    --v-surface: oklch(0.19 0.014 220);
+    --v-sunk: oklch(0.12 0.01 220);
+    --v-line: oklch(0.3 0.015 220);
+    --v-action: oklch(0.84 0.12 195);
+    --v-accent: oklch(0.84 0.12 195);
+    --v-display: 'Martian Mono', ui-monospace, monospace;
+    --v-ui: 'Martian Mono', ui-monospace, monospace;
+  }
+  [data-product='driftwood'] .v { font-size: 13px; }
+  [data-product='driftwood'] .app-title h1 { letter-spacing: -0.02em; font-weight: 700; }
+  [data-product='driftwood'] .app-table { font-size: 12.5px; }
+
+  /* Guidebook: the Larch kit on a bright ground, violet acts, heavy headings. */
+  [data-product='guidebook'] {
+    --v-bg: light-dark(oklch(0.985 0.004 290), oklch(0.17 0.02 290));
+    --v-surface: light-dark(oklch(0.955 0.014 290), oklch(0.22 0.026 290));
+    --v-sunk: light-dark(oklch(1 0 0), oklch(0.26 0.03 290));
+    --v-ink: light-dark(oklch(0.2 0.03 290), oklch(0.96 0.01 290));
+    --v-ink-soft: light-dark(oklch(0.38 0.03 290), oklch(0.83 0.02 290));
+    --v-muted: light-dark(oklch(0.47 0.03 290), oklch(0.73 0.025 290));
+    --v-line: light-dark(oklch(0.9 0.015 290), oklch(0.32 0.03 290));
+    --v-edge: light-dark(oklch(0.58 0.04 290), oklch(0.62 0.04 290));
+    --v-action: light-dark(oklch(0.5 0.2 290), oklch(0.8 0.12 290));
+    --v-on-action: light-dark(oklch(0.99 0 0), oklch(0.17 0.02 290));
+    --v-link: light-dark(oklch(0.5 0.2 290), oklch(0.8 0.12 290));
+  }
+  [data-product='guidebook'] .app-title h1 { font-weight: 800; letter-spacing: -0.045em; }
+
+  /* Sites: the Larch kit on a pink wash, magenta acts, medium-weight headings. */
+  [data-product='sites'] {
+    --v-bg: light-dark(oklch(0.95 0.032 0), oklch(0.19 0.025 350));
+    --v-surface: light-dark(oklch(0.985 0.012 0), oklch(0.24 0.03 350));
+    --v-sunk: light-dark(oklch(1 0 0), oklch(0.28 0.035 350));
+    --v-ink: light-dark(oklch(0.22 0.03 350), oklch(0.96 0.012 0));
+    --v-ink-soft: light-dark(oklch(0.38 0.035 350), oklch(0.84 0.02 0));
+    --v-muted: light-dark(oklch(0.45 0.035 350), oklch(0.74 0.025 0));
+    --v-line: light-dark(oklch(0.9 0.03 0), oklch(0.33 0.035 350));
+    --v-edge: light-dark(oklch(0.56 0.05 350), oklch(0.62 0.05 350));
+    --v-action: light-dark(oklch(0.5 0.17 355), oklch(0.8 0.11 355));
+    --v-on-action: light-dark(oklch(0.99 0 0), oklch(0.19 0.025 350));
+    --v-link: light-dark(oklch(0.5 0.17 355), oklch(0.8 0.11 355));
+    --v-display: 'Onest', system-ui, sans-serif;
+    --v-r-control: 16px; --v-r-card: 24px;
+  }
+  [data-product='sites'] .app-title h1 { font-weight: 500; letter-spacing: -0.03em; }
+  [data-product='sites'] .app-stat b { font: 500 28px/1 var(--v-display); }
+  [data-product='sites'] .app-side, [data-product='sites'] .app-bar { background: transparent; }
+  [data-product='sites'] .app-nav a[aria-current] { background: var(--v-surface); }
+
+  /* Receipts takes the Ledger kit as it is: no block needed. */
+
+  /* ── The sections that hold them ── */
+  .wf-sec { margin: 0 0 64px; padding-top: 24px; border-top: 1px solid var(--line-strong); }
+  .wf-sec > h2 { font-size: var(--text-2xl); margin: 0 0 4px; letter-spacing: -0.01em; }
+  .wf-sec > p, .wf-sec > ul { max-width: 72ch; margin: 0 0 12px; color: var(--ink-soft); }
+  .wf-sec > ul { padding-left: 20px; }
+  .wf-product { margin: 28px 0 0; }
+  .wf-product h3 { font-size: var(--text-lg); margin: 0 0 2px; }
+  .wf-product pre { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 10px; white-space: pre-wrap; }
+
+  /* ── The design site's new home (drawn in the house look) ── */
+  .home-wrap { min-height: inherit; }
+  .home-wrap > .v { min-height: 0; }
+  .home-bar { display: flex; align-items: center; gap: 20px; padding: 10px 20px; border-bottom: 1px solid var(--v-ink); }
+  .home-bar nav { display: none; gap: 20px; font: 500 11px var(--v-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+  .home-bar nav a { text-decoration: none; }
+  .home-bar .v-field { margin-left: auto; max-width: 200px; min-height: 36px; font: 500 11px var(--v-mono); }
+  .home-hero { padding: 36px 20px 24px; display: grid; gap: 16px; }
+  .home-hero h1 { font: 800 clamp(2.3rem, 9.5cqi, 6rem)/0.92 var(--v-display); font-stretch: 120%; text-transform: uppercase; letter-spacing: -0.035em; text-wrap: balance; }
+  .home-hero h1 em { font-style: normal; background: var(--v-accent); color: var(--v-on-accent); padding: 0 0.12em; }
+  .home-hero p { max-width: 52ch; color: var(--v-ink-soft); font-size: 17px; }
+  .home-switch { display: flex; flex-wrap: wrap; gap: 6px; }
+  .home-stage { container-type: inline-size; border-top: 1px solid; border-bottom: 1px solid; }
+  .home-stage .v { min-height: 0; }
+  /* A built theme's fill is pale in any hue, so its button is found by an ink edge. */
+  [data-built] .v-btn.primary { border-color: var(--v-ink); }
+  .home-rest { padding: 36px 20px 28px; display: grid; gap: 28px; }
+  .home-rest h2 { font: 800 clamp(1.6rem, 5cqi, 2.6rem)/0.95 var(--v-display); font-stretch: 120%; text-transform: uppercase; letter-spacing: -0.03em; }
+  .home-build { display: grid; gap: 20px; }
+  .home-controls { display: grid; gap: 16px; align-content: start; }
+  .home-controls input[type='range'] { width: 100%; accent-color: var(--v-ink); min-height: 44px; }
+  .home-controls select { appearance: auto; }
+  .home-file { font: 500 13px/1.7 var(--v-mono); background: var(--v-ink); color: var(--v-bg); padding: 18px; white-space: pre; overflow-x: auto; margin: 0; }
+  .home-tiles { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--v-ink); }
+  .home-tile { padding: 16px; border-top: 1px solid var(--v-ink); border-left: 1px solid var(--v-ink); display: grid; gap: 4px; text-decoration: none; }
+  .home-tile:nth-child(odd) { border-left: 0; }
+  .home-tile:nth-child(-n + 2) { border-top: 0; }
+  .home-tile b { font: 700 17px var(--v-ui); font-stretch: 112%; }
+  .home-tile span { font-size: 13px; color: var(--v-muted); }
+  .home-foot { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--v-muted); padding-top: 16px; border-top: 1px solid var(--v-ink); }
+  .home-foot .v-stamp { color: var(--v-ink); }
+  @container (min-width: 900px) {
+    .home-bar { padding: 12px 48px; }
+    .home-bar nav { display: flex; }
+    .home-hero { padding: 72px 48px 36px; gap: 20px; }
+    .home-rest { padding: 64px 48px 40px; gap: 48px; }
+    .home-build { grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .home-tiles { grid-template-columns: repeat(4, 1fr); }
+    .home-tile { border-top: 0; }
+    .home-tile:nth-child(odd) { border-left: 1px solid var(--v-ink); }
+    .home-tile:first-child { border-left: 0; }
+  }
 </style>
 </head>
 <body>
   <div class="wf-head">
-    <h1>Wireframe: design v1.0 directions</h1>
-    <p>Three candidate identities for <a href="../../proposals/design-v1.md">design v1.0</a> (#171), each drawn on the same two screens: Sites' product page and homelab's Hosts view. Pick one, or name the parts you'd combine. Every colour, typeface, corner and icon stroke below is a candidate token; the layout and words are the same in all three.</p>
-    <p>Rejected before drawing: a dark-only "console" look (Driftwood already owns it, ADR-0017); keeping Geist with a new accent (the "evolve" option you turned down); a glass and gradient look (dates fast, costs contrast).</p>
+    <h1>Wireframe: design v1.0</h1>
+    <p>The plan for <a href="../../proposals/design-v1.md">design v1.0</a> (#171), drawn: a house look every product shares, a theme per product so they don't look alike, a new home for this site, and the three kits the themes are built from. Every colour, typeface, corner and icon stroke is a candidate token; nothing here ships.</p>
+    <p>Rejected before drawing: one look for every app (they would look alike again); a dark-only "console" house (it suits Driftwood, not Sites); keeping Geist with a new accent (the "evolve" option turned down on 2026-11-21); glass and gradients (dates fast, costs contrast).</p>
     <p><button type="button" id="wf-theme">Theme: system</button></p>
   </div>
+
+
+  <section class="wf-sec">
+    <h2>Five products, one system</h2>
+    <p>Anthony's call on 2026-11-22: one house look, plus a theme for each product, so the apps differ from one another inside and not only on their marketing pages. Each screen below is the same markup and the same components. Only the theme changes.</p>
+    <ul>
+      <li><b>The house (shared by all):</b> the layout, how every control behaves, mono for data, the <code>product | section</code> bar above each heading, the <code>A|B</code> stamp, and the accessibility floor.</li>
+      <li><b>A theme (per product):</b> a kit, a ground, an action hue, a typeface and corners. The whole file is printed above each product.</li>
+      <li>Receipts' screen is a guess at its content, with demo data, to show the Ledger kit on an app. The other four use each product's own words.</li>
+    </ul>
+    <div id="wf-products"></div>
+  </section>
+
+  <section class="wf-sec">
+    <h2>The design site's new home</h2>
+    <p>Today's home is 40 identical cards. This one opens on the system doing its job: tap a product and the screen re-themes, then build a theme of your own and read the file it makes. It works here: try the chips, the slider and the two menus.</p>
+    <p>Rejected: a longer card grid with filters (still a catalogue); an animated hero with no controls (shows nothing true about the system).</p>
+    <div class="wf-frames" id="wf-home"></div>
+  </section>
+
+  <section class="wf-sec">
+    <h2>The three kits</h2>
+    <p>The looks the themes above are built from, each on Sites' product page and homelab's Hosts view. Split is the house and the default kit; Ledger and Larch are the two alternatives a product can start from.</p>
+  </section>
 
   <section class="wf-dir" data-name="ledger">
     <h2><small>1 of 3</small>Ledger</h2>
@@ -492,13 +629,184 @@
       if (!cache.has(name)) cache.set(name, fetch(`../../icons/${name}.svg`).then((r) => r.text()));
       return cache.get(name);
     };
-    for (const slot of document.querySelectorAll('[data-icon]')) {
-      svg(slot.dataset.icon).then((text) => {
-        const el = new DOMParser().parseFromString(text, 'image/svg+xml').documentElement;
-        for (const a of ['width', 'height', 'class', 'stroke-width', 'stroke-linecap', 'stroke-linejoin']) el.removeAttribute(a);
-        el.setAttribute('aria-hidden', 'true');
-        slot.replaceWith(el);
-      });
+    function hydrate(root) {
+      for (const slot of root.querySelectorAll('[data-icon]')) {
+        svg(slot.dataset.icon).then((text) => {
+          const el = new DOMParser().parseFromString(text, 'image/svg+xml').documentElement;
+          for (const a of ['width', 'height', 'class', 'stroke-width', 'stroke-linecap', 'stroke-linejoin']) el.removeAttribute(a);
+          el.setAttribute('aria-hidden', 'true');
+          slot.replaceWith(el);
+        });
+      }
+    }
+    hydrate(document);
+
+    // ── Product themes and the home page ──────────────────────────────────
+    const PRODUCTS = {
+      homelab: {
+        kit: 'split', file: 'kit: split   # the house look, unchanged',
+        name: 'homelab', icon: 'house', section: 'Infrastructure', title: 'Hosts', action: ['plus', 'Add host'], search: 'Search hosts',
+        nav: [['Infrastructure', [['monitor', 'Hosts'], ['download', 'Backups'], ['refresh-cw', 'Updates']]], ['Network', [['link', 'Tunnels'], ['lock', 'Certificates']]], ['System', [['bell', 'Alerts'], ['settings', 'Settings']]]],
+        stats: [['Hosts', '5'], ['Running', '3'], ['Average CPU', '34%'], ['Longest uptime', '41 days']],
+        chips: [['All', 5], ['Running', 3], ['Degraded', 1], ['Stopped', 1]],
+        cols: ['Host', 'Status', 'CPU', 'Uptime', 'Last backup'],
+        rows: [['pve-01', 'ok', 'Running', '23%', '41 days', 'Today, 03:00'], ['nas', 'ok', 'Running', '8%', '41 days', 'Today, 03:10'], ['pi-dns', 'warn', 'Degraded', '71%', '3 days', 'Yesterday, 03:00'], ['media', 'ok', 'Running', '35%', '12 days', 'Today, 03:20'], ['backup-offsite', 'bad', 'Stopped', '–', '–', '6 days ago']],
+      },
+      driftwood: {
+        kit: 'split', file: 'kit: split\nscheme: dark\nhue: 195        # teal\ntypeface: mono',
+        name: 'driftwood', icon: 'refresh-cw', section: 'System', title: 'Drift', action: ['refresh-cw', 'Scan now'], search: 'Search resources',
+        nav: [['System', [['triangle-alert', 'Drift'], ['map-pin', 'Map'], ['clock', 'History']]], ['Sources', [['link', 'Repos'], ['lock', 'Accounts']]], ['Setup', [['settings', 'Settings']]]],
+        stats: [['Resources', '48'], ['In sync', '45'], ['Drifted', '2'], ['Last scan', '4 min']],
+        chips: [['All', 48], ['In sync', 45], ['Drifted', 2], ['Missing', 1]],
+        cols: ['Resource', 'Status', 'Changed', 'Last seen', 'Source'],
+        rows: [['orders-db', 'warn', 'Drifted', '2 fields', '4 min ago', 'architecture.yaml'], ['auth-service', 'warn', 'Drifted', '1 field', '4 min ago', 'architecture.yaml'], ['cdn-edge', 'bad', 'Missing', '–', '2 days ago', 'architecture.yaml'], ['api-gateway', 'ok', 'In sync', '–', '4 min ago', 'architecture.yaml'], ['worker-queue', 'ok', 'In sync', '–', '4 min ago', 'architecture.yaml']],
+      },
+      guidebook: {
+        kit: 'larch', file: 'kit: larch\nground: bright\nhue: 290        # violet\nheading-weight: 800',
+        name: 'Guidebook', icon: 'map-pin', section: 'Guides', title: 'Guides', action: ['plus', 'New guide'], search: 'Search guides',
+        nav: [['Training', [['map-pin', 'Guides'], ['user', 'New hires'], ['circle-check', 'Results']]], ['Setup', [['download', 'Install'], ['settings', 'Settings']]]],
+        stats: [['Guides', '3'], ['New hires', '12'], ['Finished', '9'], ['Stuck', '2']],
+        chips: [['All', 3], ['Live', 2], ['Draft', 1]],
+        cols: ['Guide', 'Status', 'Steps', 'Finished', 'Most get stuck at'],
+        rows: [['Invite a teammate', 'ok', 'Live', '4', '9 of 12', 'Step 3: Press Invite'], ['Set up billing', 'ok', 'Live', '6', '7 of 12', 'Step 2: Open Billing'], ['Export data', '', 'Draft', '5', '–', '–']],
+      },
+      sites: {
+        kit: 'larch', file: 'kit: larch\nground: wash\nhue: 355        # magenta\nheading-weight: 500\ncorners: 16',
+        name: 'Sites', icon: 'pencil', section: 'Maple Street Plumbing', title: 'Requests', action: ['plus', 'Ask for a change'], search: 'Search requests',
+        nav: [['Your site', [['bell', 'Requests'], ['monitor', 'Pages'], ['eye', 'Photos']]], ['Your business', [['clock', 'Hours'], ['pencil', 'Prices'], ['settings', 'Settings']]]],
+        stats: [['Requests', '3'], ['Live', '3'], ['Average time', '41s'], ['Site', 'Up']],
+        chips: [['All', 3], ['Live', 3], ['Working', 0]],
+        cols: ['Request', 'Status', 'Time', 'Asked', 'Page'],
+        rows: [['Can you add Saturday hours? 9 to 1.', 'ok', 'Live', '40s', 'Today', 'Hours'], ['Put a photo of the van at the top?', 'ok', 'Live', '52s', 'Yesterday', 'Home'], ['Drain clearing is $120 now.', 'ok', 'Live', '31s', 'Monday', 'Prices']],
+      },
+      receipts: {
+        kit: 'ledger', file: 'kit: ledger   # unchanged',
+        name: 'Receipts', icon: 'copy', section: 'November', title: 'Receipts', action: ['upload', 'Add receipt'], search: 'Search receipts',
+        nav: [['Records', [['copy', 'Receipts'], ['calendar', 'Months'], ['download', 'Exports']]], ['Setup', [['funnel', 'Categories'], ['settings', 'Settings']]]],
+        stats: [['This month', '$612.40'], ['Receipts', '14'], ['Filed', '12'], ['Needs a look', '2']],
+        chips: [['All', 14], ['Filed', 12], ['Needs a look', 2]],
+        cols: ['From', 'Status', 'Amount', 'Date', 'Category'],
+        rows: [['Hardware store', 'ok', 'Filed', '$48.20', '7 Nov', 'Home'], ['Internet', 'ok', 'Filed', '$70.00', '5 Nov', 'Bills'], ['Parking', 'warn', 'Needs a look', '$12.00', '4 Nov', '–'], ['Groceries', 'ok', 'Filed', '$93.15', '2 Nov', 'Food'], ['Train ticket', 'warn', 'Needs a look', '$31.50', '1 Nov', '–']],
+      },
+    };
+    const icon = (n) => `<i data-icon="${n}"></i>`;
+    const appHTML = (p) => `
+      <div class="v app">
+        <div class="app-bar">
+          <button class="v-btn ghost icon" type="button" aria-label="Menu">${icon('menu')}</button>
+          <span class="app-brand">${icon(p.icon)}${p.name}</span>
+          <button class="v-btn ghost icon" type="button" aria-label="Account">${icon('user')}</button>
+        </div>
+        <nav class="app-side" aria-label="Main">
+          <span class="app-brand">${icon(p.icon)}${p.name}</span>
+          <div class="app-nav">${p.nav.map(([h, items], g) => `<h2>${h}</h2>` + items.map(([ic, label], i) => `<a href="#"${g + i === 0 ? ' aria-current="page"' : ''}>${icon(ic)}${label}</a>`).join('')).join('')}</div>
+        </nav>
+        <main class="app-main">
+          <div class="app-title">
+            <div><p class="v-eyebrow">${p.name}<b>${p.section}</b></p><h1>${p.title}</h1></div>
+            <button class="v-btn primary" type="button">${icon(p.action[0])}${p.action[1]}</button>
+          </div>
+          <div class="app-stats">${p.stats.map(([l, v]) => `<div class="app-stat"><span class="v-eyebrow">${l}</span><b>${v}</b></div>`).join('')}</div>
+          <div class="app-tools">
+            <input class="v-field" placeholder="${p.search}" aria-label="${p.search}">
+            <div class="app-chips">${p.chips.map(([l, n], i) => `<button class="v-chip" type="button" aria-pressed="${i === 0}">${l} <span class="v-num">${n}</span></button>`).join('')}</div>
+          </div>
+          <table class="app-table">
+            <thead><tr><th>${p.cols[0]}</th><th>${p.cols[1]}</th><th class="r">${p.cols[2]}</th><th class="r wide">${p.cols[3]}</th><th class="wide">${p.cols[4]}</th></tr></thead>
+            <tbody>${p.rows.map(([a, tone, st, c, d, e]) => `<tr><td>${a}</td><td><span class="v-pill ${tone}">${st}</span></td><td class="r">${c}</td><td class="r wide">${d}</td><td class="wide v-muted">${e}</td></tr>`).join('')}</tbody>
+          </table>
+        </main>
+      </div>`;
+    const dress = (el, key) => {
+      el.dataset.dir = PRODUCTS[key].kit;
+      if (key === 'homelab') delete el.dataset.product; else el.dataset.product = key;
+      el.removeAttribute('style');
+      delete el.dataset.built;
+      el.innerHTML = appHTML(PRODUCTS[key]);
+      hydrate(el);
+    };
+
+    // One row per product: its theme file, then phone and desktop.
+    const list = document.getElementById('wf-products');
+    for (const key of Object.keys(PRODUCTS)) {
+      const block = document.createElement('div');
+      block.className = 'wf-product';
+      block.innerHTML = `<h3>${PRODUCTS[key].name}</h3><pre>${PRODUCTS[key].file}</pre>
+        <div class="wf-frames">
+          <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+          <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>
+        </div>`;
+      list.append(block);
+      for (const screen of block.querySelectorAll('.wf-screen')) dress(screen, key);
+    }
+
+    // The home page, twice (phone and desktop), each one live.
+    const homeHTML = `
+      <div class="home-wrap">
+        <div class="v" data-dir="split">
+          <div class="home-bar">
+            <span class="v-stamp">A|B</span>
+            <nav aria-label="Sections"><a href="#">Foundations</a><a href="#">Components</a><a href="#">Templates</a><a href="#">Themes</a></nav>
+            <input class="v-field" placeholder="Search   /" aria-label="Search the system">
+          </div>
+          <div class="home-hero">
+            <p class="v-eyebrow">brignano<b>design</b></p>
+            <h1>One system. <em>Every product</em> its own.</h1>
+            <p>The same components, themed for each product. Pick one and watch the screen change.</p>
+            <div class="home-switch" role="group" aria-label="Product theme">
+              ${Object.keys(PRODUCTS).map((k, i) => `<button class="v-chip" type="button" data-pick="${k}" aria-pressed="${i === 0}">${PRODUCTS[k].name}</button>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="home-stage"></div>
+        <div class="v home-rest" data-dir="split">
+          <div class="home-build">
+            <div class="home-controls">
+              <p class="v-eyebrow">Themes<b>Make one</b></p>
+              <h2>A theme is a few lines.</h2>
+              <p>Move the controls. The screen above and the file beside this change together, and every colour is checked for contrast before it is allowed.</p>
+              <div><label class="v-label">Action hue <span class="v-num" data-out="hue">125</span></label><input type="range" min="0" max="360" value="125" data-set="hue" aria-label="Action hue"></div>
+              <div><label class="v-label">Kit</label><select class="v-field" data-set="kit" aria-label="Kit"><option value="split">Split: wide capitals, square</option><option value="ledger">Ledger: serif, ruled</option><option value="larch">Larch: soft, tinted</option></select></div>
+              <div><label class="v-label">Corners</label><select class="v-field" data-set="corners" aria-label="Corners"><option value="">From the kit</option><option value="0">Square</option><option value="8">Soft</option><option value="999">Pill</option></select></div>
+            </div>
+            <pre class="home-file" data-out="file"></pre>
+          </div>
+          <div class="home-tiles">
+            <a class="home-tile" href="#"><b>Foundations</b><span>Colour, type, space, motion</span></a>
+            <a class="home-tile" href="#"><b>Components</b><span>Shown inside real screens</span></a>
+            <a class="home-tile" href="#"><b>Templates</b><span>Whole pages to start from</span></a>
+            <a class="home-tile" href="#"><b>Icons</b><span>One set, our own stroke</span></a>
+          </div>
+          <div class="home-foot"><span>MIT licensed · npm · GitHub</span><span class="v-stamp">A|B</span></div>
+        </div>
+      </div>`;
+    const home = document.getElementById('wf-home');
+    home.innerHTML = `
+      <div class="wf-frame wf-phone"><p class="wf-label">Phone · 390px</p><div class="wf-screen"></div></div>
+      <div class="wf-frame wf-desktop"><p class="wf-label">Desktop · 1280px</p><div class="wf-screen"></div></div>`;
+    for (const screen of home.querySelectorAll('.wf-screen')) {
+      screen.innerHTML = homeHTML;
+      hydrate(screen);
+      const stage = screen.querySelector('.home-stage');
+      const out = (k) => screen.querySelector(`[data-out="${k}"]`);
+      const ctl = (k) => screen.querySelector(`[data-set="${k}"]`);
+      const press = (key) => { for (const b of screen.querySelectorAll('[data-pick]')) b.setAttribute('aria-pressed', String(b.dataset.pick === key)); };
+      const show = (key) => { dress(stage, key); press(key); out('file').textContent = `# ${PRODUCTS[key].name.toLowerCase()}.theme\n${PRODUCTS[key].file}`; };
+      const build = () => {
+        const hue = ctl('hue').value, kit = ctl('kit').value, corners = ctl('corners').value;
+        dress(stage, 'homelab');
+        stage.dataset.dir = kit;
+        press('');
+        stage.dataset.built = '';
+        const fill = `oklch(0.86 0.16 ${hue})`, ink = 'oklch(0.2 0.02 265)';
+        for (const [k, v] of [['--v-action', fill], ['--v-accent', fill], ['--v-on-action', ink], ['--v-on-accent', ink]]) stage.style.setProperty(k, v);
+        if (corners !== '') for (const k of ['--v-r-control', '--v-r-card', '--v-r-pill']) stage.style.setProperty(k, k === '--v-r-card' && corners === '999' ? '24px' : `${corners}px`);
+        out('hue').textContent = hue;
+        out('file').textContent = `# my-product.theme\nkit: ${kit}\nhue: ${hue}` + (corners !== '' ? `\ncorners: ${corners === '999' ? 'pill' : corners}` : '');
+      };
+      for (const b of screen.querySelectorAll('[data-pick]')) b.addEventListener('click', () => show(b.dataset.pick));
+      for (const k of ['hue', 'kit', 'corners']) ctl(k).addEventListener('input', build);
+      show('homelab');
     }
 
     // Theme: system → light → dark. The frames marked dark stay dark.

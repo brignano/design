@@ -18,74 +18,119 @@ checks, a docs page for every component. What it lacks is a look and an end.
   without overriding the colour underneath it.
 - **Nothing stops an app from deviating.** Every check runs in this repo only.
 
-Anthony's call on 2026-11-21: re-found the identity rather than evolve it,
-mock the directions first, and ship the result as a breaking v1.0.
+Anthony's calls: re-found the identity rather than evolve it, mock first, and
+ship the result as a breaking v1.0 (2026-11-21); one house look plus a theme
+per product, so the apps differ from one another (2026-11-22).
 
 ## Wireframe
 
 [`previews/wireframes/design-v1.html`](../previews/wireframes/design-v1.html)
-draws three candidate identities on the same two screens, Sites' product page
-and homelab's Hosts view, at 390px and 1280px, with a light and dark specimen
-of each. The words and layout are identical in all three; only the candidate
-tokens change.
+draws, at 390px and 1280px:
 
-## The three directions
+- **five products in their themes**: homelab, Driftwood, Guidebook, Sites and
+  Receipts, each on its own app screen, same markup and components;
+- **the design site's new home**, working: tap a product to re-theme the
+  screen, or build a theme and read the file it makes;
+- **the three kits** the themes are built from, each on Sites' product page
+  and homelab's Hosts view, with light and dark specimens.
 
-| | 1. Ledger | 2. Split | 3. Larch |
+## One house, a theme per product
+
+Decided 2026-11-22. One look for every app would make them alike again, which
+is today's problem with cobalt and Geist. So the system has two layers.
+
+**The house** is what makes everything recognisably ours, and no theme can
+change it: the layout, how every control behaves, mono for data, the
+`product | section` bar above each heading (the bar from `A|B`), the `A|B`
+stamp, and the accessibility floor.
+
+**A theme** is everything else, and each product has its own. It is a small
+file, not CSS:
+
+```yaml
+# sites.theme
+kit: larch            # split, ledger or larch
+ground: wash          # plain, bright or wash
+hue: 355              # what acts: buttons, links, the selected item
+heading-weight: 500
+corners: 16
+```
+
+The system generates the full palette, light and dark, from those values and
+refuses a theme whose colours fail contrast. Adding a product is choosing a
+few values; it never adds a component or a rule.
+
+### The three kits
+
+A kit sets the character a theme starts from.
+
+| | Split (the house default) | Ledger | Larch |
 |---|---|---|---|
-| **In a line** | A well-kept notebook | The `A\|B` bar becomes the system | Larch, forest and rust made visible |
-| **Ground** | warm paper | white, or near-black | cream, or deep green at night |
-| **What acts** | ink (a black button) | one lime signal on the primary action | forest green |
-| **Highlight** | amber, as a highlighter | the same lime | amber |
-| **Headings** | Newsreader, a serif | Archivo, wide and heavy, capitals | Bricolage Grotesque |
-| **Interface** | Instrument Sans | Archivo at normal width | Onest |
-| **Data** | IBM Plex Mono (kept) | Martian Mono | IBM Plex Mono (kept) |
-| **Corners** | 3px | square | pills and 20px cards |
-| **Separation** | hairline rules, no cards | 1px ink borders | tint, no borders |
-| **Status** | an outlined stamp | a coloured bar and a word | a soft tinted pill |
-| **Selected** | a rule at the edge | inverted | tinted, icon filled |
-| **Icon stroke** | 1.5px, flat ends | 1.5px, square ends | 1.75px, round ends |
-| **New font files** | 3 (about 150 KB) | 2 (about 115 KB) | 2 (about 75 KB) |
+| **In a line** | The `A\|B` bar becomes the system | A well-kept notebook | Soft and friendly |
+| **Headings** | Archivo, wide and heavy, capitals | Newsreader, a serif | Bricolage Grotesque |
+| **Interface** | Archivo at normal width | Instrument Sans | Onest |
+| **Data** | Martian Mono | IBM Plex Mono | IBM Plex Mono |
+| **Corners** | square | 3px | pills and 20px cards |
+| **Separation** | 1px ink borders | hairline rules, no cards | tint, no borders |
+| **Status** | a coloured bar and a word | an outlined stamp | a soft tinted pill |
+| **Selected** | inverted | a rule at the edge | tinted, icon filled |
+| **Icon stroke** | 1.5px, square ends | 1.5px, flat ends | 1.75px, round ends |
 
-All typefaces are open-licensed (SIL OFL) and self-hosted; nothing is fetched
-from a third party.
+All typefaces are open-licensed (SIL OFL) and self-hosted. An app loads only
+its own kit's fonts: about 115 KB for Split, 150 KB for Ledger, 75 KB for
+Larch.
 
-### Recommendation: Split
+### Who gets what
 
-- **It is the only one that comes from something already ours.** The bar in
-  `A|B` turns into a rule the whole system follows: a label and its value, a
-  place and its page, a status and its word. Ledger and Larch are good looks
-  that another studio could also have.
-- **It is the most minimal.** Two font files, no shadows, no radius scale, one
-  accent. Fewer tokens to maintain and fewer ways for an app to get it wrong.
-- **It keeps colour meaning what it means today.** Lime is used for the one
-  primary action and the one highlight, so green, amber and red stay free for
-  state, which is the rule this system was built on.
-- **It suits the tools.** Dense tables and mono data are most of what homelab,
-  driftwood and life show.
+| Product | Kit | What its theme changes | Why |
+|---|---|---|---|
+| homelab, life, brignano.io, this site | Split | nothing: the house look, lime signal | dense tools and the family's own face |
+| Driftwood | Split | always dark, all mono, teal signal | it already reads as an incident console (ADR-0017) |
+| Guidebook | Larch | bright ground, violet, 800-weight headings | loud and friendly, for new hires |
+| Sites | Larch | pink wash, magenta, medium headings, rounder | soft, for local businesses |
+| Receipts, Breakeven | Ledger | nothing yet | money and records suit paper and a serif |
+| Card | undecided | | |
 
-What it costs: it is the least friendly of the three, and capitals on every
-heading are loud. Product pages keep their own five choices (ADR-0017), so
-Sites can still be soft and pink. If it feels too hard on a real screen, Larch
-is the fallback, and Split's bar motif would carry over to it.
+These follow the marks and choices each product already has (teal, violet,
+magenta; ADR-0017), so a product's app now matches its marketing page.
+Receipts, Breakeven and Card are my suggestions and easy to change.
+
+### Why Split is the house
+
+- It is the only look that comes from something already ours: the bar in
+  `A|B` becomes a rule the whole system follows.
+- It is the most minimal: two font files, no shadows, no radius scale, one
+  signal colour, so green, amber and red stay free for state.
+- It suits the tools, which are mostly dense tables and mono data.
+
+It is also the least friendly, which is why the products meant for the public
+(Sites, Guidebook) take Larch instead.
 
 ### Measured
 
-Text contrast for every candidate pair, light / dark, against WCAG's 4.5:1
-(3:1 for a control's edge):
+Text contrast, light / dark, against WCAG's 4.5:1 (3:1 for a control's edge).
+Driftwood is dark only.
 
-| Pair | Ledger | Split | Larch |
-|---|---|---|---|
-| Body text on the page | 16.37 / 15.64 | 18.31 / 17.40 | 14.85 / 15.89 |
-| Muted text on a surface | 5.88 / 6.41 | 6.00 / 6.85 | 5.81 / 6.71 |
-| Primary button label | 16.37 / 15.64 | 14.82 / 14.82 | 8.45 / 11.05 |
-| Highlight label | 10.79 / 7.04 | 14.82 / 14.82 | 9.91 / 8.04 |
-| Lowest state word on a surface | 6.82 / 7.88 | 6.20 / 7.42 | 5.77 / 7.90 |
-| Control edge on the page | 3.65 / 4.01 | 18.31 / 17.40 | 3.85 / 4.73 |
+| Pair | Split | Ledger | Larch | Driftwood | Guidebook | Sites |
+|---|---|---|---|---|---|---|
+| Body text on the page | 18.31 / 17.40 | 16.37 / 15.64 | 14.85 / 15.89 | 17.49 | 17.41 / 17.03 | 14.92 / 16.46 |
+| Muted text on a surface | 6.00 / 6.85 | 5.88 / 6.41 | 5.81 / 6.71 | 6.90 | 6.02 / 7.23 | 7.23 / 7.12 |
+| Primary button label | 14.82 / 14.82 | 16.37 / 15.64 | 8.45 / 11.05 | 12.25 | 6.39 / 9.96 | 6.42 / 9.47 |
+| Lowest state word on a surface | 6.20 / 7.42 | 6.82 / 7.88 | 5.77 / 7.90 | 7.47 | 6.11 / 8.29 | 6.66 / 7.93 |
+| Control edge on the page | 18.31 / 17.40 | 3.65 / 4.01 | 3.85 / 4.73 | 17.49 | 4.14 / 5.21 | 4.08 / 4.97 |
 
 One known exception: Split's lime fill is 1.24:1 against a white page, so in
 light mode the button is found by its ink border (18.31:1), not its fill. The
 wireframe draws it that way.
+
+### What theming costs
+
+- More combinations to keep accessible. The generator and `npm run check`
+  measure every theme, so this is machine work, not review work.
+- Three kits to maintain instead of one look. Each kit is a set of token
+  values over the same components, not a second set of components.
+- A shared component has to look right in all three kits, so each component's
+  preview page shows it in each.
 
 ## What v1.0 is
 
@@ -105,9 +150,10 @@ accepted.
 - Today's names (`--i`, `--n-300`, `--s4`) stay as aliases for one minor
   release, marked deprecated, then go in 1.0.
 
-### 2. The chosen direction, as tokens
+### 2. The house, the kits and the themes, as tokens
 
-Colour, type, shape, elevation and motion values from the chosen direction,
+Colour, type, shape, elevation and motion values for the three kits, the theme
+file format and its generator, and one theme per product,
 with a full type scale (size, line height and tracking as one token per step),
 a density setting for tool screens, and a named motion scale. Every value is
 measured and checked the way `npm run check` does today.
@@ -117,8 +163,8 @@ measured and checked the way `npm run check` does today.
 Decided 2026-11-21: an open-source base redrawn to our rules, not a different
 stock set and not drawn from scratch.
 
-- One stroke, end and join rule from the chosen direction, applied to every
-  icon by a script and enforced by the check.
+- One stroke, end and join rule per kit, applied to every icon by a script and
+  enforced by the check.
 - Grow from 46 to about 120, added by need: the apps' own navigation first.
 - A filled variant for the selected state.
 - Product marks (Driftwood, Guidebook, Sites and the rest) and a small set of
@@ -132,7 +178,9 @@ stock set and not drawn from scratch.
   social share image, pricing table.
 - Add what the audit of the apps turns up that isn't here yet (avatar, empty
   state art, a chart frame).
-- Rebuild the gallery's index as a real home page instead of a wall of 40 cards.
+- Rebuild the gallery's home as drawn in the wireframe: a product switcher
+  that re-themes a real screen, a theme builder, components shown inside real
+  screens, and search. Today it is a wall of 40 cards.
 
 ### 5. A product page kit
 
@@ -165,8 +213,8 @@ of its own; the kit gives them different parts to choose from.
 
 ```mermaid
 flowchart LR
-  A[Pick a direction] --> B[0.13: tokens from JSON, new names, no visual change]
-  B --> C[1.0.0-next: direction, icons, components]
+  A[Approve the themes] --> B[0.13: tokens from JSON, new names, no visual change]
+  B --> C[1.0.0-next: kits, themes, icons, components]
   C --> D[Product page kit + audit]
   D --> E[1.0.0]
   E --> F[Each app migrates in its own repo]
@@ -188,6 +236,7 @@ flowchart LR
 
 ## Rejected
 
+- **One look for every app:** simplest, but the apps would look alike again.
 - **Evolve the current look** (keep Geist and cobalt, add a display face):
   Anthony turned it down; it would still read as the default stack.
 - **A dark-only console look:** Driftwood's product page already owns it.
@@ -200,18 +249,21 @@ flowchart LR
 
 ## Open questions
 
-1. **Which direction?** Recommended: Split.
+1. **Are the themes assigned to the right products?** Recommended: as in "Who
+   gets what". Receipts, Breakeven and Card are the ones to check.
 2. **Tokens generated from JSON, with a build step in this repo?** Recommended:
-   yes. The alternative is to keep hand-writing `tokens.css` and only rename.
-3. **Do product pages keep their own five choices (ADR-0017) on top of the new
-   family look?** Recommended: yes.
+   yes. Themes need a generator either way, so this is close to settled.
+
+Settled: Split is the house (2026-11-22). Product pages keep their five
+choices (ADR-0017); a product's theme now supplies them.
 
 ## Proposed issues
 
 Filed once this is accepted, each with Decisions taken from here.
 
 1. Tokens: JSON source, generator, three tiers, old names as aliases (0.13)
-2. Foundations: the chosen direction's colour, type, shape, motion (1.0.0-next)
+2. Foundations: the three kits' colour, type, shape, motion (1.0.0-next)
+2a. Themes: the file format, the generator and its contrast gate; one theme per product
 3. Icons: the stroke rule and check; the selected variant
 4. Icons: grow the set to what the apps use; product marks
 5. Components: restyle the existing set, one issue per gallery section
