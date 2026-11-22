@@ -32,6 +32,33 @@
     },
     "focus-ring": {
       "$value": "var(--action-ink)"
+    },
+    "control-height": {
+      "$value": "40px",
+      "$description": "── Density ──\nThe height of a button, input or select at each size. `data-density=\"compact\"`\non <html> or any element tightens them for a dense tool screen. Touch\nscreens keep their 44px targets either way (DESIGN.md §10)."
+    },
+    "control-height-sm": {
+      "$value": "32px"
+    },
+    "control-height-lg": {
+      "$value": "48px"
+    }
+  },
+  "compact": {
+    "$description": "A dense tool screen: one step tighter.",
+    "$extensions": {
+      "io.brignano": {
+        "selector": "[data-density='compact']"
+      }
+    },
+    "control-height": {
+      "$value": "32px"
+    },
+    "control-height-sm": {
+      "$value": "28px"
+    },
+    "control-height-lg": {
+      "$value": "40px"
     }
   }
 }

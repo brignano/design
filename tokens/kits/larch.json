@@ -1,0 +1,248 @@
+{
+  "$description": "Larch: soft and friendly. A cream page with lighter surfaces on it, separated by tint instead of borders, pill buttons, amber for the one highlight. Night is deep green, not black.",
+  "kit": {
+    "$description": "Larch: soft and friendly. A cream page with lighter surfaces on it, separated by tint instead of borders, pill buttons, amber for the one highlight. Night is deep green, not black.",
+    "$extensions": {
+      "io.brignano": {
+        "selector": "[data-kit='larch']"
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "light": "#f1eadc",
+        "dark": "#0d1611"
+      },
+      "$description": "── Ground and surfaces ──"
+    },
+    "card": {
+      "$type": "color",
+      "$value": {
+        "light": "#faf6ee",
+        "dark": "#16211b"
+      }
+    },
+    "surface-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#f4eee1",
+        "dark": "#1e2b24"
+      }
+    },
+    "surface-active": {
+      "$type": "color",
+      "$value": {
+        "light": "#ece6d8",
+        "dark": "#27342c"
+      }
+    },
+    "surface-sticky": {
+      "$value": "light-dark(color-mix(in srgb, #faf6ee 92%, transparent), color-mix(in srgb, #0d1611 92%, transparent))",
+      "$description": "92% of the card in light, of the page in dark, as on :root."
+    },
+    "on-dark": {
+      "$type": "color",
+      "$value": {
+        "light": "#f1eadc",
+        "dark": "#0d1611"
+      }
+    },
+    "ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#12241a",
+        "dark": "#f3eee3"
+      },
+      "$description": "── Text and lines ──"
+    },
+    "ink-soft": {
+      "$type": "color",
+      "$value": {
+        "light": "#35473d",
+        "dark": "#c7c5b6"
+      }
+    },
+    "slate": {
+      "$type": "color",
+      "$value": {
+        "light": "#4c5d53",
+        "dark": "#a3a799"
+      }
+    },
+    "line": {
+      "$type": "color",
+      "$value": {
+        "light": "#ddd7c9",
+        "dark": "#2a362f"
+      }
+    },
+    "line-soft": {
+      "$type": "color",
+      "$value": {
+        "light": "#e7e1d3",
+        "dark": "#1e2a23"
+      }
+    },
+    "line-strong": {
+      "$type": "color",
+      "$value": {
+        "light": "#c4bdb0",
+        "dark": "#445149"
+      }
+    },
+    "line-control": {
+      "$type": "color",
+      "$value": {
+        "light": "#6c8074",
+        "dark": "#71867a"
+      },
+      "$description": "A control's edge: 3:1 on the page and the card."
+    },
+    "action": {
+      "$type": "color",
+      "$value": {
+        "light": "#05585f",
+        "dark": "#78d6db"
+      },
+      "$description": "── Action: spruce ──\nA blue-green, deliberately NOT the forest green of --success: within a\nproduct one hue means \"you can act on this\" and another means \"settled\"\n(ADR-0004). Guidebook and Sites replace it with their own hue."
+    },
+    "action-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#00474d",
+        "dark": "#64c3c8"
+      }
+    },
+    "action-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#00363c",
+        "dark": "#56afb3"
+      }
+    },
+    "on-action": {
+      "$type": "color",
+      "$value": {
+        "light": "#fdfaf3",
+        "dark": "#0d1611"
+      }
+    },
+    "action-edge": {
+      "$type": "color",
+      "$value": {
+        "light": "#05585f",
+        "dark": "#78d6db"
+      },
+      "$description": "The primary button's border: the fill carries itself."
+    },
+    "action-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#05585f",
+        "dark": "#78d6db"
+      },
+      "$description": "Links, icons and the focus ring: what you read, not what you fill."
+    },
+    "action-ink-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#004148",
+        "dark": "#a6edf0"
+      }
+    },
+    "action-surface": {
+      "$value": "light-dark(color-mix(in srgb, #05585f 12%, transparent), color-mix(in srgb, #78d6db 20%, transparent))"
+    },
+    "action-line": {
+      "$value": "light-dark(color-mix(in srgb, #05585f 32%, transparent), color-mix(in srgb, #78d6db 44%, transparent))"
+    },
+    "action-selection": {
+      "$value": "light-dark(color-mix(in srgb, #05585f 26%, transparent), color-mix(in srgb, #78d6db 30%, transparent))"
+    },
+    "disabled": {
+      "$type": "color",
+      "$value": {
+        "light": "#ece6d8",
+        "dark": "#27342c"
+      },
+      "$description": "Disabled is neutral, never hued."
+    },
+    "disabled-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#7c8a82",
+        "dark": "#5f6d65"
+      }
+    },
+    "accent": {
+      "$type": "color",
+      "$value": {
+        "light": "#f1c45e",
+        "dark": "#e3ad4b"
+      },
+      "$description": "The one highlight a screen may carry, and its label."
+    },
+    "on-accent": {
+      "$type": "color",
+      "$value": {
+        "light": "#12241a",
+        "dark": "#12241a"
+      }
+    },
+    "sans": {
+      "$value": "'Onest', system-ui, sans-serif",
+      "$description": "── Type ──"
+    },
+    "display": {
+      "$value": "'Bricolage Grotesque', system-ui, sans-serif"
+    },
+    "mono": {
+      "$value": "'IBM Plex Mono', ui-monospace, monospace"
+    },
+    "weight-heavy": {
+      "$value": "700"
+    },
+    "leading-display": {
+      "$value": "1.05"
+    },
+    "tracking-display": {
+      "$value": "-0.035em"
+    },
+    "display-case": {
+      "$value": "none"
+    },
+    "display-stretch": {
+      "$value": "normal"
+    },
+    "radius-sm": {
+      "$value": "8px",
+      "$description": "── Shape and elevation ──"
+    },
+    "radius-control": {
+      "$value": "12px"
+    },
+    "radius-card": {
+      "$value": "20px"
+    },
+    "radius-lg": {
+      "$value": "28px"
+    },
+    "button-radius": {
+      "$value": "999px"
+    },
+    "pill-radius": {
+      "$value": "999px"
+    },
+    "shadow-1": {
+      "$value": "none"
+    },
+    "chart-surface": {
+      "$type": "color",
+      "$value": {
+        "light": "#fefcf7",
+        "dark": "#16211b"
+      },
+      "$description": "── Charts ──\nA chart sits on near-white paper in light: the orange series needs it to\nreach 3:1, which the tinted page and card cannot give it."
+    }
+  }
+}

@@ -49,6 +49,62 @@
     },
     "tracking-caps": {
       "$value": "0.08em"
+    },
+    "display-case": {
+      "$value": "none",
+      "$description": "How the display treatment is set: a kit may ask for capitals and a wider\ncut of its face (Split). `text-transform` and `font-stretch` read these."
+    },
+    "display-stretch": {
+      "$value": "normal"
+    },
+    "leading-xs": {
+      "$value": "var(--leading-ui)",
+      "$description": "── One line height and one tracking per size ──\nA step of the scale is three tokens: --text-N, --leading-N, --tracking-N.\nEach starts as the role token it used already, so nothing moves; a kit\nretunes a step without touching the others."
+    },
+    "tracking-xs": {
+      "$value": "0"
+    },
+    "leading-sm": {
+      "$value": "var(--leading-ui)"
+    },
+    "tracking-sm": {
+      "$value": "0"
+    },
+    "leading-base": {
+      "$value": "var(--leading-body)"
+    },
+    "tracking-base": {
+      "$value": "0"
+    },
+    "leading-lg": {
+      "$value": "var(--leading-body)"
+    },
+    "tracking-lg": {
+      "$value": "0"
+    },
+    "leading-xl": {
+      "$value": "var(--leading-title)"
+    },
+    "tracking-xl": {
+      "$value": "var(--tracking-title)"
+    },
+    "leading-2xl": {
+      "$value": "var(--leading-title)"
+    },
+    "tracking-2xl": {
+      "$value": "var(--tracking-title)"
+    },
+    "leading-3xl": {
+      "$value": "var(--leading-display)"
+    },
+    "tracking-3xl": {
+      "$value": "var(--tracking-display)"
+    },
+    "leading-4xl": {
+      "$value": "var(--leading-display)"
+    },
+    "tracking-4xl": {
+      "$value": "var(--tracking-display)"
     }
   },
   "root-2": {

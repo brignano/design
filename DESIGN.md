@@ -434,6 +434,35 @@ Non-negotiable in both themes:
 
 ## 11. Themes, and integrating with a Tailwind consumer
 
+### Kits
+
+A kit is a whole look: ground, text, the action colour, typefaces, corners and
+elevation. Three ship, Split, Ledger and Larch (ADR-0019), each as
+`kits/<kit>.css`, generated from `tokens/kits/<kit>.json`. **They are opt-in
+until 1.0** (ADR-0020): today's look is the default, and `data-kit="split"` on
+`<html>`, or on any element, gives that subtree the kit.
+
+- **A kit sets only names `:root` defines.** A component never asks which kit
+  it is in; it reads the same token and gets the kit's value.
+- **One hue acts, another says "settled".** A kit's `--action` stays at least
+  25° from `--success`. State hues are the same in every kit.
+- **A fill's label is `--on-action`**, whatever reads on it: ink on Split's
+  lime, the page on Ledger's ink.
+- **The primary is found by its fill or its edge.** `--action-edge` is the
+  fill, except Split in light, where lime can't be found on white and the edge
+  is ink. There `--action` is a fill only; a mark, a line or a link takes
+  `--action-ink`.
+- **The display treatment reads the kit**: `--display`, `--weight-heavy`,
+  `--display-case` and `--display-stretch` (Split sets capitals and a wide cut).
+- **A step of the type scale is three tokens**: `--text-N`, `--leading-N`,
+  `--tracking-N`.
+- **Density.** `data-density="compact"` tightens `--control-height` for a
+  dense tool screen. Touch targets stay 44px.
+
+`npm run check` measures every kit, both schemes, against every token floor
+the default look is held to, plus its washes and the gap between act and
+settled. A kit may not set a state colour.
+
 ### How the theme is chosen
 
 Every colour is one declaration holding both values, `light-dark(<light>, <dark>)`,

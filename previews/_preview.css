@@ -21,6 +21,7 @@ body {
 /* The shared header (_site.js, _site.css) bleeds to the edges of this padding. */
 body > .site-bar { margin: -28px -28px 24px; padding: 0 28px; }
 h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margin: 0 0 4px; }
+h2.kits { font-size: var(--text-lg); font-weight: 600; letter-spacing: -.01em; margin: 40px 0 4px; }
 .sub { font-size: var(--text-sm); color: var(--slate); margin: 0 0 24px; font-family: var(--mono); }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 700px) { .pair { grid-template-columns: 1fr; } }
@@ -54,6 +55,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .sw { display: flex; gap: 8px; flex-wrap: wrap; }
 .sw > div { flex: 1 1 96px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .sw i { display: block; height: 40px; }
+[data-kit] .sw > div { border-radius: var(--radius-sm); }
 .sw span { display: block; padding: 6px 8px; font-family: var(--mono); font-size: 9px; color: var(--ink-soft); }
 
 .elev { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }

@@ -1,0 +1,240 @@
+{
+  "$description": "Split: the house look. Black and white, one lime signal, square corners, 1px ink borders, no shadows. The bar in A|B is the system (ADR-0019).",
+  "kit": {
+    "$description": "Split: the house look. Black and white, one lime signal, square corners, 1px ink borders, no shadows. The bar in A|B is the system (ADR-0019).",
+    "$extensions": {
+      "io.brignano": {
+        "selector": "[data-kit='split']"
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "light": "#fafafa",
+        "dark": "#0b0c0e"
+      },
+      "$description": "── Ground and surfaces ──"
+    },
+    "card": {
+      "$type": "color",
+      "$value": {
+        "light": "#ffffff",
+        "dark": "#141517"
+      }
+    },
+    "surface-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#f0f0f0",
+        "dark": "#1d1e20"
+      }
+    },
+    "surface-active": {
+      "$type": "color",
+      "$value": {
+        "light": "#e4e4e4",
+        "dark": "#26282a"
+      }
+    },
+    "surface-sticky": {
+      "$value": "light-dark(color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, #0b0c0e 92%, transparent))",
+      "$description": "92% of the card in light, of the page in dark, as on :root."
+    },
+    "on-dark": {
+      "$type": "color",
+      "$value": {
+        "light": "#fafafa",
+        "dark": "#0b0c0e"
+      }
+    },
+    "ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#0f0f11",
+        "dark": "#f2f2f2"
+      },
+      "$description": "── Text and lines ──"
+    },
+    "ink-soft": {
+      "$type": "color",
+      "$value": {
+        "light": "#414245",
+        "dark": "#c4c4c4"
+      }
+    },
+    "slate": {
+      "$type": "color",
+      "$value": {
+        "light": "#626366",
+        "dark": "#9e9e9e"
+      }
+    },
+    "line": {
+      "$type": "color",
+      "$value": {
+        "light": "#d7d7d7",
+        "dark": "#2d2e30"
+      }
+    },
+    "line-soft": {
+      "$type": "color",
+      "$value": {
+        "light": "#e8e8e8",
+        "dark": "#1e1f22"
+      }
+    },
+    "line-strong": {
+      "$type": "color",
+      "$value": {
+        "light": "#0f0f11",
+        "dark": "#f2f2f2"
+      }
+    },
+    "line-control": {
+      "$type": "color",
+      "$value": {
+        "light": "#0f0f11",
+        "dark": "#f2f2f2"
+      },
+      "$description": "A control's edge: 3:1 on the page and the card."
+    },
+    "action": {
+      "$type": "color",
+      "$value": {
+        "light": "#bff538",
+        "dark": "#bff538"
+      },
+      "$description": "── Action: the lime signal ──\nA FILL only: the one primary action. It is 1.24:1 on a white page, so it\nis never a mark, a line or text there; those take --action-ink."
+    },
+    "action-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#ade02a",
+        "dark": "#ade02a"
+      }
+    },
+    "action-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#9ccb1b",
+        "dark": "#9ccb1b"
+      }
+    },
+    "on-action": {
+      "$type": "color",
+      "$value": {
+        "light": "#0f0f11",
+        "dark": "#0f0f11"
+      }
+    },
+    "action-edge": {
+      "$type": "color",
+      "$value": {
+        "light": "#0f0f11",
+        "dark": "#bff538"
+      },
+      "$description": "The primary button's border. In light it is ink, because the fill alone\ncan't be found on white; in dark the fill carries itself."
+    },
+    "action-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#0f0f11",
+        "dark": "#f2f2f2"
+      },
+      "$description": "Links, icons and the focus ring: what you read, not what you fill."
+    },
+    "action-ink-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#414245",
+        "dark": "#c4c4c4"
+      }
+    },
+    "action-surface": {
+      "$value": "light-dark(color-mix(in srgb, #bff538 12%, transparent), color-mix(in srgb, #bff538 20%, transparent))"
+    },
+    "action-line": {
+      "$value": "light-dark(color-mix(in srgb, #bff538 32%, transparent), color-mix(in srgb, #bff538 44%, transparent))"
+    },
+    "action-selection": {
+      "$value": "light-dark(color-mix(in srgb, #bff538 26%, transparent), color-mix(in srgb, #bff538 30%, transparent))"
+    },
+    "disabled": {
+      "$type": "color",
+      "$value": {
+        "light": "#e4e4e4",
+        "dark": "#26282a"
+      },
+      "$description": "Disabled is neutral, never hued."
+    },
+    "disabled-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#868686",
+        "dark": "#636363"
+      }
+    },
+    "accent": {
+      "$type": "color",
+      "$value": {
+        "light": "#bff538",
+        "dark": "#bff538"
+      },
+      "$description": "The one highlight a screen may carry, and its label."
+    },
+    "on-accent": {
+      "$type": "color",
+      "$value": {
+        "light": "#0f0f11",
+        "dark": "#0f0f11"
+      }
+    },
+    "sans": {
+      "$value": "'Archivo', system-ui, sans-serif",
+      "$description": "── Type ──"
+    },
+    "display": {
+      "$value": "'Archivo', system-ui, sans-serif"
+    },
+    "mono": {
+      "$value": "'Martian Mono', ui-monospace, monospace"
+    },
+    "weight-heavy": {
+      "$value": "800"
+    },
+    "leading-display": {
+      "$value": "0.95"
+    },
+    "tracking-display": {
+      "$value": "-0.035em"
+    },
+    "display-case": {
+      "$value": "uppercase"
+    },
+    "display-stretch": {
+      "$value": "120%"
+    },
+    "radius-sm": {
+      "$value": "0px",
+      "$description": "── Shape and elevation ──"
+    },
+    "radius-control": {
+      "$value": "0px"
+    },
+    "radius-card": {
+      "$value": "0px"
+    },
+    "radius-lg": {
+      "$value": "0px"
+    },
+    "shadow-1": {
+      "$value": "none"
+    },
+    "shadow-2": {
+      "$value": "none"
+    },
+    "shadow-3": {
+      "$value": "none"
+    }
+  }
+}

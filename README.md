@@ -45,6 +45,34 @@ Light and dark follow the OS until something sets `data-theme="light"` or
 part (DESIGN.md §11). Each colour is a single `light-dark()` declaration, so this
 needs a browser from mid-2024 or later.
 
+### Kits
+
+Three looks ship beside the default one, opt-in until 1.0 (ADR-0020). Import
+one and name it on `<html>`, or on any element to give just that part the look:
+
+```css
+@import '@brignano/design/kits/split.css';   /* or ledger.css, larch.css */
+```
+
+```html
+<html data-kit="split">
+```
+
+A kit names its typefaces; the surface loads them. All are SIL OFL, latin
+subset, in [`fonts/`](./fonts) with their licences:
+
+| Kit | Load | Size |
+|---|---|---|
+| `split` | `archivo-latin-wdth-normal.woff2`, `martian-mono-latin-wght-normal.woff2` | 111 KB |
+| `ledger` | `newsreader-latin-wght-normal.woff2`, `newsreader-latin-wght-italic.woff2`, `instrument-sans-latin-wght-normal.woff2`, and Plex Mono | 149 KB + 44 KB |
+| `larch` | `bricolage-grotesque-latin-wght-normal.woff2`, `onest-latin-wght-normal.woff2`, and Plex Mono | 73 KB + 44 KB |
+
+Plex Mono is `ibm-plex-mono-latin-400-normal.woff2`, `-500-` and `-600-` (44 KB
+together), which a surface on today's look already loads.
+
+The `@font-face` rules are in [`previews/_fonts.css`](./previews/_fonts.css) to
+copy. Components are not restyled for the kits yet.
+
 The tool tier is the default. A marketing surface opts in with
 `class="tier-marketing"` on `<html>`, which unlocks the display face and opens the
 type scale. Colour is identical across tiers.

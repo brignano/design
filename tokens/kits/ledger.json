@@ -1,0 +1,240 @@
+{
+  "$description": "Ledger: a well-kept notebook. Warm paper, a serif for headings, hairline rules instead of cards, ink does the acting and amber is a highlighter.",
+  "kit": {
+    "$description": "Ledger: a well-kept notebook. Warm paper, a serif for headings, hairline rules instead of cards, ink does the acting and amber is a highlighter.",
+    "$extensions": {
+      "io.brignano": {
+        "selector": "[data-kit='ledger']"
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "light": "#f8f5ef",
+        "dark": "#15120f"
+      },
+      "$description": "── Ground and surfaces ──"
+    },
+    "card": {
+      "$type": "color",
+      "$value": {
+        "light": "#fefcf9",
+        "dark": "#1f1b17"
+      }
+    },
+    "surface-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#f0ece4",
+        "dark": "#282521"
+      }
+    },
+    "surface-active": {
+      "$type": "color",
+      "$value": {
+        "light": "#e7e2d9",
+        "dark": "#312d28"
+      }
+    },
+    "surface-sticky": {
+      "$value": "light-dark(color-mix(in srgb, #fefcf9 92%, transparent), color-mix(in srgb, #15120f 92%, transparent))",
+      "$description": "92% of the card in light, of the page in dark, as on :root."
+    },
+    "on-dark": {
+      "$type": "color",
+      "$value": {
+        "light": "#f8f5ef",
+        "dark": "#15120f"
+      }
+    },
+    "ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#1d1713",
+        "dark": "#efebe2"
+      },
+      "$description": "── Text and lines ──"
+    },
+    "ink-soft": {
+      "$type": "color",
+      "$value": {
+        "light": "#4e4640",
+        "dark": "#c1bdb5"
+      }
+    },
+    "slate": {
+      "$type": "color",
+      "$value": {
+        "light": "#69625b",
+        "dark": "#a29e96"
+      }
+    },
+    "line": {
+      "$type": "color",
+      "$value": {
+        "light": "#d8d4ca",
+        "dark": "#36322d"
+      }
+    },
+    "line-soft": {
+      "$type": "color",
+      "$value": {
+        "light": "#e8e4dc",
+        "dark": "#292622"
+      }
+    },
+    "line-strong": {
+      "$type": "color",
+      "$value": {
+        "light": "#bbb7ae",
+        "dark": "#514c47"
+      }
+    },
+    "line-control": {
+      "$type": "color",
+      "$value": {
+        "light": "#877e78",
+        "dark": "#78746d"
+      },
+      "$description": "A control's edge: 3:1 on the page and the card."
+    },
+    "action": {
+      "$type": "color",
+      "$value": {
+        "light": "#1d1713",
+        "dark": "#efebe2"
+      },
+      "$description": "── Action: ink ──\nThe primary button is ink, with the page as its label."
+    },
+    "action-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#38322d",
+        "dark": "#d4d0c8"
+      }
+    },
+    "action-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#4e4640",
+        "dark": "#c1bdb5"
+      }
+    },
+    "on-action": {
+      "$type": "color",
+      "$value": {
+        "light": "#f8f5ef",
+        "dark": "#15120f"
+      }
+    },
+    "action-edge": {
+      "$type": "color",
+      "$value": {
+        "light": "#1d1713",
+        "dark": "#efebe2"
+      },
+      "$description": "The primary button's border: the fill carries itself."
+    },
+    "action-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#1d1713",
+        "dark": "#efebe2"
+      },
+      "$description": "Links, icons and the focus ring: what you read, not what you fill."
+    },
+    "action-ink-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#4e4640",
+        "dark": "#c1bdb5"
+      }
+    },
+    "action-surface": {
+      "$value": "light-dark(color-mix(in srgb, #1d1713 12%, transparent), color-mix(in srgb, #efebe2 20%, transparent))"
+    },
+    "action-line": {
+      "$value": "light-dark(color-mix(in srgb, #1d1713 32%, transparent), color-mix(in srgb, #efebe2 44%, transparent))"
+    },
+    "action-selection": {
+      "$value": "light-dark(color-mix(in srgb, #1d1713 26%, transparent), color-mix(in srgb, #efebe2 30%, transparent))"
+    },
+    "disabled": {
+      "$type": "color",
+      "$value": {
+        "light": "#e7e2d9",
+        "dark": "#312d28"
+      },
+      "$description": "Disabled is neutral, never hued."
+    },
+    "disabled-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#8c857f",
+        "dark": "#66635d"
+      }
+    },
+    "accent": {
+      "$type": "color",
+      "$value": {
+        "light": "#f1c45e",
+        "dark": "#d19936"
+      },
+      "$description": "The one highlight a screen may carry, and its label."
+    },
+    "on-accent": {
+      "$type": "color",
+      "$value": {
+        "light": "#1d1713",
+        "dark": "#1d1713"
+      }
+    },
+    "sans": {
+      "$value": "'Instrument Sans', system-ui, sans-serif",
+      "$description": "── Type ──"
+    },
+    "display": {
+      "$value": "'Newsreader', Georgia, serif"
+    },
+    "mono": {
+      "$value": "'IBM Plex Mono', ui-monospace, monospace"
+    },
+    "weight-heavy": {
+      "$value": "500"
+    },
+    "leading-display": {
+      "$value": "1.05"
+    },
+    "tracking-display": {
+      "$value": "-0.025em"
+    },
+    "display-case": {
+      "$value": "none"
+    },
+    "display-stretch": {
+      "$value": "normal"
+    },
+    "radius-sm": {
+      "$value": "2px",
+      "$description": "── Shape and elevation ──"
+    },
+    "radius-control": {
+      "$value": "3px"
+    },
+    "radius-card": {
+      "$value": "4px"
+    },
+    "radius-lg": {
+      "$value": "6px"
+    },
+    "shadow-1": {
+      "$value": "none"
+    },
+    "shadow-2": {
+      "$value": "none"
+    },
+    "shadow-3": {
+      "$value": "none"
+    }
+  }
+}

@@ -757,6 +757,17 @@
     },
     "gold": {
       "$value": "var(--slate)"
+    },
+    "action-edge": {
+      "$value": "var(--action)",
+      "$description": "── Tokens the kits set (ADR-0019) ──\nEach is an alias here, so today's look is unchanged; a kit in kits/*.css\ngives it a value of its own.\n\nThe primary button's border. The fill carries itself, except in a kit\nwhose fill can't be found on its page (Split in light)."
+    },
+    "accent": {
+      "$value": "var(--mark-fill)",
+      "$description": "The one highlight a screen may carry, and its label."
+    },
+    "on-accent": {
+      "$value": "var(--on-mark)"
     }
   },
   "data-mark-teal": {
