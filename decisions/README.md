@@ -26,3 +26,4 @@ record is only edited to mark it superseded; a change of mind is a new record.
 | [0016](0016-danger-fills.md) | The danger button has its own fills; the state hue doesn't move | 2026-11-12 |
 | [0017](0017-product-identity.md) | A product page is built from what the product does | 2026-11-13 |
 | [0018](0018-card-stage.md) | A product's card may carry its stage | 2026-11-15 |
+| [0019](0019-house-theme-shell.md) | One house look, with a theme and a shell per product | 2026-11-22 |

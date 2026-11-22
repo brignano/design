@@ -1,6 +1,6 @@
 # ADR-0017 — A product page is built from what the product does
 
-**Status:** accepted · 2026-11-13 · #153
+**Status:** superseded in part by ADR-0019 from v1.0 · accepted 2026-11-13 · #153
 **Supersedes in part:** ADR-0011 ("each looks like itself": the mark, layout and frame choices, and "actions stay cobalt on every product")
 
 ## Context

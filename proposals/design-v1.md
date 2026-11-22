@@ -1,4 +1,4 @@
-Status: proposed · Tracking issue: #171
+Status: accepted · Tracking issue: #171 · ADR-0019
 
 # Design v1.0: a look of our own, a finished system, and apps that can't drift
 
@@ -281,8 +281,8 @@ knowing that.
 | ADR-0017 (product identity) | "Inside the apps, buttons and links stay cobalt"; "No typeface per product for now"; the mark "never appears as a fill in an app" | superseded in part: all three are reversed inside apps. Its five choices per product page stay, now supplied by the theme |
 | ADR-0015, ADR-0016 (white label on cobalt, danger fills) | label and fill rules for today's buttons | rewritten per kit from the measured values |
 
-On acceptance, one new ADR records "a house look, with a theme and a shell
-per product" and marks the rows above superseded, in whole or in part.
+ADR-0019 records "a house look, with a theme and a shell per product" and
+marks the rows above superseded, in whole or in part, from v1.0.
 
 ## Rejected
 
@@ -297,17 +297,18 @@ per product" and marks the rows above superseded, in whole or in part.
 - **A hosted token service or Figma as the source:** a JSON file in this repo
   costs nothing to run and is reviewed like code.
 
-## Open questions
+## Answers
 
-1. **Are the kits and shells assigned to the right products?** Recommended: as
-   in "Who gets what". Receipts' screen is a guess at what the app shows;
-   Breakeven, Card, life and brignano.io are undecided.
-2. **Tokens generated from JSON, with a build step in this repo?** Recommended:
-   yes. Themes need a generator either way, so this is close to settled.
+Anthony, 2026-11-22: yes to all three.
 
-Settled: Split is the house (2026-11-22). Product pages keep their five
-choices (ADR-0017); a product's theme now supplies them. What this reverses is
-listed under "ADRs".
+1. **Per-product action colours**, not cobalt everywhere. What that reverses
+   is under "ADRs", and recorded in ADR-0019.
+2. **The kits and shells are on the right products**, as in "Who gets what".
+   The undecided ones are assigned when their turn comes.
+3. **Tokens are generated from JSON**, with a build step in this repo.
+
+Split is the house. Product pages keep their five choices (ADR-0017); a
+product's theme now supplies them.
 
 ## Proposed issues
 
