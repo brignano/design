@@ -1,0 +1,7 @@
+kit: larch
+ground: wash
+hue: 355          # magenta
+typeface: onest
+heading-weight: 500
+corners: 16
+shell: conversation

@@ -9,6 +9,8 @@
 //   tailwind.css        tokens/tailwind.json
 //   tokens/names.d.ts   every token name, typed
 //   kits/<kit>.css      tokens/kits/<kit>.json: one look, under [data-kit='<kit>']
+//   themes/<name>.css   themes/<name>.theme: a product's look, its kit plus what
+//                       scripts/theme.mjs derives, under [data-product='<name>']
 //
 // The JSON follows the W3C design-tokens shape ($value, $type, $description,
 // groups), with two things it has no word for yet, kept under
@@ -21,6 +23,7 @@
 // No dependencies, like check.mjs: a build that needs an install stops being run.
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { derive, gate, parse } from './theme.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -79,6 +82,12 @@ function kit(name, rootTokens) {
   const [g] = all;
   const set = new Set(g.tokens.map(([n]) => n));
   for (const n of set) if (!rootTokens.has(n)) throw new Error(`tokens/kits/${name}.json: --${n} is not a token :root defines; add it to tokens/ first`);
+  return `${BANNER(`tokens/kits/${name}.json`)}\n${rule(g)}${again(g.selector, new Set(g.tokens.map(([n]) => n)), rootTokens, 'kit')}\n`;
+}
+
+// The second rule of a kit or a theme: every :root alias that leads to a
+// token it sets, declared again under its selector.
+function again(selector, set, rootTokens, what) {
   const refs = (v) => [...v.matchAll(/var\(--([\w-]+)/g)].map((m) => m[1]);
   const follows = new Set(set);
   for (let grew = true; grew; ) {
@@ -86,12 +95,38 @@ function kit(name, rootTokens) {
     for (const [n, v] of rootTokens)
       if (!follows.has(n) && refs(v).some((r) => follows.has(r))) { follows.add(n); grew = true; }
   }
-  const again = [...rootTokens].filter(([n]) => follows.has(n) && !set.has(n));
-  const lines = again.map(([n, v]) => `  --${n}: ${v};`);
-  const tail = again.length
-    ? `\n\n/* Aliases from :root that lead to a token this kit sets, declared again so\n   they resolve against the kit's values on whatever element carries it. */\n${g.selector} {\n${lines.join('\n')}\n}`
-    : '';
-  return `${BANNER(`tokens/kits/${name}.json`)}\n${rule(g)}${tail}\n`;
+  const list = [...rootTokens].filter(([n]) => follows.has(n) && !set.has(n));
+  if (!list.length) return '';
+  return `\n\n/* Aliases from :root that lead to a token this ${what} sets, declared again so\n   they resolve against the ${what}'s values on whatever element carries it. */\n${selector} {\n${list.map(([n, v]) => `  --${n}: ${v};`).join('\n')}\n}`;
+}
+
+// A theme is its kit's tokens with the theme's own laid over them, as one
+// rule under [data-product], so a product imports one file and sets one
+// attribute. A theme that misses a contrast floor is refused here, before
+// anything is written.
+const THEMES = readdirSync(new URL('themes/', root)).filter((f) => f.endsWith('.theme')).map((f) => f.slice(0, -6)).sort();
+const kitTokensOf = (kit) => new Map(groups(`kits/${kit}`)[0].tokens.map(([n, tok]) => [n, value(tok)]));
+// `kitTokens` is a parameter so `npm run check` can hand this a kit with one
+// colour just under a floor and see the theme refused (rule 17).
+export function theme(name, source, rootTokens, kitTokens) {
+  const t = parse(name, source);
+  kitTokens ??= kitTokensOf(t.kit);
+  const own = derive(t, kitTokens);
+  for (const n of own.keys()) if (!rootTokens.has(n)) throw new Error(`themes/${name}.theme: the generator set --${n}, which :root does not define`);
+  const all = new Map([...kitTokens, ...own]);
+  const failures = gate(name, new Map([...rootTokens, ...all]), t.scheme === 'dark' ? [['dark', 1]] : [['light', 0], ['dark', 1]]);
+  if (failures.length) throw new Error(`a theme misses a contrast floor and was not written:\n  ${failures.join('\n  ')}`);
+  const selector = `[data-product='${name}']`;
+  const lines = [];
+  if (t.scheme === 'dark') lines.push('  /* This product is always dark. */', '  color-scheme: dark;', '');
+  lines.push(`  /* From the ${t.kit} kit. */`);
+  for (const [n, v] of kitTokens) if (!own.has(n)) lines.push(`  --${n}: ${v};`);
+  if (own.size) {
+    lines.push('', '  /* From the theme. */');
+    for (const [n, v] of own) lines.push(`  --${n}: ${v};`);
+  }
+  const head = source.trimEnd().split('\n').map((l) => `   ${l}`).join('\n');
+  return `${BANNER(`themes/${name}.theme and tokens/kits/${t.kit}.json`)}\n/* ${name}.theme\n\n${head} */\n${selector} {\n${lines.join('\n')}\n}${again(selector, new Set(all.keys()), rootTokens, 'theme')}\n`;
 }
 
 // Names that changed in 0.13. The old one still works, pointing at the new.
@@ -131,6 +166,21 @@ function tailwind(known) {
   return `${BANNER('tokens/tailwind.json')}\n${comment(doc.$description, '')}\n\n${doc.block} {\n${lines.join('\n')}\n}\n`;
 }
 
+// :root's own tokens, by name, for the kits and themes: tokens.css and the
+// chart file, whose aliases (--chart-surface: var(--card)) must follow a kit
+// too. Old names are aliases as well.
+export function rootTokenMap() {
+  const rootTokens = new Map();
+  for (const f of [...FAMILIES, 'chart'])
+    for (const g of groups(f))
+      if (g.selector === ':root' && !g.media)
+        for (const [name, t] of g.tokens) {
+          rootTokens.set(name, value(t));
+          if (ext(t).was) rootTokens.set(ext(t).was, `var(--${name})`);
+        }
+  return rootTokens;
+}
+
 export function build() {
   const known = new Set();
   for (const f of [...FAMILIES, 'chart'])
@@ -160,20 +210,11 @@ export function build() {
     read('tokens/base.css').trimEnd(),
   ].join('\n\n') + '\n';
 
-  // :root's own tokens, by name, for the kits: tokens.css and the chart file,
-  // whose aliases (--chart-surface: var(--card)) must follow a kit too. Old
-  // names are aliases as well.
-  const rootTokens = new Map();
-  for (const f of [...FAMILIES, 'chart'])
-    for (const g of groups(f))
-      if (g.selector === ':root' && !g.media)
-        for (const [name, t] of g.tokens) {
-          rootTokens.set(name, value(t));
-          if (ext(t).was) rootTokens.set(ext(t).was, `var(--${name})`);
-        }
+  const rootTokens = rootTokenMap();
 
   return {
     ...Object.fromEntries(KITS.map((k) => [`kits/${k}.css`, kit(k, rootTokens)])),
+    ...Object.fromEntries(THEMES.map((n) => [`themes/${n}.css`, theme(n, read(`themes/${n}.theme`), rootTokens)])),
     'tokens.css': tokens,
     'tokens.chart.css': BANNER('tokens/chart.json') + '\n' + groups('chart').map(rule).join('\n\n') + '\n',
     'tailwind.css': tailwind(known),

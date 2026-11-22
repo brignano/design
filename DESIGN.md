@@ -463,6 +463,59 @@ until 1.0** (ADR-0020): today's look is the default, and `data-kit="split"` on
 the default look is held to, plus its washes and the gap between act and
 settled. A kit may not set a state colour.
 
+### Product themes
+
+A product's look is a file of a few lines, `themes/<product>.theme`
+(ADR-0019). `npm run build` lays it over its kit and writes
+`themes/<product>.css`, one rule under `[data-product='<product>']`, so a
+product imports one file and sets one attribute. Opt-in until 1.0, like kits.
+
+```
+kit: larch            # split, ledger or larch: the look it starts from
+ground: wash          # plain (the kit's), bright, or wash
+scheme: dark          # both (the default) or dark, which pins the product dark
+hue: 355              # what acts: an OKLCH hue, 0 to 360
+typeface: onest       # headings; `mono` sets everything in the kit's mono
+heading-weight: 500
+corners: 16           # px, or `pill`
+shell: conversation   # console, canvas, player, conversation, document
+```
+
+Those eight keys are all there are. A key left out takes the kit's value.
+
+**To add a product:** write its `.theme`, run `npm run build`, import
+`@brignano/design/themes/<product>.css`, set `data-product="<product>"` on
+`<html>`, and load the kit's fonts (README). Nothing else: no CSS, no palette.
+
+**A theme is a hue, never a palette.** Every colour a theme sets is a fixed
+step of lightness and chroma at its hue, written once in
+`scripts/theme.mjs`:
+
+- `ground: bright` is a near-white page with white cards; `wash` is a page
+  tinted with the hue and lighter cards on it. Text and lines take the hue too.
+- On Split the hue is a **signal**: a bright fill with an ink label, the same
+  in both schemes, and an ink edge wherever the fill can't be found on the
+  page. On Ledger and Larch it is **deep**: a deep fill with a light label in
+  light, a pale fill with a dark label in dark.
+- State colours are never a theme's to set, and are the same in every one.
+
+**It can't make an unreadable theme.** The build refuses a theme whose text
+is under 4.5:1 or whose controls are under 3:1, naming the pair and the
+ratio. `npm run check` proves every hue, on every kit and ground, passes that
+gate (648 combinations), and holds each built theme to every token floor.
+
+Measured, light / dark (Driftwood is dark only):
+
+| Theme | Text on page | Muted on a surface | Button label | Link on page | Primary found | Control edge |
+|---|---|---|---|---|---|---|
+| homelab | 18.34 / 17.48 | 6.01 / 6.82 | 14.89 / 14.89 | 18.34 / 17.48 | 18.34 / 15.22 | 18.34 / 17.48 |
+| driftwood | 17.48 | 6.82 | 12.29 | 17.48 | 12.56 | 17.48 |
+| guidebook | 16.53 / 17.06 | 7.10 / 7.37 | 6.39 / 9.99 | 6.12 / 9.99 | 6.12 / 9.99 | 4.38 / 5.41 |
+| sites | 15.30 / 16.50 | 6.89 / 7.15 | 6.54 / 9.47 | 5.74 / 9.47 | 5.74 / 9.47 | 4.06 / 5.17 |
+| receipts | 16.30 / 15.69 | 5.86 / 6.41 | 16.30 / 15.69 | 16.30 / 15.69 | 16.30 / 15.69 | 3.65 / 4.01 |
+
+`shell` is stored and validated; the shell templates are their own work.
+
 ### How the theme is chosen
 
 Every colour is one declaration holding both values, `light-dark(<light>, <dark>)`,
