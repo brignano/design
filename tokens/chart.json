@@ -1,0 +1,145 @@
+{
+  "$description": "Chart colours: categorical, sequential and the chart frame. Imported separately as tokens.chart.css.",
+  "root": {
+    "$description": "─────────────────────────────────────────────────────────────────────────\ntokens.chart.css — the categorical palette for data visualisation.\n\nWHY THIS IS A SEPARATE FILE FROM THE BRAND ACCENT\n-------------------------------------------------\nA chart's colours do a different job from a brand's colours, so they are\nnot derived from the mark and they are not the state hues.\n\n  mark (--mark)             identity. One hue. \"This is Anthony.\"\n  state (--success/…)       state. RESERVED — never a series colour.\n  categorical (this file)   IDENTITY OF A SERIES. Needs 8 hues that a\n                            human can tell apart at a glance, including\n                            the ~8% of men with a colour-vision\n                            deficiency.\n\nTrying to derive eight distinguishable series hues from one amber gives\nyou eight ambers nobody can separate. Charts genuinely need the range —\nthe constraint is separability, not restraint.\n\nTHESE VALUES ARE VALIDATED, NOT CHOSEN BY EYE\n----------------------------------------------\nValues are light-dark(<light>, <dark>), one declaration each.\nBoth modes pass every hard gate of the six-check colour formula:\n\n  lightness band     PASS  (all 8 inside the mode's band)\n  chroma floor       PASS  (all 8 >= 0.1)\n  CVD separation     PASS  worst adjacent dE 9.1 light / 8.4 dark  (>=8)\n  normal-vision      PASS  worst adjacent dE 19.6 light / 19.3 dark (>=15)\n  contrast           light: slots 3, 4, 5 sit below 3:1 — see RELIEF below\n                     dark:  all 8 clear 3:1\n\nThe ORDER is the colourblind-safety mechanism, not decoration. Slots are\nassigned in fixed order and NEVER cycled. Re-ordering silently breaks the\nadjacent-pair separation the gates above measure. If you change anything\nhere, re-run the validator on both modes before shipping.\n\nRULES OF USE\n------------\n- Fixed order, never cycled. A 9th series is not a generated hue: fold it\n  into \"Other\", facet into small multiples, or cut it. (`stats-pie.tsx`\n  already does this correctly — top 8 + \"Other\".)\n- Colour follows the ENTITY, never its rank. A filter that changes the\n  series count must not repaint the survivors. Map name -> slot once.\n- RELIEF: on light mode, slots 3/4/5 fall below 3:1 against the surface.\n  That is legal only with visible direct labels or a table view — which\n  the donut's centre readout and the legend already provide. Do not use\n  those three as the ONLY signal for a mark with no label.\n- Never colour-alone: >=2 series always carries a legend, and <=4 are also\n  direct-labelled.\n- Text wears text tokens (--ink / --ink-soft / --slate), never the series\n  colour. A coloured mark beside a label carries the identity.\n─────────────────────────────────────────────────────────────────────────",
+    "$extensions": {
+      "io.brignano": {
+        "selector": ":root"
+      }
+    },
+    "chart-surface": {
+      "$value": "var(--card)"
+    },
+    "chart-1": {
+      "$type": "color",
+      "$value": {
+        "light": "#2a78d6",
+        "dark": "#3987e5"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "blue"
+        }
+      }
+    },
+    "chart-2": {
+      "$type": "color",
+      "$value": {
+        "light": "#eb6834",
+        "dark": "#d95926"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "orange"
+        }
+      }
+    },
+    "chart-3": {
+      "$type": "color",
+      "$value": {
+        "light": "#1baf7a",
+        "dark": "#199e70"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "aqua    — relief required (2.74:1)"
+        }
+      }
+    },
+    "chart-4": {
+      "$type": "color",
+      "$value": {
+        "light": "#eda100",
+        "dark": "#c98500"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "yellow  — relief required (2.11:1)"
+        }
+      }
+    },
+    "chart-5": {
+      "$type": "color",
+      "$value": {
+        "light": "#e87ba4",
+        "dark": "#d55181"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "magenta — relief required (2.62:1)"
+        }
+      }
+    },
+    "chart-6": {
+      "$value": "#008300",
+      "$extensions": {
+        "io.brignano": {
+          "note": "green — same in both"
+        }
+      }
+    },
+    "chart-7": {
+      "$type": "color",
+      "$value": {
+        "light": "#4a3aa7",
+        "dark": "#9085e9"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "violet"
+        }
+      }
+    },
+    "chart-8": {
+      "$type": "color",
+      "$value": {
+        "light": "#e34948",
+        "dark": "#e66767"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "red"
+        }
+      }
+    },
+    "chart-other": {
+      "$value": "var(--slate)",
+      "$description": "Everything past slot 8 aggregates here. Deliberately neutral: \"Other\"\nis not an entity, so it does not earn a hue."
+    },
+    "chart-grid": {
+      "$value": "var(--line)",
+      "$description": "Axes, gridlines and the ring behind overlapping marks. Recessive by\ndesign — the data is the ink, the frame is not."
+    },
+    "chart-axis": {
+      "$value": "var(--slate)"
+    },
+    "seq-0": {
+      "$value": "var(--line)",
+      "$description": "─────────────────────────────────────────────────────────────────────────\nSEQUENTIAL — one hue, light to dark, for CONTINUOUS MAGNITUDE.\nNot categorical. Use when the thing being coloured is \"how much\", not\n\"which one\": the GitHub contribution heatmap, a density map, a calendar.\n\nRules that differ from the categorical palette above:\n  - ONE hue. Never a rainbow — a rainbow implies categories where there\n    are only degrees.\n  - Lightness must be MONOTONIC. Verified in OKLCH: light L 0.888 ->\n    0.487 descending, dark L 0.380 -> 0.808 ascending, every adjacent\n    step separated by dL >= 0.107.\n  - `--seq-0` is NEUTRAL on purpose. Zero contributions is not a small\n    amount of the hue, it is the absence of a value — colouring it a pale\n    blue would claim data that isn't there.\n\nThe hue is cobalt, the same family as --action. That is intentional: a\nmagnitude ramp is informational, the same register as a link, and giving\nit its own hue would add a meaning the system doesn't need.\n─────────────────────────────────────────────────────────────────────────"
+    },
+    "seq-1": {
+      "$type": "color",
+      "$value": {
+        "light": "#c6dcfb",
+        "dark": "#014084"
+      }
+    },
+    "seq-2": {
+      "$type": "color",
+      "$value": {
+        "light": "#87b5f3",
+        "dark": "#015cbb"
+      }
+    },
+    "seq-3": {
+      "$value": "#2885f5"
+    },
+    "seq-4": {
+      "$type": "color",
+      "$value": {
+        "light": "#015cbb",
+        "dark": "#98c3fe"
+      }
+    }
+  }
+}

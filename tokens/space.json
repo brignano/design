@@ -1,0 +1,99 @@
+{
+  "$description": "Space on a 4px base, and the named stacking order.",
+  "root": {
+    "$extensions": {
+      "io.brignano": {
+        "selector": ":root"
+      }
+    },
+    "z-raised": {
+      "$value": "1",
+      "$description": "── Stacking ─────────────────────────────────────────────────────────\nNamed by what sits above what. Dialogs, popovers and sheets use the\nbrowser's top layer and need none of these.\n\n  --z-raised  a control above its card's stretched link, a sticky th\n  --z-sticky  a header content scrolls under\n  --z-float   a label floating over the page (the rail's tooltip)\n  --z-skip    the skip link, above the header it skips\n  --z-toast   toasts, above everything not in the top layer"
+    },
+    "z-sticky": {
+      "$value": "10"
+    },
+    "z-float": {
+      "$value": "20"
+    },
+    "z-skip": {
+      "$value": "30"
+    },
+    "z-toast": {
+      "$value": "40"
+    },
+    "space-1": {
+      "$value": "4px",
+      "$description": "── Space ── 4px base. Tiers differ by which steps they reach for.",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s1"
+        }
+      }
+    },
+    "space-2": {
+      "$value": "8px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s2"
+        }
+      }
+    },
+    "space-3": {
+      "$value": "12px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s3"
+        }
+      }
+    },
+    "space-4": {
+      "$value": "16px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s4"
+        }
+      }
+    },
+    "space-5": {
+      "$value": "24px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s5"
+        }
+      }
+    },
+    "space-6": {
+      "$value": "32px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s6"
+        }
+      }
+    },
+    "space-7": {
+      "$value": "48px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s7"
+        }
+      }
+    },
+    "space-8": {
+      "$value": "64px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s8"
+        }
+      }
+    },
+    "space-9": {
+      "$value": "96px",
+      "$extensions": {
+        "io.brignano": {
+          "was": "s9"
+        }
+      }
+    }
+  }
+}

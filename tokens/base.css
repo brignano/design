@@ -1,0 +1,37 @@
+::selection {
+  background: var(--action-selection);
+}
+
+/* Native checkboxes, radios, range and progress take the control hue
+   instead of the browser's own blue. */
+:root {
+  accent-color: var(--action);
+}
+
+/* Paper is light. Printing a dark page spends ink on the background and
+   most browsers drop backgrounds anyway, leaving pale text on white. After
+   the [data-theme] rules above so it wins over an in-app dark choice. */
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light;
+  }
+}
+
+/* Ships here so no surface can forget it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* View transitions live on pseudo-elements the rule above can't reach. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

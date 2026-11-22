@@ -22,7 +22,7 @@
   .wf-frame { flex: none; }
   .wf-label { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 6px; }
   .wf-screen { container-type: inline-size; background: var(--card); color: var(--ink);
-    border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+    border: 1px solid var(--line-strong); border-radius: var(--radius-card); overflow: hidden; }
   .wf-phone .wf-screen { width: 390px; }
   .wf-desktop .wf-screen { width: 1280px; }
   .wf-fold { font: var(--text-xs) var(--mono); color: var(--slate); text-align: center; padding: 8px; border-bottom: 1px dashed var(--line-control); }
@@ -31,7 +31,7 @@
   .p ul, .p ol { padding: 0; list-style: none; }
   .p a { color: inherit; }
   .p input { font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line-control); min-height: 48px; padding: 0 14px; width: 100%; }
-  .p input:focus-visible, .p .cta:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .p input:focus-visible, .p .cta:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; }
   .p label { display: grid; gap: 6px; font-size: var(--text-sm); }
   .cta { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border: 0;
     font: var(--weight-semibold) var(--text-base) / 1 var(--sans); cursor: pointer; text-decoration: none; }
@@ -83,7 +83,7 @@
   .gb-shot .row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: var(--radius-sm); font-size: var(--text-sm); }
   .gb-shot .row.hit { outline: 3px solid var(--mark-violet); outline-offset: 3px; background: var(--card); }
   .gb-tip { position: absolute; right: 12px; bottom: -18px; width: 220px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line-strong);
-    border-radius: var(--radius); box-shadow: var(--shadow-3); font-size: var(--text-xs); }
+    border-radius: var(--radius-card); box-shadow: var(--shadow-3); font-size: var(--text-xs); }
   .gb-tip small { display: block; font-family: var(--mono); color: var(--ink-soft); }
   .gb-step h3 { font-size: var(--text-lg); display: flex; gap: 10px; align-items: center; margin-top: 12px; }
   .gb-step h3 em { font-style: normal; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--mark-violet); font: var(--weight-semibold) var(--text-sm) var(--mono); }

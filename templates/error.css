@@ -28,7 +28,7 @@
     place-items: center;
     box-sizing: border-box;
     min-height: 100svh;
-    padding: var(--s7) var(--s5);
+    padding: var(--space-7) var(--space-5);
     background: var(--bg);
     color: var(--ink);
   }
@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--s3);
+    gap: var(--space-3);
     min-width: 0;
     max-width: min(28rem, 100%);
     text-align: center;
@@ -44,13 +44,13 @@
   .error-page-mark {
     display: inline-flex;
     align-items: center;
-    gap: var(--s2);
-    margin-bottom: var(--s5);
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
     font-weight: var(--weight-semibold);
     color: var(--ink);
     text-decoration: none;
   }
-  .error-page-mark:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: var(--radius); }
+  .error-page-mark:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; border-radius: var(--radius-card); }
   .error-page-mark > svg { width: 1.5em; height: 1.5em; flex: none; color: var(--mark-current); }
   .error-page-code {
     margin: 0;
@@ -69,9 +69,9 @@
     text-wrap: balance;
     overflow-wrap: anywhere;
   }
-  .error-page-body { margin: 0 0 var(--s3); color: var(--ink-soft); text-wrap: pretty; overflow-wrap: anywhere; }
+  .error-page-body { margin: 0 0 var(--space-3); color: var(--ink-soft); text-wrap: pretty; overflow-wrap: anywhere; }
   .error-page-ref {
-    margin: var(--s3) 0 0;
+    margin: var(--space-3) 0 0;
     font-family: var(--mono);
     font-size: var(--text-xs);
     color: var(--slate);

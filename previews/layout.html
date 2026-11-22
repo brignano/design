@@ -13,7 +13,7 @@
   .pair { grid-template-columns: minmax(0, 1fr); }
   .panel.light, .panel.dark { background: var(--bg); }
   /* Preview only: boxes that make the gaps visible. */
-  .box { padding: var(--s2) var(--s3); border: 1px dashed var(--line-strong); border-radius: var(--radius-sm);
+  .box { padding: var(--space-2) var(--space-3); border: 1px dashed var(--line-strong); border-radius: var(--radius-sm);
          background: var(--card); font-size: var(--text-sm); color: var(--ink-soft); }
   .demo-container { border-inline: 1px dashed var(--line-strong); }
   .demo-container > .box { border-style: solid; }
@@ -27,7 +27,7 @@
   <div class="panel light"><span class="panel-label">Light · tool tier</span>
     <div class="stack gap-5">
       <div class="stack gap-2">
-        <p class="name">.container (780px measure, --s4 gutters)</p>
+        <p class="name">.container (780px measure, --space-4 gutters)</p>
         <div class="container demo-container"><div class="box">Content stays at the tier's measure and centres.</div></div>
       </div>
       <div class="stack gap-2">
@@ -35,14 +35,14 @@
         <div class="container container-wide demo-container"><div class="box">For dashboards and the product page width.</div></div>
       </div>
       <div class="stack gap-2">
-        <p class="name">.stack (default --s4) · .stack.gap-2</p>
+        <p class="name">.stack (default --space-4) · .stack.gap-2</p>
         <div class="cluster gap-6">
           <div class="stack"><div class="box">One</div><div class="box">Two</div><div class="box">Three</div></div>
           <div class="stack gap-2"><div class="box">One</div><div class="box">Two</div><div class="box">Three</div></div>
         </div>
       </div>
       <div class="stack gap-2">
-        <p class="name">.cluster (wrapping row, default --s2)</p>
+        <p class="name">.cluster (wrapping row, default --space-2)</p>
         <div class="cluster"><span class="pill">Draft</span><span class="pill pill-success">Booked</span><span class="pill pill-attention">Deposit due</span><button type="button" class="btn btn-sm">Edit</button><button type="button" class="btn btn-sm btn-ghost">Share</button></div>
       </div>
       <div class="stack gap-2">

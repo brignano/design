@@ -39,6 +39,9 @@
 //      strengths: a product looks the same on its card and its page (ADR-0018).
 //  14. controls.css is not exactly what scripts/controls.mjs makes from
 //      components.css (it is generated, never edited).
+//  15. tokens.css, tokens.chart.css, tailwind.css or tokens/names.d.ts is not
+//      exactly what scripts/build.mjs makes from tokens/ (they are generated:
+//      edit the JSON, then `npm run build`).
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -47,6 +50,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { hex, toHex, resolve } from './colour.mjs';
 import { TOKEN, resolveLight } from './email-tokens.mjs';
 import { controls } from './controls.mjs';
+import { build } from './build.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -162,7 +166,7 @@ const hexOf = (name, map) => toHex(resolve(`var(${name})`, map).rgb);
 // hue; --surface-sticky mixes the surface it sits on, which differs by theme.
 const WASHES = { '--surface-sticky': ['--card', '--bg'] };
 for (const [k] of tokens) {
-  const m = k.match(/^--(i|success|attention|danger)-(surface|line|selection)$/);
+  const m = k.match(/^--(action|success|attention|danger)-(surface|line|selection)$/);
   if (m) WASHES[k] = [`--${m[1]}`, `--${m[1]}`];
 }
 for (const [k, sources] of Object.entries(WASHES))
@@ -173,9 +177,9 @@ for (const [k, sources] of Object.entries(WASHES))
     else if (toHex(hex(base)) !== hexOf(src, map))
       fail(`drift (${theme}): ${k} mixes ${base}, but ${src} is ${hexOf(src, map)}`);
   });
-const STEPS = { '--bg': ['--n-25', '--n-0'], '--card': ['--n-0', '--n-50'], '--on-dark': ['--n-25', '--n-0'],
-  '--slate': ['--n-600', '--n-500'], '--line-control': ['--n-500', null],
-  '--device': ['--n-900', '--n-300'],
+const STEPS = { '--bg': ['--neutral-25', '--neutral-0'], '--card': ['--neutral-0', '--neutral-50'], '--on-dark': ['--neutral-25', '--neutral-0'],
+  '--slate': ['--neutral-600', '--neutral-500'], '--line-control': ['--neutral-500', null],
+  '--device': ['--neutral-900', '--neutral-300'],
   // The danger button's fills are the state hue in light; only dark has its own.
   '--danger-fill': ['--danger', null], '--danger-fill-hover': ['--danger-ink', null], '--danger-fill-pressed': ['--danger-ink', null],
   // A product's fill is its mark in light; only dark has its own (ADR-0017).
@@ -192,8 +196,8 @@ for (const [k, steps] of Object.entries(STEPS))
 // rather than Tailwind's blue-600 at 263° (ADR-0008). Near-zero chroma has no
 // meaningful hue, so pure white is exempt.
 const HUES = [
-  [/^--n-\d+$/, 286, 'ramp temperature'],
-  [/^--i(-ink|-ink-hover|-hover|-pressed)?$/, 256, 'cobalt hue'],
+  [/^--neutral-\d+$/, 286, 'ramp temperature'],
+  [/^--action(-ink|-ink-hover|-hover|-pressed)?$/, 256, 'cobalt hue'],
   [/^--seq-[1-9]$/, 256, 'cobalt hue'],
 ];
 const HUE_TOLERANCE = 3;
@@ -238,12 +242,12 @@ for (const f of MARK_FAMILIES)
 // over --card first, which is where washes sit.
 const TEXT = 4.5, MARK = 3;
 const floors = [];
-for (const fg of ['--ink', '--ink-soft', '--slate', '--i-ink', '--i-ink-hover', '--success-ink', '--attention-ink', '--danger-ink'])
+for (const fg of ['--ink', '--ink-soft', '--slate', '--action-ink', '--action-ink-hover', '--success-ink', '--attention-ink', '--danger-ink'])
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, TEXT]);
 floors.push(['--slate', '--line-soft', TEXT]); // the Idea pill
 floors.push(['--ink', '--surface-sticky', TEXT], ['--ink-soft', '--surface-sticky', TEXT]); // sticky bars
-floors.push(['--i', '--surface-sticky', MARK], ['--i-ink', '--surface-sticky', MARK]); // aria-current underline, ghost icon and focus ring on the site header
-for (const bg of ['--i', '--i-hover', '--i-pressed']) floors.push(['--on-i', bg, TEXT]);
+floors.push(['--action', '--surface-sticky', MARK], ['--action-ink', '--surface-sticky', MARK]); // aria-current underline, ghost icon and focus ring on the site header
+for (const bg of ['--action', '--action-hover', '--action-pressed']) floors.push(['--on-action', bg, TEXT]);
 // Buttons (#47): labels on the fills a hover or press swaps in, which no
 // single rule pairs with its colour.
 for (const bg of ['--danger-fill', '--danger-fill-hover', '--danger-fill-pressed']) floors.push(['--on-danger', bg, TEXT]);
@@ -253,32 +257,32 @@ for (const bg of ['--card', '--bg']) floors.push(['--danger-fill', bg, MARK]); /
 for (const f of MARK_FAMILIES) {
   for (const step of ['fill', 'fill-hover', 'fill-pressed']) floors.push(['--on-mark', `--mark${f}-${step}`, TEXT]);
   for (const bg of ['--card', '--bg', `--mark${f}-surface`]) floors.push([`--mark${f}-fill`, bg, MARK]);
-  for (const fg of ['--ink', '--ink-soft', '--i-ink']) floors.push([fg, `--mark${f}-surface`, TEXT]);
+  for (const fg of ['--ink', '--ink-soft', '--action-ink']) floors.push([fg, `--mark${f}-surface`, TEXT]);
 }
 // product-page.css: an ink primary button (data-button="ink", or no mark)
-// takes a --card label on --ink, --n-800 (hover) and --n-700 (pressed).
-for (const bg of ['--ink', '--n-800', '--n-700']) floors.push(['--card', bg, TEXT]);
+// takes a --card label on --ink, --neutral-800 (hover) and --neutral-700 (pressed).
+for (const bg of ['--ink', '--neutral-800', '--neutral-700']) floors.push(['--card', bg, TEXT]);
 for (const bg of ['--surface-hover', '--surface-active']) floors.push(['--ink', bg, TEXT]);
 for (const s of ['success', 'attention', 'danger']) floors.push([`--${s}-ink`, `--${s}-surface`, TEXT]);
-floors.push(['--i-ink', '--i-surface', TEXT]);
+floors.push(['--action-ink', '--action-surface', TEXT]);
 // Messages and banners (#50): title and body on each wash, the icon on it as a
 // mark, and the neutral info banner's strip.
 for (const s of ['success', 'attention', 'danger']) {
   for (const fg of ['--ink', '--ink-soft']) floors.push([fg, `--${s}-surface`, TEXT]);
   floors.push([`--${s}`, `--${s}-surface`, MARK]);
 }
-floors.push(['--ink-soft', '--surface-hover', TEXT], ['--i', '--surface-hover', MARK]);
+floors.push(['--ink-soft', '--surface-hover', TEXT], ['--action', '--surface-hover', MARK]);
 // Tooltip (#57): the inverted chip.
 floors.push(['--card', '--ink', TEXT]);
 // Pills (#51): the info pill's dot on its wash.
-floors.push(['--i', '--i-surface', MARK]);
+floors.push(['--action', '--action-surface', MARK]);
 // --line-control is not paired with the washes: it is under 3:1 there, so an
 // outlined button in .msg-actions gets a --card fill (floored above).
 // Code on a highlighted line (components.css .line-highlight). A comment there
 // takes --code-string, so --code-comment is not paired with the wash.
 for (const fg of ['--code-ink', '--code-keyword', '--code-string']) floors.push([fg, '--code-highlight', TEXT]);
 for (const fg of ['--code-ink', '--code-keyword', '--code-string', '--code-comment']) floors.push([fg, '--code-surface', TEXT]);
-for (const fg of ['--i', '--success', '--attention', '--danger', '--line-control', '--mark', '--mark-current', '--mark-teal', '--mark-violet', '--mark-magenta'])
+for (const fg of ['--action', '--success', '--attention', '--danger', '--line-control', '--mark', '--mark-current', '--mark-teal', '--mark-violet', '--mark-magenta'])
   for (const bg of ['--card', '--bg']) floors.push([fg, bg, MARK]);
 // Chart series: light slots 3–5 are exempt by the relief rule in tokens.chart.css.
 for (let n = 1; n <= 8; n++) floors.push([`--chart-${n}`, '--chart-surface', MARK, n >= 3 && n <= 5 ? 'dark' : null]);
@@ -335,11 +339,11 @@ for (const [, rs] of layerRules)
     if (!bg) continue;
     // Text on its own background: 4.5:1. The one exception is a really
     // inactive control (WCAG 1.4.3, DESIGN.md §4): a rule keyed on :disabled
-    // or aria-disabled may set exactly --i-disabled-ink on --i-disabled-bg, and
+    // or aria-disabled may set exactly --disabled-ink on --disabled, and
     // nothing else escapes the floor.
     const fg = decls.get('color')?.match(/^var\((--[\w-]+)\)$/)?.[1];
     const inactive = INACTIVE.test(selector);
-    if (fg && inactive && fg === '--i-disabled-ink' && bg === '--i-disabled-bg') {
+    if (fg && inactive && fg === '--disabled-ink' && bg === '--disabled') {
       /* exempt: inactive control */
     } else if (fg) addFloor(fg, bg, TEXT);
     // A control's edge on its own background: 3:1 (DESIGN.md §4). The divider
@@ -382,7 +386,7 @@ function nestedPairs(rs) {
 for (const [, rs] of layerRules)
   for (const [fg, bg, sel] of nestedPairs(rs)) {
     // The same exemption as above: a really inactive control's ink.
-    if (fg === '--i-disabled-ink' && INACTIVE.test(sel)) continue;
+    if (fg === '--disabled-ink' && INACTIVE.test(sel)) continue;
     // An icon is a graphic, not text: 3:1 (WCAG 1.4.11), as a control's edge.
     addFloor(fg, bg, /(^|[\s>])(svg|\.icon)$/.test(sel) ? MARK : TEXT);
   }
@@ -596,9 +600,20 @@ else {
 if (!existsSync(new URL('controls.css', root)) || read('controls.css') !== controls(read('components.css')))
   fail('controls.css is out of date with components.css: run `npm run controls` and commit it');
 
+// ── 15. The token files are generated ────────────────────────────────────────
+// tokens/ is the source. A hand edit to a generated file, or a JSON change
+// without a rebuild, would ship a file that disagrees with its source.
+try {
+  for (const [file, text] of Object.entries(build()))
+    if (!existsSync(new URL(file, root)) || read(file) !== text)
+      fail(`${file} is not what scripts/build.mjs makes from tokens/; edit the JSON and run \`npm run build\``);
+} catch (e) {
+  fail(`build: ${e.message}`);
+}
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength, controls.css in step`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength, controls.css and the token files in step`);

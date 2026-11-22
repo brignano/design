@@ -1,0 +1,37 @@
+{
+  "$description": "Component tokens: what a button, field, card, pill or dialog reads. Each starts as an alias of a semantic token, so nothing moves; a kit or a theme sets them to restyle a component without touching a colour (ADR-0019).",
+  "root": {
+    "$extensions": {
+      "io.brignano": {
+        "selector": ":root"
+      }
+    },
+    "button-radius": {
+      "$value": "var(--radius-control)"
+    },
+    "field-radius": {
+      "$value": "var(--radius-control)"
+    },
+    "field-line": {
+      "$value": "var(--line-control)"
+    },
+    "card-radius": {
+      "$value": "var(--radius-card)"
+    },
+    "card-line": {
+      "$value": "var(--line)"
+    },
+    "card-shadow": {
+      "$value": "var(--shadow-1)"
+    },
+    "pill-radius": {
+      "$value": "var(--radius-sm)"
+    },
+    "dialog-radius": {
+      "$value": "var(--radius-lg)"
+    },
+    "focus-ring": {
+      "$value": "var(--action-ink)"
+    }
+  }
+}

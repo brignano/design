@@ -13,10 +13,10 @@
   .pair { grid-template-columns: minmax(0, 1fr); }
   /* Cards sit on the page ground, so the panel shows it rather than a card surface. */
   .panel.light, .panel.dark { background: var(--bg); }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--s4); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--space-4); }
   /* Preview only: shows the focus ring without tabbing to the card. */
-  .card-link:has(.focus-demo) { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-  .stage-label { all: revert-layer; margin: var(--s6) 0 var(--s3); font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--ink-soft); }
+  .card-link:has(.focus-demo) { outline: 2px solid var(--action-ink); outline-offset: 2px; }
+  .stage-label { all: revert-layer; margin: var(--space-6) 0 var(--space-3); font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -31,7 +31,7 @@
         <footer class="card-footer"><span class="pill">Draft</span><button type="button" class="btn btn-sm">Edit</button></footer>
       </article>
       <article class="card card-link">
-        <div class="card-media"><svg viewBox="0 0 320 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" style="fill:var(--i-surface)"/><circle cx="250" cy="40" r="18" style="fill:var(--attention)"/><path d="M0 150 L80 90 L140 130 L210 70 L320 140 V180 H0Z" style="fill:var(--i)"/><path d="M0 165 L90 125 L170 160 L260 120 L320 150 V180 H0Z" style="fill:var(--i-ink);opacity:.5"/></svg></div>
+        <div class="card-media"><svg viewBox="0 0 320 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" style="fill:var(--action-surface)"/><circle cx="250" cy="40" r="18" style="fill:var(--attention)"/><path d="M0 150 L80 90 L140 130 L210 70 L320 140 V180 H0Z" style="fill:var(--action)"/><path d="M0 165 L90 125 L170 160 L260 120 L320 150 V180 H0Z" style="fill:var(--action-ink);opacity:.5"/></svg></div>
         <header class="card-header"><h2 class="card-title"><a href="#l-lisbon">Lisbon, 4 days</a></h2><p class="card-meta">12–15 Mar · 2 people</p></header>
         <div class="card-body"><p>The whole card opens the trip. Tab to it: one ring goes round the card.</p></div>
         <footer class="card-footer"><span class="pill pill-success">Booked</span></footer>
@@ -74,7 +74,7 @@
         <footer class="card-footer"><span class="pill">Draft</span><button type="button" class="btn btn-sm">Edit</button></footer>
       </article>
       <article class="card card-link">
-        <div class="card-media"><svg viewBox="0 0 320 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" style="fill:var(--i-surface)"/><circle cx="250" cy="40" r="18" style="fill:var(--attention)"/><path d="M0 150 L80 90 L140 130 L210 70 L320 140 V180 H0Z" style="fill:var(--i)"/><path d="M0 165 L90 125 L170 160 L260 120 L320 150 V180 H0Z" style="fill:var(--i-ink);opacity:.5"/></svg></div>
+        <div class="card-media"><svg viewBox="0 0 320 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" style="fill:var(--action-surface)"/><circle cx="250" cy="40" r="18" style="fill:var(--attention)"/><path d="M0 150 L80 90 L140 130 L210 70 L320 140 V180 H0Z" style="fill:var(--action)"/><path d="M0 165 L90 125 L170 160 L260 120 L320 150 V180 H0Z" style="fill:var(--action-ink);opacity:.5"/></svg></div>
         <header class="card-header"><h2 class="card-title"><a href="#d-lisbon">Lisbon, 4 days</a></h2><p class="card-meta">12–15 Mar · 2 people</p></header>
         <div class="card-body"><p>The whole card opens the trip. Tab to it: one ring goes round the card.</p></div>
         <footer class="card-footer"><span class="pill pill-success">Booked</span></footer>
@@ -152,7 +152,7 @@
         <li><code>.card-media</code> goes first and runs edge to edge at 16:9, cropped to fill.</li>
         <li><code>.card-media.card-stage</code> is for a drawing of a product: the drawing is padded and contained, never cropped, on a faint field of the product's mark.</li>
         <li>The footer sits at the bottom, so cards in a row line up.</li>
-        <li>Radius <code>--radius</code>; the grid of cards is the layout's job.</li>
+        <li>Radius <code>--radius-card</code>; the grid of cards is the layout's job.</li>
       </ul>
     </section>
     <section>

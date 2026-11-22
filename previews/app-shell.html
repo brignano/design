@@ -13,26 +13,26 @@
 <style>
   /* Preview chrome only: each example is a fixed box the shell fills, and
      the wide ones scroll sideways on a narrow screen. */
-  .shell-demo { margin-top: var(--s6); }
-  .shell-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); }
-  .shell-demo > p { margin: 0 0 var(--s3); color: var(--ink-soft); max-width: 70ch; }
-  .shell-scroll { overflow-x: auto; padding-bottom: var(--s2); }
-  .shell-frame { border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+  .shell-demo { margin-top: var(--space-6); }
+  .shell-demo > h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-2); }
+  .shell-demo > p { margin: 0 0 var(--space-3); color: var(--ink-soft); max-width: 70ch; }
+  .shell-scroll { overflow-x: auto; padding-bottom: var(--space-2); }
+  .shell-frame { border: 1px solid var(--line-strong); border-radius: var(--radius-card); overflow: hidden; }
   .shell-frame.light { color-scheme: light; }
   .shell-frame.dark { color-scheme: dark; }
   .shell-frame .app-shell { height: 600px; }
   .shell-frame.w1440 { width: 1440px; }
   .shell-frame.w900 { width: 900px; }
   .shell-frame.w375 { width: 375px; max-width: 100%; }
-  .phones { display: flex; flex-wrap: wrap; gap: var(--s4); }
-  .phones > div { display: grid; gap: var(--s2); }
+  .phones { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+  .phones > div { display: grid; gap: var(--space-2); }
   /* The example app's own page styles, not part of the template. */
-  .app-page { padding: var(--s5); }
-  .app-page-title { margin: 0 0 var(--s4); font-size: var(--text-xl); font-weight: 600; }
+  .app-page { padding: var(--space-5); }
+  .app-page-title { margin: 0 0 var(--space-4); font-size: var(--text-xl); font-weight: 600; }
   .host-open { min-height: 32px; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-weight: 600; text-align: start; cursor: pointer; }
   .host-open:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .host-open:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; border-radius: 2px; }
-  .host-open[aria-current='true'] { color: var(--i-ink); }
+  .host-open:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; border-radius: 2px; }
+  .host-open[aria-current='true'] { color: var(--action-ink); }
 </style>
 </head>
 <body>
@@ -105,7 +105,7 @@
     </section>
     </div>
   </div>
-  <div class="shell-scroll" style="margin-top: var(--s4)">
+  <div class="shell-scroll" style="margin-top: var(--space-4)">
     <div class="shell-frame dark w1440">
       <section class="app-shell" data-sidebar="collapsed" data-mark="teal" aria-label="Example app, wide dark">
       <div class="app-shell-grid">

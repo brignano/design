@@ -1,0 +1,829 @@
+{
+  "$description": "Colour: the neutral ramp, the roles built on it, the action colour, the states, diff and code colours, and the marks. One declaration per colour, holding both schemes.",
+  "root": {
+    "$extensions": {
+      "io.brignano": {
+        "selector": ":root"
+      }
+    },
+    "neutral-0": {
+      "$type": "color",
+      "$value": {
+        "light": "#ffffff",
+        "dark": "#0d0d0f"
+      },
+      "$description": "── Neutral ramp ─────────────────────────────────────────────────────\nTwelve steps, up from five. The gap that mattered most: there was no\nhover or pressed background token, so every interactive surface in\nboth repos was improvising.\n\nDeliberately COOL — a cool grey lets the warm mark and the amber\nattention state read as warm, instead of muddying into them.\n\nONE TEMPERATURE, top to bottom, both themes: every tinted step sits at\nOKLCH hue 286° (±3°, `npm run check` holds it). Chroma is a whisper at\nthe ends (~0.0015 at neutral-25) and peaks in the mid-tones (~0.015 at\nneutral-700), where a grey reads most neutral-flat without it. Only pure\nwhite (light neutral-0) is untinted. An earlier ramp mixed warm hairlines\n(106°) with cool text, so a border and the label beside it disagreed.\n\nChanging a step: keep its OKLCH lightness, keep the hue, re-run the\ncheck.",
+      "$extensions": {
+        "io.brignano": {
+          "was": "n-0"
+        }
+      }
+    },
+    "neutral-25": {
+      "$type": "color",
+      "$value": {
+        "light": "#fafafb",
+        "dark": "#131316"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "n-25"
+        }
+      }
+    },
+    "neutral-50": {
+      "$type": "color",
+      "$value": {
+        "light": "#f3f3f4",
+        "dark": "#17171a"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "n-50"
+        }
+      }
+    },
+    "neutral-100": {
+      "$type": "color",
+      "$value": {
+        "light": "#ececee",
+        "dark": "#202024"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "hairline",
+          "was": "n-100"
+        }
+      }
+    },
+    "neutral-200": {
+      "$type": "color",
+      "$value": {
+        "light": "#e1e1e4",
+        "dark": "#2a2a2f"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "hover surface",
+          "was": "n-200"
+        }
+      }
+    },
+    "neutral-300": {
+      "$type": "color",
+      "$value": {
+        "light": "#cbcbce",
+        "dark": "#3a3a41"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "strong border, pressed surface",
+          "was": "n-300"
+        }
+      }
+    },
+    "neutral-400": {
+      "$type": "color",
+      "$value": {
+        "light": "#a9a9ae",
+        "dark": "#55555e"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "n-400"
+        }
+      }
+    },
+    "neutral-500": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a8a8f",
+        "dark": "#8b8b93"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "3.44:1 — UI marks only, never text / 5.29:1",
+          "was": "n-500"
+        }
+      }
+    },
+    "neutral-600": {
+      "$type": "color",
+      "$value": {
+        "light": "#6b6b73",
+        "dark": "#9c9ca4"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "muted label 5.28:1",
+          "was": "n-600"
+        }
+      }
+    },
+    "neutral-700": {
+      "$type": "color",
+      "$value": {
+        "light": "#52525b",
+        "dark": "#a8a8b0"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "secondary 7.73:1 / 7.58:1",
+          "was": "n-700"
+        }
+      }
+    },
+    "neutral-800": {
+      "$type": "color",
+      "$value": {
+        "light": "#33333a",
+        "dark": "#d0d0d5"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "n-800"
+        }
+      }
+    },
+    "neutral-900": {
+      "$type": "color",
+      "$value": {
+        "light": "#111114",
+        "dark": "#f2f2f4"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "primary 18.85:1 / 16.00:1",
+          "was": "n-900"
+        }
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "light": "#fafafb",
+        "dark": "#0d0d0f"
+      },
+      "$description": "Semantic aliases. Components use THESE, not the raw steps.\nWhere a role sits on a different step in each theme, the step's two\nhexes are written out (rule 2) and named in the comment; the check\nholds them to the ramp.",
+      "$extensions": {
+        "io.brignano": {
+          "note": "neutral-25 / neutral-0"
+        }
+      }
+    },
+    "card": {
+      "$type": "color",
+      "$value": {
+        "light": "#ffffff",
+        "dark": "#17171a"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "neutral-0 / neutral-50"
+        }
+      }
+    },
+    "surface-hover": {
+      "$value": "var(--neutral-100)"
+    },
+    "surface-active": {
+      "$value": "var(--neutral-200)"
+    },
+    "surface-sticky": {
+      "$value": {
+        "light": "color-mix(in srgb, #ffffff 92%, transparent)",
+        "dark": "color-mix(in srgb, #0d0d0f 92%, transparent)"
+      },
+      "$description": "Sticky chrome — a header or toolbar that content scrolls under, usually\nwith `backdrop-filter: blur()`. 92% of the surface it sits on: the card\nin light, the page ground in dark, where cards are lighter than the\npage. A token so consumers never color-mix() one (DESIGN.md §11).",
+      "$extensions": {
+        "io.brignano": {
+          "note": "card / bg"
+        }
+      }
+    },
+    "ink": {
+      "$value": "var(--neutral-900)"
+    },
+    "ink-soft": {
+      "$value": "var(--neutral-700)"
+    },
+    "slate": {
+      "$type": "color",
+      "$value": {
+        "light": "#6b6b73",
+        "dark": "#8b8b93"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "neutral-600 / neutral-500 — text-safe: eyebrows, axis labels, captions"
+        }
+      }
+    },
+    "line": {
+      "$value": "var(--neutral-100)"
+    },
+    "line-soft": {
+      "$value": "var(--neutral-50)"
+    },
+    "line-strong": {
+      "$value": "var(--neutral-300)",
+      "$extensions": {
+        "io.brignano": {
+          "note": "1.62:1 — decoration, not a boundary"
+        }
+      }
+    },
+    "line-control": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a8a8f",
+        "dark": "#6b6b73"
+      },
+      "$description": "The edge that tells you a control is there: inputs, secondary buttons.\nWCAG 1.4.11 asks 3:1 of a boundary you need to find the control, which\n--line-strong is nowhere near. Light is neutral-500 (3.44:1 on card, 3.29:1\non bg); dark sits between neutral-400 and neutral-500, which the ramp has no step\nfor (3.39:1 on card, 3.68:1 on bg)."
+    },
+    "on-dark": {
+      "$type": "color",
+      "$value": {
+        "light": "#fafafb",
+        "dark": "#0d0d0f"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "neutral-25 / neutral-0"
+        }
+      }
+    },
+    "device": {
+      "$type": "color",
+      "$value": {
+        "light": "#111114",
+        "dark": "#3a3a41"
+      },
+      "$description": "A phone's bezel (.pp-device). A phone is a dark object in either theme,\nso this stays dark rather than flipping with --ink, which would draw a\nnear-white bezel in dark mode. Dark lifts it to neutral-300 so the frame still\nhas an edge against the near-black page. Decoration, not a boundary.",
+      "$extensions": {
+        "io.brignano": {
+          "note": "neutral-900 / neutral-300"
+        }
+      }
+    },
+    "action": {
+      "$type": "color",
+      "$value": {
+        "light": "#076bd3",
+        "dark": "#0371e0"
+      },
+      "$description": "── Interactive — cobalt ─────────────────────────────────────────────\nEverything you can act on: links, buttons, focus, selection. Chosen to\nbe semantically INERT — it carries no inherited meaning the way amber,\ngreen and red do — and complementary to the mark hue, so identity and\naffordance never compete for the same attention.\n\nEvery step sits at OKLCH hue 256° (`npm run check` holds it), as near\nto larch's opposite (~248°) as sRGB allows while keeping cobalt's\nchroma. It is deliberately NOT Tailwind's blue-600 (263°, a touch\nviolet and electric): same affordance, our own colour (ADR-0008).\n\n  --action          fill               5.18:1 / 3.78:1  (label 5.18 / 4.73)\n  --action-ink      link/icon/focus    6.78:1 / 7.07:1\n  --action-hover    hover fill         label 8.65:1 / 5.88:1\n  --action-ink-hover  hovered link     8.65:1 / 9.95:1 on --card\n  --action-pressed  pressed fill       label 10.44:1 / 7.52:1\n\nThe fill is a saturated mid-cobalt with a WHITE label in both themes,\nand hover and pressed step darker in both. Dark used to lift the fill\nto the ink's pale blue with a dark label, which read as washed out on\nthe most important control on the screen. So in dark the fill and the\nink are now different steps: --action fills, --action-ink is what you read\n(links, icons, the focus ring). The dark fill is as light as a white\nlabel allows (4.5:1), which is what keeps it 3:1 as a mark on --card,\n--bg and its own wash.\n\nDISABLED IS NEUTRAL, NEVER HUED — a greyed-out control must stop\nsignalling \"click me\".",
+      "$extensions": {
+        "io.brignano": {
+          "was": "i"
+        }
+      }
+    },
+    "action-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#0159b5",
+        "dark": "#6ba5f3"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-ink"
+        }
+      }
+    },
+    "action-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#014a97",
+        "dark": "#0062c7"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-hover"
+        }
+      }
+    },
+    "action-ink-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#014a97",
+        "dark": "#98c4ff"
+      },
+      "$description": "A hovered link is TEXT, so it follows the ink, not the fill: in dark the\nfill's hover is too deep to read on a dark page (about 3.3:1).",
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-ink-hover"
+        }
+      }
+    },
+    "action-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#003e82",
+        "dark": "#0553a6"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-pressed"
+        }
+      }
+    },
+    "action-surface": {
+      "$value": {
+        "light": "color-mix(in srgb, #076bd3 12%, transparent)",
+        "dark": "color-mix(in srgb, #0371e0 20%, transparent)"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-surface"
+        }
+      }
+    },
+    "action-line": {
+      "$value": {
+        "light": "color-mix(in srgb, #076bd3 32%, transparent)",
+        "dark": "color-mix(in srgb, #0371e0 44%, transparent)"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-line"
+        }
+      }
+    },
+    "action-selection": {
+      "$value": {
+        "light": "color-mix(in srgb, #076bd3 26%, transparent)",
+        "dark": "color-mix(in srgb, #0371e0 30%, transparent)"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-selection"
+        }
+      }
+    },
+    "on-action": {
+      "$type": "color",
+      "$value": {
+        "light": "#ffffff",
+        "dark": "#ffffff"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "was": "on-i"
+        }
+      }
+    },
+    "danger-fill": {
+      "$type": "color",
+      "$value": {
+        "light": "#a4442c",
+        "dark": "#be563c"
+      },
+      "$description": "A button filled with danger (.btn-danger), and its label. Its own\ntokens so the state hue --danger can stay a pale, readable rust in dark\n(messages, pills, field errors) while the button is as deep as the\nprimary beside it: as light as a white label allows, stepping darker on\nhover and press (ADR-0015). In light the fills ARE --danger and\n--danger-ink; `npm run check` holds them to those.\n\n  --danger-fill          label 6.10:1 / 4.58:1   on --card 3.91:1 in dark\n  --danger-fill-hover    label 7.92:1 / 5.65:1\n  --danger-fill-pressed  label 7.92:1 / 6.96:1"
+    },
+    "danger-fill-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a3722",
+        "dark": "#ad472e"
+      }
+    },
+    "danger-fill-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a3722",
+        "dark": "#9d381e"
+      }
+    },
+    "on-danger": {
+      "$type": "color",
+      "$value": {
+        "light": "#ffffff",
+        "dark": "#ffffff"
+      }
+    },
+    "disabled": {
+      "$value": "var(--neutral-200)",
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-disabled-bg"
+        }
+      }
+    },
+    "disabled-ink": {
+      "$value": "var(--neutral-400)",
+      "$extensions": {
+        "io.brignano": {
+          "was": "i-disabled-ink"
+        }
+      }
+    },
+    "success": {
+      "$type": "color",
+      "$value": {
+        "light": "#2f6b4f",
+        "dark": "#6fbf95"
+      },
+      "$description": "── State ────────────────────────────────────────────────────────────\nThree hues, one meaning each, identical on every surface and both\ntiers. Always shipped with an ICON AND A WORD — colour is never the\nonly signal.\n\n  --success    settled · confirmed · done · succeeded    6.29:1 / 8.15:1\n  --attention  now · next · warning · needs you          6.08:1 / 8.17:1  (ink)\n  --danger     overdue · failed · invalid                6.10:1 / 6.06:1\n\n`--info` is the interactive hue on purpose: an informational message\nis the same \"neutral, no action implied\" register as a link.\n\n`-ink` is the text-safe step; the bare token is for marks and fills.\n`-surface` and `-line` are the wash and its edge: 12% / 32% of the hue\nin light, 20% / 44% in dark."
+    },
+    "success-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#245740",
+        "dark": "#8fd4ae"
+      }
+    },
+    "attention": {
+      "$type": "color",
+      "$value": {
+        "light": "#b4741f",
+        "dark": "#e0a44f"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "3.85:1 in light — mark/fill only, NOT text"
+        }
+      }
+    },
+    "attention-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a5714",
+        "dark": "#e0a44f"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "6.08:1 / 8.17:1 — mark and label converge in dark"
+        }
+      }
+    },
+    "danger": {
+      "$type": "color",
+      "$value": {
+        "light": "#a4442c",
+        "dark": "#e07a5f"
+      }
+    },
+    "danger-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a3722",
+        "dark": "#ec9880"
+      }
+    },
+    "info": {
+      "$value": "var(--action)"
+    },
+    "info-ink": {
+      "$value": "var(--action-ink)"
+    },
+    "success-surface": {
+      "$value": {
+        "light": "color-mix(in srgb, #2f6b4f 12%, transparent)",
+        "dark": "color-mix(in srgb, #6fbf95 20%, transparent)"
+      }
+    },
+    "attention-surface": {
+      "$value": {
+        "light": "color-mix(in srgb, #b4741f 12%, transparent)",
+        "dark": "color-mix(in srgb, #e0a44f 20%, transparent)"
+      }
+    },
+    "danger-surface": {
+      "$value": {
+        "light": "color-mix(in srgb, #a4442c 12%, transparent)",
+        "dark": "color-mix(in srgb, #e07a5f 20%, transparent)"
+      }
+    },
+    "info-surface": {
+      "$value": "var(--action-surface)"
+    },
+    "success-line": {
+      "$value": {
+        "light": "color-mix(in srgb, #2f6b4f 32%, transparent)",
+        "dark": "color-mix(in srgb, #6fbf95 44%, transparent)"
+      }
+    },
+    "attention-line": {
+      "$value": {
+        "light": "color-mix(in srgb, #b4741f 32%, transparent)",
+        "dark": "color-mix(in srgb, #e0a44f 44%, transparent)"
+      }
+    },
+    "danger-line": {
+      "$value": {
+        "light": "color-mix(in srgb, #a4442c 32%, transparent)",
+        "dark": "color-mix(in srgb, #e07a5f 44%, transparent)"
+      }
+    },
+    "info-line": {
+      "$value": "var(--action-line)"
+    },
+    "diff-added": {
+      "$value": "var(--success)",
+      "$description": "── Diff ─────────────────────────────────────────────────────────────\nWhat a change did to a thing: a deploy, a plan, a pull request. Aliases\nof the state hues, so a diff adds no hue of its own (DESIGN.md §9):\n\n  --diff-added    created by this change      success — settled\n  --diff-changed  modified by this change     interactive — informational\n  --diff-removed  removed by this change      danger — can lose data\n\nAlways with a symbol and a word (+ added, ~ changed, − removed)."
+    },
+    "diff-added-ink": {
+      "$value": "var(--success-ink)"
+    },
+    "diff-added-surface": {
+      "$value": "var(--success-surface)"
+    },
+    "diff-changed": {
+      "$value": "var(--action)"
+    },
+    "diff-changed-ink": {
+      "$value": "var(--action-ink)"
+    },
+    "diff-changed-surface": {
+      "$value": "var(--action-surface)"
+    },
+    "diff-removed": {
+      "$value": "var(--danger)"
+    },
+    "diff-removed-ink": {
+      "$value": "var(--danger-ink)"
+    },
+    "diff-removed-surface": {
+      "$value": "var(--danger-surface)"
+    },
+    "code-surface": {
+      "$value": "var(--bg)",
+      "$description": "── Code ─────────────────────────────────────────────────────────────\nSyntax colour without a rainbow (DESIGN.md §3): keywords take the\ninteractive cobalt ink, everything else is a step of the neutral ramp,\nand weight and italics do the rest. All aliases, so code adds no hue.\n\n  --code-surface   the block, inset one step below the card\n  --code-keyword   if, return, const — cobalt ink\n  --code-string    literals — secondary ink\n  --code-comment   comments — slate, set in italics\n  --code-highlight a highlighted line — the cobalt wash"
+    },
+    "code-ink": {
+      "$value": "var(--ink)"
+    },
+    "code-keyword": {
+      "$value": "var(--action-ink)"
+    },
+    "code-string": {
+      "$value": "var(--ink-soft)"
+    },
+    "code-comment": {
+      "$value": "var(--slate)"
+    },
+    "code-highlight": {
+      "$value": "var(--action-surface)"
+    },
+    "mark": {
+      "$type": "color",
+      "$value": {
+        "light": "#b4741f",
+        "dark": "#e0a44f"
+      },
+      "$description": "── Mark — identity ──────────────────────────────────────────────────\nInks a GRAPHIC: a product's glyph, the A|B monogram, a hero rule. That is\nthe entire permitted use.\n\nIt is NOT a button, chip, badge, wash, border, or link. If you are\nreaching for it to tint a UI element, the answer is a neutral or a\nstate colour — see DESIGN.md §3.\n\nIt shares larch amber with --attention deliberately: the identity and\nthe attention state are the same warmth, and because --mark never\nappears as a UI surface the two can never be mistaken for each other\nin the same context."
+    },
+    "mark-ink": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a5714",
+        "dark": "#e0a44f"
+      },
+      "$extensions": {
+        "io.brignano": {
+          "note": "when the mark carries a label, 6.08:1 / 8.17:1"
+        }
+      }
+    },
+    "mark-teal": {
+      "$type": "color",
+      "$value": {
+        "light": "#0e7c86",
+        "dark": "#4cc0cb"
+      },
+      "$description": "── Product marks — one per product page ─────────────────────────────\nEach product's marketing page picks one, so Driftwood, Guidebook and\nSites don't read as the same page with the words swapped (ADR-0011).\nSame contract as --mark: it inks the product's graphics (its glyph,\nthe hero rule, the proof's stage, step numerals), never a link, text\nor state. On a product page only, it may also fill the primary button\nand wash the ground, through the -fill and -surface steps below\n(ADR-0017). Hues sit away from cobalt (act), forest\n(success), amber (attention) and rust (danger). All ≥ 3:1 on --bg and\n--card in both themes. product-page.css maps one onto --pp-mark via\ndata-mark on .pp."
+    },
+    "mark-violet": {
+      "$type": "color",
+      "$value": {
+        "light": "#7148c9",
+        "dark": "#a990f2"
+      }
+    },
+    "mark-magenta": {
+      "$type": "color",
+      "$value": {
+        "light": "#b1366f",
+        "dark": "#ea7fb0"
+      }
+    },
+    "mark-fill": {
+      "$type": "color",
+      "$value": {
+        "light": "#a66707",
+        "dark": "#a06a05"
+      },
+      "$description": "── A mark as a fill and a ground — product pages only (ADR-0017) ────\nOn a product's marketing page, and nowhere else, the mark may fill the\none primary button and wash the page ground. Never in an app, never a\nlink, text or a state. The mark tokens above don't move: like --action beside\n--action-ink and --danger-fill beside --danger, the fill is its own step.\n\n  -fill          the button, under a white --on-mark label in both themes.\n                 In light it IS the mark (amber is deepened to carry the\n                 label); in dark it sits at the mark's hue, as light as a\n                 white label allows (4.5:1), the method ADR-0015 used\n                 for cobalt.\n  -fill-hover, -fill-pressed   step darker in both themes.\n  -surface       the page ground: a faint, opaque tint at the mark's hue\n                 that --ink, --ink-soft and --action-ink all read on.\n\nLabels, light / dark:   fill          hover         pressed\n  amber (the family)    4.60 / 4.61   6.09 / 5.65   7.63 / 6.92\n  teal                  4.95 / 4.56   6.70 / 5.60   8.31 / 6.90\n  violet                6.05 / 4.57   8.23 / 5.68   10.24 / 6.94\n  magenta               5.79 / 4.57   7.83 / 5.61   9.71 / 6.91\n\nUse the unprefixed four: `data-mark` points them at a product's, as it\ndoes --mark-current. With no attribute they are the family amber."
+    },
+    "mark-fill-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#8c5602",
+        "dark": "#8e5d03"
+      }
+    },
+    "mark-fill-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#784903",
+        "dark": "#7c5102"
+      }
+    },
+    "mark-surface": {
+      "$type": "color",
+      "$value": {
+        "light": "#fce7d3",
+        "dark": "#241807"
+      }
+    },
+    "mark-teal-fill": {
+      "$type": "color",
+      "$value": {
+        "light": "#0e7c86",
+        "dark": "#19828a"
+      }
+    },
+    "mark-teal-fill-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#03666f",
+        "dark": "#07737b"
+      }
+    },
+    "mark-teal-fill-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#01575e",
+        "dark": "#05646b"
+      }
+    },
+    "mark-teal-surface": {
+      "$type": "color",
+      "$value": {
+        "light": "#d1f3f6",
+        "dark": "#021f22"
+      }
+    },
+    "mark-violet-fill": {
+      "$type": "color",
+      "$value": {
+        "light": "#7148c9",
+        "dark": "#855cdf"
+      }
+    },
+    "mark-violet-fill-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#5e31b1",
+        "dark": "#774ccd"
+      }
+    },
+    "mark-violet-fill-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#511ea1",
+        "dark": "#6a3dbe"
+      }
+    },
+    "mark-violet-surface": {
+      "$type": "color",
+      "$value": {
+        "light": "#ebe8ff",
+        "dark": "#1c1729"
+      }
+    },
+    "mark-magenta-fill": {
+      "$type": "color",
+      "$value": {
+        "light": "#b1366f",
+        "dark": "#c24986"
+      }
+    },
+    "mark-magenta-fill-hover": {
+      "$type": "color",
+      "$value": {
+        "light": "#991d5b",
+        "dark": "#b23977"
+      }
+    },
+    "mark-magenta-fill-pressed": {
+      "$type": "color",
+      "$value": {
+        "light": "#88024d",
+        "dark": "#a1296a"
+      }
+    },
+    "mark-magenta-surface": {
+      "$type": "color",
+      "$value": {
+        "light": "#ffe3ec",
+        "dark": "#27141c"
+      }
+    },
+    "on-mark": {
+      "$type": "color",
+      "$value": {
+        "light": "#ffffff",
+        "dark": "#ffffff"
+      }
+    },
+    "mark-current": {
+      "$value": "var(--mark)",
+      "$description": "The mark in force here (ADR-0014): the family amber until `data-mark`\non an ancestor, usually <html>, names a product's. A brand glyph and\n.rule draw in this, so a product's colour follows it from its marketing\npage into its app and onto its error pages. The [data-mark] rules below\nonly point it at a token above; they declare no colour of their own."
+    },
+    "forest": {
+      "$value": "var(--success)",
+      "$description": "── Legacy aliases ───────────────────────────────────────────────────\nKept so existing `life` components keep compiling. Do not use in new\nwork — reach for the semantic tokens above.\n\n--larch-deep is written out rather than aliased, because \"deep\"\ninverts: darker in light, BRIGHTER in dark. An alias to either role\nsilently changes one theme — it moved .pill-active from #f0bd74 to\n#e0a44f before this was caught."
+    },
+    "forest-deep": {
+      "$value": "var(--success-ink)"
+    },
+    "larch": {
+      "$value": "var(--attention)"
+    },
+    "larch-deep": {
+      "$type": "color",
+      "$value": {
+        "light": "#8a5714",
+        "dark": "#f0bd74"
+      }
+    },
+    "rust": {
+      "$value": "var(--danger)"
+    },
+    "rust-deep": {
+      "$value": "var(--danger-ink)"
+    },
+    "gold": {
+      "$value": "var(--slate)"
+    }
+  },
+  "data-mark-teal": {
+    "$description": "── A product's mark, wherever the product is ──────────────────────────\nOne attribute per product: <html data-mark=\"teal\">. Works on any element,\nso a page that shows two products can mark each one's section. It also\npoints the product-page fill and ground (ADR-0017) at the product's.",
+    "$extensions": {
+      "io.brignano": {
+        "selector": "[data-mark='teal']"
+      }
+    },
+    "mark-current": {
+      "$value": "var(--mark-teal)"
+    },
+    "mark-fill": {
+      "$value": "var(--mark-teal-fill)"
+    },
+    "mark-fill-hover": {
+      "$value": "var(--mark-teal-fill-hover)"
+    },
+    "mark-fill-pressed": {
+      "$value": "var(--mark-teal-fill-pressed)"
+    },
+    "mark-surface": {
+      "$value": "var(--mark-teal-surface)"
+    }
+  },
+  "data-mark-violet": {
+    "$extensions": {
+      "io.brignano": {
+        "selector": "[data-mark='violet']"
+      }
+    },
+    "mark-current": {
+      "$value": "var(--mark-violet)"
+    },
+    "mark-fill": {
+      "$value": "var(--mark-violet-fill)"
+    },
+    "mark-fill-hover": {
+      "$value": "var(--mark-violet-fill-hover)"
+    },
+    "mark-fill-pressed": {
+      "$value": "var(--mark-violet-fill-pressed)"
+    },
+    "mark-surface": {
+      "$value": "var(--mark-violet-surface)"
+    }
+  },
+  "data-mark-magenta": {
+    "$extensions": {
+      "io.brignano": {
+        "selector": "[data-mark='magenta']"
+      }
+    },
+    "mark-current": {
+      "$value": "var(--mark-magenta)"
+    },
+    "mark-fill": {
+      "$value": "var(--mark-magenta-fill)"
+    },
+    "mark-fill-hover": {
+      "$value": "var(--mark-magenta-fill-hover)"
+    },
+    "mark-fill-pressed": {
+      "$value": "var(--mark-magenta-fill-pressed)"
+    },
+    "mark-surface": {
+      "$value": "var(--mark-magenta-surface)"
+    }
+  }
+}

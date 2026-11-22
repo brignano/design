@@ -25,7 +25,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 700px) { .pair { grid-template-columns: 1fr; } }
 .panel {
-  border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;
+  border: 1px solid var(--line); border-radius: var(--radius-card); padding: 20px;
   background: var(--card); display: flex; flex-direction: column; gap: 16px;
 }
 /* Forced grounds. One line each because tokens.css declares every colour as
@@ -44,7 +44,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 /* ── Component specimens ── */
 /* Buttons, .link, messages and pills live in components.css (#47, #50, #51). .focused draws the focus
    ring on a specimen so the state can be shown without tabbing to it. */
-.focused { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+.focused { outline: 2px solid var(--action-ink); outline-offset: 2px; }
 
 .ramp { display: grid; grid-template-columns: repeat(12, 1fr); border-radius: 8px;
         overflow: hidden; border: 1px solid var(--line); }
@@ -60,7 +60,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .ecard { border: 1px solid var(--line); border-radius: 10px; padding: 14px; text-align: center;
          font-family: var(--mono); font-size: 10px; color: var(--ink-soft); background: var(--card); }
 .e1 { box-shadow: var(--shadow-1); } .e2 { box-shadow: var(--shadow-2); } .e3 { box-shadow: var(--shadow-3); }
-.dark .ecard { background: var(--n-50); } .dark .e2 { background: var(--n-100); } .dark .e3 { background: var(--n-200); }
+.dark .ecard { background: var(--neutral-50); } .dark .e2 { background: var(--neutral-100); } .dark .e3 { background: var(--neutral-200); }
 
 .type-row { display: flex; align-items: baseline; gap: 14px; }
 .type-row .lbl { font-family: var(--mono); font-size: 10px; color: var(--slate); width: 62px; flex: none; }
@@ -79,7 +79,7 @@ h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margi
 .node-removed b { text-decoration: line-through; }
 .node-down { background: var(--danger-surface); border-color: var(--danger); }
 .node-degraded { background: var(--attention-surface); border-color: var(--attention); }
-.node-selected { outline: 2px solid var(--i-ink); outline-offset: 3px; box-shadow: var(--shadow-2); }
+.node-selected { outline: 2px solid var(--action-ink); outline-offset: 3px; box-shadow: var(--shadow-2); }
 .node-dim { opacity: .32; }
 .dtag { position: absolute; top: -10px; right: 10px; font-family: var(--mono); font-size: 10px;
         font-weight: 500; padding: 1px 6px; border-radius: 4px; background: var(--card);

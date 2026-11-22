@@ -25,49 +25,49 @@
 
   .gb .pp-header { background: var(--card); border-bottom: 0; }
   .gb .pp-header > .pp-wrap { flex-wrap: wrap; }
-  .gb-prog { margin: 0 0 0 auto; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); font: var(--text-xs) var(--mono); color: var(--ink-soft); }
+  .gb-prog { margin: 0 0 0 auto; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font: var(--text-xs) var(--mono); color: var(--ink-soft); }
   @media (max-width: 22em) { .gb-bar { display: none; } }
   .gb-bar { width: 72px; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
-  .gb-bar i { display: block; height: 100%; width: 25%; background: var(--mark-current); transition: width var(--dur) var(--ease); }
+  .gb-bar i { display: block; height: 100%; width: 25%; background: var(--mark-current); transition: width var(--duration) var(--ease); }
   @media (prefers-reduced-motion: reduce) { .gb-bar i { transition: none; } }
 
-  .gb-hero { padding: var(--s5) 0 var(--s7); text-align: center; }
-  .gb-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-areas: "head" "media" "body"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; justify-items: center; gap: var(--s5); }
+  .gb-hero { padding: var(--space-5) 0 var(--space-7); text-align: center; }
+  .gb-hero > .pp-wrap:has(> .pp-hero-head) { grid-template-areas: "head" "media" "body"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; justify-items: center; gap: var(--space-5); }
   .gb-hero .pp-hero-head::before { display: none; }
-  .gb-hero .pp-hero-head { display: grid; justify-items: center; gap: var(--s4); }
+  .gb-hero .pp-hero-head { display: grid; justify-items: center; gap: var(--space-4); }
   .gb .pp-audience { margin: 0; }
   .gb .pp-thesis { font-size: min(3.375rem, 1rem + 13vw); overflow-wrap: anywhere; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 11ch; }
   .gb-thesis-mark { box-shadow: inset 0 -0.26em 0 var(--mark-current); }
   .gb .pp-subhead { margin: 0; max-width: 34ch; }
   /* The proof is the coach mark on the page's own button. */
-  .gb-hero .pp-media { padding: 0; border-radius: 0; background: none; display: grid; justify-items: center; gap: var(--s5); }
+  .gb-hero .pp-media { padding: 0; border-radius: 0; background: none; display: grid; justify-items: center; gap: var(--space-5); }
   .gb-hero .pp-actions { justify-self: stretch; justify-content: center; }
   .gb-hero .pp-button { max-width: calc(100% - 20px); white-space: normal; min-height: 56px; padding-inline: 30px; font-size: var(--text-lg); outline: 3px solid var(--mark-current); outline-offset: 7px; }
-  .gb-hero .pp-button:focus-visible { outline: 2px solid var(--i-ink); outline-offset: 2px; }
-  .gb-tip { position: relative; box-sizing: border-box; width: min(300px, 100%); text-align: left; padding: var(--s3) var(--s4); background: var(--card);
-    border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow-3); font-size: var(--text-sm); }
+  .gb-hero .pp-button:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; }
+  .gb-tip { position: relative; box-sizing: border-box; width: min(300px, 100%); text-align: left; padding: var(--space-3) var(--space-4); background: var(--card);
+    border: 1px solid var(--line-strong); border-radius: var(--radius-card); box-shadow: var(--shadow-3); font-size: var(--text-sm); }
   .gb-tip::before { content: ""; position: absolute; top: -7px; left: 50%; width: 12px; height: 12px; margin-left: -6px; rotate: 45deg;
     background: var(--card); border: 1px solid var(--line-strong); border-right: 0; border-bottom: 0; }
   .gb-tip small { display: block; font: var(--text-xs) var(--mono); color: var(--ink-soft); margin-bottom: 4px; }
   .gb-tip b { display: block; }
   .gb-tip span { color: var(--ink-soft); }
   @media (min-width: 960px) {
-    .gb-hero { padding-top: var(--s7); }
+    .gb-hero { padding-top: var(--space-7); }
     .gb .pp-thesis { font-size: 7rem; max-width: 11ch; }
     .gb .pp-subhead { font-size: var(--text-xl); max-width: 44ch; }
   }
 
   /* The band: the next three steps of the guide. */
-  .gb-band { padding: var(--s8) 0; border-top: 2px dotted var(--line-strong); text-align: center; }
-  .gb h2 { margin: 0 auto var(--s7); font-size: min(var(--text-3xl), 1rem + 10vw); overflow-wrap: anywhere; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 14ch; text-wrap: balance; }
-  .gb-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s7); text-align: left; }
-  .gb-step h3 { display: flex; gap: var(--s3); align-items: center; margin: var(--s6) 0 var(--s2); font-size: var(--text-lg); }
+  .gb-band { padding: var(--space-8) 0; border-top: 2px dotted var(--line-strong); text-align: center; }
+  .gb h2 { margin: 0 auto var(--space-7); font-size: min(var(--text-3xl), 1rem + 10vw); overflow-wrap: anywhere; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; max-width: 14ch; text-wrap: balance; }
+  .gb-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-7); text-align: left; }
+  .gb-step h3 { display: flex; gap: var(--space-3); align-items: center; margin: var(--space-6) 0 var(--space-2); font-size: var(--text-lg); }
   .gb-step h3 .num { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--mark-current); font-size: var(--text-sm); font-weight: var(--weight-semibold); }
   .gb-step p { margin: 0; color: var(--ink-soft); }
-  .gb-shot { position: relative; margin: 0; padding: var(--s4); min-height: 150px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); font-size: var(--text-sm); }
-  .gb-shot .row { display: flex; justify-content: space-between; padding: var(--s2) var(--s3); border-radius: var(--radius-sm); }
+  .gb-shot { position: relative; margin: 0; padding: var(--space-4); min-height: 150px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); font-size: var(--text-sm); }
+  .gb-shot .row { display: flex; justify-content: space-between; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); }
   .gb-shot .hit { outline: 3px solid var(--mark-current); outline-offset: 3px; background: var(--card); }
-  .gb-shot .gb-tip { position: absolute; right: var(--s3); bottom: -22px; width: 200px; padding: var(--s2) var(--s3); font-size: var(--text-xs); }
+  .gb-shot .gb-tip { position: absolute; right: var(--space-3); bottom: -22px; width: 200px; padding: var(--space-2) var(--space-3); font-size: var(--text-xs); }
   .gb-shot .gb-tip::before { display: none; }
   @media (min-width: 960px) {
     .gb h2 { font-size: 5.5rem; }
@@ -79,7 +79,7 @@
   .gb .pp-close > .pp-wrap { grid-template-columns: minmax(0, 1fr); justify-items: center; }
   .gb .pp-close h2 { margin: 0; font-size: min(var(--text-3xl), 1rem + 10vw); overflow-wrap: anywhere; font-weight: var(--weight-heavy); line-height: 0.95; letter-spacing: -0.045em; }
   .gb .pp-panel { width: min(560px, 100%); padding: 0; border: 0; box-shadow: none; background: none; text-align: left; }
-  .gb .pp-field input { border-radius: 999px; padding-inline: var(--s5); min-height: 52px; }
+  .gb .pp-field input { border-radius: 999px; padding-inline: var(--space-5); min-height: 52px; }
   .gb .pp-close .pp-button { width: 100%; min-height: 52px; white-space: normal; }
   @media (min-width: 960px) { .gb .pp-close h2 { font-size: 5.5rem; } }
 

@@ -23,7 +23,7 @@
   .wf-label { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0 0 6px; }
   .wf-screen {
     container-type: inline-size; background: var(--bg); color: var(--ink);
-    border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line-strong); border-radius: var(--radius-card); overflow: hidden;
   }
   .wf-phone .wf-screen { width: 390px; }
   .wf-desktop .wf-screen { width: 1280px; }
@@ -32,31 +32,31 @@
 
   /* Wireframe only: pin the look of a state so it can be drawn standing still. */
   .chip.is-hover { background-color: var(--surface-hover); }
-  .chip.is-focus { outline: 2px solid var(--i-ink); outline-offset: 2px; }
+  .chip.is-focus { outline: 2px solid var(--action-ink); outline-offset: 2px; }
   .chip.is-touch { min-height: 44px; }
 
   /* ── The page being wireframed: a filterable list. @container, not @media. ── */
-  .page { display: grid; gap: var(--s4); padding: var(--s4); }
+  .page { display: grid; gap: var(--space-4); padding: var(--space-4); }
   .page h3 { margin: 0; font-size: var(--text-xl); letter-spacing: var(--tracking-title); }
-  .filter { display: grid; gap: var(--s2); }
+  .filter { display: grid; gap: var(--space-2); }
   .filter-label { margin: 0; font-size: var(--text-sm); font-weight: var(--weight-medium); }
-  .filter-chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .filter-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
   .count { margin: 0; font-size: var(--text-sm); color: var(--ink-soft); }
-  .rows { margin: 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
-  .rows li { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 10px var(--s4); border-bottom: 1px solid var(--line); }
+  .rows { margin: 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); }
+  .rows li { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: 10px var(--space-4); border-bottom: 1px solid var(--line); }
   .rows li:last-child, .rows li.is-last { border-bottom: 0; }
   .rows li[hidden] { display: none; }
   @container (min-width: 900px) {
-    .page { padding: var(--s6); max-width: 880px; }
-    .filter { grid-template-columns: auto 1fr; align-items: center; gap: var(--s4); }
+    .page { padding: var(--space-6); max-width: 880px; }
+    .filter { grid-template-columns: auto 1fr; align-items: center; gap: var(--space-4); }
   }
 
   /* States sheet */
-  .states { display: grid; gap: var(--s4); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 1280px; }
-  .states > div { padding: var(--s4); background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius); }
-  .states dl { display: grid; grid-template-columns: 9ch 1fr; gap: var(--s3) var(--s4); align-items: center; margin: 0; }
+  .states { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 1280px; }
+  .states > div { padding: var(--space-4); background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius-card); }
+  .states dl { display: grid; grid-template-columns: 9ch 1fr; gap: var(--space-3) var(--space-4); align-items: center; margin: 0; }
   .states dt { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); }
-  .states dd { display: flex; flex-wrap: wrap; gap: var(--s2); margin: 0; }
+  .states dd { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; }
 </style>
 </head>
 <body>

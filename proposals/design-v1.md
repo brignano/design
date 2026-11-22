@@ -1,4 +1,4 @@
-Status: accepted · Tracking issue: #171 · ADR-0019
+Status: building · Tracking issue: #171 · ADR-0019
 
 # Design v1.0: a look of our own, a finished system, and apps that can't drift
 

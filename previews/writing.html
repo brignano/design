@@ -11,26 +11,26 @@
 <style>
   /* Preview chrome for the do/don't pairs. Tokens only. The rules themselves
      live in DESIGN.md §15; npm run check keeps the two in step. */
-  .rules-toc { list-style: none; margin: var(--s5) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); font-size: var(--text-sm); }
-  .rule { margin-top: var(--s7); max-width: 900px; }
-  .rule h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--s2); scroll-margin-top: var(--s7); }
-  .rule-text { margin: 0 0 var(--s4); color: var(--ink-soft); max-width: 68ch; }
-  .ex-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
+  .rules-toc { list-style: none; margin: var(--space-5) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-size: var(--text-sm); }
+  .rule { margin-top: var(--space-7); max-width: 900px; }
+  .rule h2 { font-size: var(--text-lg); font-weight: 600; margin: 0 0 var(--space-2); scroll-margin-top: var(--space-7); }
+  .rule-text { margin: 0 0 var(--space-4); color: var(--ink-soft); max-width: 68ch; }
+  .ex-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
   @media (max-width: 700px) { .ex-pair { grid-template-columns: 1fr; } }
-  .ex { min-width: 0; display: flex; flex-direction: column; gap: var(--s3); padding: var(--s4);
-         background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+  .ex { min-width: 0; display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4);
+         background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); }
   .ex-do { border-top: 3px solid var(--success); }
   .ex-dont { border-top: 3px solid var(--danger); }
-  .ex-label { margin: 0; display: inline-flex; align-items: center; gap: var(--s2); font-size: var(--text-sm); font-weight: 600; }
+  .ex-label { margin: 0; display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 600; }
   .ex-do .ex-label { color: var(--success-ink); }
   .ex-dont .ex-label { color: var(--danger-ink); }
   .ex-quote { margin: 0; }
   .rule-text code { font-family: var(--mono); font-size: .92em; }
-  .ex-frame { border: 1px dashed var(--line-strong); border-radius: var(--radius); }
-  .ex-confirm { display: flex; flex-direction: column; gap: var(--s2); }
+  .ex-frame { border: 1px dashed var(--line-strong); border-radius: var(--radius-card); }
+  .ex-confirm { display: flex; flex-direction: column; gap: var(--space-2); }
   .ex-confirm p { margin: 0; }
   .ex-confirm-title { font-weight: 600; }
-  .ex-confirm .cluster { justify-content: flex-end; margin-top: var(--s2); }
+  .ex-confirm .cluster { justify-content: flex-end; margin-top: var(--space-2); }
   .ex .toast { max-width: none; }
   @media (forced-colors: active) { .ex-do, .ex-dont { border-top-color: CanvasText; } }
 </style>
