@@ -281,8 +281,10 @@ knowing that.
 | ADR-0017 (product identity) | "Inside the apps, buttons and links stay cobalt"; "No typeface per product for now"; the mark "never appears as a fill in an app" | superseded in part: all three are reversed inside apps. Its five choices per product page stay, now supplied by the theme |
 | ADR-0015, ADR-0016 (white label on cobalt, danger fills) | label and fill rules for today's buttons | rewritten per kit from the measured values |
 
-ADR-0019 records "a house look, with a theme and a shell per product" and
-marks the rows above superseded, in whole or in part, from v1.0.
+ADR-0019 records "a house look, with a theme and a shell per product". From
+v1.0 it supersedes ADR-0001 and ADR-0008, and in part ADR-0014 and ADR-0017.
+ADR-0004 stands. ADR-0015 and ADR-0016 are revisited when the kits are built
+(#179), and get their own ADR then.
 
 ## Rejected
 

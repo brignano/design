@@ -45,4 +45,7 @@ product; cobalt kept as the action colour with only type and shape varying.
   each shared component shown in every kit.
 - Nothing changes for an app until v1.0; the ADRs above describe what ships
   until then.
+- ADR-0004 (one hue, one meaning) stands. ADR-0015 (a white label on cobalt)
+  and ADR-0016 (danger fills) describe today's buttons; they are revisited
+  when the kits are built (#179) and get their own ADR then.
 - The plain Larch kit must not use one green for both "settled" and "act".
