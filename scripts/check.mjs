@@ -37,6 +37,8 @@
 //  13. the card stage (.card-stage in components.css) and the product-page
 //      stage (--pp-stage in product-page.css) mix the mark at different
 //      strengths: a product looks the same on its card and its page (ADR-0018).
+//  14. controls.css is not exactly what scripts/controls.mjs makes from
+//      components.css (it is generated, never edited).
 //
 // No dependencies on purpose: the package has none, and a check that needs an
 // install is a check that stops being run.
@@ -44,6 +46,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { hex, toHex, resolve } from './colour.mjs';
 import { TOKEN, resolveLight } from './email-tokens.mjs';
+import { controls } from './controls.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -589,9 +592,13 @@ else {
   else if (page !== card) fail(`one stage: .card-stage mixes the mark at ${card}, --pp-stage at ${page}; they must match (ADR-0018)`);
 }
 
+// ── 14. controls.css is generated ────────────────────────────────────────────
+if (!existsSync(new URL('controls.css', root)) || read('controls.css') !== controls(read('components.css')))
+  fail('controls.css is out of date with components.css: run `npm run controls` and commit it');
+
 if (failures.length) {
   console.error(failures.map((f) => `✕ ${f}`).join('\n'));
   console.error(`\n${failures.length} problem${failures.length === 1 ? '' : 's'}.`);
   process.exit(1);
 }
-console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength`);
+console.log(`✓ ${checked} contrast pairs, one list, no drift, every family on its hue, no stray hex, every preview indexed, one page order, every component shown, every page documented, one icon set, one set of content rules, one stage strength, controls.css in step`);
