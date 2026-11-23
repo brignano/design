@@ -219,8 +219,8 @@ No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
   stat's value already do.
 - **One heavy moment.** `.display` sets an error code or a single headline
   figure in Geist at `--weight-heavy` (800), tight and large; `.stamp` sets the
-  `A|B` monogram at the same weight, spaced open (`--tracking-caps`) so the bar
-  doesn't read as an I, for a footer or an about page. This is the
+  logo as text, `ab` at the same weight and tight, with the block cursor after
+  it in the mark in force, for a footer or an about page. This is the
   display treatment, in both tiers. It is the one use of a weight above 600,
   and at most once a screen. `.rule` is the short bar in the mark in force (`--mark-current`, §3)
   above a hero heading. (`--display` still names Silkscreen on the marketing tier until
@@ -230,15 +230,15 @@ No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
 
 The logo is `ab`, the initials in lowercase, drawn once in [`logo/`](./logo):
 Geist at 800, set tight and outlined, with a block cursor after the letters in
-the mark colour, as if they had just been typed. The cursor is the same idea as
-the bar in the `A|B` stamp, pulled out of the middle so the letters read as one
-word. Redraw it with `scripts/logo.py`, never by hand.
+the mark colour, as if they had just been typed. It replaced `A|B`, whose bar between
+the letters read as a divider. Redraw it with `scripts/logo.py`, never by hand.
 
 | File | For |
 |---|---|
 | `logo/paths.mjs` | the path data (`MARK`, `TILE`) to inline it: a site header, a share card |
 | `logo/mark.svg` | the mark as an `<img>`, inked for the OS theme |
-| `logo/tile.svg` | the favicon: the mark in an ink tile, the same in both themes |
+| `logo/favicon.svg` | the browser-tab icon: the bare mark on a transparent ground, inked for the browser's scheme |
+| `logo/tile.svg` | the app icon: the mark in an ink tile, the same in both themes |
 | `logo/tile-180.png`, `logo/tile-512.png` | `apple-touch-icon` and the web manifest |
 
 - **Inline it where the page has tokens.** The letters take `--ink` and the cursor
@@ -246,9 +246,12 @@ word. Redraw it with `scripts/logo.py`, never by hand.
   `<img>` can only follow the OS.
 - **The letters are ink and only the cursor is amber.** Never the whole mark in
   `--mark`, never the letters in a state colour, never a gradient or a shadow.
-- **Size by height.** 24 to 32px in a header; under 20px use the tile.
-- **The tile is for icons only:** favicon, home screen, an app's sign-in. On a
-  page, use the bare mark.
+- **Size by height.** 24 to 32px in a header.
+- **No box in a tab.** The tab icon is `favicon.svg`: the bare mark, no ground,
+  so it sits on the tab bar the way the header logo sits on the page.
+- **The tile is for icons only:** home screen, an app's sign-in, and the
+  `favicon.ico` fallback for a browser without SVG icons. On a page, use the
+  bare mark.
 - **The cursor doesn't move,** except at most one blink on a page's first load,
   and none under `prefers-reduced-motion`.
 
@@ -264,7 +267,7 @@ tracking don't:
 | `--leading-ui` | 1.4 | interface text |
 | `--leading-body` | 1.6 | paragraphs |
 | `--tracking-title` / `--tracking-display` | -0.01em / -0.025em | headings / large display headings |
-| `--tracking-caps` | 0.08em | uppercase mono eyebrows; the `.stamp` monogram |
+| `--tracking-caps` | 0.08em | uppercase mono eyebrows |
 
 They are named by role because Tailwind already owns `--leading-tight`,
 `--tracking-tight` and the rest; the bridge adds `leading-display`,
