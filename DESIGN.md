@@ -68,7 +68,7 @@ system coherent across a marketing site and an operational tool.
 
 ### Identity is not a fill
 
-`--mark` inks a **graphic**: a product's glyph, the bar in the `A|B` logo, a hero rule.
+`--mark` inks a **graphic**: a product's glyph, the cursor in the logo, a hero rule.
 That is its entire permitted use. It is never a button, chip, badge, wash, border,
 or link. The scoped exceptions are the next sections: a product page, and the
 stage behind a product's picture on its card.
@@ -202,8 +202,8 @@ Three roles, no more:
   countdowns align in a column.
 - **`--mono` (IBM Plex Mono)** — data that must read *precise*: confirmation codes,
   timestamps, stat numbers, eyebrow labels.
-- **`--display` (Silkscreen)** — marketing tier only. Hero eyebrows; the `A|B`
-  logo is drawn, not set in it ("The logo", below). Used **once, well** — it is
+- **`--display` (Silkscreen)** — marketing tier only. Hero eyebrows; the logo
+  is drawn, not set in it ("The logo", below). Used **once, well** — it is
   memorable precisely because it is concentrated. On the tool tier it aliases to `--sans`.
 
 No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
@@ -228,10 +228,11 @@ No serif. Abstract over literal — no mascots, clip-art, or stock scenery.
 
 ### The logo
 
-The `A|B` logo is the monogram drawn once, in [`logo/`](./logo): the initials in
-Geist at 800, outlined, with the bar between them as a text cursor in the mark
-colour. It is the `.stamp` treatment made into a picture, so the logo and the
-type match.
+The logo is `ab`, the initials in lowercase, drawn once in [`logo/`](./logo):
+Geist at 800, set tight and outlined, with a block cursor after the letters in
+the mark colour, as if they had just been typed. The cursor is the same idea as
+the bar in the `A|B` stamp, pulled out of the middle so the letters read as one
+word. Redraw it with `scripts/logo.py`, never by hand.
 
 | File | For |
 |---|---|
@@ -240,15 +241,15 @@ type match.
 | `logo/tile.svg` | the favicon: the mark in an ink tile, the same in both themes |
 | `logo/tile-180.png`, `logo/tile-512.png` | `apple-touch-icon` and the web manifest |
 
-- **Inline it where the page has tokens.** The letters take `--ink` and the bar
-  `--mark-current`, so the header follows the site theme, not the OS. An
+- **Inline it where the page has tokens.** The letters take `--ink` and the cursor
+  (`bar` in `paths.mjs`) `--mark-current`, so the header follows the site theme, not the OS. An
   `<img>` can only follow the OS.
-- **The letters are ink and only the bar is amber.** Never the whole mark in
+- **The letters are ink and only the cursor is amber.** Never the whole mark in
   `--mark`, never the letters in a state colour, never a gradient or a shadow.
 - **Size by height.** 24 to 32px in a header; under 20px use the tile.
 - **The tile is for icons only:** favicon, home screen, an app's sign-in. On a
   page, use the bare mark.
-- **The bar doesn't move,** except at most one blink on a page's first load,
+- **The cursor doesn't move,** except at most one blink on a page's first load,
   and none under `prefers-reduced-motion`.
 
 Sizes change with the tier (`--text-xs` … `--text-4xl`); weight, leading and
