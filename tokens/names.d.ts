@@ -206,7 +206,7 @@ export type TokenName =
   | '--z-sticky'
   | '--z-toast';
 
-/** Names from before 0.13. They still resolve; they are removed in 1.0. */
+/** Names from before 0.14. They still resolve; they are removed in 1.0. */
 export type DeprecatedTokenName =
   | '--dur'
   | '--dur-fast'

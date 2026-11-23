@@ -617,7 +617,7 @@
 }
 
 /* ── Deprecated names ───────────────────────────────────────────────────
-   Renamed in 0.13; removed in 1.0. Each points at its new name, so reading
+   Renamed in 0.14; removed in 1.0. Each points at its new name, so reading
    an old name still works. SETTING an old name no longer reaches the
    components, which read the new ones: set the new name instead. */
 :root {
