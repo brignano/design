@@ -648,10 +648,11 @@ Three tiers, and a rule for which one to read:
 
 A component token starts as an alias of a semantic one. It exists so a kit or
 a product's theme can restyle a component without touching a colour (ADR-0019).
-Nothing reads them yet: #183 moves the components onto them, so setting one
-today changes nothing.
+`.card` reads `--card-line`, `--card-shadow` and `--card-radius`; the rest
+wait on #183, which moves the other components onto them, so setting one of
+those today changes nothing.
 
-**Names that changed in 0.13.** The old name still resolves until 1.0;
+**Names that changed in 0.14.** The old name still resolves until 1.0;
 `DeprecatedTokenName` in `tokens/names.d.ts` lists them.
 
 | Before | Now |
