@@ -252,8 +252,10 @@ the letters read as a divider. Redraw it with `scripts/logo.py`, never by hand.
 - **The tile is for icons only:** home screen, an app's sign-in, and the
   `favicon.ico` fallback for a browser without SVG icons. On a page, use the
   bare mark.
-- **The cursor doesn't move,** except at most one blink on a page's first load,
-  and none under `prefers-reduced-motion`.
+- **The cursor blinks three times when the page loads, then rests solid**
+  (ADR-0022): `.cursor-blink` on the inlined `bar` path, or on a `.stamp`. It
+  never blinks on hover, scroll or forever, never under
+  `prefers-reduced-motion`, and the tab icon doesn't blink at all.
 
 Sizes change with the tier (`--text-xs` … `--text-4xl`); weight, leading and
 tracking don't:

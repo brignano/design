@@ -2276,6 +2276,14 @@
     margin-left: 0.155em; /* 0.09em of gap plus the tracking taken back */
     background: var(--mark-current);
   }
+  /* The cursor blinks three times on load at a text cursor's pace, then rests
+     solid (ADR-0022). Put .cursor-blink on the inlined logo's cursor path, or
+     on a .stamp. Opacity only, and none under reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cursor-blink:not(.stamp),
+    .stamp.cursor-blink::after { animation: cursor-blink 1.06s steps(1, end) 3; }
+  }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
   .rule { display: block; width: 56px; height: 3px; border: 0; border-radius: 2px; background: var(--mark-current); }
 }
 
