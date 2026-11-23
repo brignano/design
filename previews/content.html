@@ -21,7 +21,7 @@
       <p class="eyebrow">Production</p>
       <p class="display">404</p>
       <p style="margin:0">Deploy <span class="num">214</span> went out at <span class="num">2026-11-07 09:30</span>.</p>
-      <span class="stamp" role="img" aria-label="Anthony Brignano">A|B</span>
+      <span class="stamp" role="img" aria-label="Anthony Brignano">ab</span>
     </div>
     <div style="display:flex;gap:var(--space-3);align-items:center">
       <span class="avatar avatar-lg"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='26' r='12' fill='white' fill-opacity='.75'/%3E%3Cpath d='M10 64c3-14 12-20 22-20s19 6 22 20z' fill='white' fill-opacity='.75'/%3E%3C/svg%3E" alt="Ana Ruiz"></span>
@@ -54,7 +54,7 @@
       <p class="eyebrow">Production</p>
       <p class="display">404</p>
       <p style="margin:0">Deploy <span class="num">214</span> went out at <span class="num">2026-11-07 09:30</span>.</p>
-      <span class="stamp" role="img" aria-label="Anthony Brignano">A|B</span>
+      <span class="stamp" role="img" aria-label="Anthony Brignano">ab</span>
     </div>
     <div style="display:flex;gap:var(--space-3);align-items:center">
       <span class="avatar avatar-lg"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='26' r='12' fill='white' fill-opacity='.75'/%3E%3Cpath d='M10 64c3-14 12-20 22-20s19 6 22 20z' fill='white' fill-opacity='.75'/%3E%3C/svg%3E" alt="Ana Ruiz"></span>
@@ -91,7 +91,7 @@
 Deployed &lt;span class="num"&gt;2026-11-07 09:30&lt;/span&gt;
 
 &lt;p class="display"&gt;404&lt;/p&gt;
-&lt;span class="stamp" role="img" aria-label="Anthony Brignano"&gt;A|B&lt;/span&gt;
+&lt;span class="stamp" role="img" aria-label="Anthony Brignano"&gt;ab&lt;/span&gt;
 &lt;span class="rule"&gt;&lt;/span&gt;
 
 &lt;span class="avatar"&gt;&lt;img src="ana.jpg" alt="Ana Ruiz"&gt;&lt;/span&gt;
@@ -158,7 +158,7 @@ Deployed &lt;span class="num"&gt;2026-11-07 09:30&lt;/span&gt;
       <li>The code block scrolls sideways instead of wrapping, so give its <code>&lt;pre&gt;</code> <code>tabindex="0"</code> and an <code>aria-label</code>: keyboard users can then scroll it.</li>
       <li>An initials avatar is <code>role="img"</code> with the full name as its <code>aria-label</code>; a photo needs real <code>alt</code>, or <code>alt=""</code> when the name is right beside it.</li>
       <li>The eyebrow is a <code>&lt;p&gt;</code>, not a heading: the heading under it names the screen. Write it in sentence case so a screen reader doesn't spell it out.</li>
-      <li>The stamp is <code>role="img"</code> with the name as its <code>aria-label</code>, so it is read as a name, not "A vertical bar B". <code>.rule</code> is decoration and has no text.</li>
+      <li>The stamp is <code>role="img"</code> with the name as its <code>aria-label</code>, so it is read as a name, not as two letters. <code>.rule</code> is decoration and has no text.</li>
       <li>Every figure image needs <code>alt</code>; the caption doesn't replace it.</li>
     </ul>
   </section>

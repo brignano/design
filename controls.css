@@ -2176,7 +2176,7 @@
    <h1>Services</h1>
    Deployed <span class="num">2026-11-07 09:30</span>  ← any number, date or code
    <p class="display">404</p>                        ← one heavy moment, at most
-   <span class="stamp" role="img" aria-label="Anthony Brignano">A|B</span>
+   <span class="stamp" role="img" aria-label="Anthony Brignano">ab</span>
    <span class="rule"></span>                        ← the bar above a hero heading
 
    The eyebrow is written in sentence case and uppercased here. .rule is the
@@ -2206,9 +2206,18 @@
   .stamp {
     font-family: var(--sans);
     font-weight: var(--weight-heavy);
-    letter-spacing: var(--tracking-caps); /* open, not tight: closed up, the heavy bar reads as an I */
+    letter-spacing: -0.065em; /* tight, as in the logo (ADR-0021) */
     white-space: nowrap;
     color: var(--ink);
+  }
+  /* The logo's block cursor: as tall as the a, in the mark in force. */
+  .stamp::after {
+    content: "";
+    display: inline-block;
+    width: 0.34em;
+    height: 0.55em;
+    margin-left: 0.155em; /* 0.09em of gap plus the tracking taken back */
+    background: var(--mark-current);
   }
   .rule { display: block; width: 56px; height: 3px; border: 0; border-radius: 2px; background: var(--mark-current); }
 }
