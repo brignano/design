@@ -5,8 +5,11 @@
 //
 //   <svg viewBox={MARK.viewBox} role="img" aria-label="Anthony Brignano">
 //     <path d={MARK.letters} style="fill: var(--ink)" />
-//     <path d={MARK.bar} style="fill: var(--mark-current)" />
+//     <path d={MARK.bar} className="cursor-blink" style="fill: var(--mark-current)" />
 //   </svg>
+//
+// `cursor-blink` (components.css) blinks the cursor three times on load, then
+// leaves it solid; it stays still under reduced motion (ADR-0022).
 //
 // The logo is "ab" in lowercase Geist at weight 800 (OFL,
 // fonts/LICENSE-geist.txt), set tight, with a block cursor after it. The

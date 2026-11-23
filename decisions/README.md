@@ -29,3 +29,4 @@ record is only edited to mark it superseded; a change of mind is a new record.
 | [0019](0019-house-theme-shell.md) | One house look, with a theme and a shell per product | 2026-11-22 |
 | [0020](0020-kits-opt-in.md) | Kits are opt-in until 1.0, and a fill's label is whatever reads on it | 2026-11-22 |
 | [0021](0021-ab-logo.md) | The logo is `ab` with a cursor after it | 2026-11-23 |
+| [0022](0022-cursor-blink.md) | The logo's cursor blinks three times on load | 2026-11-23 |
