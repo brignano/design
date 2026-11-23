@@ -9,6 +9,8 @@
    shell: player */
 [data-product='guidebook'] {
   /* From the larch kit. */
+  --card-line: var(--line);
+  --card-shadow: var(--shadow-1);
   --accent: light-dark(#f1c45e, #e3ad4b);
   --on-accent: light-dark(#12241a, #12241a);
   --sans: 'Onest', system-ui, sans-serif;
@@ -93,8 +95,6 @@
   --field-radius: var(--radius-control);
   --field-line: var(--line-control);
   --card-radius: var(--radius-card);
-  --card-line: var(--line);
-  --card-shadow: var(--shadow-1);
   --dialog-radius: var(--radius-lg);
   --focus-ring: var(--action-ink);
   --chart-other: var(--slate);

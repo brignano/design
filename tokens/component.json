@@ -19,10 +19,21 @@
       "$value": "var(--radius-card)"
     },
     "card-line": {
-      "$value": "var(--line)"
+      "$type": "color",
+      "$value": {
+        "light": "#e1e1e4",
+        "dark": "#202024"
+      },
+      "$description": "A card's edge. --line all but vanishes between a white card and the light\npage (1.06:1), so a grid of cards read as one sheet of paper. Light takes\nthe next step up; dark keeps the hairline, since there a card is lighter\nthan the page and its fill does the work (§6). Decoration, not a boundary.",
+      "$extensions": {
+        "io.brignano": {
+          "note": "neutral-200 / neutral-100"
+        }
+      }
     },
     "card-shadow": {
-      "$value": "var(--shadow-1)"
+      "$value": "var(--shadow-2)",
+      "$description": "Lifts a card off the page in light; dark has no light shadow layer."
     },
     "pill-radius": {
       "$value": "var(--radius-sm)"

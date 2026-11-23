@@ -656,11 +656,11 @@
     gap: var(--space-3);
     min-width: 0;
     padding: var(--space-5);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-card);
+    border: 1px solid var(--card-line);
+    border-radius: var(--card-radius);
     background-color: var(--card);
     color: var(--ink);
-    box-shadow: var(--shadow-1);
+    box-shadow: var(--card-shadow);
     overflow: hidden;
   }
   .card-media { margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) 0; }
@@ -686,7 +686,7 @@
   .card-link .card-title a::after { content: ''; position: absolute; inset: 0; z-index: 0; }
   /* Zero-specificity so components that position their own parts (for example .segmented) still win. */
   :where(.card-link :is(a, button, input, select, textarea, label):not(.card-title a)) { position: relative; z-index: var(--z-raised); }
-  .card-link:hover { background-color: var(--surface-hover); box-shadow: var(--shadow-2); }
+  .card-link:hover { background-color: var(--surface-hover); box-shadow: var(--shadow-3); }
   .card-link:hover .card-title a { text-decoration: underline; text-underline-offset: 3px; }
   /* The ring moves to the card only where :has() works; elsewhere the link keeps its own ring. */
   .card-link:has(.card-title a:focus-visible) { outline: 2px solid var(--action-ink); outline-offset: 2px; }

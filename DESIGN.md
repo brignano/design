@@ -285,6 +285,11 @@ hero surfaces.
 **Elevation differs by theme.** Light mode separates surfaces with a hairline plus
 a shadow (`--shadow-1/2/3`). Dark mode does not use borders — surfaces get
 *lighter* with elevation. This is why `--line` can stay nearly invisible in dark.
+A card is the exception to a faint hairline in light: `--line` all but
+vanishes between a white card and the page, so a grid of cards read as one
+sheet. `.card` reads `--card-line` (one step up, neutral-200) and
+`--card-shadow` (`--shadow-2`); a kit whose `--line` already shows sets both
+back to `--line` and `--shadow-1`.
 
 **Stacking** is named, not numbered: `--z-raised` (a control above its card's
 stretched link), `--z-sticky` (a header), `--z-float` (a floating label),

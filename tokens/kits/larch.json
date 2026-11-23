@@ -83,6 +83,13 @@
         "dark": "#1e2a23"
       }
     },
+    "card-line": {
+      "$value": "var(--line)",
+      "$description": "This kit's hairline already shows on its page, so a card keeps it."
+    },
+    "card-shadow": {
+      "$value": "var(--shadow-1)"
+    },
     "line-strong": {
       "$type": "color",
       "$value": {

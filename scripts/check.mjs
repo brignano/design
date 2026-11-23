@@ -343,7 +343,7 @@ const addFloor = (fg, bg, floor) => {
   }
 };
 const INACTIVE = /:disabled|\[aria-disabled=['"]?true['"]?\]/;
-const DIVIDERS = new Set(['--line', '--line-soft', '--line-strong']);
+const DIVIDERS = new Set(['--line', '--line-soft', '--line-strong', '--card-line']);
 const tokenOf = (v) => v?.match(/var\((--[\w-]+)\)/g)?.length === 1 ? v.match(/var\((--[\w-]+)\)/)[1] : undefined;
 for (const [, rs] of layerRules)
   for (const { selector, decls } of rs) {
