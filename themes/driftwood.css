@@ -23,6 +23,8 @@
   --slate: light-dark(#626366, #9e9e9e);
   --line: light-dark(#d7d7d7, #2d2e30);
   --line-soft: light-dark(#e8e8e8, #1e1f22);
+  --card-line: var(--line);
+  --card-shadow: var(--shadow-1);
   --line-strong: light-dark(#0f0f11, #f2f2f2);
   --line-control: light-dark(#0f0f11, #f2f2f2);
   --action-ink: light-dark(#0f0f11, #f2f2f2);
@@ -96,8 +98,6 @@
   --field-radius: var(--radius-control);
   --field-line: var(--line-control);
   --card-radius: var(--radius-card);
-  --card-line: var(--line);
-  --card-shadow: var(--shadow-1);
   --pill-radius: var(--radius-sm);
   --dialog-radius: var(--radius-lg);
   --focus-ring: var(--action-ink);

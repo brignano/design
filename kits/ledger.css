@@ -18,6 +18,10 @@
   --slate: light-dark(#69625b, #a29e96);
   --line: light-dark(#d8d4ca, #36322d);
   --line-soft: light-dark(#e8e4dc, #292622);
+
+  /* This kit's hairline already shows on its page, so a card keeps it. */
+  --card-line: var(--line);
+  --card-shadow: var(--shadow-1);
   --line-strong: light-dark(#bbb7ae, #514c47);
 
   /* A control's edge: 3:1 on the page and the card. */
@@ -106,8 +110,6 @@
   --field-radius: var(--radius-control);
   --field-line: var(--line-control);
   --card-radius: var(--radius-card);
-  --card-line: var(--line);
-  --card-shadow: var(--shadow-1);
   --pill-radius: var(--radius-sm);
   --dialog-radius: var(--radius-lg);
   --focus-ring: var(--action-ink);

@@ -587,8 +587,15 @@
   --field-radius: var(--radius-control);
   --field-line: var(--line-control);
   --card-radius: var(--radius-card);
-  --card-line: var(--line);
-  --card-shadow: var(--shadow-1);
+
+  /* A card's edge. --line all but vanishes between a white card and the light
+     page (1.06:1), so a grid of cards read as one sheet of paper. Light takes
+     the next step up; dark keeps the hairline, since there a card is lighter
+     than the page and its fill does the work (§6). Decoration, not a boundary. */
+  --card-line: light-dark(#e1e1e4, #202024); /* neutral-200 / neutral-100 */
+
+  /* Lifts a card off the page in light; dark has no light shadow layer. */
+  --card-shadow: var(--shadow-2);
   --pill-radius: var(--radius-sm);
   --dialog-radius: var(--radius-lg);
   --focus-ring: var(--action-ink);
