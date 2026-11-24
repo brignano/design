@@ -15,7 +15,7 @@ see its README and `_template.html`.
 
 ## Adding or changing a component
 
-Reviews keep catching the same four gaps. Check each before opening a PR that
+Reviews keep catching the same gaps. Check each before opening a PR that
 touches `components.css` or `templates/*.css`:
 
 - **44px on coarse pointers.** Every interactive element (link, button,
@@ -35,6 +35,22 @@ touches `components.css` or `templates/*.css`:
   in `@layer brignano.components`. Put demos outside `.docs`; a demo that needs
   a bare `h1` uses `all: revert-layer` so the component's own style shows.
   `npm run check` only sees that a class name appears, so it can't catch this.
+- **Collapse with container queries.** An element can't container-query
+  itself, so to collapse a component put the grid on an inner element. Use
+  container queries, not viewport queries, for component collapse.
+- **Motion under reduced motion.** `tokens.css`'s reduced-motion block is
+  unlayered `!important`, so a layered animation override never applies there.
+  Keep animations to transform and opacity.
+- **CSS details that fail silently.** No hex anywhere, preview data URIs
+  included. Set `font: inherit` on inputs. Put each vendor pseudo-element in its
+  own rule: one unknown selector drops the whole rule.
+- **Contrast and class names.** Status `-line` tokens fall under 3:1 on status
+  washes, so don't use them for text there. A page's own class named like a
+  component (e.g. `.pill`) picks up the shared rules.
+- **Overlays.** A modal dialog makes top-layer popovers inert, which is why the
+  app-shell phone nav is a popover. Nested live regions are unreliable.
+- **Keep the PR to the component.** Leave `AGENTS.md` and `package.json` out of
+  component PRs.
 
 ## How to release
 
