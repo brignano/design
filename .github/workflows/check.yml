@@ -49,6 +49,14 @@ jobs:
             http://localhost:8080/previews/product-page-guidebook.html \
             http://localhost:8080/previews/product-page-sites.html \
             --shots fold-shots
+      # Every gallery page at 390 and 1280, light and dark: no console or
+      # network errors, no sideways scroll, no squashed or spilling block.
+      # Deliberate cases are listed, with reasons, in the script (issue #191).
+      - run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          python3 -m http.server 8081 >/dev/null 2>&1 &
+          sleep 1
+          node scripts/render-check.mjs http://localhost:8081
       - uses: actions/upload-artifact@v4
         if: always()
         with:
