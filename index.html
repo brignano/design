@@ -207,6 +207,7 @@
   .phone svg { width: 22px; height: 22px; color: var(--ink-soft); }
 
   .foot.layout-foot { max-width: 1280px; margin: 0 auto; padding-inline: var(--space-5); }
+  .foot .link { display: inline-block; padding-block: 4px; }
   .foot { border-top: 1px solid var(--line); padding: var(--space-5) 0 var(--space-7);
           font-size: var(--text-sm); color: var(--ink-soft); display: flex; flex-wrap: wrap;
           align-items: center; gap: 0 var(--space-5); }
@@ -216,7 +217,7 @@
 <a class="skip-link" href="#parts">Skip to every part</a>
 <header class="ds-top">
   <button type="button" class="ds-menu" data-menu aria-label="Contents" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-  <a class="ds-brand" href="#top" aria-label="brignano design, home"><span class="ds-stamp" aria-hidden="true">ab</span> design</a>
+  <a class="ds-brand" href="#top" aria-label="ab design, home"><span class="ds-stamp" aria-hidden="true">ab</span> design</a>
   <span class="ds-ver">v0.17.0</span>
   <nav class="ds-sections" aria-label="Sections">
     <a href="#foundations">Foundations</a>
@@ -225,7 +226,7 @@
     <a href="#templates">Templates</a>
     <a class="ds-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<span class="ds-hidden"> (opens in a new tab)</span></a>
   </nav>
-  <button type="button" class="ds-find" data-find aria-label="Search every part"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span class="ds-find-text">Search parts</span><kbd class="ds-kbd">/</kbd></button>
+  <button type="button" class="ds-find" data-find aria-label="Search parts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span class="ds-find-text">Search parts</span><kbd class="ds-kbd">/</kbd></button>
   <span data-site-toggle></span>
 </header>
 
@@ -291,7 +292,7 @@
   </div>
   <div class="play-stage">
     <div class="play-app" id="app">
-<div class="demo-bar"><span class="demo-brand">brignano.io</span><span class="demo-tabs" aria-hidden="true"><span class="on">Projects</span><span>Notes</span><span>About</span></span><button type="button" class="btn btn-primary btn-sm">New project</button></div><div class="demo-body"><div class="demo-head"><p class="eyebrow">This month</p><p class="demo-h">3 projects shipped. 1 needs a look.</p></div><div class="stat-grid demo-stats"><div class="stat"><span class="stat-label">Live</span><span class="stat-value">9</span></div><div class="stat"><span class="stat-label">Shipped</span><span class="stat-value">3</span></div><div class="stat"><span class="stat-label">Open issues</span><span class="stat-value">14</span></div></div><div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">The new logo is waiting on a review</p><p class="msg-body">The change has been open for two days.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Review it</button><button type="button" class="btn btn-sm">Later</button></div></div></div><div class="table-wrap"><table class="table"><thead><tr><th scope="col">Project</th><th scope="col">Status</th><th scope="col" class="num">Updated</th></tr></thead><tbody><tr><td>Design</td><td><span class="pill pill-success">Live</span></td><td class="num">Today</td></tr><tr><td>Driftwood</td><td><span class="pill pill-success">Live</span></td><td class="num">Mon</td></tr><tr><td>Homelab</td><td><span class="pill pill-attention">In review</span></td><td class="num">Sun</td></tr><tr><td>Card</td><td><span class="pill pill-success">Live</span></td><td class="num">Fri</td></tr></tbody></table></div></div>
+<div class="demo-bar"><span class="demo-brand">brignano.io</span><span class="demo-tabs" aria-hidden="true"><span class="on">Projects</span><span>Notes</span><span>About</span></span><button type="button" class="btn btn-primary btn-sm">New project</button></div><div class="demo-body"><div class="demo-head"><p class="eyebrow">This month</p><p class="demo-h">3 projects shipped. 1 needs a look.</p></div><div class="stat-grid demo-stats"><div class="stat"><span class="stat-label">Live</span><span class="stat-value">9</span></div><div class="stat"><span class="stat-label">Shipped</span><span class="stat-value">3</span></div><div class="stat"><span class="stat-label">Open issues</span><span class="stat-value">14</span></div></div><div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">The new logo is waiting on a review</p><p class="msg-body">The change has been open for two days.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Review it</button><button type="button" class="btn btn-sm">Later</button></div></div></div><div class="table-wrap" tabindex="0"><table class="table"><thead><tr><th scope="col">Project</th><th scope="col">Status</th><th scope="col" class="num">Updated</th></tr></thead><tbody><tr><td>Design</td><td><span class="pill pill-success">Live</span></td><td class="num">Today</td></tr><tr><td>Driftwood</td><td><span class="pill pill-success">Live</span></td><td class="num">Mon</td></tr><tr><td>Homelab</td><td><span class="pill pill-attention">In review</span></td><td class="num">Sun</td></tr><tr><td>Card</td><td><span class="pill pill-success">Live</span></td><td class="num">Fri</td></tr></tbody></table></div></div>
     </div>
     <div class="play-side">
       <div class="card"><div class="card-body stack gap-4">
@@ -705,7 +706,7 @@
       + `<div class="stat-grid demo-stats">${d.stats.map(([l, v]) => `<div class="stat"><span class="stat-label">${esc(l)}</span><span class="stat-value">${esc(v)}</span></div>`).join('')}</div>`
       + `<div class="msg msg-attention">${ICON.attention}<div class="msg-content"><p class="msg-title">${esc(d.alert[0])}</p><p class="msg-body">${esc(d.alert[1])}</p>`
       + `<div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">${esc(d.alert[2])}</button><button type="button" class="btn btn-sm">${esc(d.alert[3])}</button></div></div></div>`
-      + `<div class="table-wrap"><table class="table"><thead><tr><th scope="col">${esc(d.cols[0])}</th><th scope="col">${esc(d.cols[1])}</th><th scope="col" class="num">${esc(d.cols[2])}</th></tr></thead><tbody>`
+      + `<div class="table-wrap" tabindex="0"><table class="table"><thead><tr><th scope="col">${esc(d.cols[0])}</th><th scope="col">${esc(d.cols[1])}</th><th scope="col" class="num">${esc(d.cols[2])}</th></tr></thead><tbody>`
       + d.rows.map(([n, tone, s, v]) => `<tr><td>${esc(n)}</td><td><span class="pill pill-${tone}">${esc(s)}</span></td><td class="num">${esc(v)}</td></tr>`).join('')
       + `</tbody></table></div></div>`;
   }

@@ -141,10 +141,10 @@
 .ds-side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 1px solid var(--line); }
 .ds-side ul ul { border-left: 0; margin: 2px 0 var(--space-2); }
 .ds-side li { margin: 0; padding: 0; }
-.ds-side ul ul a { padding: 3px 10px 3px 22px; font-size: var(--text-xs); }
+.ds-side ul ul a { padding: 4px 10px 4px 22px; font-size: var(--text-xs); }
 /* Calm current marker (issue 206): ink text, semibold, a 2px rule on the left edge, no fill. */
 .ds-side a {
-  display: block; padding: 5px 10px; margin-left: -1.5px; border-left: 2px solid transparent;
+  display: block; min-height: 24px; box-sizing: border-box; padding: 5px 10px; margin-left: -1.5px; border-left: 2px solid transparent;
   color: var(--ink-soft); text-decoration: none;
 }
 .ds-side a:hover { color: var(--ink); }
@@ -285,7 +285,7 @@
   transition: border-color var(--duration-fast);
 }
 .ds-pager a:hover { border-color: var(--line-strong); }
-.ds-pager span { color: var(--slate); font-size: var(--text-xs); }
+.ds-pager span { color: var(--ink-soft); font-size: var(--text-xs); }
 .ds-pager b { font-weight: 600; }
 .ds-next { grid-column: 2; text-align: right; }
 
