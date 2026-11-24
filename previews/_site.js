@@ -256,7 +256,7 @@
     const bar = el('header', { class: 'ds-top', 'data-fold': 'skip' },
       el('a', { class: 'ds-skip', href: '#ds-main', text: 'Skip to content' }),
       el('button', { type: 'button', class: 'ds-menu', 'data-menu': true, 'aria-label': 'Contents', 'aria-haspopup': 'dialog', html: ICON.menu }),
-      el('a', { class: 'ds-brand', href: home, 'aria-label': 'brignano design, home' },
+      el('a', { class: 'ds-brand', href: home, 'aria-label': 'ab design, home' },
         el('span', { class: 'ds-stamp', 'aria-hidden': 'true', text: 'ab' }), ' design'),
       el('nav', { class: 'ds-sections', 'aria-label': 'Sections' },
         el('a', { href: `${home}#foundations`, text: 'Foundations' }),
@@ -270,7 +270,7 @@
   }
 
   function findButton() {
-    const b = el('button', { type: 'button', class: 'ds-find', 'data-find': true, 'aria-label': 'Search every part', html: ICON.search });
+    const b = el('button', { type: 'button', class: 'ds-find', 'data-find': true, 'aria-label': 'Search parts', html: ICON.search });
     b.append(el('span', { class: 'ds-find-text', text: 'Search parts' }), el('kbd', { class: 'ds-kbd', text: '/' }));
     return b;
   }
