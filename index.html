@@ -46,6 +46,10 @@
     .top .find .find-text { display: inline; }
   }
 
+  /* Links that leave this site open in a new tab and say so: an
+     external-link icon, and the words for screen readers (issue 205). */
+  .ext { display: inline-block; width: .8em; height: .8em; margin-left: .3em; vertical-align: -.05em; opacity: .7; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .layout { max-width: 1280px; margin: 0 auto; padding: 0 var(--space-5); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
   .side { display: none; }
   @media (min-width: 1100px) {
@@ -56,13 +60,16 @@
   .side h2 { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em; text-transform: uppercase;
              color: var(--slate); font-weight: 500; margin: var(--space-5) 0 var(--space-2); }
   .side h2:first-child { margin-top: 0; }
-  .side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-  .side ul ul { margin: 2px 0 var(--space-2) 10px; padding-left: 10px; border-left: 1px solid var(--line); }
-  .side ul ul a { padding: 4px 10px; font-size: var(--text-xs); }
-  .side a { display: block; padding: 6px 10px; margin-left: -10px; border-radius: var(--radius-sm);
+  .side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 1px solid var(--line); }
+  .side ul ul { border-left: 0; }
+  .side ul ul { margin: 2px 0 var(--space-2); padding: 0; }
+  .side ul ul a { padding: 3px 10px 3px 22px; font-size: var(--text-xs); }
+  /* Calm current marker: ink text and a 2px rule on the left edge, no fill. */
+  .side a { display: block; padding: 5px 10px; border-left: 2px solid transparent; margin-left: -1.5px;
             color: var(--ink-soft); text-decoration: none; }
-  .side a:hover { background: var(--surface-hover); color: var(--ink); }
-  .side a[aria-current] { background: var(--surface-active); color: var(--ink); font-weight: 500; }
+  .side a:hover { color: var(--ink); }
+  .side a[aria-current] { color: var(--ink); font-weight: 600; border-left-color: var(--ink); }
+  @media (pointer: coarse) { .side a { min-height: 44px; display: flex; align-items: center; } }
 
   .intro-block { padding: var(--space-7) 0 var(--space-6); max-width: 46rem; }
   .intro-block .label { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
@@ -230,7 +237,7 @@
            display: flex; align-items: center; justify-content: center; }
   .phone svg { width: 22px; height: 22px; color: var(--ink-soft); }
 
-  .layout-foot { max-width: 1280px; margin: 0 auto; padding-inline: var(--space-5); }
+  .foot.layout-foot { max-width: 1280px; margin: 0 auto; padding-inline: var(--space-5); }
   .foot { border-top: 1px solid var(--line); padding: var(--space-5) 0 var(--space-7);
           font-size: var(--text-sm); color: var(--ink-soft); display: flex; flex-wrap: wrap;
           align-items: center; gap: 0 var(--space-5); }
@@ -245,7 +252,7 @@
     <a href="#foundations">Foundations</a>
     <a href="#controls">Components</a>
     <a href="#templates">Templates</a>
-    <a href="https://github.com/brignano/design/releases">Changelog</a>
+    <a href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a>
   </nav>
   <button type="button" class="btn btn-sm find" data-find aria-label="Search every part"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span class="find-text">Search parts</span><kbd class="kbd">/</kbd></button>
   <span data-site-toggle></span>
@@ -256,9 +263,9 @@
   <h2>Get started</h2>
   <ul>
     <li><a href="#top" aria-current="true">Overview</a></li>
-    <li><a href="https://github.com/brignano/design/blob/main/DESIGN.md">The rules</a></li>
-    <li><a href="https://github.com/brignano/design/tree/main/decisions">Decisions</a></li>
-    <li><a href="https://github.com/brignano/design/releases">Changelog</a></li>
+    <li><a href="https://github.com/brignano/design/blob/main/DESIGN.md" target="_blank" rel="noopener">The rules<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a></li>
+    <li><a href="https://github.com/brignano/design/tree/main/decisions" target="_blank" rel="noopener">Decisions<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a></li>
+    <li><a href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a></li>
   </ul>
   <h2>Every part</h2>
   <ul>
@@ -272,9 +279,9 @@
   </ul>
   <h2>Elsewhere</h2>
   <ul>
-    <li><a href="https://github.com/brignano/design">GitHub</a></li>
-    <li><a href="https://www.npmjs.com/package/@brignano/design">npm</a></li>
-    <li><a href="https://brignano.io">brignano.io</a></li>
+    <li><a href="https://github.com/brignano/design" target="_blank" rel="noopener">GitHub<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a></li>
+    <li><a href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">npm<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a></li>
+    <li><a href="https://brignano.io" target="_blank" rel="noopener">brignano.io<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a></li>
   </ul>
 </aside>
 
@@ -405,10 +412,10 @@
   </ul>
   <h3 class="planned-title" id="controls-planned">Planned</h3>
   <ul class="planned" aria-labelledby="controls-planned">
-    <li><a class="link" href="https://github.com/brignano/design/issues/75">Combobox and autocomplete</a> <small class="site-status" data-status="planned">planned</small></li>
-    <li><a class="link" href="https://github.com/brignano/design/issues/76">Date and time inputs</a> <small class="site-status" data-status="planned">planned</small></li>
-    <li><a class="link" href="https://github.com/brignano/design/issues/77">File upload</a> <small class="site-status" data-status="planned">planned</small></li>
-    <li><a class="link" href="https://github.com/brignano/design/issues/81">Range slider</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/75" target="_blank" rel="noopener">Combobox and autocomplete<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/76" target="_blank" rel="noopener">Date and time inputs<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/77" target="_blank" rel="noopener">File upload<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/81" target="_blank" rel="noopener">Range slider<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
 
@@ -454,7 +461,7 @@
   </ul>
   <h3 class="planned-title" id="overlays-planned">Planned</h3>
   <ul class="planned" aria-labelledby="overlays-planned">
-    <li><a class="link" href="https://github.com/brignano/design/issues/78">Command palette</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/78" target="_blank" rel="noopener">Command palette<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
 
@@ -485,8 +492,8 @@
   </ul>
   <h3 class="planned-title" id="data-planned">Planned</h3>
   <ul class="planned" aria-labelledby="data-planned">
-    <li><a class="link" href="https://github.com/brignano/design/issues/80">Timeline and activity feed</a> <small class="site-status" data-status="planned">planned</small></li>
-    <li><a class="link" href="https://github.com/brignano/design/issues/82">Calendar and agenda</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/80" target="_blank" rel="noopener">Timeline and activity feed<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/82" target="_blank" rel="noopener">Calendar and agenda<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
 
@@ -513,7 +520,7 @@
   </ul>
   <h3 class="planned-title" id="navigation-planned">Planned</h3>
   <ul class="planned" aria-labelledby="navigation-planned">
-    <li><a class="link" href="https://github.com/brignano/design/issues/79">Stepper and multi-step form</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/79" target="_blank" rel="noopener">Stepper and multi-step form<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
 
@@ -572,8 +579,8 @@
   </ul>
   <h3 class="planned-title" id="templates-planned">Planned</h3>
   <ul class="planned" aria-labelledby="templates-planned">
-    <li><a class="link" href="https://github.com/brignano/design/issues/83">Social share image</a> <small class="site-status" data-status="planned">planned</small></li>
-    <li><a class="link" href="https://github.com/brignano/design/issues/84">Pricing table</a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/83" target="_blank" rel="noopener">Social share image<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
+    <li><a class="link" href="https://github.com/brignano/design/issues/84" target="_blank" rel="noopener">Pricing table<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
 </div>
@@ -582,9 +589,9 @@
 
 <footer class="foot layout-foot">
   <span>MIT licensed</span>
-  <a class="link" href="https://github.com/brignano/design">Source on GitHub</a>
-  <a class="link" href="https://www.npmjs.com/package/@brignano/design">@brignano/design on npm</a>
-  <a class="link" href="https://brignano.io">brignano.io</a>
+  <a class="link" href="https://github.com/brignano/design" target="_blank" rel="noopener">Source on GitHub<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a>
+  <a class="link" href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">@brignano/design on npm<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a>
+  <a class="link" href="https://brignano.io" target="_blank" rel="noopener">brignano.io<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr">(opens in a new tab)</span></a>
 </footer>
 <script>
 (() => {
