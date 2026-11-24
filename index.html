@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>brignano design: everything I build is made of these</title>
-<meta name="description" content="Anthony Brignano's design system: the buttons, menus, messages, tables and pages behind brignano.io and every app beside it, each product in its own look.">
+<title>brignano design: the design system behind everything I build</title>
+<meta name="description" content="Anthony Brignano's design system: the tokens, components and page templates behind brignano.io and every app beside it, each product in its own theme, in light and dark.">
 <script src="previews/_site.js"></script>
 <link rel="stylesheet" href="previews/_preview.css">
 <link rel="stylesheet" href="components.css">
@@ -20,115 +20,92 @@
      specimens on each card are the same classes the previews use, so they
      move when the tokens move. */
   body { padding: 0; font-size: var(--text-base); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--space-5); }
 
-  .top { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) 0; }
-  .top .brand { display: inline-flex; align-items: baseline; gap: var(--space-2); margin-right: auto;
-                color: var(--ink); text-decoration: none; font-weight: 600; padding: 10px 0; }
+  /* A docs-style home (issue 205): a sticky bar, a section sidebar, a short
+     intro, four ways in, then every part, searchable and previewable in any
+     product's theme. */
+  .top { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: var(--space-4);
+         padding: 6px var(--space-5); background: var(--surface-sticky); border-bottom: 1px solid var(--line);
+         -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  .top .brand { display: inline-flex; align-items: baseline; gap: var(--space-2); color: var(--ink);
+                text-decoration: none; font-weight: 600; padding: 10px 0; }
   .top .brand .stamp { font-size: var(--text-xl); }
-  .top nav { display: none; gap: var(--space-5); font-size: var(--text-sm); }
-  .top nav a { padding: 10px 0; }
-  @media (min-width: 760px) { .top nav { display: flex; } }
+  .top .ver { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); }
+  .top nav { display: none; gap: var(--space-5); font-size: var(--text-sm); margin-left: var(--space-4); }
+  .top nav a { color: var(--ink-soft); text-decoration: none; padding: 10px 0; }
+  .top nav a:hover { color: var(--ink); }
+  .top .find { margin-left: auto; display: inline-flex; align-items: center; gap: var(--space-2);
+               color: var(--slate); min-width: 44px; justify-content: center; }
+  .top .find .kbd, .top .find .find-text { display: none; }
+  .top .ver { display: none; }
+  @media (min-width: 600px) { .top .ver { display: inline; } }
+  @media (min-width: 900px) {
+    .top nav { display: flex; }
+    .top .find { min-width: 14rem; justify-content: space-between; }
+    .top .find .kbd { display: inline-block; }
+    .top .find .find-text { display: inline; }
+  }
 
-  /* The showcase (issue 205): a big claim, then a wall of live parts that a
-     product picker re-themes all at once with each product's real theme. */
-  .hero { padding: var(--space-7) 0 var(--space-6); display: grid; gap: var(--space-5); }
-  .hero .label { margin: 0; }
-  .hero h1 { font-size: clamp(2.75rem, 9.5vw, 7rem); line-height: .92; letter-spacing: -.05em;
-             font-weight: var(--weight-heavy, 800); margin: 0; text-wrap: balance; max-width: 14ch; }
-  /* The caret: the logo's cursor, in --mark-current, blinking three times (ADR-0022). */
-  .caret { display: inline-block; width: .42em; height: .78em; margin-left: .06em; vertical-align: -.02em;
-           background: var(--mark-current); }
-  .hero-row { display: grid; gap: var(--space-5); align-items: end; }
-  .lede { font-size: var(--text-lg); color: var(--ink-soft); margin: 0; line-height: 1.5; max-width: 40rem; }
-  .pick { margin: 0; padding: 0; border: 0; min-width: 0; }
-  .pick legend { font-size: var(--text-sm); font-weight: 600; margin: 0 0 var(--space-2); padding: 0; }
-  @media (min-width: 960px) { .hero-row { grid-template-columns: 1fr auto; } }
+  .layout { max-width: 1280px; margin: 0 auto; padding: 0 var(--space-5); display: grid; gap: var(--space-7); }
+  .side { display: none; }
+  @media (min-width: 1100px) {
+    .layout { grid-template-columns: 13rem minmax(0, 1fr); }
+    .side { display: block; position: sticky; top: 72px; align-self: start; max-height: calc(100dvh - 88px);
+            overflow-y: auto; padding: var(--space-6) 0; font-size: var(--text-sm); }
+  }
+  .side h2 { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em; text-transform: uppercase;
+             color: var(--slate); font-weight: 500; margin: var(--space-5) 0 var(--space-2); }
+  .side h2:first-child { margin-top: 0; }
+  .side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .side a { display: block; padding: 6px 10px; margin-left: -10px; border-radius: var(--radius-sm);
+            color: var(--ink-soft); text-decoration: none; }
+  .side a:hover { background: var(--surface-hover); color: var(--ink); }
+  .side a[aria-current] { background: var(--surface-active); color: var(--ink); font-weight: 500; }
+
+  .intro-block { padding: var(--space-7) 0 var(--space-6); max-width: 46rem; }
+  .intro-block .label { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .intro-block h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1; letter-spacing: -.04em;
+                    font-weight: var(--weight-heavy, 800); margin: 0 0 var(--space-4); text-wrap: balance; }
+  .lede { font-size: var(--text-lg); color: var(--ink-soft); margin: 0 0 var(--space-5); line-height: 1.5; }
+  .asks { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .install { font-family: var(--mono); font-size: var(--text-sm); background: var(--card);
+             border: 1px solid var(--line); border-radius: var(--radius-control); padding: 0 14px;
+             min-height: 44px; display: inline-flex; align-items: center; gap: var(--space-2); }
+  .install::before { content: "$"; color: var(--slate); }
+
+  .ways { list-style: none; margin: 0 0 var(--space-8); padding: 0; display: grid; gap: var(--space-4);
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); }
+  @media (max-width: 599px) { .way > span:not(.n) { display: none; } .way { padding: var(--space-4); } }
+  .way { display: grid; gap: var(--space-1); height: 100%; padding: var(--space-4) var(--space-5) var(--space-5);
+         color: var(--ink); text-decoration: none; background: var(--card); border: 1px solid var(--line);
+         border-radius: var(--radius-lg); transition: border-color var(--duration-fast), box-shadow var(--duration-fast); }
+  .way:hover { border-color: var(--line-strong); box-shadow: var(--shadow-2); }
+  .way:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .way { transition: none; } }
+  .way svg { width: 22px; height: 22px; color: var(--ink-soft); margin-bottom: var(--space-3); }
+  .way b { font-size: var(--text-lg); font-weight: 600; }
+  .way span { font-size: var(--text-sm); color: var(--ink-soft); }
+  .way .n { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin-top: var(--space-2); }
+
+  /* The toolbar over the catalogue: search and the product preview. */
+  .tools { display: grid; gap: var(--space-3); align-items: end;
+           padding: var(--space-3) 0; margin: 0 0 var(--space-6); background: var(--bg); border-bottom: 1px solid var(--line); }
+  .tools .field { margin: 0; }
+  .tools .field label, .tools legend { font-size: var(--text-sm); font-weight: 600; }
+  .tools fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+  .tools legend { padding: 0; margin: 0 0 6px; }
+  .tools .count { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin: 0; }
+  @media (min-width: 900px) { .tools { position: sticky; top: 57px; z-index: 5; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-5); } }
+  .tools .count { grid-column: 1 / -1; }
+  .parts { scroll-margin-top: 160px; }
+  .parts section { scroll-margin-top: 180px; }
+  .parts [hidden] { display: none !important; }
 
   section { padding: 0 0 var(--space-8); }
   .label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .12em;
            text-transform: uppercase; color: var(--slate); margin: 0 0 var(--space-2); }
   section h2 { font-size: var(--text-2xl); letter-spacing: -.02em; line-height: 1.2;
                margin: 0 0 var(--space-5); max-width: var(--measure); }
-
-  /* The wall. Everything inside is a real component; the stage takes the
-     picked product's theme, so its ground, type, corners and colour change. */
-  .stage { container-type: inline-size; margin: 0 0 var(--space-8); padding: var(--space-4);
-           background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px;
-           border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-           transition: background-color var(--duration-base, .2s), color var(--duration-base, .2s); }
-  @media (prefers-reduced-motion: reduce) { .stage { transition: none; } }
-  /* On a phone the wall runs edge to edge, so the parts get the width. */
-  @media (max-width: 639px) { .stage { margin-inline: calc(-1 * var(--space-5)); padding: var(--space-3); border-radius: 0; border-inline: 0; } }
-  .wall { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr); }
-  .tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card);
-          padding: var(--space-4); display: grid; gap: var(--space-3); align-content: start; min-width: 0; }
-  .tile-label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em;
-                text-transform: uppercase; color: var(--slate); margin: 0; }
-  .tile .row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
-  .t-app { padding: 0; overflow: hidden; gap: 0; }
-  .t-type .big { font-family: var(--display); font-weight: var(--weight-heavy, 800);
-                 text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
-                 font-size: clamp(3.5rem, 14cqi, 7rem); line-height: .9; letter-spacing: -.04em; margin: 0; }
-  .t-type .mono { font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft); margin: 0; }
-  .t-menu .menu { border: 1px solid var(--line); border-radius: var(--radius-card); padding: 4px;
-                  background: var(--card); box-shadow: var(--shadow-2); }
-  .t-menu .tooltip { position: static; translate: none; opacity: 1; visibility: visible; }
-  .t-dialog .box { border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card);
-                   box-shadow: var(--shadow-3); }
-  .t-dialog .box > * { padding-inline: var(--space-4); }
-  .t-dialog .dialog-header { padding-top: var(--space-4); }
-  .t-dialog .dialog-title { font-size: var(--text-lg); margin: 0; }
-  .t-dialog .dialog-body p { margin: var(--space-2) 0 var(--space-4); color: var(--ink-soft); }
-  .t-dialog .dialog-footer { display: flex; justify-content: flex-end; gap: var(--space-2); padding-bottom: var(--space-4); }
-  .t-toasts .toast { width: 100%; }
-  .t-gauges label { font-size: var(--text-sm); color: var(--ink-soft); }
-  .t-gauges progress, .t-gauges meter { width: 100%; }
-  .t-gauges .stat-value { font-size: clamp(2.5rem, 9cqi, 4rem); line-height: 1; }
-
-  /* The house look's display face is the pixel one, kept for eyebrows: the
-     app headline uses the heavy sans, as brignano.io does. */
-  .stage:not([data-product]) :is(.demo-h, .demo-brand, .t-type .big) { font-family: var(--sans); text-transform: none; }
-  .demo-bar { display: flex; align-items: center; gap: var(--space-4); padding: 10px var(--space-4);
-              border-bottom: 1px solid var(--line); }
-  .demo-brand { font-family: var(--display); font-weight: var(--weight-heavy, 700);
-                text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal); }
-  .demo-tabs { display: none; gap: 2px; font-size: var(--text-sm); color: var(--ink-soft); }
-  .demo-tabs span { padding: 6px 10px; border-radius: var(--radius-sm); }
-  .demo-tabs .on { background: var(--surface-active); color: var(--ink); }
-  .demo-bar .btn { margin-left: auto; }
-  .demo-body { display: grid; gap: var(--space-4); padding: var(--space-4); background: var(--bg); }
-  .demo-head .eyebrow { margin: 0 0 var(--space-1); }
-  .demo-h { margin: 0; font-family: var(--display); font-weight: var(--weight-heavy, 700);
-            text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
-            font-size: clamp(1.5rem, 4cqi, 2.25rem); line-height: 1.05; letter-spacing: -.025em; text-wrap: balance; }
-  .demo-stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: var(--space-3); }
-  .demo-stats .stat-value { font-size: clamp(1.1rem, 3cqi, 1.75rem); }
-
-  @container (min-width: 640px) {
-    .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .t-app, .t-type { grid-column: 1 / -1; }
-  }
-  @container (min-width: 880px) {
-    .stage { padding: var(--space-5); }
-    .wall { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-5); }
-    .t-app { grid-column: span 8; grid-row: span 2; }
-    .t-controls, .t-menu { grid-column: span 4; }
-    .t-dialog, .t-toasts, .t-gauges { grid-column: span 4; }
-    .t-type { grid-column: 1 / -1; grid-template-columns: auto 1fr; align-items: end; column-gap: var(--space-6); }
-    .demo-tabs { display: flex; }
-  }
-
-  /* Numbers: what the system is, counted. */
-  .counts { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: var(--space-6) 0; }
-  .counts div { display: grid; gap: var(--space-1); }
-  .counts b { font-family: var(--mono); font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 600;
-              letter-spacing: -.04em; line-height: 1; }
-  .counts span { color: var(--ink-soft); font-size: var(--text-sm); }
-
-  .catalogue { padding-top: var(--space-4); }
-  .catalogue h2 { font-size: var(--text-3xl); }
 
   /* Gallery: each card is one link with a live specimen above its words. */
   .gallery-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4);
@@ -205,116 +182,89 @@
            display: flex; align-items: center; justify-content: center; }
   .phone svg { width: 22px; height: 22px; color: var(--ink-soft); }
 
+  .layout-foot { max-width: 1280px; margin: 0 auto; padding-inline: var(--space-5); }
   .foot { border-top: 1px solid var(--line); padding: var(--space-5) 0 var(--space-7);
           font-size: var(--text-sm); color: var(--ink-soft); display: flex; flex-wrap: wrap;
           align-items: center; gap: 0 var(--space-5); }
 </style>
 </head>
 <body>
-<div class="wrap">
-
+<a class="skip-link" href="#parts">Skip to every part</a>
 <header class="top">
   <a class="brand" href="#top" aria-label="brignano design, home"><span class="stamp" aria-hidden="true">ab</span> design</a>
-  <nav aria-label="On this page">
-    <a class="link" href="#parts">Every part</a>
-    <a class="link" href="https://github.com/brignano/design">GitHub</a>
-    <a class="link" href="https://www.npmjs.com/package/@brignano/design">npm</a>
+  <span class="ver">v0.17.0</span>
+  <nav aria-label="Sections">
+    <a href="#foundations">Foundations</a>
+    <a href="#controls">Components</a>
+    <a href="#templates">Templates</a>
+    <a href="https://github.com/brignano/design/releases">Changelog</a>
   </nav>
+  <button type="button" class="btn btn-sm find" data-find aria-label="Search every part"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span class="find-text">Search parts</span><kbd class="kbd">/</kbd></button>
   <span data-site-toggle></span>
 </header>
 
+<div class="layout">
+<aside class="side" aria-label="Contents">
+  <h2>Get started</h2>
+  <ul>
+    <li><a href="#top" aria-current="true">Overview</a></li>
+    <li><a href="https://github.com/brignano/design/blob/main/DESIGN.md">The rules</a></li>
+    <li><a href="https://github.com/brignano/design/tree/main/decisions">Decisions</a></li>
+    <li><a href="https://github.com/brignano/design/releases">Changelog</a></li>
+  </ul>
+  <h2>Every part</h2>
+  <ul>
+      <li><a href="#foundations">Foundations</a></li>
+      <li><a href="#controls">Controls</a></li>
+      <li><a href="#feedback">Feedback</a></li>
+      <li><a href="#overlays">Overlays</a></li>
+      <li><a href="#data">Data</a></li>
+      <li><a href="#navigation">Navigation</a></li>
+      <li><a href="#templates">Templates</a></li>
+  </ul>
+  <h2>Elsewhere</h2>
+  <ul>
+    <li><a href="https://github.com/brignano/design">GitHub</a></li>
+    <li><a href="https://www.npmjs.com/package/@brignano/design">npm</a></li>
+    <li><a href="https://brignano.io">brignano.io</a></li>
+  </ul>
+</aside>
+
 <main id="top">
-<div class="hero">
-  <p class="label">Anthony Brignano · design system</p>
-  <h1>Everything I build is made of these.<span class="caret cursor-blink" aria-hidden="true"></span></h1>
-  <div class="hero-row">
-    <p class="lede">The buttons, menus, messages, tables and pages behind brignano.io and every app beside it. Each product gets its own look from the same parts. Pick one and watch the whole wall change.</p>
-    <fieldset class="pick">
-      <legend>Show everything as</legend>
-      <div class="segmented">
-        <label><input type="radio" name="look" value="house" checked>brignano.io</label>
-        <label><input type="radio" name="look" value="homelab">Homelab</label>
-        <label><input type="radio" name="look" value="driftwood">Driftwood</label>
-        <label><input type="radio" name="look" value="sites">Sites</label>
-        <label><input type="radio" name="look" value="guidebook">Guidebook</label>
-      </div>
-    </fieldset>
+<div class="intro-block">
+  <p class="label"><span>Design system</span><span class="pill">v0.17.0</span></p>
+  <h1>brignano design</h1>
+  <p class="lede">The design system behind everything I build: tokens, components and page templates for brignano.io and every app beside it. Each product gets its own theme from the same parts, and every part works in light and dark.</p>
+  <div class="asks">
+    <a class="btn btn-primary" href="#parts">Browse every part</a>
+    <code class="install">npm install @brignano/design</code>
   </div>
 </div>
 
-<div class="stage" aria-label="Live components">
-  <div class="wall">
-    <div class="tile t-app" id="app">
-<div class="demo-bar"><span class="demo-brand">brignano.io</span><span class="demo-tabs" aria-hidden="true"><span class="on">Projects</span><span>Notes</span><span>About</span></span><button type="button" class="btn btn-primary btn-sm">New project</button></div><div class="demo-body"><div class="demo-head"><p class="eyebrow">This month</p><p class="demo-h">3 projects shipped. 1 needs a look.</p></div><div class="stat-grid demo-stats"><div class="stat"><span class="stat-label">Live</span><span class="stat-value">9</span></div><div class="stat"><span class="stat-label">Shipped</span><span class="stat-value">3</span></div><div class="stat"><span class="stat-label">Open issues</span><span class="stat-value">14</span></div></div><div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">The new logo is waiting on a review</p><p class="msg-body">The change has been open for two days.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Review it</button><button type="button" class="btn btn-sm">Later</button></div></div></div><div class="table-wrap"><table class="table"><thead><tr><th scope="col">Project</th><th scope="col">Status</th><th scope="col" class="num">Updated</th></tr></thead><tbody><tr><td>Design</td><td><span class="pill pill-success">Live</span></td><td class="num">Today</td></tr><tr><td>Driftwood</td><td><span class="pill pill-success">Live</span></td><td class="num">Mon</td></tr><tr><td>Homelab</td><td><span class="pill pill-attention">In review</span></td><td class="num">Sun</td></tr><tr><td>Card</td><td><span class="pill pill-success">Live</span></td><td class="num">Fri</td></tr></tbody></table></div></div>
-    </div>
+<ul class="ways">
+  <li><a class="way" href="#foundations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="5"/><circle cx="16" cy="16" r="5"/></svg><b>Foundations</b><span>Colour, type, space, shape and motion.</span><span class="n">8 pages</span></a></li>
+  <li><a class="way" href="#controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="5"/><circle cx="16" cy="12" r="2"/></svg><b>Components</b><span>Buttons, fields, menus, messages, tables.</span><span class="n">20 pages</span></a></li>
+  <li><a class="way" href="#templates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><b>Templates</b><span>Whole pages to start from.</span><span class="n">12 pages</span></a></li>
+  <li><a class="way" href="#parts" data-theme-jump><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.6 0-.9-.7-1.4-.7-2.2 0-.8.7-1.4 1.6-1.4H17a4 4 0 0 0 4-4c0-4.9-4-8.8-9-8.8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="11" r="1"/></svg><b>Themes</b><span>One per product. Preview any part in each.</span><span class="n">5 themes</span></a></li>
+</ul>
 
-    <div class="tile t-controls">
-      <p class="tile-label">Buttons and choices</p>
-      <div class="row"><button type="button" class="btn btn-primary">Save changes</button><button type="button" class="btn">Cancel</button><button type="button" class="btn btn-ghost">Skip</button></div>
-      <div class="row"><button type="button" class="chip" aria-pressed="true">Live</button><button type="button" class="chip" aria-pressed="false">Draft</button><button type="button" class="chip" aria-pressed="false">Archived</button></div>
-      <div class="segmented" role="radiogroup" aria-label="View"><label><input type="radio" name="w-view" checked>Day</label><label><input type="radio" name="w-view">Week</label><label><input type="radio" name="w-view">Month</label></div>
-      <div class="field"><label for="w-name">Project name</label><input id="w-name" value="Night sky map"></div>
-      <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Email me when it ships</span></label>
+<div class="tools" id="parts">
+  <div class="field"><label for="q">Search every part</label><input id="q" type="search" placeholder="Try “menu”, “toast” or “404”" autocomplete="off"></div>
+  <fieldset>
+    <legend>Preview in</legend>
+    <div class="segmented">
+      <label><input type="radio" name="look" value="" checked>brignano.io</label>
+      <label><input type="radio" name="look" value="homelab">Homelab</label>
+      <label><input type="radio" name="look" value="driftwood">Driftwood</label>
+      <label><input type="radio" name="look" value="sites">Sites</label>
+      <label><input type="radio" name="look" value="guidebook">Guidebook</label>
     </div>
-
-    <div class="tile t-menu">
-      <p class="tile-label">Menus and hints</p>
-      <div class="menu" role="menu" aria-label="Project actions">
-        <button type="button" class="menu-item" role="menuitem">Rename<span class="menu-item-hint"><kbd class="kbd">R</kbd></span></button>
-        <button type="button" class="menu-item" role="menuitem">Duplicate</button>
-        <button type="button" class="menu-item" role="menuitem">Share a link</button>
-        <hr class="menu-separator">
-        <button type="button" class="menu-item menu-item-danger" role="menuitem">Delete project</button>
-      </div>
-      <div class="row"><span class="tooltip" role="tooltip">Copied to your clipboard</span></div>
-    </div>
-
-    <div class="tile t-dialog">
-      <p class="tile-label">Dialogs</p>
-      <div class="box" role="group" aria-label="Example dialog">
-        <div class="dialog-header"><p class="dialog-title">Delete “Night sky map”?</p></div>
-        <div class="dialog-body"><p>The project and its links go too. This can’t be undone.</p></div>
-        <div class="dialog-footer"><button type="button" class="btn">Keep it</button><button type="button" class="btn btn-danger">Delete</button></div>
-      </div>
-    </div>
-
-    <div class="tile t-toasts">
-      <p class="tile-label">Messages</p>
-      <div class="toast toast-success" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div class="toast-content"><p class="toast-title">Published</p><p class="toast-body">It’s live at /night-sky.</p></div><button type="button" class="btn btn-ghost btn-sm toast-action">Undo</button></div>
-      <div class="toast toast-attention" role="status"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="toast-content"><p class="toast-title">Card expires soon</p><p class="toast-body">Update it before 1 Dec.</p></div></div>
-      <div class="toast toast-danger" role="status"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="toast-content"><p class="toast-title">Couldn’t save</p><p class="toast-body">You’re offline. It’ll retry.</p></div></div>
-    </div>
-
-    <div class="tile t-gauges">
-      <p class="tile-label">Numbers</p>
-      <div class="stat"><span class="stat-label">Visitors this week</span><span class="stat-value">1,284</span><span class="stat-delta" data-dir="up" data-tone="good">Up 12% from last week</span></div>
-      <label for="w-up">Uploading photos, 64%</label><progress class="progress" id="w-up" value="64" max="100">64%</progress>
-      <label for="w-disk">Disk used, 82%</label><meter class="meter" id="w-disk" value="0.82" low="0.5" high="0.75" optimum="0.1">82%</meter>
-    </div>
-
-    <div class="tile t-type">
-      <p class="big" aria-hidden="true">Aa</p>
-      <div class="stack gap-2">
-        <p class="tile-label">Type</p>
-        <p class="mono">FR-8821 · 2026-11-24 · 64% · $1,284.00</p>
-        <p style="margin:0;color:var(--ink-soft)">One face for words, one for numbers that must read exactly. Each product picks its own pair.</p>
-      </div>
-    </div>
-  </div>
+  </fieldset>
+  <p class="count" role="status" aria-live="polite">40 pages</p>
 </div>
 
-<div class="counts">
-  <div><b>40</b><span>pages of parts and templates, each live in light and dark</span></div>
-  <div><b>5</b><span>products, each with its own look from the same parts</span></div>
-  <div><b>2,000+</b><span>colour pairs checked for contrast on every change</span></div>
-  <div><b>1</b><span>colour for anything you can tap, one for anything that needs you</span></div>
-</div>
-
-<div class="catalogue">
-  <p class="label">Up close</p>
-  <h2 id="parts">Every part, one at a time.</h2>
-</div>
-
+<div class="parts" id="catalogue">
+<p class="empty" hidden><span class="empty-title">Nothing matches that.</span> <span class="empty-body">Try a shorter word, or clear the search.</span></p>
 <section aria-labelledby="foundations">
   <p class="label">01 / Foundations</p>
   <h2 id="foundations">The values everything else is made of.</h2>
@@ -551,94 +501,46 @@
     <li><a class="link" href="https://github.com/brignano/design/issues/84">Pricing table</a> <small class="site-status" data-status="planned">planned</small></li>
   </ul>
 </section>
+</div>
 </main>
+</div>
 
-<footer class="foot">
+<footer class="foot layout-foot">
   <span>MIT licensed</span>
   <a class="link" href="https://github.com/brignano/design">Source on GitHub</a>
   <a class="link" href="https://www.npmjs.com/package/@brignano/design">@brignano/design on npm</a>
   <a class="link" href="https://brignano.io">brignano.io</a>
 </footer>
-
-</div>
 <script>
 (() => {
-  // The live screen (issue 205). Each product's real theme (themes/<product>.css)
-  // re-skins the same components; only the demo words change with it.
-  // Demo data only.
-  const ICON = {
-    attention: '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>',
-    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',
-  };
-  const DEMOS = {
-    house: {
-      brand: 'brignano.io', tabs: ['Projects', 'Notes', 'About'], action: 'New project',
-      eyebrow: 'This month', headline: '3 projects shipped. 1 needs a look.',
-      stats: [['Live', '9'], ['Shipped', '3'], ['Open issues', '14']],
-      alert: ['The new logo is waiting on a review', 'The change has been open for two days.', 'Review it', 'Later'],
-      cols: ['Project', 'Status', 'Updated'],
-      rows: [['Design', 'success', 'Live', 'Today'], ['Driftwood', 'success', 'Live', 'Mon'], ['Homelab', 'attention', 'In review', 'Sun'], ['Card', 'success', 'Live', 'Fri']],
-    },
-    homelab: {
-      brand: 'homelab', tabs: ['Hosts', 'Backups', 'Alerts'], action: 'Add host',
-      eyebrow: 'Today', headline: '5 hosts. 1 needs you.',
-      stats: [['Hosts up', '4 of 5'], ['Busiest', '71%'], ['Last backup', '03:00']],
-      alert: ['pi-dns is running hot', 'Over 70% busy for the last hour.', 'Restart', 'Not now'],
-      cols: ['Host', 'Status', 'Busy'],
-      rows: [['pve-01', 'success', 'Running', '23%'], ['pi-dns', 'attention', 'Slow', '71%'], ['media', 'success', 'Running', '35%'], ['offsite', 'danger', 'Stopped', '–']],
-      field: ['Host name', 'nas-02'], toggle: 'Back it up every night', save: 'Add host',
-      toast: ['Backup finished', 'media: 12 GB in 4 minutes.'],
-    },
-    driftwood: {
-      brand: 'Driftwood', tabs: ['Map', 'Changes', 'Scans'], action: 'Run scan',
-      eyebrow: 'Since Monday', headline: '2 parts changed without the diagram.',
-      stats: [['Services', '14'], ['Changed', '2'], ['Last scan', '09:30']],
-      alert: ['checkout talks to a new database', 'It isn’t on the diagram yet.', 'Add it', 'Ignore'],
-      cols: ['Service', 'Status', 'Calls'],
-      rows: [['api', 'success', 'Matches', '1,204'], ['checkout', 'attention', 'Changed', '388'], ['billing', 'success', 'Matches', '96'], ['search', 'danger', 'Missing', '–']],
-      field: ['Repository', 'shop/main'], toggle: 'Scan every night', save: 'Run scan',
-      toast: ['Diagram updated', '14 services, 2 changes noted.'],
-    },
-    sites: {
-      brand: 'Sites', tabs: ['My site', 'Changes', 'Visits'], action: 'Ask for a change',
-      eyebrow: 'Corner Bakery', headline: 'Your site, changed when you ask.',
-      stats: [['Visits this week', '1,284'], ['Changes asked', '3'], ['Waiting', '1']],
-      alert: ['Sunday hours are waiting on you', 'Reply with the new times and it goes live.', 'Reply', 'Later'],
-      cols: ['Change', 'Status', 'Asked'],
-      rows: [['New photos', 'success', 'Live', 'Mon'], ['Sunday hours', 'attention', 'Waiting', 'Tue'], ['Holiday menu', 'success', 'Live', 'Wed']],
-      field: ['What should change?', 'Add our new phone number'], toggle: 'Email me when it’s live', save: 'Send it',
-      toast: ['Your site is updated', 'The new photos are live.'],
-    },
-    guidebook: {
-      brand: 'Guidebook', tabs: ['Guides', 'People', 'Settings'], action: 'New guide',
-      eyebrow: 'This week', headline: 'Show people the way, one step at a time.',
-      stats: [['Guides', '12'], ['Finished', '86%'], ['Got stuck', '3']],
-      alert: ['3 people got stuck on step 4', 'The button it points at has moved.', 'Fix the step', 'Later'],
-      cols: ['Guide', 'Status', 'Finished'],
-      rows: [['Set up billing', 'success', 'Live', '91%'], ['Invite your team', 'attention', 'Needs a fix', '62%'], ['Export a report', 'success', 'Live', '88%']],
-      field: ['Guide name', 'Connect your calendar'], toggle: 'Show on first visit', save: 'Publish guide',
-      toast: ['Guide published', 'People see it on their next visit.'],
-    },
-  };
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  function render(d) {
-    return `<div class="demo-bar"><span class="demo-brand">${esc(d.brand)}</span>`
-      + `<span class="demo-tabs" aria-hidden="true">${d.tabs.map((t, i) => `<span${i ? '' : ' class="on"'}>${esc(t)}</span>`).join('')}</span>`
-      + `<button type="button" class="btn btn-primary btn-sm">${esc(d.action)}</button></div>`
-      + `<div class="demo-body"><div class="demo-head"><p class="eyebrow">${esc(d.eyebrow)}</p><p class="demo-h">${esc(d.headline)}</p></div>`
-      + `<div class="stat-grid demo-stats">${d.stats.map(([l, v]) => `<div class="stat"><span class="stat-label">${esc(l)}</span><span class="stat-value">${esc(v)}</span></div>`).join('')}</div>`
-      + `<div class="msg msg-attention">${ICON.attention}<div class="msg-content"><p class="msg-title">${esc(d.alert[0])}</p><p class="msg-body">${esc(d.alert[1])}</p>`
-      + `<div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">${esc(d.alert[2])}</button><button type="button" class="btn btn-sm">${esc(d.alert[3])}</button></div></div></div>`
-      + `<div class="table-wrap"><table class="table"><thead><tr><th scope="col">${esc(d.cols[0])}</th><th scope="col">${esc(d.cols[1])}</th><th scope="col" class="num">${esc(d.cols[2])}</th></tr></thead><tbody>`
-      + d.rows.map(([n, tone, s, v]) => `<tr><td>${esc(n)}</td><td><span class="pill pill-${tone}">${esc(s)}</span></td><td class="num">${esc(v)}</td></tr>`).join('')
-      + `</tbody></table></div></div>`;
+  // Search and theme preview for the catalogue (issue 205). Without script
+  // the page is the full list.
+  const q = document.getElementById('q');
+  const parts = document.getElementById('catalogue');
+  const count = document.querySelector('.tools .count');
+  const empty = parts.querySelector('.empty');
+  const cards = [...parts.querySelectorAll('.gallery-grid > li')];
+  function filter() {
+    const term = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const li of cards) { const hit = !term || li.textContent.toLowerCase().includes(term); li.hidden = !hit; if (hit) shown++; }
+    for (const sec of parts.querySelectorAll('section')) {
+      const any = [...sec.querySelectorAll('.gallery-grid > li')].some((li) => !li.hidden);
+      sec.hidden = !any;
+      for (const el of sec.querySelectorAll('.planned-title, .planned')) el.hidden = Boolean(term);
+    }
+    empty.hidden = shown > 0;
+    count.textContent = term ? `${shown} of ${cards.length} pages match` : `${cards.length} pages`;
   }
-  const stage = document.querySelector('.stage');
-  const app = document.getElementById('app');
+  q.addEventListener('input', filter);
+  const focus = () => { document.getElementById('parts').scrollIntoView({ block: 'start' }); q.focus({ preventScroll: true }); };
+  document.querySelector('[data-find]').addEventListener('click', focus);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !/^(input|textarea|select)$/i.test(e.target.tagName) && !e.target.isContentEditable) { e.preventDefault(); focus(); }
+  });
   document.querySelectorAll('input[name="look"]').forEach((r) => r.addEventListener('change', () => {
-    if (!r.checked || !DEMOS[r.value]) return;
-    if (r.value === 'house') delete stage.dataset.product; else stage.dataset.product = r.value;
-    app.innerHTML = render(DEMOS[r.value]);
+    if (!r.checked) return;
+    if (r.value) parts.dataset.product = r.value; else delete parts.dataset.product;
   }));
 })();
 </script>
