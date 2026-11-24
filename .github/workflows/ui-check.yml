@@ -1,0 +1,65 @@
+name: ui-check
+
+# Fleet UX gate: axe-core (WCAG 2.2 AA) at mobile and desktop, light and dark,
+# on the home page and every preview page. Fails on serious or critical
+# violations and console errors; screenshots are uploaded as an artifact.
+# The page list below is literal (the reusable job takes no globs): when you
+# add a preview page, add it here too.
+on:
+  pull_request:
+
+jobs:
+  ui:
+    uses: brignano/ai-tools/.github/workflows/ui-check.yml@main
+    with:
+      install: "true"            # no npm deps: the site is plain HTML and CSS
+      build: ""                  # nothing to build; the pages are committed
+      serve: python3 -m http.server 4173
+      url: http://localhost:4173
+      pages: |
+        /
+        /previews/app-shell.html
+        /previews/article.html
+        /previews/buttons.html
+        /previews/cards.html
+        /previews/changelog.html
+        /previews/chips.html
+        /previews/choices.html
+        /previews/color.html
+        /previews/components.html
+        /previews/content.html
+        /previews/diagram.html
+        /previews/dialogs.html
+        /previews/disclosure.html
+        /previews/elevation.html
+        /previews/email.html
+        /previews/error.html
+        /previews/feedback.html
+        /previews/fields.html
+        /previews/icons.html
+        /previews/kv-stat.html
+        /previews/layout.html
+        /previews/legal.html
+        /previews/loading.html
+        /previews/menus.html
+        /previews/navigation.html
+        /previews/product-media.html
+        /previews/product-page-example.html
+        /previews/product-page-guidebook.html
+        /previews/product-page-sites.html
+        /previews/product-page.html
+        /previews/prose.html
+        /previews/settings.html
+        /previews/site-chrome.html
+        /previews/status.html
+        /previews/table.html
+        /previews/tabs.html
+        /previews/theme-brignano-io.html
+        /previews/theme-driftwood.html
+        /previews/theme-guidebook.html
+        /previews/theme-homelab.html
+        /previews/theme-sites.html
+        /previews/toasts.html
+        /previews/tooltips.html
+        /previews/type.html
+        /previews/writing.html
