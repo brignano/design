@@ -182,6 +182,13 @@ The part that makes an interface feel built rather than styled.
   `disabled` on a button or input, `aria-disabled="true"` otherwise. Disabled
   styling on an element that isn't marked disabled is just low-contrast text.
 - Focus is always visible: 2px `--action-ink` outline, 2px offset. Never remove it.
+- **A link that leaves the site opens in a new tab and says so** (#207):
+  `target="_blank" rel="noopener"`, `.link-external` for the external-link icon
+  after the text, and a `.visually-hidden` "(opens in a new tab)" inside the
+  link. Leaving the site means another domain: GitHub, npm, another product.
+  A link within the site, to another page, a section or a file it serves, stays
+  in the tab with no icon, so the icon only ever means "this takes you
+  somewhere else".
 - Hover and pressed surfaces on neutral elements come from `--surface-hover` and
   `--surface-active`, not from opacity tricks.
 - A control's own edge — an input, a secondary button — is `--line-control`

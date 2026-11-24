@@ -122,6 +122,38 @@
   .link:hover { color: var(--action-ink-hover); }
   .link:focus-visible { outline: 2px solid var(--action-ink); outline-offset: 2px; }
 
+  /* A link that leaves the site (issue 207): it opens in a new tab and says so.
+     .link-external draws the external-link icon (icons/external-link.svg)
+     after the text at text size, in the link's own colour; the words for
+     screen readers go in a .visually-hidden span inside the link.
+       <a class="link link-external" href="https://…" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+     It works on any <a>, with or without .link. Same-site links never get it. */
+  .link-external::after {
+    /* An inline box holding a word joiner, never an inline-block: the joiner
+       forbids a line break before the icon, so it never wraps alone onto a
+       line of its own. Its width is the padding; the mask draws the icon. */
+    content: '\2060';
+    padding-inline-start: 0.8em;
+    margin-inline-start: 0.3em;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E") right center / 0.8em 0.8em no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E") right center / 0.8em 0.8em no-repeat;
+  }
+  /* Forced colours would repaint the icon's fill as the page background. */
+  @media (forced-colors: active) {
+    .link-external::after { forced-color-adjust: none; background: LinkText; }
+  }
+
+  /* Text for screen readers only: in the accessibility tree, off the screen. */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   @media (pointer: coarse) {
     .btn:not(.btn-lg) { min-height: 44px; }
     .btn-icon { min-width: 44px; }

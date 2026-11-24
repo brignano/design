@@ -17,6 +17,10 @@
   .panel > .row, .panel > .btn-block { margin-top: var(--space-3); }
   .pair { grid-template-columns: minmax(0, 1fr); }
   .prose-line { margin: var(--space-3) 0 0; font-size: var(--text-sm); }
+  .section-title { all: revert-layer; margin: var(--space-7) 0 var(--space-2); font-size: var(--text-lg); font-weight: var(--weight-semibold); }
+  .ext-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .ext-marketing .prose-line { font-size: var(--text-lg); }
+  .ext-tier-note { margin-top: var(--space-6); }
 </style>
 </head>
 <body>
@@ -123,6 +127,30 @@
   </div>
 </div>
 
+<h2 class="section-title" id="external">Links that leave the site</h2>
+<p class="sub">A link to another site opens in a new tab and says so: the external-link icon after the text, and "(opens in a new tab)" for screen readers. Links within the site stay in the tab, unmarked.</p>
+<div class="pair">
+  <div class="panel light"><span class="panel-label">Light</span>
+    <p class="prose-line">Running text with a link to <a class="link link-external" href="https://github.com/brignano/design" target="_blank" rel="noopener">the source on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>, and one to <a class="link" href="#external">this section</a>, which stays in the tab.</p>
+    <p class="prose-line ext-row"><a class="link link-external" href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">npm<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="link link-external" href="https://brignano.io" target="_blank" rel="noopener">brignano.io<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="btn btn-secondary link-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Release notes<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+    <p class="prose-line">Running text with a link to <a class="link link-external" href="https://github.com/brignano/design" target="_blank" rel="noopener">the source on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>, and one to <a class="link" href="#external">this section</a>, which stays in the tab.</p>
+    <p class="prose-line ext-row"><a class="link link-external" href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">npm<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="link link-external" href="https://brignano.io" target="_blank" rel="noopener">brignano.io<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="btn btn-secondary link-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Release notes<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+  </div>
+</div>
+<p class="sub ext-tier-note">Marketing tier: the icon is sized in <code>em</code>, so it follows the larger text with no extra rule.</p>
+<div class="pair tier-marketing ext-marketing">
+  <div class="panel light"><span class="panel-label">Light</span>
+    <p class="prose-line">Running text with a link to <a class="link link-external" href="https://github.com/brignano/design" target="_blank" rel="noopener">the source on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>, and one to <a class="link" href="#external">this section</a>, which stays in the tab.</p>
+    <p class="prose-line ext-row"><a class="link link-external" href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">npm<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="link link-external" href="https://brignano.io" target="_blank" rel="noopener">brignano.io<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="btn btn-secondary link-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Release notes<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+  </div>
+  <div class="panel dark"><span class="panel-label">Dark</span>
+    <p class="prose-line">Running text with a link to <a class="link link-external" href="https://github.com/brignano/design" target="_blank" rel="noopener">the source on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>, and one to <a class="link" href="#external">this section</a>, which stays in the tab.</p>
+    <p class="prose-line ext-row"><a class="link link-external" href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">npm<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="link link-external" href="https://brignano.io" target="_blank" rel="noopener">brignano.io<span class="visually-hidden"> (opens in a new tab)</span></a> <a class="btn btn-secondary link-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Release notes<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+  </div>
+</div>
+
 <div class="docs">
   <section data-doc="usage">
     <h2>Use it</h2>
@@ -133,7 +161,10 @@
 &lt;!-- while saving: your script sets it and ignores clicks --&gt;
 &lt;button class="btn btn-primary" aria-busy="true"&gt;Save&lt;/button&gt;
 
-&lt;p&gt;Read the &lt;a class="link" href="/terms"&gt;terms&lt;/a&gt;.&lt;/p&gt;</pre>
+&lt;p&gt;Read the &lt;a class="link" href="/terms"&gt;terms&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!-- a link that leaves the site: new tab, icon, and the words for screen readers --&gt;
+&lt;a class="link link-external" href="https://github.com/brignano/design" target="_blank" rel="noopener"&gt;Source on GitHub&lt;span class="visually-hidden"&gt; (opens in a new tab)&lt;/span&gt;&lt;/a&gt;</pre>
   </section>
 
   <div class="two">
@@ -143,6 +174,7 @@
         <li>Someone acts: save, send, delete, open a dialog. Use <code>&lt;button&gt;</code>.</li>
         <li>A link should look like an action, such as "Cancel" next to "Save". Put <code>.btn</code> on the <code>&lt;a href&gt;</code>.</li>
         <li>A link sits inside running text: <code>.link</code>.</li>
+        <li>A link leaves the site (GitHub, npm, another product): add <code>.link-external</code>, <code>target="_blank" rel="noopener"</code> and a <code>.visually-hidden</code> "(opens in a new tab)". It works on <code>.link</code>, <code>.btn</code> or a bare <code>&lt;a&gt;</code>.</li>
         <li>For the words, follow <a class="link" href="writing.html#buttons-and-links">Buttons and links</a> in the content guidelines.</li>
       </ul>
     </section>
@@ -152,6 +184,7 @@
         <li>Navigation inside running text: use <code>.link</code>, not a button.</li>
         <li>A choice between options: the segmented control, not a row of buttons.</li>
         <li>Two primaries side by side: make one secondary.</li>
+        <li><code>.link-external</code> on a link within the site, even another page or a download: it stays in the tab and unmarked.</li>
       </ul>
     </section>
   </div>
@@ -194,6 +227,7 @@
       <li>Use <code>&lt;button&gt;</code> for actions and <code>&lt;a href&gt;</code> for navigation; the class is the same.</li>
       <li>Every label passes 4.5:1 in both themes, in every state but disabled, which WCAG exempts because the control is really inactive.</li>
       <li>Targets reach 44px on touch. The busy spinner slows under reduced motion; announce the result of the action yourself.</li>
+      <li>A link that opens a new tab says so to screen readers with a <code>.visually-hidden</code> "(opens in a new tab)" inside it; the icon is drawn by CSS and is never read. Under forced colours the icon takes <code>LinkText</code>.</li>
     </ul>
   </section>
 </div>
