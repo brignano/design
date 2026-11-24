@@ -16,6 +16,14 @@
 
 <div class="pair">
   <div class="panel light"><span class="panel-label">Light</span>
+      <template data-compare><article class="prose">
+        <p>Our builds took fourteen minutes. Here's how we got them to six without touching a single test, and what we'd do differently.</p>
+        <h2>Find the real cause</h2>
+        <p>The pipeline rebuilt every package on every commit. A trace showed <strong>80% of the time</strong> went to packages nobody had changed. See the <a href="#">build log</a>.</p>
+        <ol><li>Hash each package's inputs.</li><li>Skip the build when the hash is in the cache.</li></ol>
+        <p>Run <code>npm run build -- --cache</code> locally, or press <kbd>⌘</kbd> <kbd>B</kbd>.</p>
+        <blockquote><p>We cut build times in half without touching a single test.</p><p>Ana Ruiz, platform lead</p></blockquote>
+      </article></template>
       <article class="prose">
         <p>Our builds took fourteen minutes. Here's how we got them to six without touching a single test, and what we'd do differently.</p>
         <h2 id="l-cause">Find the real cause <a class="anchor" href="#l-cause" aria-label="Link to Find the real cause"></a></h2>

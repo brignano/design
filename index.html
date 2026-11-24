@@ -73,8 +73,9 @@
 
 
   /* The playground: one composed screen from real parts, re-themed by the
-     product and light/dark controls above it. The product choice is the
-     site-wide theme (issue 212): it re-themes the whole site. */
+     product and light/dark controls above it. The product choice also
+     re-themes every card in the catalogue on this page, and nothing else
+     (issue 214: the rest of the site stays in the house look). */
   .play { container-type: inline-size; margin: 0 0 var(--space-7); border: 1px solid var(--line); border-radius: var(--radius-lg);
           background: var(--card); overflow: hidden; }
   .play-bar { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); align-items: center;
@@ -104,7 +105,7 @@
   .demo-stats .stat-value { font-size: clamp(1.1rem, 3cqi, 1.6rem); }
   @container (min-width: 760px) { .demo-tabs { display: flex; } }
   /* The house look's display face is the pixel one, kept for eyebrows. */
-  :root:not([data-product]) .play-stage :is(.demo-h, .demo-brand) { font-family: var(--sans); text-transform: none; }
+  .play-stage:not([data-product]) :is(.demo-h, .demo-brand) { font-family: var(--sans); text-transform: none; }
 
   /* Specimen-first cards: the live preview is most of the tile. */
   .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)) !important; gap: var(--space-3) !important; }
@@ -166,6 +167,13 @@
   .elev[data-theme="dark"] i.e3 { background: var(--neutral-200); }
   .spec .msg { width: 100%; max-width: 280px; }
   .spec .node { width: 210px; }
+  /* A product's card wears that product's theme (issue 214). */
+  .theme-spec { font-family: var(--sans); color: var(--ink); flex-wrap: nowrap; justify-content: space-between; padding: var(--space-4) var(--space-5); }
+  .theme-spec .aa { width: auto; font-family: var(--display); font-weight: var(--weight-heavy, 700);
+                    text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal); }
+  .theme-spec:not([data-product]) .aa { font-family: var(--sans); text-transform: none; }
+  .theme-spec .dots { width: 72px; flex-wrap: wrap; gap: 6px; }
+  .theme-spec .dots i { flex: 0 0 33px; height: 33px; border-radius: var(--radius-sm); }
   .chrome-spec { display: flex; align-items: center; gap: 10px; width: 220px; height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface-sticky); }
   .chrome-spec span { display: block; height: 8px; border-radius: 4px; background: var(--line-strong); }
   .chrome-spec .chrome-brand { width: 40px; margin-right: auto; background: var(--ink); }
@@ -212,6 +220,7 @@
   <span class="ds-ver">v0.17.0</span>
   <nav class="ds-sections" aria-label="Sections">
     <a href="#foundations">Foundations</a>
+    <a href="#products">Products</a>
     <a href="#controls">Components</a>
     <a href="#templates">Templates</a>
     <a class="ds-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<span class="ds-hidden"> (opens in a new tab)</span></a>
@@ -232,6 +241,7 @@
   <p class="ds-side-head">Every part</p>
   <ul>
       <li><a href="#foundations">Foundations</a></li>
+      <li><a href="#products">Products</a></li>
       <li><a href="#controls">Controls</a></li>
       <li><a href="#feedback">Feedback</a></li>
       <li><a href="#overlays">Overlays</a></li>
@@ -299,12 +309,12 @@
   <li><a class="way" href="#foundations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="5"/><circle cx="16" cy="16" r="5"/></svg><b>Foundations</b><span>Colour, type, space, shape and motion.</span><span class="n">8 pages</span></a></li>
   <li><a class="way" href="#controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="5"/><circle cx="16" cy="12" r="2"/></svg><b>Components</b><span>Buttons, fields, menus, messages, tables.</span><span class="n">20 pages</span></a></li>
   <li><a class="way" href="#templates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><b>Templates</b><span>Whole pages to start from.</span><span class="n">12 pages</span></a></li>
-  <li><a class="way" href="#top" data-theme-jump><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.6 0-.9-.7-1.4-.7-2.2 0-.8.7-1.4 1.6-1.4H17a4 4 0 0 0 4-4c0-4.9-4-8.8-9-8.8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="11" r="1"/></svg><b>Themes</b><span>One per product. Switch them in the playground.</span><span class="n">5 themes</span></a></li>
+  <li><a class="way" href="#products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.6 0-.9-.7-1.4-.7-2.2 0-.8.7-1.4 1.6-1.4H17a4 4 0 0 0 4-4c0-4.9-4-8.8-9-8.8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="11" r="1"/></svg><b>Themes</b><span>One per product. See each one’s whole look, and every part in each.</span><span class="n">5 themes</span></a></li>
 </ul>
 
 <div class="tools" id="parts">
   <div class="field"><label for="q">Filter every part</label><input id="q" type="search" placeholder="Try “menu”, “toast” or “404”" autocomplete="off"></div>
-  <p class="count" role="status" aria-live="polite">40 pages</p>
+  <p class="count" role="status" aria-live="polite">45 pages</p>
 </div>
 
 <div class="parts" id="catalogue">
@@ -351,8 +361,35 @@
   </ul>
 </section>
 
+<section aria-labelledby="products">
+  <p class="label">02 / Products</p>
+  <h2 id="products">One theme per product, from the same parts.</h2>
+  <ul class="gallery-grid">
+    <li><a class="gallery-card" href="previews/theme-brignano-io.html">
+      <div class="spec theme-spec" aria-hidden="true"><span class="aa">Aa</span><div class="dots"><i style="background:var(--action)"></i><i style="background:var(--accent, var(--action-surface))"></i><i style="background:var(--ink)"></i><i style="background:var(--success)"></i></div></div>
+      <div class="txt"><b>brignano.io</b><span>The house look: Geist, the pixel display face, cobalt.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/theme-homelab.html">
+      <div class="spec theme-spec" data-product="homelab" aria-hidden="true"><span class="aa">Aa</span><div class="dots"><i style="background:var(--action)"></i><i style="background:var(--accent, var(--action-surface))"></i><i style="background:var(--ink)"></i><i style="background:var(--success)"></i></div></div>
+      <div class="txt"><b>Homelab</b><span>The house look in a console shell, set in Archivo.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/theme-driftwood.html">
+      <div class="spec theme-spec" data-product="driftwood" aria-hidden="true"><span class="aa">Aa</span><div class="dots"><i style="background:var(--action)"></i><i style="background:var(--accent, var(--action-surface))"></i><i style="background:var(--ink)"></i><i style="background:var(--success)"></i></div></div>
+      <div class="txt"><b>Driftwood</b><span>Dark only, teal, set in Martian Mono on a canvas.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/theme-sites.html">
+      <div class="spec theme-spec" data-product="sites" aria-hidden="true"><span class="aa">Aa</span><div class="dots"><i style="background:var(--action)"></i><i style="background:var(--accent, var(--action-surface))"></i><i style="background:var(--ink)"></i><i style="background:var(--success)"></i></div></div>
+      <div class="txt"><b>Sites</b><span>Magenta on a soft wash, Onest, round corners.</span><span class="go">View →</span></div>
+    </a></li>
+    <li><a class="gallery-card" href="previews/theme-guidebook.html">
+      <div class="spec theme-spec" data-product="guidebook" aria-hidden="true"><span class="aa">Aa</span><div class="dots"><i style="background:var(--action)"></i><i style="background:var(--accent, var(--action-surface))"></i><i style="background:var(--ink)"></i><i style="background:var(--success)"></i></div></div>
+      <div class="txt"><b>Guidebook</b><span>Violet on a bright ground, Bricolage Grotesque headings.</span><span class="go">View →</span></div>
+    </a></li>
+  </ul>
+</section>
+
 <section aria-labelledby="controls">
-  <p class="label">02 / Controls</p>
+  <p class="label">03 / Controls</p>
   <h2 id="controls">Every state has a real value.</h2>
   <ul class="gallery-grid">
     <li><a class="gallery-card" href="previews/buttons.html">
@@ -382,7 +419,7 @@
 </section>
 
 <section aria-labelledby="feedback">
-  <p class="label">03 / Feedback</p>
+  <p class="label">04 / Feedback</p>
   <h2 id="feedback">State in a word, never colour alone.</h2>
   <ul class="gallery-grid">
     <li><a class="gallery-card" href="previews/feedback.html">
@@ -405,7 +442,7 @@
 </section>
 
 <section aria-labelledby="overlays">
-  <p class="label">04 / Overlays</p>
+  <p class="label">05 / Overlays</p>
   <h2 id="overlays">On top, briefly, and easy to leave.</h2>
   <ul class="gallery-grid">
     <li><a class="gallery-card" href="previews/dialogs.html">
@@ -428,7 +465,7 @@
 </section>
 
 <section aria-labelledby="data">
-  <p class="label">05 / Data</p>
+  <p class="label">06 / Data</p>
   <h2 id="data">Numbers that read precise.</h2>
   <ul class="gallery-grid">
     <li><a class="gallery-card" href="previews/table.html">
@@ -460,7 +497,7 @@
 </section>
 
 <section aria-labelledby="navigation">
-  <p class="label">06 / Navigation</p>
+  <p class="label">07 / Navigation</p>
   <h2 id="navigation">Where you are, and where you can go.</h2>
   <ul class="gallery-grid">
     <li><a class="gallery-card" href="previews/site-chrome.html">
@@ -487,7 +524,7 @@
 </section>
 
 <section aria-labelledby="templates">
-  <p class="label">07 / Templates</p>
+  <p class="label">08 / Templates</p>
   <h2 id="templates">One argument and one ask.</h2>
   <ul class="gallery-grid">
     <li><a class="gallery-card" href="previews/product-page.html">
@@ -674,21 +711,16 @@
   }
   const stage = document.querySelector('.play-stage');
   const app = document.getElementById('app');
-  // The playground's Theme is the site-wide theme (issue 212): picking one
-  // here re-themes the whole site, the same as the top bar's picker, and a
-  // pick there shows up here.
-  const looks = [...document.querySelectorAll('input[name="look"]')];
-  const showLook = (id) => {
-    for (const r of looks) r.checked = r.value === id;
-    app.innerHTML = render(DEMOS[id || 'house']);
-  };
-  looks.forEach((r) => r.addEventListener('change', () => {
+  // The playground's Theme re-themes the playground and the catalogue on
+  // this page only (issue 214). To compare one part across products, each
+  // component page has "In every product".
+  document.querySelectorAll('input[name="look"]').forEach((r) => r.addEventListener('change', () => {
     if (!r.checked) return;
-    if (window.dsTheme) window.dsTheme.setProduct(r.value);
-    else showLook(r.value);
+    // The Products cards keep their own looks.
+    const themed = [stage, ...parts.querySelectorAll('section:not([aria-labelledby="products"])')];
+    for (const el of themed) { if (r.value) el.dataset.product = r.value; else delete el.dataset.product; }
+    app.innerHTML = render(DEMOS[r.value || 'house']);
   }));
-  document.addEventListener('ds-product', (e) => showLook(e.detail), { signal: window.dsPage?.signal });
-  if (window.dsTheme?.product) showLook(window.dsTheme.product);
   document.querySelectorAll('input[name="mode"]').forEach((r) => r.addEventListener('change', () => {
     if (!r.checked) return;
     if (r.value) stage.dataset.theme = r.value; else delete stage.dataset.theme;

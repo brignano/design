@@ -88,3 +88,23 @@ h2.kits { font-size: var(--text-lg); font-weight: 600; letter-spacing: -.01em; m
 .dtag-changed { color: var(--diff-changed-ink); border-color: var(--diff-changed); }
 .dtag-down { color: var(--danger-ink); border-color: var(--danger); }
 .dtag-degraded { color: var(--attention-ink); border-color: var(--attention); }
+
+/* ── Product theme pages (theme-*.html, issue 214) ── */
+/* Each panel wears one product's theme from data-product down: its ground,
+   face and ink, in a forced light or dark. */
+.panel.theme-panel { background: var(--bg); color: var(--ink); font-family: var(--sans); }
+.theme-pair.one { grid-template-columns: minmax(0, 1fr); max-width: 640px; }
+.theme-recipe { margin: 0 0 var(--space-3); padding: var(--space-4); max-width: 640px; overflow-x: auto;
+                font-family: var(--mono); font-size: var(--text-sm); line-height: 1.6;
+                background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); }
+.theme-type { display: flex; flex-direction: column; gap: var(--space-2); }
+.theme-type p { margin: 0; }
+.theme-display { font-family: var(--display); font-weight: var(--weight-heavy, 700); text-transform: var(--display-case, none);
+                 font-stretch: var(--display-stretch, normal); font-size: var(--text-2xl); line-height: var(--leading-display, 1.1);
+                 letter-spacing: var(--tracking-display, -.02em); text-wrap: balance; }
+.theme-body { font-size: var(--text-base); color: var(--ink-soft); }
+.theme-mono { font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft); }
+.theme-parts { display: flex; flex-direction: column; gap: var(--space-4); }
+.theme-parts .field { max-width: 360px; }
+/* The house look's display face is the pixel one, kept for eyebrows. */
+.theme-panel:not([data-product]) .theme-display { font-family: var(--sans); text-transform: none; }

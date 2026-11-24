@@ -29,7 +29,7 @@
       <span class="avatar avatar-sm" role="img" aria-label="Chen Li">CL</span>
     </div>
     <p style="margin:0">Open search with <kbd class="kbd">⌘</kbd> <kbd class="kbd">K</kbd>, then run <code class="code">npm run check</code>.</p>
-    <figure class="code-block">
+    <figure class="code-block" data-compare>
       <figcaption class="code-block-header">
         <span class="code-block-file">scripts/deploy.mjs</span>
         <button type="button" class="code-block-copy">Copy</button>
@@ -39,7 +39,7 @@
 <span class="line-highlight"><span class="tok-keyword">if</span> (!checks.every(Boolean)) <span class="tok-keyword">throw new</span> Error(<span class="tok-string">`checks failed for ${target}`</span>); <span class="tok-comment">// fail fast</span></span>
 <span class="tok-keyword">await</span> deploy({ target, wait: <span class="tok-keyword">true</span>, message: <span class="tok-string">'Ship the build'</span> });</code></pre>
     </figure>
-    <blockquote class="blockquote">
+    <blockquote class="blockquote" data-compare>
       <p>We cut build times in half without touching a single test.</p>
       <cite>Ana Ruiz, platform lead</cite>
     </blockquote>

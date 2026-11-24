@@ -65,7 +65,8 @@
         </tr>
       </tbody>
     </table></div>
-    <div class="row">
+    <template data-compare><div class="row"><button type="button" class="btn btn-primary">Primary</button><button type="button" class="btn btn-secondary">Secondary</button><button type="button" class="btn btn-ghost">Ghost</button><button type="button" class="btn btn-danger">Danger</button><button type="button" class="btn btn-primary" disabled>Disabled</button></div></template>
+    <div class="row" data-compare>
       <button type="button" class="btn btn-primary btn-sm">Small</button>
       <button type="button" class="btn btn-primary">Default</button>
       <button type="button" class="btn btn-primary btn-lg">Large</button>
@@ -74,7 +75,7 @@
       <a class="btn btn-secondary" href="#" aria-disabled="true">Link, aria-disabled</a>
     </div>
     <button type="button" class="btn btn-primary btn-block">Block</button>
-    <p class="prose-line">Running text with an <a class="link" href="#">inline link</a> in it.</p>
+    <p class="prose-line" data-compare>Running text with an <a class="link" href="#">inline link</a> in it.</p>
   </div>
   <div class="panel dark"><span class="panel-label">Dark</span>
     <div class="states-wrap"><table class="states">

@@ -76,50 +76,21 @@
   cursor: pointer; white-space: nowrap; transition: background-color var(--duration-fast);
 }
 .ds-theme:hover { background: var(--surface-hover); }
-/* Mode and theme (issue 212): an icon and a word; under 600px the icon alone,
+/* Mode (issue 212): an icon and a word; under 600px the icon alone,
    the word still read out (it is visually hidden, not removed). */
 .ds-theme { gap: var(--space-2); padding: 0 10px; justify-content: center; }
-.ds-ico, .ds-chev { display: inline-flex; flex: none; }
+.ds-ico { display: inline-flex; flex: none; }
 .ds-ico svg { width: 16px; height: 16px; }
-.ds-chev svg { width: 14px; height: 14px; color: var(--slate); }
 @media (max-width: 599px) {
   .ds-theme { min-width: 40px; padding: 0; }
-  .ds-theme .ds-label, .ds-theme .ds-chev {
+  .ds-theme .ds-label {
     position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
   }
 }
 
-/* The home writes an empty slot in its bar for the two controls. */
+/* The home writes an empty slot in its bar for the mode control. */
 [data-site-toggle] { display: inline-flex; flex: none; gap: var(--space-4); }
 @media (max-width: 599px) { [data-site-toggle] { gap: var(--space-3); } }
-
-/* The theme menu: radio items under the button. */
-.ds-pick-wrap { position: relative; flex: none; display: inline-flex; }
-.ds-pick-menu {
-  position: absolute; top: calc(100% + 6px); right: 0; z-index: 35; min-width: 12rem;
-  display: grid; gap: 2px; padding: var(--space-2); box-sizing: border-box;
-  color: var(--ink); background: var(--card); border: 1px solid var(--line);
-  border-radius: var(--radius-card, var(--radius-sm)); box-shadow: var(--shadow-3);
-}
-.ds-pick-menu[hidden] { display: none; }
-.ds-pick-head {
-  margin: 2px var(--space-2) var(--space-1); font-family: var(--mono); font-size: var(--text-xs);
-  letter-spacing: .1em; text-transform: uppercase; color: var(--slate);
-}
-.ds-pick-item {
-  display: flex; align-items: center; gap: var(--space-2); width: 100%; min-height: 36px; padding: 0 var(--space-3) 0 var(--space-2);
-  font: inherit; text-align: left; color: var(--ink); background: transparent; border: 0;
-  border-radius: var(--radius-sm); cursor: pointer;
-}
-.ds-pick-item .ds-ico { visibility: hidden; color: var(--action-ink); }
-.ds-pick-item[aria-checked="true"] { font-weight: 600; }
-.ds-pick-item[aria-checked="true"] .ds-ico { visibility: visible; }
-.ds-pick-item:hover, .ds-pick-item:focus-visible { background: var(--surface-hover); outline: 0; }
-.ds-pick-item:focus-visible { box-shadow: inset 0 0 0 2px var(--action-ink); }
-.ds-pick-note {
-  max-width: 15rem; margin: var(--space-1) var(--space-2) 2px; padding-top: var(--space-2);
-  border-top: 1px solid var(--line); color: var(--slate); font-size: var(--text-xs);
-}
 
 /* Under 600px the bar keeps the menu, the mark, search and the theme. */
 @media (max-width: 599px) {
@@ -285,6 +256,22 @@
 /* The heading the swap moves focus to is not a control. */
 .ds-chrome h1[tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
 
+/* ── In every product (issue 214) ──────────────────────────────────────────── */
+/* One cell per product: its own ground, face and ink (the theme's tokens
+   apply from the cell down), so the specimen inside reads as that product. */
+.ds-compare { margin: var(--space-7) 0 0; }
+.ds-compare-grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+.ds-compare-cell {
+  min-width: 0; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-4) var(--space-5) var(--space-5);
+  background: var(--bg); color: var(--ink); font-family: var(--sans);
+  border: 1px solid var(--line); border-radius: var(--radius-card);
+}
+.ds-compare-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin: 0; }
+.ds-compare-name { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.ds-compare-link { font-size: var(--text-sm); color: var(--action-ink); text-underline-offset: 3px; }
+.ds-compare-body { display: flex; flex-direction: column; gap: 16px; min-width: 0; overflow-x: auto; }
+@media (pointer: coarse) { .ds-compare-link { min-height: 44px; display: inline-flex; align-items: center; } }
+
 /* ── Previous / next, at the end of each page ─────────────────────────── */
 .ds-pager {
   display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);
@@ -312,7 +299,6 @@
   .ds-sections a, .ds-pager a { min-height: 44px; box-sizing: border-box; }
   .ds-brand { min-height: 44px; align-items: center; }
   .ds-menu, .ds-icon-btn, .ds-find, .ds-theme, .ds-esc { min-height: 44px; min-width: 44px; }
-  .ds-pick-item { min-height: 44px; }
   .ds-side a { min-height: 44px; display: flex; align-items: center; box-sizing: border-box; }
   .ds-hit { min-height: 44px; align-content: center; }
 }
