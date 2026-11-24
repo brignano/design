@@ -3,11 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>@brignano/design — the design system behind brignano.io</title>
-<meta name="description" content="The design system behind brignano.io and its tools: one foundation for colour, type, space, shape and motion, previewed live in light and dark.">
+<title>brignano design: make every app you build look finished</title>
+<meta name="description" content="A free, open-source kit of colours, type and ready-made parts for small apps and sites. Works in light and dark, fits on a phone, and gives each product its own look.">
 <script src="previews/_site.js"></script>
 <link rel="stylesheet" href="previews/_preview.css">
 <link rel="stylesheet" href="components.css">
+<link rel="stylesheet" href="themes/homelab.css">
+<link rel="stylesheet" href="themes/driftwood.css">
+<link rel="stylesheet" href="themes/sites.css">
+<link rel="stylesheet" href="themes/guidebook.css">
 <style>
   /* The landing page of design.brignano.io (wrangler.jsonc). Marketing tier,
      built only from tokens, components.css and the preview chrome in previews/_preview.css.
@@ -18,41 +22,90 @@
   body { padding: 0; font-size: var(--text-base); }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--space-5); }
 
-  .top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
-         padding: var(--space-4) 0; border-bottom: 1px solid var(--line); }
-  .top .name { font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft); }
+  .top { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) 0;
+         border-bottom: 1px solid var(--line); }
+  .top .brand { display: inline-flex; align-items: baseline; gap: var(--space-2); margin-right: auto;
+                color: var(--ink); text-decoration: none; font-weight: 600; padding: 10px 0; }
+  .top .brand .stamp { font-size: var(--text-xl); }
+  .top nav { display: none; gap: var(--space-5); font-size: var(--text-sm); }
+  .top nav a { padding: 10px 0; }
+  @media (min-width: 760px) { .top nav { display: flex; } }
 
-  .hero { padding: var(--space-8) 0 var(--space-7); max-width: var(--measure); }
-  .eyebrow { font-family: var(--display); font-size: var(--text-sm); letter-spacing: .08em;
-             text-transform: uppercase; color: var(--ink-soft); margin: 0 0 var(--space-4); }
-  .hero h1 { font-size: var(--text-4xl); line-height: 1.05; letter-spacing: -.03em; margin: 0; }
+  /* The pitch: what it is, who it's for, one ask (issue 205). */
+  .hero { padding: var(--space-7) 0 var(--space-7); max-width: 46rem; }
+  .hero .label { margin-bottom: var(--space-4); }
+  .hero h1 { font-size: clamp(2.5rem, 7vw, 4rem); line-height: 1; letter-spacing: -.04em;
+             font-weight: var(--weight-heavy, 700); margin: 0; text-wrap: balance; }
   /* The hero rule: one of the three graphics --mark is allowed to ink (DESIGN.md §3). */
   .rule { display: block; width: 56px; height: 3px; border-radius: 2px; background: var(--mark);
           margin: var(--space-5) 0; }
   .lede { font-size: var(--text-lg); color: var(--ink-soft); margin: 0 0 var(--space-6); line-height: 1.5; }
-  .get { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
-  .get code { font-family: var(--mono); font-size: var(--text-sm); background: var(--card);
-              border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 14px;
-              box-shadow: var(--shadow-1); }
-  .get nav { display: flex; gap: var(--space-4); font-size: var(--text-sm); }
-  .get a, .foot a { display: inline-block; padding: 10px 0; }
+  .asks { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .proof { margin: var(--space-4) 0 0; font-size: var(--text-sm); color: var(--slate); }
 
   section { padding: 0 0 var(--space-8); }
   .label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .12em;
            text-transform: uppercase; color: var(--slate); margin: 0 0 var(--space-2); }
   section h2 { font-size: var(--text-2xl); letter-spacing: -.02em; line-height: 1.2;
                margin: 0 0 var(--space-5); max-width: var(--measure); }
+  .intro { max-width: var(--measure); color: var(--ink-soft); margin: calc(-1 * var(--space-3)) 0 var(--space-5); }
 
-  /* Three colour layers. The swatches are decoration; the words carry it. */
-  .layers { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
-  @media (max-width: 760px) { .layers { grid-template-columns: 1fr; } }
-  .layer { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
-           padding: var(--space-5); box-shadow: var(--shadow-1); }
-  .layer .chips { display: flex; gap: 6px; margin: 0 0 var(--space-4); }
-  .layer .chips i { display: block; height: 36px; flex: 1; border-radius: var(--radius-sm); }
-  .layer h3 { font-size: var(--text-lg); margin: 0 0 var(--space-1); }
-  .layer p { margin: 0 0 var(--space-2); color: var(--ink-soft); font-size: var(--text-sm); }
-  .layer code { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); }
+  /* The live screen: real components, re-skinned by a product's real theme. */
+  .demo-head-row { display: grid; gap: 0 var(--space-6); align-items: end; }
+  .demo-head-row .intro { margin-bottom: var(--space-4); }
+  @media (min-width: 960px) { .demo-head-row { grid-template-columns: 1fr auto; } .demo-head-row h2 { margin-bottom: var(--space-2); } }
+  .pick { margin: 0 0 var(--space-4); padding: 0; border: 0; }
+  .pick legend { font-size: var(--text-sm); font-weight: 600; margin: 0 0 var(--space-2); padding: 0; }
+  .demo { container-type: inline-size; background: var(--bg); color: var(--ink); font-family: var(--sans);
+          font-size: 15px; border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+          overflow: hidden; box-shadow: var(--shadow-3); }
+  .demo-bar { display: flex; align-items: center; gap: var(--space-4); padding: 10px var(--space-4);
+              border-bottom: 1px solid var(--line); background: var(--card); }
+  .demo-brand { font-family: var(--display); font-weight: var(--weight-heavy, 700);
+                text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
+                letter-spacing: -.01em; }
+  .demo-tabs { display: none; gap: 2px; font-size: var(--text-sm); color: var(--ink-soft); }
+  .demo-tabs span { padding: 6px 10px; border-radius: var(--radius-sm); }
+  .demo-tabs .on { background: var(--surface-active); color: var(--ink); }
+  .demo-bar .btn { margin-left: auto; }
+  .demo-body { display: grid; gap: var(--space-4); padding: var(--space-4); }
+  .demo-head .eyebrow { margin: 0 0 var(--space-1); }
+  .demo-h { margin: 0; font-family: var(--display); font-weight: var(--weight-heavy, 700);
+            text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
+            font-size: clamp(1.5rem, 5cqi, 2.25rem); line-height: 1.05; letter-spacing: -.025em; text-wrap: balance; }
+  .demo-stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: var(--space-3); }
+  .demo-stats .stat-value { font-size: clamp(1.1rem, 4cqi, 1.75rem); }
+  .demo-main, .demo-side { display: grid; gap: var(--space-4); align-content: start; }
+  .demo .toast { width: 100%; }
+  @container (min-width: 720px) {
+    .demo-tabs { display: flex; }
+    .demo-body { grid-template-columns: 3fr 2fr; padding: var(--space-6); gap: var(--space-5); }
+    .demo-head, .demo-stats { grid-column: 1 / -1; }
+  }
+
+  /* Why: three plain reasons. */
+  .whys { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+  .why { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+         padding: var(--space-5); box-shadow: var(--shadow-1); }
+  .why h3 { font-size: var(--text-lg); margin: var(--space-3) 0 var(--space-2); }
+  .why p { margin: 0; color: var(--ink-soft); }
+  .why .swatches { display: flex; gap: 6px; }
+  .why .swatches i { display: block; width: 28px; height: 28px; border-radius: var(--radius-sm); }
+
+  /* Get started: three steps. */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4);
+           grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); counter-reset: step; }
+  .steps li { counter-increment: step; display: grid; gap: var(--space-2); align-content: start; }
+  .steps li::before { content: counter(step); font-family: var(--mono); font-size: var(--text-sm);
+                      color: var(--slate); }
+  .steps b { font-size: var(--text-lg); }
+  .steps pre { margin: 0; font-family: var(--mono); font-size: var(--text-sm); background: var(--card);
+               border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px;
+               overflow-x: auto; white-space: pre; }
+  .more { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-top: var(--space-5); font-size: var(--text-sm); }
+  .more a { padding: 10px 0; }
+
+  .catalogue { border-top: 1px solid var(--line); padding-top: var(--space-7); }
 
   /* Gallery: each card is one link with a live specimen above its words. */
   .gallery-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4);
@@ -138,50 +191,96 @@
 <div class="wrap">
 
 <header class="top">
-  <span class="name">@brignano/design</span>
+  <a class="brand" href="#top" aria-label="brignano design, home"><span class="stamp" aria-hidden="true">ab</span> design</a>
+  <nav aria-label="On this page">
+    <a class="link" href="#demo">See it working</a>
+    <a class="link" href="#start">Get started</a>
+    <a class="link" href="#parts">Every part</a>
+    <a class="link" href="https://github.com/brignano/design">GitHub</a>
+  </nav>
   <span data-site-toggle></span>
 </header>
 
-<main>
+<main id="top">
 <div class="hero">
-  <p class="eyebrow">Design system</p>
-  <h1>Competence and calm.</h1>
+  <p class="label">Free design system · open source</p>
+  <h1>Make every app you build look finished.</h1>
   <span class="rule" aria-hidden="true"></span>
-  <p class="lede">The foundation under brignano.io and every tool beside it. Near-monochrome, with colour used so sparingly that when it appears, you look at it. Every page here renders straight from tokens.css, in light and dark side by side.</p>
-  <div class="get">
-    <code>npm install @brignano/design</code>
-    <nav aria-label="Project links">
-      <a class="link" href="https://github.com/brignano/design">Source</a>
-      <a class="link" href="https://www.npmjs.com/package/@brignano/design">npm</a>
-      <a class="link" href="https://github.com/brignano/design/tree/main/decisions">Decisions</a>
-    </nav>
+  <p class="lede">For anyone building small apps and sites: buttons, forms, messages, tables and whole pages, already designed. They work in light and dark, fit on a phone, and let each product have its own look.</p>
+  <div class="asks">
+    <a class="btn btn-primary btn-lg" href="#demo">See it working</a>
+    <a class="btn btn-lg" href="#start">Get it free</a>
   </div>
+  <p class="proof">Every product on <a class="link" href="https://brignano.io">brignano.io</a> is built from it.</p>
 </div>
 
-<section aria-labelledby="layers">
-  <p class="label">Colour</p>
-  <h2 id="layers">Three layers, so no colour does two jobs.</h2>
-  <div class="layers">
-    <div class="layer">
-      <div class="chips" aria-hidden="true"><i style="background:var(--mark)"></i></div>
-      <h3>Identity</h3>
-      <p>Inks a graphic only: a product's glyph, the monogram, a hero rule. Never a control.</p>
-      <code>--mark</code>
+<section aria-labelledby="demo">
+  <p class="label">See it working</p>
+  <div class="demo-head-row">
+  <div>
+  <h2 id="demo">Same parts. Four different products.</h2>
+  <p class="intro">Pick one. Everything on this screen is a real part from the kit, and each product's look is a theme file a few lines long.</p>
+  </div>
+  <fieldset class="pick">
+    <legend>Show it as</legend>
+    <div class="segmented">
+      <label><input type="radio" name="demo-product" value="homelab" checked>Homelab</label>
+      <label><input type="radio" name="demo-product" value="driftwood">Driftwood</label>
+      <label><input type="radio" name="demo-product" value="sites">Sites</label>
+      <label><input type="radio" name="demo-product" value="guidebook">Guidebook</label>
     </div>
-    <div class="layer">
-      <div class="chips" aria-hidden="true"><i style="background:var(--action)"></i></div>
-      <h3>Interactive</h3>
-      <p>One hue for everything you can act on, in every state.</p>
-      <code>--action</code>
+  </fieldset>
+  </div>
+  <div class="demo" data-product="homelab" aria-live="polite">
+<div class="demo-bar"><span class="demo-brand">homelab</span><span class="demo-tabs" aria-hidden="true"><span class="on">Hosts</span><span>Backups</span><span>Alerts</span></span><button type="button" class="btn btn-primary btn-sm">Add host</button></div><div class="demo-body"><div class="demo-head"><p class="eyebrow">Today</p><p class="demo-h">5 hosts. 1 needs you.</p></div><div class="stat-grid demo-stats"><div class="stat"><span class="stat-label">Hosts up</span><span class="stat-value">4 of 5</span></div><div class="stat"><span class="stat-label">Busiest</span><span class="stat-value">71%</span></div><div class="stat"><span class="stat-label">Last backup</span><span class="stat-value">03:00</span></div></div><div class="demo-main"><div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">pi-dns is running hot</p><p class="msg-body">Over 70% busy for the last hour.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Restart</button><button type="button" class="btn btn-sm">Not now</button></div></div></div><div class="table-wrap"><table class="table"><thead><tr><th scope="col">Host</th><th scope="col">Status</th><th scope="col" class="num">Busy</th></tr></thead><tbody><tr><td>pve-01</td><td><span class="pill pill-success">Running</span></td><td class="num">23%</td></tr><tr><td>pi-dns</td><td><span class="pill pill-attention">Slow</span></td><td class="num">71%</td></tr><tr><td>media</td><td><span class="pill pill-success">Running</span></td><td class="num">35%</td></tr><tr><td>offsite</td><td><span class="pill pill-danger">Stopped</span></td><td class="num">–</td></tr></tbody></table></div></div><div class="demo-side"><div class="card"><div class="card-body stack gap-4"><div class="field"><label for="demo-field">Host name</label><input id="demo-field" value="nas-02"></div><label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Back it up every night</span></label><button type="button" class="btn btn-primary">Add host</button></div></div><div class="toast toast-success" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div class="toast-content"><p class="toast-title">Backup finished</p><p class="toast-body">media: 12 GB in 4 minutes.</p></div></div></div></div>
+  </div>
+</section>
+
+<section aria-labelledby="why">
+  <p class="label">Why use it</p>
+  <h2 id="why">The boring decisions, already made.</h2>
+  <div class="whys">
+    <div class="why">
+      <div class="swatches" aria-hidden="true"><i style="background:var(--action)"></i><i style="background:var(--attention)"></i><i style="background:var(--danger)"></i></div>
+      <h3>Colour that means something</h3>
+      <p>One colour means "you can tap this". Amber means "this needs you". Red means "something went wrong", always with a word, so nobody has to guess.</p>
     </div>
-    <div class="layer">
-      <div class="chips" aria-hidden="true"><i style="background:var(--success)"></i><i style="background:var(--attention)"></i><i style="background:var(--danger)"></i></div>
-      <h3>State</h3>
-      <p>Settled, wants you, gone wrong. Always with an icon or a word.</p>
-      <code>--success · --attention · --danger</code>
+    <div class="why">
+      <div class="swatches" aria-hidden="true"><i style="background:var(--neutral-0);border:1px solid var(--line)"></i><i style="background:var(--neutral-900)"></i></div>
+      <h3>Dark mode and phones, done</h3>
+      <p>Every part works in light and dark, and every button is big enough for a thumb. You don't design anything twice.</p>
+    </div>
+    <div class="why">
+      <div class="swatches" aria-hidden="true"><i style="background:var(--surface-hover);border:1px solid var(--line-strong)"></i><i style="background:var(--surface-hover);border:1px solid var(--line-strong)"></i><i style="background:var(--surface-hover);border:1px solid var(--line-strong)"></i></div>
+      <h3>Whole pages, not just buttons</h3>
+      <p>Start from a finished 404, settings page, changelog, article or email instead of an empty file.</p>
     </div>
   </div>
 </section>
+
+<section aria-labelledby="start">
+  <p class="label">Get started</p>
+  <h2 id="start">Up and running in three steps.</h2>
+  <ol class="steps">
+    <li><b>Install it</b><pre><code>npm install @brignano/design</code></pre></li>
+    <li><b>Add it to your styles</b><pre><code>@import '@brignano/design/tokens.css';
+@import '@brignano/design/components.css';</code></pre></li>
+    <li><b>Use a part</b><pre><code>&lt;button class="btn btn-primary"&gt;
+  Save
+&lt;/button&gt;</code></pre></li>
+  </ol>
+  <nav class="more" aria-label="Project links">
+    <a class="link" href="https://github.com/brignano/design">Source on GitHub</a>
+    <a class="link" href="https://www.npmjs.com/package/@brignano/design">npm</a>
+    <a class="link" href="https://github.com/brignano/design/blob/main/DESIGN.md">The rules</a>
+    <a class="link" href="https://github.com/brignano/design/tree/main/decisions">Why each choice was made</a>
+  </nav>
+</section>
+
+<div class="catalogue">
+  <p class="label">Every part</p>
+  <h2 id="parts" class="catalogue-h">Browse every part, live in light and dark.</h2>
+</div>
 
 <section aria-labelledby="foundations">
   <p class="label">01 / Foundations</p>
@@ -429,5 +528,81 @@
 </footer>
 
 </div>
+<script>
+(() => {
+  // The live screen (issue 205). Each product's real theme (themes/<product>.css)
+  // re-skins the same components; only the demo words change with it.
+  // Demo data only.
+  const ICON = {
+    attention: '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',
+  };
+  const DEMOS = {
+    homelab: {
+      brand: 'homelab', tabs: ['Hosts', 'Backups', 'Alerts'], action: 'Add host',
+      eyebrow: 'Today', headline: '5 hosts. 1 needs you.',
+      stats: [['Hosts up', '4 of 5'], ['Busiest', '71%'], ['Last backup', '03:00']],
+      alert: ['pi-dns is running hot', 'Over 70% busy for the last hour.', 'Restart', 'Not now'],
+      cols: ['Host', 'Status', 'Busy'],
+      rows: [['pve-01', 'success', 'Running', '23%'], ['pi-dns', 'attention', 'Slow', '71%'], ['media', 'success', 'Running', '35%'], ['offsite', 'danger', 'Stopped', '–']],
+      field: ['Host name', 'nas-02'], toggle: 'Back it up every night', save: 'Add host',
+      toast: ['Backup finished', 'media: 12 GB in 4 minutes.'],
+    },
+    driftwood: {
+      brand: 'Driftwood', tabs: ['Map', 'Changes', 'Scans'], action: 'Run scan',
+      eyebrow: 'Since Monday', headline: '2 parts changed without the diagram.',
+      stats: [['Services', '14'], ['Changed', '2'], ['Last scan', '09:30']],
+      alert: ['checkout talks to a new database', 'It isn’t on the diagram yet.', 'Add it', 'Ignore'],
+      cols: ['Service', 'Status', 'Calls'],
+      rows: [['api', 'success', 'Matches', '1,204'], ['checkout', 'attention', 'Changed', '388'], ['billing', 'success', 'Matches', '96'], ['search', 'danger', 'Missing', '–']],
+      field: ['Repository', 'shop/main'], toggle: 'Scan every night', save: 'Run scan',
+      toast: ['Diagram updated', '14 services, 2 changes noted.'],
+    },
+    sites: {
+      brand: 'Sites', tabs: ['My site', 'Changes', 'Visits'], action: 'Ask for a change',
+      eyebrow: 'Corner Bakery', headline: 'Your site, changed when you ask.',
+      stats: [['Visits this week', '1,284'], ['Changes asked', '3'], ['Waiting', '1']],
+      alert: ['Sunday hours are waiting on you', 'Reply with the new times and it goes live.', 'Reply', 'Later'],
+      cols: ['Change', 'Status', 'Asked'],
+      rows: [['New photos', 'success', 'Live', 'Mon'], ['Sunday hours', 'attention', 'Waiting', 'Tue'], ['Holiday menu', 'success', 'Live', 'Wed']],
+      field: ['What should change?', 'Add our new phone number'], toggle: 'Email me when it’s live', save: 'Send it',
+      toast: ['Your site is updated', 'The new photos are live.'],
+    },
+    guidebook: {
+      brand: 'Guidebook', tabs: ['Guides', 'People', 'Settings'], action: 'New guide',
+      eyebrow: 'This week', headline: 'Show people the way, one step at a time.',
+      stats: [['Guides', '12'], ['Finished', '86%'], ['Got stuck', '3']],
+      alert: ['3 people got stuck on step 4', 'The button it points at has moved.', 'Fix the step', 'Later'],
+      cols: ['Guide', 'Status', 'Finished'],
+      rows: [['Set up billing', 'success', 'Live', '91%'], ['Invite your team', 'attention', 'Needs a fix', '62%'], ['Export a report', 'success', 'Live', '88%']],
+      field: ['Guide name', 'Connect your calendar'], toggle: 'Show on first visit', save: 'Publish guide',
+      toast: ['Guide published', 'People see it on their next visit.'],
+    },
+  };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function render(d) {
+    return `<div class="demo-bar"><span class="demo-brand">${esc(d.brand)}</span>`
+      + `<span class="demo-tabs" aria-hidden="true">${d.tabs.map((t, i) => `<span${i ? '' : ' class="on"'}>${esc(t)}</span>`).join('')}</span>`
+      + `<button type="button" class="btn btn-primary btn-sm">${esc(d.action)}</button></div>`
+      + `<div class="demo-body"><div class="demo-head"><p class="eyebrow">${esc(d.eyebrow)}</p><p class="demo-h">${esc(d.headline)}</p></div>`
+      + `<div class="stat-grid demo-stats">${d.stats.map(([l, v]) => `<div class="stat"><span class="stat-label">${esc(l)}</span><span class="stat-value">${esc(v)}</span></div>`).join('')}</div>`
+      + `<div class="demo-main"><div class="msg msg-attention">${ICON.attention}<div class="msg-content"><p class="msg-title">${esc(d.alert[0])}</p><p class="msg-body">${esc(d.alert[1])}</p>`
+      + `<div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">${esc(d.alert[2])}</button><button type="button" class="btn btn-sm">${esc(d.alert[3])}</button></div></div></div>`
+      + `<div class="table-wrap"><table class="table"><thead><tr><th scope="col">${esc(d.cols[0])}</th><th scope="col">${esc(d.cols[1])}</th><th scope="col" class="num">${esc(d.cols[2])}</th></tr></thead><tbody>`
+      + d.rows.map(([n, tone, s, v]) => `<tr><td>${esc(n)}</td><td><span class="pill pill-${tone}">${esc(s)}</span></td><td class="num">${esc(v)}</td></tr>`).join('')
+      + `</tbody></table></div></div>`
+      + `<div class="demo-side"><div class="card"><div class="card-body stack gap-4"><div class="field"><label for="demo-field">${esc(d.field[0])}</label><input id="demo-field" value="${esc(d.field[1])}"></div>`
+      + `<label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>${esc(d.toggle)}</span></label>`
+      + `<button type="button" class="btn btn-primary">${esc(d.save)}</button></div></div>`
+      + `<div class="toast toast-success" role="status">${ICON.success}<div class="toast-content"><p class="toast-title">${esc(d.toast[0])}</p><p class="toast-body">${esc(d.toast[1])}</p></div></div></div></div>`;
+  }
+  const demo = document.querySelector('.demo');
+  document.querySelectorAll('input[name="demo-product"]').forEach((r) => r.addEventListener('change', () => {
+    if (!r.checked || !DEMOS[r.value]) return;
+    demo.dataset.product = r.value;
+    demo.innerHTML = render(DEMOS[r.value]);
+  }));
+})();
+</script>
 </body>
 </html>
