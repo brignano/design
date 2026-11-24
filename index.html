@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>brignano design: make every app you build look finished</title>
-<meta name="description" content="A free, open-source kit of colours, type and ready-made parts for small apps and sites. Works in light and dark, fits on a phone, and gives each product its own look.">
+<title>brignano design: everything I build is made of these</title>
+<meta name="description" content="Anthony Brignano's design system: the buttons, menus, messages, tables and pages behind brignano.io and every app beside it, each product in its own look.">
 <script src="previews/_site.js"></script>
 <link rel="stylesheet" href="previews/_preview.css">
 <link rel="stylesheet" href="components.css">
@@ -22,8 +22,7 @@
   body { padding: 0; font-size: var(--text-base); }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--space-5); }
 
-  .top { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) 0;
-         border-bottom: 1px solid var(--line); }
+  .top { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) 0; }
   .top .brand { display: inline-flex; align-items: baseline; gap: var(--space-2); margin-right: auto;
                 color: var(--ink); text-decoration: none; font-weight: 600; padding: 10px 0; }
   .top .brand .stamp { font-size: var(--text-xl); }
@@ -31,81 +30,105 @@
   .top nav a { padding: 10px 0; }
   @media (min-width: 760px) { .top nav { display: flex; } }
 
-  /* The pitch: what it is, who it's for, one ask (issue 205). */
-  .hero { padding: var(--space-7) 0 var(--space-7); max-width: 46rem; }
-  .hero .label { margin-bottom: var(--space-4); }
-  .hero h1 { font-size: clamp(2.5rem, 7vw, 4rem); line-height: 1; letter-spacing: -.04em;
-             font-weight: var(--weight-heavy, 700); margin: 0; text-wrap: balance; }
-  /* The hero rule: one of the three graphics --mark is allowed to ink (DESIGN.md §3). */
-  .rule { display: block; width: 56px; height: 3px; border-radius: 2px; background: var(--mark);
-          margin: var(--space-5) 0; }
-  .lede { font-size: var(--text-lg); color: var(--ink-soft); margin: 0 0 var(--space-6); line-height: 1.5; }
-  .asks { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
-  .proof { margin: var(--space-4) 0 0; font-size: var(--text-sm); color: var(--slate); }
+  /* The showcase (issue 205): a big claim, then a wall of live parts that a
+     product picker re-themes all at once with each product's real theme. */
+  .hero { padding: var(--space-7) 0 var(--space-6); display: grid; gap: var(--space-5); }
+  .hero .label { margin: 0; }
+  .hero h1 { font-size: clamp(2.75rem, 9.5vw, 7rem); line-height: .92; letter-spacing: -.05em;
+             font-weight: var(--weight-heavy, 800); margin: 0; text-wrap: balance; max-width: 14ch; }
+  /* The caret: the logo's cursor, in --mark-current, blinking three times (ADR-0022). */
+  .caret { display: inline-block; width: .42em; height: .78em; margin-left: .06em; vertical-align: -.02em;
+           background: var(--mark-current); }
+  .hero-row { display: grid; gap: var(--space-5); align-items: end; }
+  .lede { font-size: var(--text-lg); color: var(--ink-soft); margin: 0; line-height: 1.5; max-width: 40rem; }
+  .pick { margin: 0; padding: 0; border: 0; min-width: 0; }
+  .pick legend { font-size: var(--text-sm); font-weight: 600; margin: 0 0 var(--space-2); padding: 0; }
+  @media (min-width: 960px) { .hero-row { grid-template-columns: 1fr auto; } }
 
   section { padding: 0 0 var(--space-8); }
   .label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .12em;
            text-transform: uppercase; color: var(--slate); margin: 0 0 var(--space-2); }
   section h2 { font-size: var(--text-2xl); letter-spacing: -.02em; line-height: 1.2;
                margin: 0 0 var(--space-5); max-width: var(--measure); }
-  .intro { max-width: var(--measure); color: var(--ink-soft); margin: calc(-1 * var(--space-3)) 0 var(--space-5); }
 
-  /* The live screen: real components, re-skinned by a product's real theme. */
-  .demo-head-row { display: grid; gap: 0 var(--space-6); align-items: end; }
-  .demo-head-row .intro { margin-bottom: var(--space-4); }
-  @media (min-width: 960px) { .demo-head-row { grid-template-columns: 1fr auto; } .demo-head-row h2 { margin-bottom: var(--space-2); } }
-  .pick { margin: 0 0 var(--space-4); padding: 0; border: 0; }
-  .pick legend { font-size: var(--text-sm); font-weight: 600; margin: 0 0 var(--space-2); padding: 0; }
-  .demo { container-type: inline-size; background: var(--bg); color: var(--ink); font-family: var(--sans);
-          font-size: 15px; border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-          overflow: hidden; box-shadow: var(--shadow-3); }
+  /* The wall. Everything inside is a real component; the stage takes the
+     picked product's theme, so its ground, type, corners and colour change. */
+  .stage { container-type: inline-size; margin: 0 0 var(--space-8); padding: var(--space-4);
+           background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px;
+           border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
+           transition: background-color var(--duration-base, .2s), color var(--duration-base, .2s); }
+  @media (prefers-reduced-motion: reduce) { .stage { transition: none; } }
+  /* On a phone the wall runs edge to edge, so the parts get the width. */
+  @media (max-width: 639px) { .stage { margin-inline: calc(-1 * var(--space-5)); padding: var(--space-3); border-radius: 0; border-inline: 0; } }
+  .wall { display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr); }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card);
+          padding: var(--space-4); display: grid; gap: var(--space-3); align-content: start; min-width: 0; }
+  .tile-label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em;
+                text-transform: uppercase; color: var(--slate); margin: 0; }
+  .tile .row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+  .t-app { padding: 0; overflow: hidden; gap: 0; }
+  .t-type .big { font-family: var(--display); font-weight: var(--weight-heavy, 800);
+                 text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
+                 font-size: clamp(3.5rem, 14cqi, 7rem); line-height: .9; letter-spacing: -.04em; margin: 0; }
+  .t-type .mono { font-family: var(--mono); font-size: var(--text-sm); color: var(--ink-soft); margin: 0; }
+  .t-menu .menu { border: 1px solid var(--line); border-radius: var(--radius-card); padding: 4px;
+                  background: var(--card); box-shadow: var(--shadow-2); }
+  .t-menu .tooltip { position: static; translate: none; opacity: 1; visibility: visible; }
+  .t-dialog .box { border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card);
+                   box-shadow: var(--shadow-3); }
+  .t-dialog .box > * { padding-inline: var(--space-4); }
+  .t-dialog .dialog-header { padding-top: var(--space-4); }
+  .t-dialog .dialog-title { font-size: var(--text-lg); margin: 0; }
+  .t-dialog .dialog-body p { margin: var(--space-2) 0 var(--space-4); color: var(--ink-soft); }
+  .t-dialog .dialog-footer { display: flex; justify-content: flex-end; gap: var(--space-2); padding-bottom: var(--space-4); }
+  .t-toasts .toast { width: 100%; }
+  .t-gauges label { font-size: var(--text-sm); color: var(--ink-soft); }
+  .t-gauges progress, .t-gauges meter { width: 100%; }
+  .t-gauges .stat-value { font-size: clamp(2.5rem, 9cqi, 4rem); line-height: 1; }
+
+  /* The house look's display face is the pixel one, kept for eyebrows: the
+     app headline uses the heavy sans, as brignano.io does. */
+  .stage:not([data-product]) :is(.demo-h, .demo-brand, .t-type .big) { font-family: var(--sans); text-transform: none; }
   .demo-bar { display: flex; align-items: center; gap: var(--space-4); padding: 10px var(--space-4);
-              border-bottom: 1px solid var(--line); background: var(--card); }
+              border-bottom: 1px solid var(--line); }
   .demo-brand { font-family: var(--display); font-weight: var(--weight-heavy, 700);
-                text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
-                letter-spacing: -.01em; }
+                text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal); }
   .demo-tabs { display: none; gap: 2px; font-size: var(--text-sm); color: var(--ink-soft); }
   .demo-tabs span { padding: 6px 10px; border-radius: var(--radius-sm); }
   .demo-tabs .on { background: var(--surface-active); color: var(--ink); }
   .demo-bar .btn { margin-left: auto; }
-  .demo-body { display: grid; gap: var(--space-4); padding: var(--space-4); }
+  .demo-body { display: grid; gap: var(--space-4); padding: var(--space-4); background: var(--bg); }
   .demo-head .eyebrow { margin: 0 0 var(--space-1); }
   .demo-h { margin: 0; font-family: var(--display); font-weight: var(--weight-heavy, 700);
             text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
-            font-size: clamp(1.5rem, 5cqi, 2.25rem); line-height: 1.05; letter-spacing: -.025em; text-wrap: balance; }
-  .demo-stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: var(--space-3); }
-  .demo-stats .stat-value { font-size: clamp(1.1rem, 4cqi, 1.75rem); }
-  .demo-main, .demo-side { display: grid; gap: var(--space-4); align-content: start; }
-  .demo .toast { width: 100%; }
-  @container (min-width: 720px) {
+            font-size: clamp(1.5rem, 4cqi, 2.25rem); line-height: 1.05; letter-spacing: -.025em; text-wrap: balance; }
+  .demo-stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: var(--space-3); }
+  .demo-stats .stat-value { font-size: clamp(1.1rem, 3cqi, 1.75rem); }
+
+  @container (min-width: 640px) {
+    .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .t-app, .t-type { grid-column: 1 / -1; }
+  }
+  @container (min-width: 880px) {
+    .stage { padding: var(--space-5); }
+    .wall { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-5); }
+    .t-app { grid-column: span 8; grid-row: span 2; }
+    .t-controls, .t-menu { grid-column: span 4; }
+    .t-dialog, .t-toasts, .t-gauges { grid-column: span 4; }
+    .t-type { grid-column: 1 / -1; grid-template-columns: auto 1fr; align-items: end; column-gap: var(--space-6); }
     .demo-tabs { display: flex; }
-    .demo-body { grid-template-columns: 3fr 2fr; padding: var(--space-6); gap: var(--space-5); }
-    .demo-head, .demo-stats { grid-column: 1 / -1; }
   }
 
-  /* Why: three plain reasons. */
-  .whys { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
-  .why { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
-         padding: var(--space-5); box-shadow: var(--shadow-1); }
-  .why h3 { font-size: var(--text-lg); margin: var(--space-3) 0 var(--space-2); }
-  .why p { margin: 0; color: var(--ink-soft); }
-  .why .swatches { display: flex; gap: 6px; }
-  .why .swatches i { display: block; width: 28px; height: 28px; border-radius: var(--radius-sm); }
+  /* Numbers: what the system is, counted. */
+  .counts { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: var(--space-6) 0; }
+  .counts div { display: grid; gap: var(--space-1); }
+  .counts b { font-family: var(--mono); font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 600;
+              letter-spacing: -.04em; line-height: 1; }
+  .counts span { color: var(--ink-soft); font-size: var(--text-sm); }
 
-  /* Get started: three steps. */
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4);
-           grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); counter-reset: step; }
-  .steps li { counter-increment: step; display: grid; gap: var(--space-2); align-content: start; }
-  .steps li::before { content: counter(step); font-family: var(--mono); font-size: var(--text-sm);
-                      color: var(--slate); }
-  .steps b { font-size: var(--text-lg); }
-  .steps pre { margin: 0; font-family: var(--mono); font-size: var(--text-sm); background: var(--card);
-               border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px;
-               overflow-x: auto; white-space: pre; }
-  .more { display: flex; flex-wrap: wrap; gap: var(--space-5); margin-top: var(--space-5); font-size: var(--text-sm); }
-  .more a { padding: 10px 0; }
-
-  .catalogue { border-top: 1px solid var(--line); padding-top: var(--space-7); }
+  .catalogue { padding-top: var(--space-4); }
+  .catalogue h2 { font-size: var(--text-3xl); }
 
   /* Gallery: each card is one link with a live specimen above its words. */
   .gallery-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4);
@@ -193,93 +216,103 @@
 <header class="top">
   <a class="brand" href="#top" aria-label="brignano design, home"><span class="stamp" aria-hidden="true">ab</span> design</a>
   <nav aria-label="On this page">
-    <a class="link" href="#demo">See it working</a>
-    <a class="link" href="#start">Get started</a>
     <a class="link" href="#parts">Every part</a>
     <a class="link" href="https://github.com/brignano/design">GitHub</a>
+    <a class="link" href="https://www.npmjs.com/package/@brignano/design">npm</a>
   </nav>
   <span data-site-toggle></span>
 </header>
 
 <main id="top">
 <div class="hero">
-  <p class="label">Free design system · open source</p>
-  <h1>Make every app you build look finished.</h1>
-  <span class="rule" aria-hidden="true"></span>
-  <p class="lede">For anyone building small apps and sites: buttons, forms, messages, tables and whole pages, already designed. They work in light and dark, fit on a phone, and let each product have its own look.</p>
-  <div class="asks">
-    <a class="btn btn-primary btn-lg" href="#demo">See it working</a>
-    <a class="btn btn-lg" href="#start">Get it free</a>
+  <p class="label">Anthony Brignano · design system</p>
+  <h1>Everything I build is made of these.<span class="caret cursor-blink" aria-hidden="true"></span></h1>
+  <div class="hero-row">
+    <p class="lede">The buttons, menus, messages, tables and pages behind brignano.io and every app beside it. Each product gets its own look from the same parts. Pick one and watch the whole wall change.</p>
+    <fieldset class="pick">
+      <legend>Show everything as</legend>
+      <div class="segmented">
+        <label><input type="radio" name="look" value="house" checked>brignano.io</label>
+        <label><input type="radio" name="look" value="homelab">Homelab</label>
+        <label><input type="radio" name="look" value="driftwood">Driftwood</label>
+        <label><input type="radio" name="look" value="sites">Sites</label>
+        <label><input type="radio" name="look" value="guidebook">Guidebook</label>
+      </div>
+    </fieldset>
   </div>
-  <p class="proof">Every product on <a class="link" href="https://brignano.io">brignano.io</a> is built from it.</p>
 </div>
 
-<section aria-labelledby="demo">
-  <p class="label">See it working</p>
-  <div class="demo-head-row">
-  <div>
-  <h2 id="demo">Same parts. Four different products.</h2>
-  <p class="intro">Pick one. Everything on this screen is a real part from the kit, and each product's look is a theme file a few lines long.</p>
-  </div>
-  <fieldset class="pick">
-    <legend>Show it as</legend>
-    <div class="segmented">
-      <label><input type="radio" name="demo-product" value="homelab" checked>Homelab</label>
-      <label><input type="radio" name="demo-product" value="driftwood">Driftwood</label>
-      <label><input type="radio" name="demo-product" value="sites">Sites</label>
-      <label><input type="radio" name="demo-product" value="guidebook">Guidebook</label>
+<div class="stage" aria-label="Live components">
+  <div class="wall">
+    <div class="tile t-app" id="app">
+<div class="demo-bar"><span class="demo-brand">brignano.io</span><span class="demo-tabs" aria-hidden="true"><span class="on">Projects</span><span>Notes</span><span>About</span></span><button type="button" class="btn btn-primary btn-sm">New project</button></div><div class="demo-body"><div class="demo-head"><p class="eyebrow">This month</p><p class="demo-h">3 projects shipped. 1 needs a look.</p></div><div class="stat-grid demo-stats"><div class="stat"><span class="stat-label">Live</span><span class="stat-value">9</span></div><div class="stat"><span class="stat-label">Shipped</span><span class="stat-value">3</span></div><div class="stat"><span class="stat-label">Open issues</span><span class="stat-value">14</span></div></div><div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">The new logo is waiting on a review</p><p class="msg-body">The change has been open for two days.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Review it</button><button type="button" class="btn btn-sm">Later</button></div></div></div><div class="table-wrap"><table class="table"><thead><tr><th scope="col">Project</th><th scope="col">Status</th><th scope="col" class="num">Updated</th></tr></thead><tbody><tr><td>Design</td><td><span class="pill pill-success">Live</span></td><td class="num">Today</td></tr><tr><td>Driftwood</td><td><span class="pill pill-success">Live</span></td><td class="num">Mon</td></tr><tr><td>Homelab</td><td><span class="pill pill-attention">In review</span></td><td class="num">Sun</td></tr><tr><td>Card</td><td><span class="pill pill-success">Live</span></td><td class="num">Fri</td></tr></tbody></table></div></div>
     </div>
-  </fieldset>
-  </div>
-  <div class="demo" data-product="homelab" aria-live="polite">
-<div class="demo-bar"><span class="demo-brand">homelab</span><span class="demo-tabs" aria-hidden="true"><span class="on">Hosts</span><span>Backups</span><span>Alerts</span></span><button type="button" class="btn btn-primary btn-sm">Add host</button></div><div class="demo-body"><div class="demo-head"><p class="eyebrow">Today</p><p class="demo-h">5 hosts. 1 needs you.</p></div><div class="stat-grid demo-stats"><div class="stat"><span class="stat-label">Hosts up</span><span class="stat-value">4 of 5</span></div><div class="stat"><span class="stat-label">Busiest</span><span class="stat-value">71%</span></div><div class="stat"><span class="stat-label">Last backup</span><span class="stat-value">03:00</span></div></div><div class="demo-main"><div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">pi-dns is running hot</p><p class="msg-body">Over 70% busy for the last hour.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Restart</button><button type="button" class="btn btn-sm">Not now</button></div></div></div><div class="table-wrap"><table class="table"><thead><tr><th scope="col">Host</th><th scope="col">Status</th><th scope="col" class="num">Busy</th></tr></thead><tbody><tr><td>pve-01</td><td><span class="pill pill-success">Running</span></td><td class="num">23%</td></tr><tr><td>pi-dns</td><td><span class="pill pill-attention">Slow</span></td><td class="num">71%</td></tr><tr><td>media</td><td><span class="pill pill-success">Running</span></td><td class="num">35%</td></tr><tr><td>offsite</td><td><span class="pill pill-danger">Stopped</span></td><td class="num">–</td></tr></tbody></table></div></div><div class="demo-side"><div class="card"><div class="card-body stack gap-4"><div class="field"><label for="demo-field">Host name</label><input id="demo-field" value="nas-02"></div><label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Back it up every night</span></label><button type="button" class="btn btn-primary">Add host</button></div></div><div class="toast toast-success" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div class="toast-content"><p class="toast-title">Backup finished</p><p class="toast-body">media: 12 GB in 4 minutes.</p></div></div></div></div>
-  </div>
-</section>
 
-<section aria-labelledby="why">
-  <p class="label">Why use it</p>
-  <h2 id="why">The boring decisions, already made.</h2>
-  <div class="whys">
-    <div class="why">
-      <div class="swatches" aria-hidden="true"><i style="background:var(--action)"></i><i style="background:var(--attention)"></i><i style="background:var(--danger)"></i></div>
-      <h3>Colour that means something</h3>
-      <p>One colour means "you can tap this". Amber means "this needs you". Red means "something went wrong", always with a word, so nobody has to guess.</p>
+    <div class="tile t-controls">
+      <p class="tile-label">Buttons and choices</p>
+      <div class="row"><button type="button" class="btn btn-primary">Save changes</button><button type="button" class="btn">Cancel</button><button type="button" class="btn btn-ghost">Skip</button></div>
+      <div class="row"><button type="button" class="chip" aria-pressed="true">Live</button><button type="button" class="chip" aria-pressed="false">Draft</button><button type="button" class="chip" aria-pressed="false">Archived</button></div>
+      <div class="segmented" role="radiogroup" aria-label="View"><label><input type="radio" name="w-view" checked>Day</label><label><input type="radio" name="w-view">Week</label><label><input type="radio" name="w-view">Month</label></div>
+      <div class="field"><label for="w-name">Project name</label><input id="w-name" value="Night sky map"></div>
+      <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Email me when it ships</span></label>
     </div>
-    <div class="why">
-      <div class="swatches" aria-hidden="true"><i style="background:var(--neutral-0);border:1px solid var(--line)"></i><i style="background:var(--neutral-900)"></i></div>
-      <h3>Dark mode and phones, done</h3>
-      <p>Every part works in light and dark, and every button is big enough for a thumb. You don't design anything twice.</p>
+
+    <div class="tile t-menu">
+      <p class="tile-label">Menus and hints</p>
+      <div class="menu" role="menu" aria-label="Project actions">
+        <button type="button" class="menu-item" role="menuitem">Rename<span class="menu-item-hint"><kbd class="kbd">R</kbd></span></button>
+        <button type="button" class="menu-item" role="menuitem">Duplicate</button>
+        <button type="button" class="menu-item" role="menuitem">Share a link</button>
+        <hr class="menu-separator">
+        <button type="button" class="menu-item menu-item-danger" role="menuitem">Delete project</button>
+      </div>
+      <div class="row"><span class="tooltip" role="tooltip">Copied to your clipboard</span></div>
     </div>
-    <div class="why">
-      <div class="swatches" aria-hidden="true"><i style="background:var(--surface-hover);border:1px solid var(--line-strong)"></i><i style="background:var(--surface-hover);border:1px solid var(--line-strong)"></i><i style="background:var(--surface-hover);border:1px solid var(--line-strong)"></i></div>
-      <h3>Whole pages, not just buttons</h3>
-      <p>Start from a finished 404, settings page, changelog, article or email instead of an empty file.</p>
+
+    <div class="tile t-dialog">
+      <p class="tile-label">Dialogs</p>
+      <div class="box" role="group" aria-label="Example dialog">
+        <div class="dialog-header"><p class="dialog-title">Delete “Night sky map”?</p></div>
+        <div class="dialog-body"><p>The project and its links go too. This can’t be undone.</p></div>
+        <div class="dialog-footer"><button type="button" class="btn">Keep it</button><button type="button" class="btn btn-danger">Delete</button></div>
+      </div>
+    </div>
+
+    <div class="tile t-toasts">
+      <p class="tile-label">Messages</p>
+      <div class="toast toast-success" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div class="toast-content"><p class="toast-title">Published</p><p class="toast-body">It’s live at /night-sky.</p></div><button type="button" class="btn btn-ghost btn-sm toast-action">Undo</button></div>
+      <div class="toast toast-attention" role="status"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="toast-content"><p class="toast-title">Card expires soon</p><p class="toast-body">Update it before 1 Dec.</p></div></div>
+      <div class="toast toast-danger" role="status"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="toast-content"><p class="toast-title">Couldn’t save</p><p class="toast-body">You’re offline. It’ll retry.</p></div></div>
+    </div>
+
+    <div class="tile t-gauges">
+      <p class="tile-label">Numbers</p>
+      <div class="stat"><span class="stat-label">Visitors this week</span><span class="stat-value">1,284</span><span class="stat-delta" data-dir="up" data-tone="good">Up 12% from last week</span></div>
+      <label for="w-up">Uploading photos, 64%</label><progress class="progress" id="w-up" value="64" max="100">64%</progress>
+      <label for="w-disk">Disk used, 82%</label><meter class="meter" id="w-disk" value="0.82" low="0.5" high="0.75" optimum="0.1">82%</meter>
+    </div>
+
+    <div class="tile t-type">
+      <p class="big" aria-hidden="true">Aa</p>
+      <div class="stack gap-2">
+        <p class="tile-label">Type</p>
+        <p class="mono">FR-8821 · 2026-11-24 · 64% · $1,284.00</p>
+        <p style="margin:0;color:var(--ink-soft)">One face for words, one for numbers that must read exactly. Each product picks its own pair.</p>
+      </div>
     </div>
   </div>
-</section>
+</div>
 
-<section aria-labelledby="start">
-  <p class="label">Get started</p>
-  <h2 id="start">Up and running in three steps.</h2>
-  <ol class="steps">
-    <li><b>Install it</b><pre><code>npm install @brignano/design</code></pre></li>
-    <li><b>Add it to your styles</b><pre><code>@import '@brignano/design/tokens.css';
-@import '@brignano/design/components.css';</code></pre></li>
-    <li><b>Use a part</b><pre><code>&lt;button class="btn btn-primary"&gt;
-  Save
-&lt;/button&gt;</code></pre></li>
-  </ol>
-  <nav class="more" aria-label="Project links">
-    <a class="link" href="https://github.com/brignano/design">Source on GitHub</a>
-    <a class="link" href="https://www.npmjs.com/package/@brignano/design">npm</a>
-    <a class="link" href="https://github.com/brignano/design/blob/main/DESIGN.md">The rules</a>
-    <a class="link" href="https://github.com/brignano/design/tree/main/decisions">Why each choice was made</a>
-  </nav>
-</section>
+<div class="counts">
+  <div><b>40</b><span>pages of parts and templates, each live in light and dark</span></div>
+  <div><b>5</b><span>products, each with its own look from the same parts</span></div>
+  <div><b>2,000+</b><span>colour pairs checked for contrast on every change</span></div>
+  <div><b>1</b><span>colour for anything you can tap, one for anything that needs you</span></div>
+</div>
 
 <div class="catalogue">
-  <p class="label">Every part</p>
-  <h2 id="parts" class="catalogue-h">Browse every part, live in light and dark.</h2>
+  <p class="label">Up close</p>
+  <h2 id="parts">Every part, one at a time.</h2>
 </div>
 
 <section aria-labelledby="foundations">
@@ -538,6 +571,14 @@
     success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',
   };
   const DEMOS = {
+    house: {
+      brand: 'brignano.io', tabs: ['Projects', 'Notes', 'About'], action: 'New project',
+      eyebrow: 'This month', headline: '3 projects shipped. 1 needs a look.',
+      stats: [['Live', '9'], ['Shipped', '3'], ['Open issues', '14']],
+      alert: ['The new logo is waiting on a review', 'The change has been open for two days.', 'Review it', 'Later'],
+      cols: ['Project', 'Status', 'Updated'],
+      rows: [['Design', 'success', 'Live', 'Today'], ['Driftwood', 'success', 'Live', 'Mon'], ['Homelab', 'attention', 'In review', 'Sun'], ['Card', 'success', 'Live', 'Fri']],
+    },
     homelab: {
       brand: 'homelab', tabs: ['Hosts', 'Backups', 'Alerts'], action: 'Add host',
       eyebrow: 'Today', headline: '5 hosts. 1 needs you.',
@@ -586,21 +627,18 @@
       + `<button type="button" class="btn btn-primary btn-sm">${esc(d.action)}</button></div>`
       + `<div class="demo-body"><div class="demo-head"><p class="eyebrow">${esc(d.eyebrow)}</p><p class="demo-h">${esc(d.headline)}</p></div>`
       + `<div class="stat-grid demo-stats">${d.stats.map(([l, v]) => `<div class="stat"><span class="stat-label">${esc(l)}</span><span class="stat-value">${esc(v)}</span></div>`).join('')}</div>`
-      + `<div class="demo-main"><div class="msg msg-attention">${ICON.attention}<div class="msg-content"><p class="msg-title">${esc(d.alert[0])}</p><p class="msg-body">${esc(d.alert[1])}</p>`
+      + `<div class="msg msg-attention">${ICON.attention}<div class="msg-content"><p class="msg-title">${esc(d.alert[0])}</p><p class="msg-body">${esc(d.alert[1])}</p>`
       + `<div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">${esc(d.alert[2])}</button><button type="button" class="btn btn-sm">${esc(d.alert[3])}</button></div></div></div>`
       + `<div class="table-wrap"><table class="table"><thead><tr><th scope="col">${esc(d.cols[0])}</th><th scope="col">${esc(d.cols[1])}</th><th scope="col" class="num">${esc(d.cols[2])}</th></tr></thead><tbody>`
       + d.rows.map(([n, tone, s, v]) => `<tr><td>${esc(n)}</td><td><span class="pill pill-${tone}">${esc(s)}</span></td><td class="num">${esc(v)}</td></tr>`).join('')
-      + `</tbody></table></div></div>`
-      + `<div class="demo-side"><div class="card"><div class="card-body stack gap-4"><div class="field"><label for="demo-field">${esc(d.field[0])}</label><input id="demo-field" value="${esc(d.field[1])}"></div>`
-      + `<label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>${esc(d.toggle)}</span></label>`
-      + `<button type="button" class="btn btn-primary">${esc(d.save)}</button></div></div>`
-      + `<div class="toast toast-success" role="status">${ICON.success}<div class="toast-content"><p class="toast-title">${esc(d.toast[0])}</p><p class="toast-body">${esc(d.toast[1])}</p></div></div></div></div>`;
+      + `</tbody></table></div></div>`;
   }
-  const demo = document.querySelector('.demo');
-  document.querySelectorAll('input[name="demo-product"]').forEach((r) => r.addEventListener('change', () => {
+  const stage = document.querySelector('.stage');
+  const app = document.getElementById('app');
+  document.querySelectorAll('input[name="look"]').forEach((r) => r.addEventListener('change', () => {
     if (!r.checked || !DEMOS[r.value]) return;
-    demo.dataset.product = r.value;
-    demo.innerHTML = render(DEMOS[r.value]);
+    if (r.value === 'house') delete stage.dataset.product; else stage.dataset.product = r.value;
+    app.innerHTML = render(DEMOS[r.value]);
   }));
 })();
 </script>
