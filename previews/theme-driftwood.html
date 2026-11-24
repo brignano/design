@@ -1,0 +1,45 @@
+<!-- @dsCard group="Products" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Driftwood theme</title>
+<meta name="description" content="Dark only. Teal on a canvas, everything set in Martian Mono.">
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../themes/driftwood.css">
+</head>
+<body>
+<h1>Driftwood</h1>
+<p class="sub">Dark only. Teal on a canvas, everything set in Martian Mono. Its palette, type and key parts in one place. To compare one part across every product, open that part’s page: each has <b>In every product</b>.</p>
+<pre class="theme-recipe" tabindex="0" aria-label="The theme file">kit: split
+scheme: dark
+hue: 195          # teal
+typeface: mono
+shell: canvas</pre>
+<p class="sub">From <code>themes/driftwood.theme</code>. Import <code>themes/driftwood.css</code> and set <code>data-product="driftwood"</code>.</p>
+<div class="pair theme-pair one">
+  <div class="panel dark theme-panel" data-product="driftwood"><span class="panel-label">Driftwood · dark only</span>
+    <div><span class="panel-label">Surfaces and text</span><div class="sw"><div><i style="background:var(--bg)"></i><span>--bg<br>the ground</span></div><div><i style="background:var(--card)"></i><span>--card<br>cards</span></div><div><i style="background:var(--ink)"></i><span>--ink<br>text</span></div><div><i style="background:var(--ink-soft)"></i><span>--ink-soft<br>second text</span></div><div><i style="background:var(--slate)"></i><span>--slate<br>labels</span></div><div><i style="background:var(--line)"></i><span>--line<br>borders</span></div></div></div>
+    <div><span class="panel-label">Action and signals</span><div class="sw"><div><i style="background:var(--action)"></i><span>--action<br>actions</span></div><div><i style="background:var(--action-surface)"></i><span>--action-surface<br>selected</span></div><div><i style="background:var(--accent)"></i><span>--accent<br>accent</span></div><div><i style="background:var(--success)"></i><span>--success<br>success</span></div><div><i style="background:var(--attention)"></i><span>--attention<br>attention</span></div><div><i style="background:var(--danger)"></i><span>--danger<br>danger</span></div></div></div>
+    <div class="theme-type"><span class="panel-label">Type</span>
+      <p class="eyebrow">Since Monday</p>
+      <p class="theme-display">2 parts changed without the diagram.</p>
+      <p class="theme-body">Body text is set in the product’s face at the reading size, with <a class="link" href="#">a link</a> in it.</p>
+      <p class="theme-mono">FR-8821 · 2026-11-07 · 64%</p>
+    </div>
+    <div class="theme-parts"><span class="panel-label">Key parts</span>
+      <div class="row"><button type="button" class="btn btn-primary">Run scan</button><button type="button" class="btn btn-secondary">Cancel</button><button type="button" class="btn btn-ghost">More</button></div>
+      <div class="field"><label for="f-driftwood-dark">Repository</label><input id="f-driftwood-dark" value="shop/main"></div>
+      <div class="segmented" role="radiogroup" aria-label="View"><label><input type="radio" name="seg-driftwood-dark" checked>Map</label><label><input type="radio" name="seg-driftwood-dark">Changes</label><label><input type="radio" name="seg-driftwood-dark">Scans</label></div>
+      <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Scan every night</span></label>
+      <div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">checkout talks to a new database</p><p class="msg-body">It isn’t on the diagram yet.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Add it</button><button type="button" class="btn btn-sm">Later</button></div></div></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th scope="col">Service</th><th scope="col">Status</th></tr></thead><tbody><tr><td>api</td><td><span class="pill pill-success">Matches</span></td></tr><tr><td>checkout</td><td><span class="pill pill-attention">Changed</span></td></tr><tr><td>search</td><td><span class="pill pill-danger">Missing</span></td></tr></tbody></table></div>
+      <div class="toast toast-success" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div class="toast-content"><p class="toast-title">Diagram updated</p><p class="toast-body">14 services, 2 changes noted.</p></div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

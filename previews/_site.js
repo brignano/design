@@ -3,10 +3,10 @@
 // It owns these so no page has to:
 //   1. the page order (PAGES below; it must match index.html, and
 //      `npm run check` fails when it doesn't), with each page's section;
-//   2. the saved mode (light / dark) and product theme, applied the moment
-//      the script runs so there is no flash (#212);
-//   3. the site chrome (#209): the top bar (mark, sections, search, mode,
-//      theme), the sidebar listing every page with the current one marked, a
+//   2. the saved mode (light / dark), applied the moment the script runs so
+//      there is no flash;
+//   3. the site chrome (#209): the top bar (mark, sections, search, mode),
+//      the sidebar listing every page with the current one marked, a
 //      menu drawer with the same list on narrow screens, and previous / next
 //      at the end of the page;
 //   4. search from every page: the search button, "/" and ⌘K or Ctrl+K open
@@ -21,10 +21,15 @@
 //   6. Google Analytics, on design.brignano.io only (see below);
 //   7. the tab icon (favicon.svg at the repo root);
 //   8. the status badge after the page's h1, from <html data-status>
-//      (stable, beta or planned; #86).
+//      (stable, beta or planned; #86);
+//   9. "In every product" on each component page (#214): the page's main
+//      specimen once per product theme, side by side, so a part can be
+//      compared across products and pointed at. The site itself stays in
+//      the house look; each product's whole look has its own page
+//      (theme-<product>.html).
 //
 // index.html (marked by [data-site-toggle]) writes its own top bar and
-// sidebar in the same classes; this script adds the mode and theme controls,
+// sidebar in the same classes; this script adds the mode control,
 // the menu drawer and search to them. The full-page template demos (body.pp)
 // get the top bar and the drawer but no sidebar column, so the demo keeps the
 // whole width. Inside an iframe (a design-tool card) nothing is added. Plain
@@ -44,6 +49,11 @@
     ['layout.html', 'Layout', 'foundations'],
     ['icons.html', 'Icons', 'foundations'],
     ['writing.html', 'Content guidelines', 'foundations'],
+    ['theme-brignano-io.html', 'brignano.io', 'products'],
+    ['theme-homelab.html', 'Homelab', 'products'],
+    ['theme-driftwood.html', 'Driftwood', 'products'],
+    ['theme-sites.html', 'Sites', 'products'],
+    ['theme-guidebook.html', 'Guidebook', 'products'],
     ['buttons.html', 'Buttons & links', 'controls'],
     ['fields.html', 'Text fields', 'controls'],
     ['choices.html', 'Choices and switches', 'controls'],
@@ -78,7 +88,7 @@
     ['email.html', 'Transactional email', 'templates'],
   ];
   const GROUPS = {
-    foundations: 'Foundations', controls: 'Controls', feedback: 'Feedback', overlays: 'Overlays',
+    foundations: 'Foundations', products: 'Products', controls: 'Controls', feedback: 'Feedback', overlays: 'Overlays',
     data: 'Data', navigation: 'Navigation', templates: 'Templates',
   };
   const GITHUB = 'https://github.com/brignano/design';
@@ -97,22 +107,18 @@
   const script = document.currentScript;
   const top = window.self === window.top;
 
-  // The product themes a visitor can view the whole site in (#212): the same
-  // five as the home's playground. Receipts stays out while it is in private
-  // preview (#205). '' is the house look, brignano.io.
+  // The products every component page compares (#214), each with its own
+  // page. Receipts stays out while it is in private preview (#205). '' is
+  // the house look, brignano.io, which the site itself wears.
   const PRODUCTS = [
-    ['', 'brignano.io'],
-    ['homelab', 'Homelab'],
-    ['driftwood', 'Driftwood'],
-    ['sites', 'Sites'],
-    ['guidebook', 'Guidebook'],
+    ['', 'brignano.io', 'theme-brignano-io.html'],
+    ['homelab', 'Homelab', 'theme-homelab.html'],
+    ['driftwood', 'Driftwood', 'theme-driftwood.html'],
+    ['sites', 'Sites', 'theme-sites.html'],
+    ['guidebook', 'Guidebook', 'theme-guidebook.html'],
   ];
-  // Pages that are already about one look keep it: Colour and Type set each
-  // theme side by side, and the product page demos are a product of their
-  // own. On these the chosen theme dresses only the site chrome.
-  const OWN_LOOK = new Set([
-    'color.html', 'type.html', 'product-page.html', 'product-page-example.html',
-    'product-page-guidebook.html', 'product-page-sites.html']);
+  // The sections whose pages get "In every product".
+  const COMPARE = new Set(['controls', 'feedback', 'overlays', 'data', 'navigation']);
 
   // ── Saved choices: applied now, before first paint ────────────────────────
   const read = (key) => {
@@ -126,8 +132,7 @@
   };
   const saved = read('theme');
   if (saved === 'light' || saved === 'dark') root.dataset.theme = saved;
-  let product = read('product') || '';
-  if (!PRODUCTS.some(([id]) => id === product)) product = '';
+  write('product', null); // the site-wide theme of #212, retired by #214
   if (top) root.classList.add('ds-chrome');
   // Aborted when the visitor leaves the page without a reload (#211).
   window.dsPage = new AbortController();
@@ -169,6 +174,10 @@
   }
   if (script && script.src) {
     addStyle(url('_site.css'));
+    // Every product's theme, for the comparisons and the product pages. A
+    // theme's rules are [data-product='x'], so they touch only the elements
+    // that carry it, never the site around them.
+    for (const [id] of PRODUCTS) if (id) addStyle(url(`../themes/${id}.css`));
 
     // The brignano.io mark as the tab icon (../favicon.svg; favicon.ico at the
     // root covers browsers without SVG favicons).
@@ -198,13 +207,10 @@
     search: svg('<path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>'),
     menu: svg('<path d="M4 6h16M4 12h16M4 18h16"/>'),
     close: svg('<path d="M18 6 6 18M6 6l12 12"/>'),
-    // Lucide monitor, sun, moon, palette, chevron-down, check.
+    // Lucide monitor, sun, moon.
     system: svg('<rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/>'),
     light: svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.93 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>'),
     dark: svg('<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>'),
-    palette: svg('<path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>'),
-    chevron: svg('<path d="m6 9 6 6 6-6"/>'),
-    check: svg('<path d="M20 6 9 17l-5-5"/>'),
   };
   // A link that leaves the site: new tab, said out loud (the #207 pattern).
   function external(text, href, cls) {
@@ -219,52 +225,6 @@
     return PAGES.findIndex(([f]) => f.replace(/\.html$/, '') === file);
   };
   const home = url('../index.html');
-
-  // ── Product theme (#212) ──────────────────────────────────────────────────
-  // The chosen theme's file is loaded once and kept across page changes. On
-  // most pages data-product goes on <html>, so the chrome, the docs and every
-  // demo take the product's look; on an OWN_LOOK page it goes on the chrome only.
-  // A theme's rules are [data-product='x'], as strong as tokens.css's :root,
-  // so the file must come after every stylesheet the page links: it is added
-  // at the end of <head> once the head is parsed (before first paint), and a
-  // page change puts the next page's stylesheets in front of it.
-  const themeLinks = {};
-  let headDone = false;
-  function themeFile(id) {
-    if (!id || themeLinks[id] || !headDone || !(script && script.src)) return;
-    themeLinks[id] = addStyle(url(`../themes/${id}.css`));
-    themeLinks[id].dataset.dsTheme = '';
-  }
-  if (document.body) headDone = true;
-  else {
-    const wait = new MutationObserver(() => {
-      if (!document.body) return;
-      wait.disconnect();
-      headDone = true;
-      themeFile(product);
-    });
-    wait.observe(root, { childList: true });
-  }
-  function applyProduct() {
-    themeFile(product);
-    const own = OWN_LOOK.has(fileOf(location.pathname));
-    if (product && !own) root.dataset.product = product;
-    else delete root.dataset.product;
-    for (const c of document.querySelectorAll('.ds-top, .ds-side, .ds-drawer, .ds-search, .ds-pager')) {
-      if (product && own) c.dataset.product = product;
-      else delete c.dataset.product;
-    }
-  }
-  applyProduct();
-  function setProduct(id) {
-    product = id;
-    write('product', id);
-    applyProduct();
-    for (const b of document.querySelectorAll('.ds-pick')) b.dsShow?.();
-    document.dispatchEvent(new CustomEvent('ds-product', { detail: id }));
-  }
-  // The home's playground reads and sets the same choice.
-  window.dsTheme = { get product() { return product; }, setProduct, products: PRODUCTS };
 
   // ── Mode switch: System → Light → Dark → System ───────────────────────────
   const ORDER = [null, 'light', 'dark'];
@@ -291,66 +251,6 @@
     return button;
   }
 
-  // ── Theme picker: a button and a menu of radio items (never a <select>) ──
-  let pickers = 0;
-  function themePicker() {
-    const id = `ds-pick-${++pickers}`;
-    const label = el('span', { class: 'ds-label' });
-    const button = el('button', {
-      type: 'button', class: 'ds-theme ds-pick', 'aria-haspopup': 'menu', 'aria-expanded': 'false', 'aria-controls': id,
-      title: 'See the whole site in a product’s theme',
-    }, el('span', { class: 'ds-ico', html: ICON.palette }), el('span', { class: 'ds-hidden', text: 'Theme: ' }), label,
-    el('span', { class: 'ds-chev', html: ICON.chevron }));
-    const menu = el('div', { class: 'ds-pick-menu', id, role: 'menu', 'aria-label': 'Theme', hidden: true });
-    menu.append(el('p', { class: 'ds-pick-head', 'aria-hidden': 'true', text: 'See the site as' }));
-    const items = PRODUCTS.map(([value, name]) => {
-      const item = el('button', { type: 'button', role: 'menuitemradio', class: 'ds-pick-item', tabindex: '-1', 'data-value': value },
-        el('span', { class: 'ds-ico', html: ICON.check }), name);
-      item.addEventListener('click', () => { setProduct(value); close(true); });
-      menu.append(item);
-      return item;
-    });
-    const note = el('p', { class: 'ds-pick-note', text: 'This page shows its own look, so the theme changes only the bar and the sidebar here.' });
-    menu.append(note);
-    const wrap = el('div', { class: 'ds-pick-wrap' }, button, menu);
-    button.dsShow = () => {
-      note.hidden = !OWN_LOOK.has(fileOf(location.pathname));
-      const [, name] = PRODUCTS.find(([v]) => v === product);
-      label.textContent = name;
-      for (const item of items) item.setAttribute('aria-checked', String(item.dataset.value === product));
-    };
-    const focusItem = (i) => items[(i + items.length) % items.length].focus();
-    function open(at) {
-      menu.hidden = false;
-      button.setAttribute('aria-expanded', 'true');
-      focusItem(at ?? items.findIndex((i) => i.dataset.value === product));
-      document.addEventListener('pointerdown', outside, true);
-    }
-    function close(refocus) {
-      if (menu.hidden) return;
-      menu.hidden = true;
-      button.setAttribute('aria-expanded', 'false');
-      document.removeEventListener('pointerdown', outside, true);
-      if (refocus) button.focus();
-    }
-    function outside(e) { if (!wrap.contains(e.target)) close(false); }
-    button.addEventListener('click', () => (menu.hidden ? open() : close(true)));
-    button.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(e.key === 'ArrowUp' ? items.length - 1 : undefined); }
-    });
-    menu.addEventListener('keydown', (e) => {
-      const at = items.indexOf(document.activeElement);
-      if (e.key === 'ArrowDown') { e.preventDefault(); focusItem(at + 1); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); focusItem(at - 1); }
-      else if (e.key === 'Home') { e.preventDefault(); focusItem(0); }
-      else if (e.key === 'End') { e.preventDefault(); focusItem(items.length - 1); }
-      else if (e.key === 'Escape') { e.preventDefault(); close(true); }
-      else if (e.key === 'Tab') close(false);
-    });
-    button.dsShow();
-    return wrap;
-  }
-
   // ── Chrome for a preview page ─────────────────────────────────────────────
   function topBar() {
     const bar = el('header', { class: 'ds-top', 'data-fold': 'skip' },
@@ -360,12 +260,12 @@
         el('span', { class: 'ds-stamp', 'aria-hidden': 'true', text: 'ab' }), ' design'),
       el('nav', { class: 'ds-sections', 'aria-label': 'Sections' },
         el('a', { href: `${home}#foundations`, text: 'Foundations' }),
+        el('a', { href: `${home}#products`, text: 'Products' }),
         el('a', { href: `${home}#controls`, text: 'Components' }),
         el('a', { href: `${home}#templates`, text: 'Templates' }),
         external('Changelog', `${GITHUB}/releases`)),
       findButton(),
-      modeSwitch(),
-      themePicker());
+      modeSwitch());
     return bar;
   }
 
@@ -448,13 +348,11 @@
         else if (e.target.closest('a[href]')) drawer.close(); // a link: the page changes behind it
       });
       document.body.append(drawer);
-      applyProduct();
     }
     drawer.querySelector('.ds-side')?.remove();
     const copy = side.cloneNode(true);
     copy.hidden = false;
     copy.removeAttribute('aria-label');
-    delete copy.dataset.product;
     drawer.append(copy);
     drawer.showModal();
     (copy.querySelector('[aria-current]') || copy.querySelector('a'))?.scrollIntoView({ block: 'center' });
@@ -582,7 +480,6 @@
     });
     dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
     document.body.append(dialog);
-    applyProduct();
   }
   function move(i) {
     items[active]?.setAttribute('aria-selected', 'false');
@@ -710,7 +607,7 @@
         match.media = 'not all';
         if (after) after.after(match);
         else if (have[0]) have[0].before(match);
-        else document.head.insertBefore(match, document.head.querySelector('[data-ds-theme]'));
+        else document.head.append(match);
       }
       used.add(match);
       after = match;
@@ -729,7 +626,7 @@
 
   // Copies the attributes of a new page's element over an old one, keeping
   // the ones this script owns on <html>.
-  const OWNED = new Set(['data-theme', 'data-product']);
+  const OWNED = new Set(['data-theme']);
   function copyAttrs(from, to, owned) {
     for (const a of [...to.attributes]) if (!(owned && OWNED.has(a.name))) to.removeAttribute(a.name);
     for (const a of from.attributes) if (!(owned && OWNED.has(a.name))) to.setAttribute(a.name, a.value);
@@ -872,7 +769,6 @@
   function wire() {
     for (const b of document.querySelectorAll('[data-find]')) b.addEventListener('click', openSearch);
     for (const b of document.querySelectorAll('[data-menu]')) b.addEventListener('click', () => openDrawer(b));
-    applyProduct();
     // The pages either side are the likeliest next click: fetch them while
     // the visitor reads.
     const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1500));
@@ -882,7 +778,7 @@
   function mount() {
     const slot = document.querySelector('[data-site-toggle]');
     if (slot) { // index.html: its bar and sidebar are in the markup
-      slot.replaceChildren(modeSwitch(), themePicker());
+      slot.replaceChildren(modeSwitch());
       wire();
       return;
     }
@@ -919,8 +815,53 @@
       const line = el('p', { class: 'site-status-line' }, statusBadge(status));
       h1.after(line);
     }
+    compare();
     idHeadings();
     wire();
+  }
+
+  // ── In every product (#214) ───────────────────────────────────────────────
+  // The page's main specimen, once per product: the elements marked
+  // [data-compare] (a <template data-compare> gives its content), else the
+  // first light panel of the first .pair. Copies are for looking: inert (no
+  // second set of tab stops, nothing read out twice), ids and names dropped
+  // so nothing clashes with the live demo above. Each follows the current
+  // mode, like the site.
+  function compare() {
+    const at = pageIndex();
+    if (at < 0 || !COMPARE.has(PAGES[at][2])) return;
+    const main = document.querySelector('.ds-main');
+    const marked = main ? [...main.querySelectorAll('[data-compare]')] : [];
+    const source = marked[0] || main?.querySelector('.pair > .panel');
+    if (!source) return;
+    const kids = marked.length
+      ? marked.flatMap((m) => (m.tagName === 'TEMPLATE' ? [...m.content.childNodes] : [m]))
+      : [...source.childNodes].filter((n) => !(n.classList && n.classList.contains('panel-label')));
+    const grid = el('div', { class: 'ds-compare-grid' });
+    for (const [id, name, page] of PRODUCTS) {
+      const body = el('div', { class: 'ds-compare-body', inert: true });
+      for (const n of kids) {
+        const c = n.cloneNode(true);
+        if (c.nodeType === 1) {
+          c.removeAttribute('data-compare');
+          for (const e of [c, ...c.querySelectorAll('*')]) {
+            for (const a of ['id', 'for', 'aria-labelledby', 'aria-describedby', 'aria-controls', 'autofocus']) e.removeAttribute(a);
+            if (e.name) e.setAttribute('name', `${e.name}-${id || 'house'}`);
+          }
+        }
+        body.append(c);
+      }
+      grid.append(el('div', { class: 'ds-compare-cell', 'data-product': id || null },
+        el('p', { class: 'ds-compare-head' }, el('span', { class: 'ds-compare-name', text: name }),
+          el('a', { class: 'ds-compare-link', href: url(page) }, 'Whole theme', el('span', { class: 'ds-hidden', text: ` of ${name}` }), ' →')),
+        body));
+    }
+    const section = el('section', { class: 'ds-compare', 'aria-labelledby': 'in-every-product', 'data-fold': 'skip' },
+      el('h2', { class: 'section-title', id: 'in-every-product', text: 'In every product' }),
+      el('p', { class: 'sub', text: 'The same part in each product’s theme, in the current mode. Point at the one that looks off.' }),
+      grid);
+    const after = source.closest('.pair') || source;
+    after.after(section);
   }
 
   function statusBadge(status) {
