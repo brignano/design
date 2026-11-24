@@ -76,6 +76,12 @@
     .dw .pp-thesis { font-size: var(--text-3xl); }
   }
 
+  /* On a phone the hero holds the whole first screen, so the band below
+     starts on the second (DESIGN.md §13: screen one is thesis, proof and
+     action). Before issue 209 the preview bar's two rows hid that the band's
+     heading and lede peeked in, at 50 words; 4rem is about the header. */
+  @media (max-width: 560px) { .dw-hero { min-height: calc(100svh - 4rem); box-sizing: border-box; } }
+
   /* The band: the last deploy, as a log. */
   .dw-band { padding: var(--space-8) 0; border-top: 1px solid var(--line); }
   .dw-band > .pp-wrap { display: grid; gap: var(--space-6); }

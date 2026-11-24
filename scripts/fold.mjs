@@ -58,6 +58,9 @@ let failed = 0;
 for (const url of args) {
   await page.goto(url, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
+  // The preview site's own chrome (top bar, pager) is not the product's
+  // page: take it out, so screen one is measured as a visitor sees it.
+  await page.evaluate(() => document.querySelectorAll('[data-fold="skip"]').forEach((el) => el.remove()));
   const r = await page.evaluate(({ W, H }) => {
     const words = (el) => (el ? el.textContent.trim().split(/\s+/).filter(Boolean).length : 0);
     const box = (el) => (el ? el.getBoundingClientRect() : null);
