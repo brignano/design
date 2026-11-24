@@ -57,6 +57,8 @@
              color: var(--slate); font-weight: 500; margin: var(--space-5) 0 var(--space-2); }
   .side h2:first-child { margin-top: 0; }
   .side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .side ul ul { margin: 2px 0 var(--space-2) 10px; padding-left: 10px; border-left: 1px solid var(--line); }
+  .side ul ul a { padding: 4px 10px; font-size: var(--text-xs); }
   .side a { display: block; padding: 6px 10px; margin-left: -10px; border-radius: var(--radius-sm);
             color: var(--ink-soft); text-decoration: none; }
   .side a:hover { background: var(--surface-hover); color: var(--ink); }
@@ -231,7 +233,7 @@
 </aside>
 
 <main id="top">
-<div class="intro-block">
+<div class="intro-block" id="overview">
   <p class="label"><span>Design system</span><span class="pill">v0.17.0</span></p>
   <h1>brignano design</h1>
   <p class="lede">The design system behind everything I build: tokens, components and page templates for brignano.io and every app beside it. Each product gets its own theme from the same parts, and every part works in light and dark.</p>
@@ -532,6 +534,30 @@
     empty.hidden = shown > 0;
     count.textContent = term ? `${shown} of ${cards.length} pages match` : `${cards.length} pages`;
   }
+  // Sidebar: list every page under its section (built here so the page
+  // order check sees each preview linked once), and mark the section in view.
+  for (const sec of parts.querySelectorAll('section')) {
+    const id = sec.getAttribute('aria-labelledby');
+    const item = document.querySelector(`.side a[href="#${id}"]`)?.parentElement;
+    if (!item) continue;
+    const sub = document.createElement('ul');
+    for (const card of sec.querySelectorAll('.gallery-card')) {
+      const a = document.createElement('a');
+      a.href = card.getAttribute('href');
+      a.textContent = card.querySelector('.txt b')?.textContent ?? '';
+      const li = document.createElement('li'); li.append(a); sub.append(li);
+    }
+    item.append(sub);
+  }
+  const sideLinks = [...document.querySelectorAll('.side a[href^="#"]')];
+  const spy = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) {
+      const id = e.target.id === 'overview' ? 'top' : e.target.getAttribute('aria-labelledby');
+      for (const a of sideLinks) a.toggleAttribute('aria-current', a.getAttribute('href') === `#${id}`);
+    }
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  parts.querySelectorAll('section').forEach((sec) => spy.observe(sec));
+  spy.observe(document.querySelector('.intro-block'));
   q.addEventListener('input', filter);
   const focus = () => { document.getElementById('parts').scrollIntoView({ block: 'start' }); q.focus({ preventScroll: true }); };
   document.querySelector('[data-find]').addEventListener('click', focus);
