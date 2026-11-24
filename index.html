@@ -24,50 +24,13 @@
   /* A docs-style home (issue 205): a sticky bar, a section sidebar, a short
      intro, four ways in, then every part, searchable and previewable in any
      product's theme. */
-  .top { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: var(--space-4);
-         padding: 6px var(--space-5); background: var(--surface-sticky); border-bottom: 1px solid var(--line);
-         -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-  .top .brand { display: inline-flex; align-items: baseline; gap: var(--space-2); color: var(--ink);
-                text-decoration: none; font-weight: 600; padding: 10px 0; }
-  .top .brand .stamp { font-size: var(--text-xl); }
-  .top .ver { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); }
-  .top nav { display: none; gap: var(--space-5); font-size: var(--text-sm); margin-left: var(--space-4); }
-  .top nav a { color: var(--ink-soft); text-decoration: none; padding: 10px 0; }
-  .top nav a:hover { color: var(--ink); }
-  .top .find { margin-left: auto; display: inline-flex; align-items: center; gap: var(--space-2);
-               color: var(--slate); min-width: 44px; justify-content: center; }
-  .top .find .kbd, .top .find .find-text { display: none; }
-  .top .ver { display: none; }
-  @media (min-width: 600px) { .top .ver { display: inline; } }
-  @media (min-width: 900px) {
-    .top nav { display: flex; }
-    .top .find { min-width: 14rem; justify-content: space-between; }
-    .top .find .kbd { display: inline-block; }
-    .top .find .find-text { display: inline; }
-  }
-
+  /* The top bar and sidebar are the site chrome every page shares
+     (previews/_site.css, issue 209); this page writes them in the markup. */
   /* Links that leave this site open in a new tab and say so with the
      shared .link-external and .visually-hidden (issue 207). */
-  .layout { max-width: 1280px; margin: 0 auto; padding: 0 var(--space-5); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
-  .side { display: none; }
-  @media (min-width: 1100px) {
-    .layout { grid-template-columns: 13rem minmax(0, 1fr); }
-    .side { display: block; position: sticky; top: 72px; align-self: start; max-height: calc(100dvh - 88px);
-            overflow-y: auto; padding: var(--space-6) 0; font-size: var(--text-sm); }
-  }
-  .side h2 { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em; text-transform: uppercase;
-             color: var(--slate); font-weight: 500; margin: var(--space-5) 0 var(--space-2); }
-  .side h2:first-child { margin-top: 0; }
-  .side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-left: 1px solid var(--line); }
-  .side ul ul { border-left: 0; }
-  .side ul ul { margin: 2px 0 var(--space-2); padding: 0; }
-  .side ul ul a { padding: 3px 10px 3px 22px; font-size: var(--text-xs); }
-  /* Calm current marker: ink text and a 2px rule on the left edge, no fill. */
-  .side a { display: block; padding: 5px 10px; border-left: 2px solid transparent; margin-left: -1.5px;
-            color: var(--ink-soft); text-decoration: none; }
-  .side a:hover { color: var(--ink); }
-  .side a[aria-current] { color: var(--ink); font-weight: 600; border-left-color: var(--ink); }
-  @media (pointer: coarse) { .side a { min-height: 44px; display: flex; align-items: center; } }
+  .ds-layout { max-width: 1280px; }
+  .ds-layout > main { min-width: 0; padding-inline: var(--space-5); }
+  @media (min-width: 1100px) { .ds-layout { column-gap: var(--space-7); } .ds-layout > main { padding-left: 0; } }
 
   .intro-block { padding: var(--space-7) 0 var(--space-6); max-width: 46rem; }
   .intro-block .label { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
@@ -243,29 +206,30 @@
 </head>
 <body>
 <a class="skip-link" href="#parts">Skip to every part</a>
-<header class="top">
-  <a class="brand" href="#top" aria-label="brignano design, home"><span class="stamp" aria-hidden="true">ab</span> design</a>
-  <span class="ver">v0.17.0</span>
-  <nav aria-label="Sections">
+<header class="ds-top">
+  <button type="button" class="ds-menu" data-menu aria-label="Contents" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  <a class="ds-brand" href="#top" aria-label="brignano design, home"><span class="ds-stamp" aria-hidden="true">ab</span> design</a>
+  <span class="ds-ver">v0.17.0</span>
+  <nav class="ds-sections" aria-label="Sections">
     <a href="#foundations">Foundations</a>
     <a href="#controls">Components</a>
     <a href="#templates">Templates</a>
-    <a class="link-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<span class="visually-hidden"> (opens in a new tab)</span></a>
+    <a class="ds-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<span class="ds-hidden"> (opens in a new tab)</span></a>
   </nav>
-  <button type="button" class="btn btn-sm find" data-find aria-label="Search every part"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span class="find-text">Search parts</span><kbd class="kbd">/</kbd></button>
+  <button type="button" class="ds-find" data-find aria-label="Search every part"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span class="ds-find-text">Search parts</span><kbd class="ds-kbd">/</kbd></button>
   <span data-site-toggle></span>
 </header>
 
-<div class="layout">
-<aside class="side" aria-label="Contents">
-  <h2>Get started</h2>
+<div class="ds-layout">
+<aside class="ds-side" aria-label="Contents">
+  <p class="ds-side-head">Get started</p>
   <ul>
     <li><a href="#top" aria-current="true">Overview</a></li>
-    <li><a class="link-external" href="https://github.com/brignano/design/blob/main/DESIGN.md" target="_blank" rel="noopener">The rules<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-    <li><a class="link-external" href="https://github.com/brignano/design/tree/main/decisions" target="_blank" rel="noopener">Decisions<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-    <li><a class="link-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+    <li><a class="ds-external" href="https://github.com/brignano/design/blob/main/DESIGN.md" target="_blank" rel="noopener">The rules<span class="ds-hidden"> (opens in a new tab)</span></a></li>
+    <li><a class="ds-external" href="https://github.com/brignano/design/tree/main/decisions" target="_blank" rel="noopener">Decisions<span class="ds-hidden"> (opens in a new tab)</span></a></li>
+    <li><a class="ds-external" href="https://github.com/brignano/design/releases" target="_blank" rel="noopener">Changelog<span class="ds-hidden"> (opens in a new tab)</span></a></li>
   </ul>
-  <h2>Every part</h2>
+  <p class="ds-side-head">Every part</p>
   <ul>
       <li><a href="#foundations">Foundations</a></li>
       <li><a href="#controls">Controls</a></li>
@@ -275,11 +239,11 @@
       <li><a href="#navigation">Navigation</a></li>
       <li><a href="#templates">Templates</a></li>
   </ul>
-  <h2>Elsewhere</h2>
+  <p class="ds-side-head">Elsewhere</p>
   <ul>
-    <li><a class="link-external" href="https://github.com/brignano/design" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-    <li><a class="link-external" href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">npm<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-    <li><a class="link-external" href="https://brignano.io" target="_blank" rel="noopener">brignano.io<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+    <li><a class="ds-external" href="https://github.com/brignano/design" target="_blank" rel="noopener">GitHub<span class="ds-hidden"> (opens in a new tab)</span></a></li>
+    <li><a class="ds-external" href="https://www.npmjs.com/package/@brignano/design" target="_blank" rel="noopener">npm<span class="ds-hidden"> (opens in a new tab)</span></a></li>
+    <li><a class="ds-external" href="https://brignano.io" target="_blank" rel="noopener">brignano.io<span class="ds-hidden"> (opens in a new tab)</span></a></li>
   </ul>
 </aside>
 
@@ -339,7 +303,7 @@
 </ul>
 
 <div class="tools" id="parts">
-  <div class="field"><label for="q">Search every part</label><input id="q" type="search" placeholder="Try “menu”, “toast” or “404”" autocomplete="off"></div>
+  <div class="field"><label for="q">Filter every part</label><input id="q" type="search" placeholder="Try “menu”, “toast” or “404”" autocomplete="off"></div>
   <p class="count" role="status" aria-live="polite">40 pages</p>
 </div>
 
@@ -593,8 +557,9 @@
 </footer>
 <script>
 (() => {
-  // Search and theme preview for the catalogue (issue 205). Without script
-  // the page is the full list.
+  // The catalogue filter and theme preview (issue 205). Search across every
+  // page, from every page, is previews/_site.js (issue 209). Without script the
+  // page is the full list.
   const q = document.getElementById('q');
   const parts = document.getElementById('catalogue');
   const count = document.querySelector('.tools .count');
@@ -616,7 +581,7 @@
   // order check sees each preview linked once), and mark the section in view.
   for (const sec of parts.querySelectorAll('section')) {
     const id = sec.getAttribute('aria-labelledby');
-    const item = document.querySelector(`.side a[href="#${id}"]`)?.parentElement;
+    const item = document.querySelector(`.ds-side a[href="#${id}"]`)?.parentElement;
     if (!item) continue;
     const sub = document.createElement('ul');
     for (const card of sec.querySelectorAll('.gallery-card')) {
@@ -627,7 +592,7 @@
     }
     item.append(sub);
   }
-  const sideLinks = [...document.querySelectorAll('.side a[href^="#"]')];
+  const sideLinks = [...document.querySelectorAll('.ds-side a[href^="#"]')];
   const spy = new IntersectionObserver((entries) => {
     for (const e of entries) if (e.isIntersecting) {
       const id = e.target.id === 'overview' ? 'top' : e.target.getAttribute('aria-labelledby');
@@ -637,11 +602,6 @@
   parts.querySelectorAll('section').forEach((sec) => spy.observe(sec));
   spy.observe(document.querySelector('.intro-block'));
   q.addEventListener('input', filter);
-  const focus = () => { document.getElementById('parts').scrollIntoView({ block: 'start' }); q.focus({ preventScroll: true }); };
-  document.querySelector('[data-find]').addEventListener('click', focus);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !/^(input|textarea|select)$/i.test(e.target.tagName) && !e.target.isContentEditable) { e.preventDefault(); focus(); }
-  });
   // The live screen (issue 205). Each product's real theme (themes/<product>.css)
   // re-skins the same components; only the demo words change with it.
   // Demo data only.

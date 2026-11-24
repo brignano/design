@@ -18,8 +18,6 @@ body {
   font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased;
   font-variant-numeric: tabular-nums;
 }
-/* The shared header (_site.js, _site.css) bleeds to the edges of this padding. */
-body > .site-bar { margin: -28px -28px 24px; padding: 0 28px; }
 h1 { font-size: var(--text-xl); font-weight: 600; letter-spacing: -.015em; margin: 0 0 4px; }
 h2.kits { font-size: var(--text-lg); font-weight: 600; letter-spacing: -.01em; margin: 40px 0 4px; }
 .sub { font-size: var(--text-sm); color: var(--slate); margin: 0 0 24px; font-family: var(--mono); }

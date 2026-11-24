@@ -45,6 +45,9 @@
 //  17. the theme generator's gate lets through a pair just under its floor,
 //      the build writes a theme the gate faults, or any hue on any kit and
 //      ground produces a theme that misses a floor.
+//  18. previews/_search.js, the preview site's search index (#209), is not
+//      exactly what scripts/search-index.mjs makes from the pages (it is
+//      generated: change a page, then `npm run search-index`).
 //  16. a kit (kits/*.css) or a product's theme (themes/*.css; ADR-0019) misses
 //      a contrast floor in either scheme,
 //      sets a name :root doesn't define, lets a wash drift from the colour it
@@ -58,6 +61,7 @@ import { hex, toHex, resolve } from './colour.mjs';
 import { TOKEN, resolveLight } from './email-tokens.mjs';
 import { controls } from './controls.mjs';
 import { build, rootTokenMap, theme as buildTheme } from './build.mjs';
+import { searchIndex } from './search-index.mjs';
 import { derive, gate, parse } from './theme.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -481,6 +485,10 @@ for (const p of new Set(pages))
 const indexOrder = [...index.matchAll(/href="previews\/([\w-]+\.html)"/g)].map((m) => m[1]);
 if (indexOrder.join() !== pages.join())
   fail(`order: index.html links\n    ${indexOrder.join(', ')}\n  but previews/_site.js PAGES is\n    ${pages.join(', ')}`);
+
+// ── 18. The search index matches the pages ──────────────────────────────────
+if (!existsSync(new URL('previews/_search.js', root)) || read('previews/_search.js') !== searchIndex())
+  fail('previews/_search.js is out of date with the pages: run `npm run search-index`');
 
 // ── 8. Every component class is on a preview page ───────────────────────────
 const shown = new Set();

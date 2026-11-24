@@ -10,7 +10,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
-    "controls": "node scripts/controls.mjs"
+    "controls": "node scripts/controls.mjs",
+    "search-index": "node scripts/search-index.mjs"
   },
   "publishConfig": {
     "access": "public",
