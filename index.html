@@ -46,7 +46,7 @@
     .top .find .find-text { display: inline; }
   }
 
-  .layout { max-width: 1280px; margin: 0 auto; padding: 0 var(--space-5); display: grid; gap: var(--space-7); }
+  .layout { max-width: 1280px; margin: 0 auto; padding: 0 var(--space-5); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
   .side { display: none; }
   @media (min-width: 1100px) {
     .layout { grid-template-columns: 13rem minmax(0, 1fr); }
@@ -90,7 +90,7 @@
   .way .n { font-family: var(--mono); font-size: var(--text-xs); color: var(--slate); margin-top: var(--space-2); }
 
   /* The toolbar over the catalogue: search and the product preview. */
-  .tools { display: grid; gap: var(--space-3); align-items: end;
+  .tools { display: grid; grid-template-columns: minmax(0, 1fr) !important; gap: var(--space-3); align-items: end;
            padding: var(--space-3) 0; margin: 0 0 var(--space-6); background: var(--bg); border-bottom: 1px solid var(--line); }
   .tools .field { margin: 0; }
   .tools .field label, .tools legend { font-size: var(--text-sm); font-weight: 600; }
@@ -102,6 +102,52 @@
   .parts { scroll-margin-top: 160px; }
   .parts section { scroll-margin-top: 180px; }
   .parts [hidden] { display: none !important; }
+
+
+  /* The playground: one composed screen from real parts, re-themed by the
+     product and light/dark controls above it. The product choice also
+     re-themes every card in the catalogue. */
+  .play { container-type: inline-size; margin: 0 0 var(--space-7); border: 1px solid var(--line); border-radius: var(--radius-lg);
+          background: var(--card); overflow: hidden; }
+  .play-bar { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); align-items: center;
+              padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--line); }
+  .play-bar fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  .play-bar legend { float: left; font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .1em;
+                     text-transform: uppercase; color: var(--slate); padding: 0; margin: 0; }
+  .play-stage { background: var(--bg); color: var(--ink); font-family: var(--sans);
+                font-size: 15px; padding: var(--space-4); display: grid; gap: var(--space-4); }
+  .play-app { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; min-width: 0; }
+  .play-side { display: grid; gap: var(--space-4); align-content: start; min-width: 0; }
+  .play-side .toast { width: 100%; }
+  @container (min-width: 760px) { .play-stage { grid-template-columns: minmax(0, 5fr) minmax(0, 3fr); padding: var(--space-5); } }
+  .demo-bar { display: flex; align-items: center; gap: var(--space-4); padding: 10px var(--space-4); border-bottom: 1px solid var(--line); }
+  .demo-brand { font-family: var(--display); font-weight: var(--weight-heavy, 700);
+                text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal); }
+  .demo-tabs { display: none; gap: 2px; font-size: var(--text-sm); color: var(--ink-soft); }
+  .demo-tabs span { padding: 6px 10px; border-radius: var(--radius-sm); }
+  .demo-tabs .on { background: var(--surface-active); color: var(--ink); }
+  .demo-bar .btn { margin-left: auto; }
+  .demo-body { display: grid; gap: var(--space-4); padding: var(--space-4); }
+  .demo-head .eyebrow { margin: 0 0 var(--space-1); }
+  .demo-h { margin: 0; font-family: var(--display); font-weight: var(--weight-heavy, 700);
+            text-transform: var(--display-case, none); font-stretch: var(--display-stretch, normal);
+            font-size: clamp(1.4rem, 2.6cqi, 2rem); line-height: 1.05; letter-spacing: -.025em; text-wrap: balance; }
+  .demo-stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.5rem), 1fr)); gap: var(--space-3); }
+  .demo-stats .stat-value { font-size: clamp(1.1rem, 3cqi, 1.6rem); }
+  @container (min-width: 760px) { .demo-tabs { display: flex; } }
+  /* The house look's display face is the pixel one, kept for eyebrows. */
+  .play-stage:not([data-product]) :is(.demo-h, .demo-brand) { font-family: var(--sans); text-transform: none; }
+
+  /* Specimen-first cards: the live preview is most of the tile. */
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)) !important; gap: var(--space-3) !important; }
+  .gallery-card { border-radius: var(--radius-card) !important; box-shadow: none !important; }
+  .gallery-card .spec { height: 150px; }
+  .gallery-card .txt { padding: var(--space-3) var(--space-4); display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px var(--space-2); }
+  .gallery-card .txt b { font-size: var(--text-base); margin: 0; }
+  .gallery-card .txt .site-status { margin: 0; order: 2; }
+  .gallery-card .txt span:not(.go) { order: 3; flex-basis: 100%; font-size: var(--text-xs); color: var(--slate);
+                                     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gallery-card .txt .go { display: none; }
 
   section { padding: 0 0 var(--space-8); }
   .label { font-family: var(--mono); font-size: var(--text-xs); letter-spacing: .12em;
@@ -243,25 +289,52 @@
   </div>
 </div>
 
+<div class="play" aria-label="Playground">
+  <div class="play-bar">
+    <fieldset>
+      <legend>Theme</legend>
+      <div class="segmented">
+        <label><input type="radio" name="look" value="" checked>brignano.io</label>
+        <label><input type="radio" name="look" value="homelab">Homelab</label>
+        <label><input type="radio" name="look" value="driftwood">Driftwood</label>
+        <label><input type="radio" name="look" value="sites">Sites</label>
+        <label><input type="radio" name="look" value="guidebook">Guidebook</label>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Mode</legend>
+      <div class="segmented">
+        <label><input type="radio" name="mode" value="" checked>Auto</label>
+        <label><input type="radio" name="mode" value="light">Light</label>
+        <label><input type="radio" name="mode" value="dark">Dark</label>
+      </div>
+    </fieldset>
+  </div>
+  <div class="play-stage">
+    <div class="play-app" id="app">
+<div class="demo-bar"><span class="demo-brand">brignano.io</span><span class="demo-tabs" aria-hidden="true"><span class="on">Projects</span><span>Notes</span><span>About</span></span><button type="button" class="btn btn-primary btn-sm">New project</button></div><div class="demo-body"><div class="demo-head"><p class="eyebrow">This month</p><p class="demo-h">3 projects shipped. 1 needs a look.</p></div><div class="stat-grid demo-stats"><div class="stat"><span class="stat-label">Live</span><span class="stat-value">9</span></div><div class="stat"><span class="stat-label">Shipped</span><span class="stat-value">3</span></div><div class="stat"><span class="stat-label">Open issues</span><span class="stat-value">14</span></div></div><div class="msg msg-attention"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg><div class="msg-content"><p class="msg-title">The new logo is waiting on a review</p><p class="msg-body">The change has been open for two days.</p><div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">Review it</button><button type="button" class="btn btn-sm">Later</button></div></div></div><div class="table-wrap"><table class="table"><thead><tr><th scope="col">Project</th><th scope="col">Status</th><th scope="col" class="num">Updated</th></tr></thead><tbody><tr><td>Design</td><td><span class="pill pill-success">Live</span></td><td class="num">Today</td></tr><tr><td>Driftwood</td><td><span class="pill pill-success">Live</span></td><td class="num">Mon</td></tr><tr><td>Homelab</td><td><span class="pill pill-attention">In review</span></td><td class="num">Sun</td></tr><tr><td>Card</td><td><span class="pill pill-success">Live</span></td><td class="num">Fri</td></tr></tbody></table></div></div>
+    </div>
+    <div class="play-side">
+      <div class="card"><div class="card-body stack gap-4">
+        <div class="field"><label for="p-name">Project name</label><input id="p-name" value="Night sky map"></div>
+        <div class="segmented" role="radiogroup" aria-label="Visibility"><label><input type="radio" name="p-vis" checked>Public</label><label><input type="radio" name="p-vis">Friends</label><label><input type="radio" name="p-vis">Just me</label></div>
+        <label class="choice"><input type="checkbox" role="switch" class="switch" checked><span>Email me when it ships</span></label>
+        <div class="cluster gap-2"><button type="button" class="btn btn-primary">Save</button><button type="button" class="btn">Cancel</button></div>
+      </div></div>
+      <div class="toast toast-success" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg><div class="toast-content"><p class="toast-title">Published</p><p class="toast-body">It’s live at /night-sky.</p></div><button type="button" class="btn btn-ghost btn-sm toast-action">Undo</button></div>
+    </div>
+  </div>
+</div>
+
 <ul class="ways">
   <li><a class="way" href="#foundations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="5"/><circle cx="16" cy="16" r="5"/></svg><b>Foundations</b><span>Colour, type, space, shape and motion.</span><span class="n">8 pages</span></a></li>
   <li><a class="way" href="#controls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="5"/><circle cx="16" cy="12" r="2"/></svg><b>Components</b><span>Buttons, fields, menus, messages, tables.</span><span class="n">20 pages</span></a></li>
   <li><a class="way" href="#templates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg><b>Templates</b><span>Whole pages to start from.</span><span class="n">12 pages</span></a></li>
-  <li><a class="way" href="#parts" data-theme-jump><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.6 0-.9-.7-1.4-.7-2.2 0-.8.7-1.4 1.6-1.4H17a4 4 0 0 0 4-4c0-4.9-4-8.8-9-8.8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="11" r="1"/></svg><b>Themes</b><span>One per product. Preview any part in each.</span><span class="n">5 themes</span></a></li>
+  <li><a class="way" href="#top" data-theme-jump><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.6 0-.9-.7-1.4-.7-2.2 0-.8.7-1.4 1.6-1.4H17a4 4 0 0 0 4-4c0-4.9-4-8.8-9-8.8z"/><circle cx="7.5" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="11" r="1"/></svg><b>Themes</b><span>One per product. Switch them in the playground.</span><span class="n">5 themes</span></a></li>
 </ul>
 
 <div class="tools" id="parts">
   <div class="field"><label for="q">Search every part</label><input id="q" type="search" placeholder="Try “menu”, “toast” or “404”" autocomplete="off"></div>
-  <fieldset>
-    <legend>Preview in</legend>
-    <div class="segmented">
-      <label><input type="radio" name="look" value="" checked>brignano.io</label>
-      <label><input type="radio" name="look" value="homelab">Homelab</label>
-      <label><input type="radio" name="look" value="driftwood">Driftwood</label>
-      <label><input type="radio" name="look" value="sites">Sites</label>
-      <label><input type="radio" name="look" value="guidebook">Guidebook</label>
-    </div>
-  </fieldset>
   <p class="count" role="status" aria-live="polite">40 pages</p>
 </div>
 
@@ -564,9 +637,86 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === '/' && !e.metaKey && !e.ctrlKey && !/^(input|textarea|select)$/i.test(e.target.tagName) && !e.target.isContentEditable) { e.preventDefault(); focus(); }
   });
+  // The live screen (issue 205). Each product's real theme (themes/<product>.css)
+  // re-skins the same components; only the demo words change with it.
+  // Demo data only.
+  const ICON = {
+    attention: '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M8.3 2.9c.8-1.3 2.6-1.3 3.4 0l6 10.1c.8 1.4-.2 3-1.7 3H4c-1.5 0-2.5-1.6-1.7-3l6-10.1zM10 7a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',
+  };
+  const DEMOS = {
+    house: {
+      brand: 'brignano.io', tabs: ['Projects', 'Notes', 'About'], action: 'New project',
+      eyebrow: 'This month', headline: '3 projects shipped. 1 needs a look.',
+      stats: [['Live', '9'], ['Shipped', '3'], ['Open issues', '14']],
+      alert: ['The new logo is waiting on a review', 'The change has been open for two days.', 'Review it', 'Later'],
+      cols: ['Project', 'Status', 'Updated'],
+      rows: [['Design', 'success', 'Live', 'Today'], ['Driftwood', 'success', 'Live', 'Mon'], ['Homelab', 'attention', 'In review', 'Sun'], ['Card', 'success', 'Live', 'Fri']],
+    },
+    homelab: {
+      brand: 'homelab', tabs: ['Hosts', 'Backups', 'Alerts'], action: 'Add host',
+      eyebrow: 'Today', headline: '5 hosts. 1 needs you.',
+      stats: [['Hosts up', '4 of 5'], ['Busiest', '71%'], ['Last backup', '03:00']],
+      alert: ['pi-dns is running hot', 'Over 70% busy for the last hour.', 'Restart', 'Not now'],
+      cols: ['Host', 'Status', 'Busy'],
+      rows: [['pve-01', 'success', 'Running', '23%'], ['pi-dns', 'attention', 'Slow', '71%'], ['media', 'success', 'Running', '35%'], ['offsite', 'danger', 'Stopped', '–']],
+      field: ['Host name', 'nas-02'], toggle: 'Back it up every night', save: 'Add host',
+      toast: ['Backup finished', 'media: 12 GB in 4 minutes.'],
+    },
+    driftwood: {
+      brand: 'Driftwood', tabs: ['Map', 'Changes', 'Scans'], action: 'Run scan',
+      eyebrow: 'Since Monday', headline: '2 parts changed without the diagram.',
+      stats: [['Services', '14'], ['Changed', '2'], ['Last scan', '09:30']],
+      alert: ['checkout talks to a new database', 'It isn’t on the diagram yet.', 'Add it', 'Ignore'],
+      cols: ['Service', 'Status', 'Calls'],
+      rows: [['api', 'success', 'Matches', '1,204'], ['checkout', 'attention', 'Changed', '388'], ['billing', 'success', 'Matches', '96'], ['search', 'danger', 'Missing', '–']],
+      field: ['Repository', 'shop/main'], toggle: 'Scan every night', save: 'Run scan',
+      toast: ['Diagram updated', '14 services, 2 changes noted.'],
+    },
+    sites: {
+      brand: 'Sites', tabs: ['My site', 'Changes', 'Visits'], action: 'Ask for a change',
+      eyebrow: 'Corner Bakery', headline: 'Your site, changed when you ask.',
+      stats: [['Visits this week', '1,284'], ['Changes asked', '3'], ['Waiting', '1']],
+      alert: ['Sunday hours are waiting on you', 'Reply with the new times and it goes live.', 'Reply', 'Later'],
+      cols: ['Change', 'Status', 'Asked'],
+      rows: [['New photos', 'success', 'Live', 'Mon'], ['Sunday hours', 'attention', 'Waiting', 'Tue'], ['Holiday menu', 'success', 'Live', 'Wed']],
+      field: ['What should change?', 'Add our new phone number'], toggle: 'Email me when it’s live', save: 'Send it',
+      toast: ['Your site is updated', 'The new photos are live.'],
+    },
+    guidebook: {
+      brand: 'Guidebook', tabs: ['Guides', 'People', 'Settings'], action: 'New guide',
+      eyebrow: 'This week', headline: 'Show people the way, one step at a time.',
+      stats: [['Guides', '12'], ['Finished', '86%'], ['Got stuck', '3']],
+      alert: ['3 people got stuck on step 4', 'The button it points at has moved.', 'Fix the step', 'Later'],
+      cols: ['Guide', 'Status', 'Finished'],
+      rows: [['Set up billing', 'success', 'Live', '91%'], ['Invite your team', 'attention', 'Needs a fix', '62%'], ['Export a report', 'success', 'Live', '88%']],
+      field: ['Guide name', 'Connect your calendar'], toggle: 'Show on first visit', save: 'Publish guide',
+      toast: ['Guide published', 'People see it on their next visit.'],
+    },
+  };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function render(d) {
+    return `<div class="demo-bar"><span class="demo-brand">${esc(d.brand)}</span>`
+      + `<span class="demo-tabs" aria-hidden="true">${d.tabs.map((t, i) => `<span${i ? '' : ' class="on"'}>${esc(t)}</span>`).join('')}</span>`
+      + `<button type="button" class="btn btn-primary btn-sm">${esc(d.action)}</button></div>`
+      + `<div class="demo-body"><div class="demo-head"><p class="eyebrow">${esc(d.eyebrow)}</p><p class="demo-h">${esc(d.headline)}</p></div>`
+      + `<div class="stat-grid demo-stats">${d.stats.map(([l, v]) => `<div class="stat"><span class="stat-label">${esc(l)}</span><span class="stat-value">${esc(v)}</span></div>`).join('')}</div>`
+      + `<div class="msg msg-attention">${ICON.attention}<div class="msg-content"><p class="msg-title">${esc(d.alert[0])}</p><p class="msg-body">${esc(d.alert[1])}</p>`
+      + `<div class="msg-actions"><button type="button" class="btn btn-primary btn-sm">${esc(d.alert[2])}</button><button type="button" class="btn btn-sm">${esc(d.alert[3])}</button></div></div></div>`
+      + `<div class="table-wrap"><table class="table"><thead><tr><th scope="col">${esc(d.cols[0])}</th><th scope="col">${esc(d.cols[1])}</th><th scope="col" class="num">${esc(d.cols[2])}</th></tr></thead><tbody>`
+      + d.rows.map(([n, tone, s, v]) => `<tr><td>${esc(n)}</td><td><span class="pill pill-${tone}">${esc(s)}</span></td><td class="num">${esc(v)}</td></tr>`).join('')
+      + `</tbody></table></div></div>`;
+  }
+  const stage = document.querySelector('.play-stage');
+  const app = document.getElementById('app');
   document.querySelectorAll('input[name="look"]').forEach((r) => r.addEventListener('change', () => {
     if (!r.checked) return;
-    if (r.value) parts.dataset.product = r.value; else delete parts.dataset.product;
+    for (const el of [stage, parts]) { if (r.value) el.dataset.product = r.value; else delete el.dataset.product; }
+    app.innerHTML = render(DEMOS[r.value || 'house']);
+  }));
+  document.querySelectorAll('input[name="mode"]').forEach((r) => r.addEventListener('change', () => {
+    if (!r.checked) return;
+    if (r.value) stage.dataset.theme = r.value; else delete stage.dataset.theme;
   }));
 })();
 </script>
