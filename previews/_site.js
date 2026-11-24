@@ -56,6 +56,7 @@
     ['theme-guidebook.html', 'Guidebook', 'products'],
     ['buttons.html', 'Buttons & links', 'controls'],
     ['fields.html', 'Text fields', 'controls'],
+    ['select-menu.html', 'Select menu', 'controls'],
     ['choices.html', 'Choices and switches', 'controls'],
     ['chips.html', 'Filter chip', 'controls'],
     ['feedback.html', 'Messages and banners', 'feedback'],

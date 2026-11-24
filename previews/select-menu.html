@@ -1,0 +1,213 @@
+<!-- @dsCard group="Components" -->
+<!doctype html>
+<html lang="en" data-status="beta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Select menu</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  .panel.light, .panel.dark { background: var(--bg); }
+  .name { font-family: var(--mono); font-size: var(--text-xs); color: var(--ink-soft); margin: 0; }
+  /* Preview only: a closed copy shown in the flow, as if open. */
+  .specimens { display: flex; }
+  .specimens > .popover { display: block; position: static; inset: auto; opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<h1>Select menu</h1>
+<p class="sub">The way to pick one option from a list. A button shows the choice and opens a menu of radio items, so the list looks the same on every device. Never a native &lt;select&gt;.</p>
+<div class="pair">
+  <div class="panel light" id="l-top"><span class="panel-label">Light</span>
+    <div class="stack gap-5">
+      <div class="field">
+        <label id="l-plan-l" for="l-plan">Plan</label>
+        <button type="button" class="select-menu" id="l-plan" popovertarget="l-plan-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="l-plan-l l-plan-v"><span class="select-menu-value" id="l-plan-v">Standard</span></button>
+        <div class="popover" id="l-plan-list" popover><div class="menu" role="menu" aria-labelledby="l-plan-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="pilot"><span class="menu-item-text">Pilot, two stores<small>Free while we test it</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="true" data-value="standard"><span class="menu-item-text">Standard<small>Up to five sites</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="custom"><span class="menu-item-text">Custom<small>Talk to Anthony first</small></span></button></div></div>
+        <input type="hidden" name="plan" value="standard">
+      </div>
+      <div class="field">
+        <label id="l-region-l" for="l-region">Region <span class="field-optional">(optional)</span></label>
+        <button type="button" class="select-menu" id="l-region" data-empty popovertarget="l-region-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="l-region-l l-region-v" aria-describedby="l-region-hint"><span class="select-menu-value" id="l-region-v">Choose a region</span></button>
+        <p class="field-hint" id="l-region-hint">We use it to pick the closest store.</p>
+        <div class="popover" id="l-region-list" popover><div class="menu" role="menu" aria-labelledby="l-region-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="east"><span class="menu-item-text">East</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="central"><span class="menu-item-text">Central</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="west"><span class="menu-item-text">West</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="overseas" disabled><span class="menu-item-text">Overseas<small>Not yet open</small></span></button></div></div>
+        <input type="hidden" name="region" value="">
+      </div>
+      <div class="field">
+        <label id="l-bad-l" for="l-bad">Billing country</label>
+        <button type="button" class="select-menu" id="l-bad" data-empty aria-invalid="true" popovertarget="l-bad-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="l-bad-l l-bad-v" aria-describedby="l-bad-error"><span class="select-menu-value" id="l-bad-v">Choose a country</span></button>
+        <p class="field-error" id="l-bad-error"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>Choose where the card was issued.</p>
+        <div class="popover" id="l-bad-list" popover><div class="menu" role="menu" aria-labelledby="l-bad-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="us"><span class="menu-item-text">United States</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="canada"><span class="menu-item-text">Canada</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="mexico"><span class="menu-item-text">Mexico</span></button></div></div>
+        <input type="hidden" name="country" value="">
+      </div>
+      <div class="field">
+        <label id="l-off-l" for="l-off">Store</label>
+        <button type="button" class="select-menu" id="l-off" disabled aria-labelledby="l-off-l l-off-v"><span class="select-menu-value" id="l-off-v">Main street</span></button>
+      </div>
+      <div class="cluster">
+        <span class="name" id="l-sort-l">Sort replies</span>
+        <button type="button" class="select-menu select-menu-inline" id="l-sort" popovertarget="l-sort-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="l-sort-l l-sort-v"><span class="select-menu-value" id="l-sort-v">Newest first</span></button>
+        <div class="popover" id="l-sort-list" popover><div class="menu" role="menu" aria-labelledby="l-sort-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="true" data-value="newest-first"><span class="menu-item-text">Newest first</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="oldest-first"><span class="menu-item-text">Oldest first</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="most-replies"><span class="menu-item-text">Most replies</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="recently-active"><span class="menu-item-text">Recently active</span></button></div></div>
+      </div>
+      <p class="name">Shown open, in place</p>
+      <div class="specimens"><div class="popover" popover><div class="menu" role="menu" aria-label="Plan"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="pilot"><span class="menu-item-text">Pilot, two stores<small>Free while we test it</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="true" data-value="standard"><span class="menu-item-text">Standard<small>Up to five sites</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="custom"><span class="menu-item-text">Custom<small>Talk to Anthony first</small></span></button></div></div></div>
+    </div>
+  </div>
+  <div class="panel dark" id="d-top"><span class="panel-label">Dark</span>
+    <div class="stack gap-5">
+      <div class="field">
+        <label id="d-plan-l" for="d-plan">Plan</label>
+        <button type="button" class="select-menu" id="d-plan" popovertarget="d-plan-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="d-plan-l d-plan-v"><span class="select-menu-value" id="d-plan-v">Standard</span></button>
+        <div class="popover" id="d-plan-list" popover><div class="menu" role="menu" aria-labelledby="d-plan-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="pilot"><span class="menu-item-text">Pilot, two stores<small>Free while we test it</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="true" data-value="standard"><span class="menu-item-text">Standard<small>Up to five sites</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="custom"><span class="menu-item-text">Custom<small>Talk to Anthony first</small></span></button></div></div>
+        <input type="hidden" name="plan" value="standard">
+      </div>
+      <div class="field">
+        <label id="d-region-l" for="d-region">Region <span class="field-optional">(optional)</span></label>
+        <button type="button" class="select-menu" id="d-region" data-empty popovertarget="d-region-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="d-region-l d-region-v" aria-describedby="d-region-hint"><span class="select-menu-value" id="d-region-v">Choose a region</span></button>
+        <p class="field-hint" id="d-region-hint">We use it to pick the closest store.</p>
+        <div class="popover" id="d-region-list" popover><div class="menu" role="menu" aria-labelledby="d-region-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="east"><span class="menu-item-text">East</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="central"><span class="menu-item-text">Central</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="west"><span class="menu-item-text">West</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="overseas" disabled><span class="menu-item-text">Overseas<small>Not yet open</small></span></button></div></div>
+        <input type="hidden" name="region" value="">
+      </div>
+      <div class="field">
+        <label id="d-bad-l" for="d-bad">Billing country</label>
+        <button type="button" class="select-menu" id="d-bad" data-empty aria-invalid="true" popovertarget="d-bad-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="d-bad-l d-bad-v" aria-describedby="d-bad-error"><span class="select-menu-value" id="d-bad-v">Choose a country</span></button>
+        <p class="field-error" id="d-bad-error"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-12a1 1 0 011 1v4a1 1 0 01-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>Choose where the card was issued.</p>
+        <div class="popover" id="d-bad-list" popover><div class="menu" role="menu" aria-labelledby="d-bad-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="us"><span class="menu-item-text">United States</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="canada"><span class="menu-item-text">Canada</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="mexico"><span class="menu-item-text">Mexico</span></button></div></div>
+        <input type="hidden" name="country" value="">
+      </div>
+      <div class="field">
+        <label id="d-off-l" for="d-off">Store</label>
+        <button type="button" class="select-menu" id="d-off" disabled aria-labelledby="d-off-l d-off-v"><span class="select-menu-value" id="d-off-v">Main street</span></button>
+      </div>
+      <div class="cluster">
+        <span class="name" id="d-sort-l">Sort replies</span>
+        <button type="button" class="select-menu select-menu-inline" id="d-sort" popovertarget="d-sort-list" aria-haspopup="menu" aria-expanded="false" aria-labelledby="d-sort-l d-sort-v"><span class="select-menu-value" id="d-sort-v">Newest first</span></button>
+        <div class="popover" id="d-sort-list" popover><div class="menu" role="menu" aria-labelledby="d-sort-l"><button type="button" class="menu-item" role="menuitemradio" aria-checked="true" data-value="newest-first"><span class="menu-item-text">Newest first</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="oldest-first"><span class="menu-item-text">Oldest first</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="most-replies"><span class="menu-item-text">Most replies</span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="recently-active"><span class="menu-item-text">Recently active</span></button></div></div>
+      </div>
+      <p class="name">Shown open, in place</p>
+      <div class="specimens"><div class="popover" popover><div class="menu" role="menu" aria-label="Plan"><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="pilot"><span class="menu-item-text">Pilot, two stores<small>Free while we test it</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="true" data-value="standard"><span class="menu-item-text">Standard<small>Up to five sites</small></span></button><button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="custom"><span class="menu-item-text">Custom<small>Talk to Anthony first</small></span></button></div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="docs">
+  <section data-doc="usage">
+    <h2>Use it</h2>
+<pre tabindex="0"><code>&lt;div class="field"&gt;
+  &lt;label id="plan-l" for="plan"&gt;Plan&lt;/label&gt;
+  &lt;button type="button" class="select-menu" id="plan" popovertarget="plan-list"
+          aria-haspopup="menu" aria-expanded="false" aria-labelledby="plan-l plan-v"&gt;
+    &lt;span class="select-menu-value" id="plan-v"&gt;Standard&lt;/span&gt;
+  &lt;/button&gt;
+  &lt;div class="popover" id="plan-list" popover&gt;
+    &lt;div class="menu" role="menu" aria-labelledby="plan-l"&gt;
+      &lt;button type="button" class="menu-item" role="menuitemradio" aria-checked="true" data-value="standard"&gt;
+        &lt;span class="menu-item-text"&gt;Standard&lt;small&gt;Up to five sites&lt;/small&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;button type="button" class="menu-item" role="menuitemradio" aria-checked="false" data-value="custom"&gt;
+        &lt;span class="menu-item-text"&gt;Custom&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;input type="hidden" name="plan" value="standard"&gt;
+&lt;/div&gt;</code></pre>
+  </section>
+
+  <div class="two">
+    <section data-doc="use-when">
+      <h2>Use when</h2>
+      <ul>
+        <li>Someone picks one of many options in a form: a plan, a region, a country.</li>
+        <li>A toolbar sorts or filters a list by one choice. Add <code>.select-menu-inline</code> so the button fits its words.</li>
+        <li>An option needs a line of explanation. Put it in <code>&lt;small&gt;</code> under the label.</li>
+      </ul>
+    </section>
+    <section data-doc="dont-use">
+      <h2>Don't use when</h2>
+      <ul>
+        <li>Never a native <code>&lt;select&gt;</code> in product UI: its open list is the operating system's, and differs on every device.</li>
+        <li>There are two to four options: use radios or a segmented control, so they are all visible.</li>
+        <li>People pick several: use checkboxes.</li>
+        <li>The list is a set of actions, not a value: use a <a class="link" href="menus.html">popover menu</a>.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Parts</h2>
+    <ul>
+      <li><code>.select-menu</code> is the button. It looks like a text field, with a chevron, and takes the same states: <code>aria-invalid="true"</code> turns the edge to <code>--danger</code>, <code>disabled</code> goes neutral, <code>data-empty</code> shows its prompt in the placeholder colour.</li>
+      <li>The list is a <code>.popover</code> holding a <code>.menu</code>, so anchoring, light dismiss and flipping when there is no room come from the <a class="link" href="menus.html">popover</a>. It is at least as wide as the button.</li>
+      <li>Each item is a <code>.menu-item</code> with <code>role="menuitemradio"</code>. The checked one has <code>aria-checked="true"</code>, a check mark and a medium weight. A <code>&lt;small&gt;</code> inside <code>.menu-item-text</code> adds a one-line hint.</li>
+      <li>A hidden input keeps the value for a form. A disabled item says why in its hint.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The script</h2>
+    <p>The CSS is the design system's; the behaviour is the product's, as with tabs. Copy this, or write the same contract: it keeps the choice, the value and the keys. Without script, a <code>.field</code> can hold a native <code>&lt;select&gt;</code>, which stays styled as the fallback until the script swaps it.</p>
+<pre tabindex="0"><code>// The select menu's script contract (issue 198). Copy it into the product: the
+// design system ships the CSS, the product owns the behaviour, as with tabs.
+// Finds every .select-menu button and the .menu its popovertarget opens.
+(() =&gt; {
+  const SEL = '[role="menuitemradio"]:not(:disabled)';
+  for (const btn of document.querySelectorAll('.select-menu')) {
+    const pop = document.getElementById(btn.getAttribute('popovertarget'));
+    if (!pop) continue; // a disabled menu has no list
+    const items = () =&gt; [...pop.querySelectorAll(SEL)];
+    const value = btn.querySelector('.select-menu-value');
+    const hidden = btn.closest('.field')?.querySelector('input[type="hidden"]');
+    let typed = '', clear;
+
+    pop.addEventListener('toggle', (e) =&gt; {
+      btn.setAttribute('aria-expanded', e.newState === 'open');
+      if (e.newState === 'open') (pop.querySelector('[aria-checked="true"]') ?? items()[0])?.focus();
+    });
+
+    pop.addEventListener('click', (e) =&gt; {
+      const item = e.target.closest(SEL);
+      if (!item) return;
+      for (const i of pop.querySelectorAll('[role="menuitemradio"]')) i.setAttribute('aria-checked', i === item);
+      value.textContent = item.querySelector('.menu-item-text')?.firstChild.textContent.trim() ?? item.textContent.trim();
+      btn.removeAttribute('data-empty');
+      if (hidden) hidden.value = item.dataset.value ?? value.textContent;
+      pop.hidePopover(); // focus goes back to the button
+      btn.dispatchEvent(new CustomEvent('select-menu:change', { bubbles: true, detail: { value: item.dataset.value } }));
+    });
+
+    pop.addEventListener('keydown', (e) =&gt; {
+      const list = items(), at = list.indexOf(document.activeElement);
+      const to = { ArrowDown: at + 1, ArrowUp: at - 1, Home: 0, End: list.length - 1 }[e.key];
+      if (e.key === 'Tab') return pop.hidePopover();
+      if (to !== undefined) { e.preventDefault(); list.at(to % list.length)?.focus(); return; }
+      if (e.key.length === 1 &amp;&amp; !e.ctrlKey &amp;&amp; !e.metaKey &amp;&amp; e.key !== ' ') { // type to jump
+        typed += e.key.toLowerCase(); clearTimeout(clear); clear = setTimeout(() =&gt; (typed = ''), 600);
+        list.find((i) =&gt; i.textContent.trim().toLowerCase().startsWith(typed))?.focus();
+      }
+    });
+
+    btn.addEventListener('keydown', (e) =&gt; { // arrows open it, as a native select does
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); btn.click(); }
+    });
+  }
+})();
+</code></pre>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>Accessibility</h2>
+    <ul>
+      <li><b>Keyboard.</b> Enter, Space or the Up and Down arrows on the button open the list, with focus on the checked item. Arrow keys move between items and wrap, Home and End jump to the ends, typing a letter jumps to the item that starts with it, Enter or Space chooses and returns focus to the button, Esc closes and returns focus to it, and Tab closes it.</li>
+      <li><b>Names.</b> The button is named by the label and the current value (<code>aria-labelledby</code> lists both), so a screen reader says "Plan, Standard, button". <code>aria-haspopup="menu"</code> and <code>aria-expanded</code> say it opens a list.</li>
+      <li>The checked item is <code>aria-checked="true"</code>, not colour alone: it also has a check mark and a heavier weight.</li>
+      <li>The button and every item are at least 44px tall on touch screens, and the text is at least 16px so phones don't zoom in.</li>
+      <li>In forced colours the check follows the text colour and the focused item takes the system highlight. Opening and closing are instant with reduced motion.</li>
+    </ul>
+  </section>
+</div>
+<script src="_select-menu.js"></script>
+</body>
+</html>

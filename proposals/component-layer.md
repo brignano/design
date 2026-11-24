@@ -130,8 +130,9 @@ question isn't reopened by accident.
   scroll-snap row of cards (W1-07 + W1-08) instead.
 - **Rich text editor.** A product, not a component; use a library inside the
   app that needs it.
-- **Custom select / dropdown replacing `<select>`.** Native select is styled in
-  W1-03; a custom one is only W3-01.
+- **Custom select / dropdown replacing `<select>`.** Reversed 2026-11-23 (#198):
+  no product shows a native dropdown, so the select menu is a component. See
+  [Select menu](select-menu.md).
 - **Sign-in page.** Sites are behind Cloudflare Access, which owns that screen.
 - **Charts as components.** `tokens.chart.css` already gives colour; chart
   libraries render them.
