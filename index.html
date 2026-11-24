@@ -73,8 +73,8 @@
 
 
   /* The playground: one composed screen from real parts, re-themed by the
-     product and light/dark controls above it. The product choice also
-     re-themes every card in the catalogue. */
+     product and light/dark controls above it. The product choice is the
+     site-wide theme (issue 212): it re-themes the whole site. */
   .play { container-type: inline-size; margin: 0 0 var(--space-7); border: 1px solid var(--line); border-radius: var(--radius-lg);
           background: var(--card); overflow: hidden; }
   .play-bar { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); align-items: center;
@@ -104,7 +104,7 @@
   .demo-stats .stat-value { font-size: clamp(1.1rem, 3cqi, 1.6rem); }
   @container (min-width: 760px) { .demo-tabs { display: flex; } }
   /* The house look's display face is the pixel one, kept for eyebrows. */
-  .play-stage:not([data-product]) :is(.demo-h, .demo-brand) { font-family: var(--sans); text-transform: none; }
+  :root:not([data-product]) .play-stage :is(.demo-h, .demo-brand) { font-family: var(--sans); text-transform: none; }
 
   /* Specimen-first cards: the live preview is most of the tile. */
   .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)) !important; gap: var(--space-3) !important; }
@@ -674,11 +674,21 @@
   }
   const stage = document.querySelector('.play-stage');
   const app = document.getElementById('app');
-  document.querySelectorAll('input[name="look"]').forEach((r) => r.addEventListener('change', () => {
+  // The playground's Theme is the site-wide theme (issue 212): picking one
+  // here re-themes the whole site, the same as the top bar's picker, and a
+  // pick there shows up here.
+  const looks = [...document.querySelectorAll('input[name="look"]')];
+  const showLook = (id) => {
+    for (const r of looks) r.checked = r.value === id;
+    app.innerHTML = render(DEMOS[id || 'house']);
+  };
+  looks.forEach((r) => r.addEventListener('change', () => {
     if (!r.checked) return;
-    for (const el of [stage, parts]) { if (r.value) el.dataset.product = r.value; else delete el.dataset.product; }
-    app.innerHTML = render(DEMOS[r.value || 'house']);
+    if (window.dsTheme) window.dsTheme.setProduct(r.value);
+    else showLook(r.value);
   }));
+  document.addEventListener('ds-product', (e) => showLook(e.detail), { signal: window.dsPage?.signal });
+  if (window.dsTheme?.product) showLook(window.dsTheme.product);
   document.querySelectorAll('input[name="mode"]').forEach((r) => r.addEventListener('change', () => {
     if (!r.checked) return;
     if (r.value) stage.dataset.theme = r.value; else delete stage.dataset.theme;
