@@ -49,6 +49,7 @@
     ['layout.html', 'Layout', 'foundations'],
     ['icons.html', 'Icons', 'foundations'],
     ['writing.html', 'Content guidelines', 'foundations'],
+    ['audit.html', 'Audit command', 'foundations'],
     ['theme-brignano-io.html', 'brignano.io', 'products'],
     ['theme-homelab.html', 'Homelab', 'products'],
     ['theme-driftwood.html', 'Driftwood', 'products'],

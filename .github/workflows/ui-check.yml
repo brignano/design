@@ -19,6 +19,7 @@ jobs:
       pages: |
         /
         /previews/app-shell.html
+        /previews/audit.html
         /previews/article.html
         /previews/buttons.html
         /previews/cards.html
