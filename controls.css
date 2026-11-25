@@ -184,8 +184,9 @@
      <p class="field-error" id="email-error"><svg …></svg>Enter an email like name@example.com</p>
    </div>
    The label sits above, never a placeholder in its place. Required fields
-   carry no star; mark the optional ones. Text-like <input>, <textarea> and a
-   native <select> are styled inside .field. State comes from attributes:
+   carry no star; mark the optional ones. Text-like <input> and <textarea> are
+   styled inside .field, and a <select> only as the no-script fallback for the
+   select menu (issue 198). State comes from attributes:
    aria-invalid="true" turns the edge to --danger, disabled goes neutral.
    .field-affix wraps a control with a prefix or suffix (a unit or an icon);
    name the unit in the label too. When to validate is your script's call. */
@@ -216,8 +217,9 @@
   .field textarea { min-height: 7em; resize: vertical; }
   .field :is(input, textarea)::placeholder { color: var(--slate); opacity: 1; }
 
-  /* Native select, no custom dropdown: the chevron is two gradients in the
-     text colour, so it follows the theme and needs no image. */
+  /* Fallback only: product UI uses the select menu (issue 198), never a native
+     dropdown. This styles the closed <select> for a page without script,
+     or in forced colours. The chevron is two gradients in the text colour. */
   .field select {
     appearance: none;
     padding-right: 36px;
@@ -1225,6 +1227,99 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .popover { transition: none; transform: none; }
+  }
+}
+
+/* ── Select menu (issue 198) ───────────────────────────────────────────────────
+   Replaces the native <select>, whose open list is the operating system's and
+   looks different on every device. A button shows the choice and opens a
+   .popover holding a .menu of radio items. No product shows a native dropdown.
+   <div class="field">
+     <label id="plan-l">Plan</label>
+     <button type="button" class="select-menu" id="plan" popovertarget="plan-list"
+             aria-haspopup="menu" aria-expanded="false" aria-labelledby="plan-l plan-v">
+       <span class="select-menu-value" id="plan-v">Standard</span>
+     </button>
+     <div class="popover" id="plan-list" popover>
+       <div class="menu" role="menu" aria-labelledby="plan-l">
+         <button type="button" class="menu-item" role="menuitemradio" aria-checked="true">
+           <span class="menu-item-text">Standard<small>Up to five sites</small></span>
+         </button>
+         …
+       </div>
+     </div>
+     <input type="hidden" name="plan" value="standard">
+   </div>
+   The popover, its anchoring, light dismiss and flipping are the popover's
+   own (#56). The checked item carries aria-checked="true" and a check mark.
+   The script that keeps the choice, the value and the keys is the contract on
+   previews/select-menu.html, as tabs do.
+   - Width: the list is at least as wide as the button.
+   - Hint: <small> under an item's label, one line.
+   - .select-menu-inline fits its content, for a sort or filter in a toolbar.
+   - No script: a .field can hold a native <select>, which stays styled above
+     as the fallback; the script swaps it for this. */
+@layer brignano.components {
+  .select-menu {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 40px;
+    margin: 0;
+    padding: 7px 36px 7px 12px;
+    border: 1px solid var(--line-control);
+    border-radius: var(--radius-control);
+    background-color: var(--card);
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: calc(100% - 19px) 50%, calc(100% - 14px) 50%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    color: var(--ink);
+    font: max(1rem, var(--text-base)) / 24px var(--sans);
+    text-align: start;
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease);
+  }
+  .select-menu-value { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* No choice yet: the value is a prompt, in the placeholder colour. */
+  .select-menu[data-empty] .select-menu-value { color: var(--slate); }
+  .select-menu:hover { border-color: var(--ink-soft); }
+  .select-menu:focus-visible, .select-menu:popover-open { outline: 2px solid var(--action-ink); outline-offset: 2px; }
+  .select-menu[aria-invalid='true'], .select-menu[aria-invalid='true']:hover { border-color: var(--danger); }
+  .select-menu:disabled { border-color: transparent; background-color: var(--surface-hover); color: var(--ink-soft); cursor: not-allowed; }
+  .select-menu-inline { display: inline-block; width: auto; max-width: 100%; }
+
+  /* The list is at least as wide as the button, where anchor sizing exists. */
+  @supports (min-width: anchor-size(width)) {
+    .popover:has(> .menu > [role='menuitemradio']) { min-width: anchor-size(width); }
+  }
+
+  /* Radio items: room for the check at the start, then the label and its hint. */
+  .menu-item[role='menuitemradio']::before {
+    content: '';
+    flex: none;
+    width: 16px;
+    height: 16px;
+    background-color: var(--action-ink);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M3.5 9.5l3.5 3.5 7.5-8' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M3.5 9.5l3.5 3.5 7.5-8' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px no-repeat;
+    opacity: 0;
+  }
+  .menu-item[role='menuitemradio'][aria-checked='true']::before { opacity: 1; }
+  .menu-item[role='menuitemradio'][aria-checked='true'] { font-weight: var(--weight-medium); }
+  .menu-item-text { display: grid; gap: 1px; min-width: 0; }
+  .menu-item-text > small { color: var(--ink-soft); font-size: var(--text-xs); font-weight: var(--weight-regular); line-height: var(--leading-ui); }
+
+  @media (pointer: coarse) {
+    .select-menu { min-height: 44px; }
+  }
+  @media (forced-colors: active) {
+    .menu-item[role='menuitemradio']::before { background-color: currentColor; }
+    .menu-item-text > small { color: inherit; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .select-menu { transition: none; }
   }
 }
 
