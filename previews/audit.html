@@ -1,0 +1,62 @@
+<!-- @dsCard group="Foundations" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit command</title>
+<script src="_site.js"></script>
+<link rel="stylesheet" href="_preview.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_docs.css">
+</head>
+<body>
+<h1>Audit command</h1>
+<p class="sub">A check an app runs in CI. It fails when the app styles around the system: a colour, font, radius, shadow or spacing value that isn't a token, or a token name the package doesn't define.</p>
+
+<div class="docs">
+  <section data-doc="usage">
+    <h2>Run it</h2>
+    <p>No install and no config. Give it files or folders; with none it scans the current folder. It reads CSS, HTML, JSX/TSX, Astro and Svelte, skips <code>node_modules</code>, anything in <code>.gitignore</code> and anything listed in a <code>design-audit.ignore</code> file (one path or glob per line), and exits 1 on any error.</p>
+<pre><code>npx @brignano/design audit src
+npx @brignano/design audit --json
+npx @brignano/design audit --spacing=error</code></pre>
+    <p>Each finding names its file, line and column:</p>
+<pre><code>src/card.css:12:3  error    colour         colour literal rgb() (use a colour token)
+src/card.css:14:3  error    border-radius  border-radius 6px is not a token (use var(--radius-sm), …)
+src/card.css:15:3  warning  spacing        padding 12px is not a token (use var(--space-1) to var(--space-9))
+
+3 files scanned: 2 errors, 1 warning, 1 open exception.</code></pre>
+  </section>
+
+  <section data-doc="use-when">
+    <h2>What it fails on</h2>
+    <ul>
+      <li>A colour literal: a hex, <code>rgb()</code>, <code>hsl()</code>, <code>oklch()</code> and the other colour functions. A function that reads a token, like <code>rgb(var(--ink) / 50%)</code>, is fine.</li>
+      <li>A Tailwind arbitrary colour: <code>bg-[…]</code>, <code>text-[…]</code> and the rest, when the brackets hold a literal colour.</li>
+      <li>A <code>font-family</code> or <code>box-shadow</code> that isn't <code>var(--…)</code>.</li>
+      <li>A <code>border-radius</code> with a length that isn't a token. <code>0</code> and percentages pass.</li>
+      <li>A <code>padding</code>, <code>margin</code> or <code>gap</code> with a length that isn't a token. <strong>A warning for now</strong>; <code>--spacing=error</code> makes it an error. <code>0</code>, <code>auto</code> and percentages pass.</li>
+      <li>A <code>var(--name)</code> the package doesn't define. Names come from the package's own <code>tokens.css</code>, <code>tokens.chart.css</code>, kits and themes, so a renamed or invented token is caught. Tailwind's <code>--tw-*</code> are left alone.</li>
+    </ul>
+    <p>An SVG file or an image is never a finding. Inline SVG in markup is. Comments are skipped.</p>
+  </section>
+
+  <section data-doc="dont-use">
+    <h2>When the system lacks something</h2>
+    <p>File an issue in <a href="https://github.com/brignano/design/issues">brignano/design</a>, then wait or take an exception. Never style around the gap in the app: the fix belongs here, so every app gets it.</p>
+    <p>One escape hatch, on the line or the line above it, in any comment style:</p>
+<pre><code>/* design-exception: brignano/design#123 */
+.hero { border-radius: 14px; }</code></pre>
+    <p>It passes while that issue is open and fails the day the issue closes. The audit counts open exceptions in its summary and in <code>--json</code>, so they stay visible. If GitHub can't be reached the exception passes with a warning, so CI never breaks on a network error.</p>
+  </section>
+
+  <section data-doc="a11y">
+    <h2>In CI</h2>
+    <p>Add one step to the app's workflow. <code>--json</code> gives <code>findings</code>, <code>exceptions</code>, <code>warnings</code> and a <code>summary</code> with <code>errors</code>, <code>warnings</code> and <code>openExceptions</code>.</p>
+<pre><code>- run: npx @brignano/design audit src</code></pre>
+    <p>The audit reads names from the version of the package it runs from, so pin <code>@brignano/design</code> in the app like any dependency.</p>
+  </section>
+</div>
+</body>
+</html>

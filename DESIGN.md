@@ -641,6 +641,18 @@ To use the components in a Tailwind site, import **`controls.css`**, not
 
 **Never hardcode a hex outside the token files.**
 
+### Apps are audited
+
+An app that needs something the system lacks files an issue here and waits or
+takes an exception. It never styles around the gap. `npx @brignano/design audit`
+enforces it in the app's CI: it fails with `file:line` on a colour literal, a
+`font-family`, `border-radius`, `box-shadow` or spacing value that isn't a
+token, a Tailwind arbitrary colour, or a `var(--…)` name the package doesn't
+define. The one escape hatch is `/* design-exception: brignano/design#123 */`
+on or above the line, which passes while that issue is open and fails once it
+is closed. Spacing is a warning until the apps are clean. ADR-0023;
+`previews/audit.html`.
+
 ### Where a token lives
 
 `tokens/*.json` is the source, one file per family (`color`, `type`, `space`,

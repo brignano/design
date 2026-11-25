@@ -506,7 +506,7 @@ for (const [f, rs] of layerRules)
 // skeleton and its examples are documented in DESIGN.md §13.
 const NOT_DOCS = new Set(['color.html', 'type.html', 'elevation.html', 'components.html',
   'diagram.html', 'product-page.html', 'product-page-example.html', 'product-page-guidebook.html',
-  'product-page-sites.html', 'product-media.html', 'writing.html',
+  'product-page-sites.html', 'product-media.html', 'writing.html', 'audit.html',
   'theme-brignano-io.html', 'theme-homelab.html', 'theme-driftwood.html', 'theme-sites.html',
   'theme-guidebook.html']);
 const STATUSES = ['stable', 'beta', 'planned'];

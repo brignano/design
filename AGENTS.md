@@ -1,7 +1,7 @@
 # Working on @brignano/design
 
 Read `DESIGN.md` (the rules) and `decisions/` (why, one ADR per file) before changing a token.
-Before every commit: `npm run check`.
+Before every commit: `npm run check && npm test`.
 
 Tokens are generated. Edit `tokens/*.json` (never `tokens.css`,
 `tokens.chart.css`, `tailwind.css`, `kits/*.css` or `themes/*.css`), then

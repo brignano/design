@@ -16,6 +16,7 @@ The shared design system for every brignano surface — `brignano.io`, `life`,
 | [`templates/`](./templates) | Page templates built on `components.css`: `article.css` (posts and docs), `changelog.css`, `legal.css`, `error.css` (404, 500, offline), `settings.css`, and a transactional email (`email.html` + `email.txt`, filled from the tokens by `scripts/email-tokens.mjs`). Import as `@brignano/design/templates/<name>.css`. |
 | [`icons/`](./icons) | One curated outline icon set (Lucide, ISC; `icons/LICENSE`) on a 24px grid in `currentColor`. Size with `.icon-sm`, `.icon`, `.icon-lg` from `components.css`; browse and copy in `previews/icons.html`. Paste the markup inline (`@brignano/design/icons/<name>.svg`); through `<img>` an icon can't take the text colour. |
 | [`logo/`](./logo) | The `ab` logo: `paths.mjs` to inline it (letters in `--ink`, cursor in `--mark-current`), `mark.svg` for an `<img>`, `favicon.svg` for a browser tab (no box), `tile.svg` and the tile PNGs for an app icon. Rules in DESIGN.md §5, "The logo". |
+| [`scripts/audit.mjs`](./scripts/audit.mjs) | The audit an app runs in CI: `npx @brignano/design audit [paths]` fails with `file:line` when it styles around the system. Reads this package's token names; no config. DESIGN.md §12, ADR-0023; docs in `previews/audit.html`. |
 | [`previews/`](./previews) | Live swatches. Open one in a browser to see the tokens render. |
 
 ## The shape of it

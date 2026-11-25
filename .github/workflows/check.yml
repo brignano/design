@@ -23,6 +23,8 @@ jobs:
           node-version: 24
       # No install: the check has no dependencies.
       - run: node scripts/check.mjs
+      # The audit command's own tests (they call no network).
+      - run: npm test
 
   fold:
     # DESIGN.md §13: the first phone screen of the product page previews shows

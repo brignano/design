@@ -11,7 +11,8 @@
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
     "controls": "node scripts/controls.mjs",
-    "search-index": "node scripts/search-index.mjs"
+    "search-index": "node scripts/search-index.mjs",
+    "test": "node --test scripts/audit.test.mjs"
   },
   "publishConfig": {
     "access": "public",
@@ -35,7 +36,9 @@
     "scripts/colour.mjs",
     "tailwind.css",
     "DESIGN.md",
-    "decisions/"
+    "decisions/",
+    "scripts/audit.mjs",
+    "scripts/cli.mjs"
   ],
   "exports": {
     "./tokens.css": "./tokens.css",
@@ -54,5 +57,8 @@
   },
   "sideEffects": [
     "*.css"
-  ]
+  ],
+  "bin": {
+    "design": "scripts/cli.mjs"
+  }
 }
