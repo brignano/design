@@ -791,10 +791,9 @@
     const bar = topBar();
     root.classList.toggle('ds-full', full);
     if (full) {
-      // The demo keeps the whole width; its own layout is the point. The
-      // sidebar is built but only ever shown in the drawer.
+      // The demo keeps its own layout. The sidebar sits fixed beside it from
+      // 900px up (a rail the page is padded for), and is the drawer below.
       const side = sidebar();
-      side.hidden = true;
       body.prepend(bar);
       body.append(side);
       const p = pager();
