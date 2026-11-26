@@ -417,7 +417,7 @@
   /* ── Type ─────────────────────────────────────────────────────────────
        --sans     Geist — body and headings, both tiers
        --mono     IBM Plex Mono — data that must read precise
-       --display  Silkscreen — MARKETING TIER ONLY (monogram, hero eyebrows)
+       --display  Geist, the heavy display treatment — both tiers (ADR-0014)
 
      NOTE: Geist is not yet installed in `life` — only brignano.io
      self-hosts it. Until added, the stack falls through to Inter and that
@@ -508,7 +508,6 @@
    face and opens the type scale. COLOUR IS IDENTICAL ACROSS TIERS — that
    is the point of this file. Tool tier is the default. */
 .tier-marketing {
-  --display: 'Silkscreen', var(--mono);
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1.0625rem;
