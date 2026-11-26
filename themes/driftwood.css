@@ -43,6 +43,9 @@
   --shadow-1: none;
   --shadow-2: none;
   --shadow-3: none;
+  --icon-stroke: 1.5;
+  --icon-cap: square;
+  --icon-join: miter;
 
   /* From the theme. */
   --action: light-dark(#55e3e3, #55e3e3);

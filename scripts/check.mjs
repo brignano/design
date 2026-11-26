@@ -63,6 +63,7 @@ import { controls } from './controls.mjs';
 import { build, rootTokenMap, theme as buildTheme } from './build.mjs';
 import { searchIndex } from './search-index.mjs';
 import { derive, gate, parse } from './theme.mjs';
+import { ICON_STYLE } from './icons.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, root), 'utf8');
@@ -560,12 +561,16 @@ for (const n of iconFiles) {
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(n)) fail(`icons/${n}.svg: names are lower-case kebab, as Lucide's are`);
   for (const m of svg.matchAll(/\b(fill|stroke)\s*=\s*(["'])(.*?)\2/g))
     if (!['none', 'currentColor'].includes(m[3])) fail(`icons/${n}.svg: ${m[1]}="${m[3]}"; icons take currentColor`);
-  if (/\s(style|color)\s*=|<style\b/.test(svg)) fail(`icons/${n}.svg: carries style= or color=; icons take currentColor from the text`);
+  // The stroke rule is carried by tokens (ADR-0025): the one allowed style= is
+  // the one scripts/icons.mjs writes, and none of the three may be hardcoded.
+  if (/\scolor\s*=|<style\b/.test(svg) || /\sstyle\s*=/.test(svg.replace(`style="${ICON_STYLE}"`, '')))
+    fail(`icons/${n}.svg: carries style= or color=; icons take currentColor from the text`);
+  if (/\sstroke-(width|linecap|linejoin)\s*=/.test(svg))
+    fail(`icons/${n}.svg: hardcodes its stroke; the rule is --icon-stroke, --icon-cap and --icon-join (run node scripts/icons.mjs)`);
+  if (!svg.includes(ICON_STYLE)) fail(`icons/${n}.svg: doesn't carry the stroke tokens (run node scripts/icons.mjs)`);
   if (/#[0-9a-fA-F]{3,8}\b/.test(svg)) fail(`icons/${n}.svg: carries a hex colour`);
   if (!/viewBox="0 0 24 24"/.test(head)) fail(`icons/${n}.svg: not on the 24px grid`);
   if (!/\swidth="24"/.test(head) || !/\sheight="24"/.test(head)) fail(`icons/${n}.svg: must be width="24" height="24"`);
-  if ([...svg.matchAll(/stroke-width\s*=\s*["']([^"']*)["']/g)].some((m) => m[1] !== '2') || !/stroke-width="2"/.test(head))
-    fail(`icons/${n}.svg: one stroke width, 2`);
 }
 
 // ── 12. One set of content rules, written once and shown once ──────────────

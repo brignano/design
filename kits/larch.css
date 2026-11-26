@@ -77,6 +77,9 @@
      A chart sits on near-white paper in light: the orange series needs it to
      reach 3:1, which the tinted page and card cannot give it. */
   --chart-surface: light-dark(#fefcf7, #16211b);
+  --icon-stroke: 1.75;
+  --icon-cap: round;
+  --icon-join: round;
 }
 
 /* Aliases from :root that lead to a token this kit sets, declared again so

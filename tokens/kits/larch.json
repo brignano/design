@@ -250,6 +250,15 @@
         "dark": "#16211b"
       },
       "$description": "── Charts ──\nA chart sits on near-white paper in light: the orange series needs it to\nreach 3:1, which the tinted page and card cannot give it."
+    },
+    "icon-stroke": {
+      "$value": "1.75"
+    },
+    "icon-cap": {
+      "$value": "round"
+    },
+    "icon-join": {
+      "$value": "round"
     }
   }
 }
