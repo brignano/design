@@ -2370,6 +2370,9 @@
    <p class="display">404</p>                        ← one heavy moment, at most
    <span class="stamp" role="img" aria-label="Anthony Brignano">ab</span>
    <span class="rule"></span>                        ← the bar above a hero heading
+   <h1 class="caret cursor-blink">Title</h1>         ← the cursor after a page's H1 (ADR-0024)
+   <p class="comment-label">now</p>                  ← a "// now" label above a section
+   <main data-headings="heavy">…</main>              ← headings h1–h3 at the heavy weight
 
    The eyebrow is written in sentence case and uppercased here. .rule is the
    mark in force (--mark-current: the product's, or the family amber): it inks
@@ -2416,9 +2419,47 @@
      on a .stamp. Opacity only, and none under reduced motion. */
   @media (prefers-reduced-motion: no-preference) {
     .cursor-blink:not(.stamp),
-    .stamp.cursor-blink::after { animation: cursor-blink 1.06s steps(1, end) 3; }
+    .stamp.cursor-blink::after,
+    .caret.cursor-blink::after { animation: cursor-blink 1.06s steps(1, end) 3; }
   }
   @keyframes cursor-blink { 50% { opacity: 0; } }
+  /* The cursor after a page's H1, drawn as a bar in the mark in force
+     (ADR-0024). A graphic: aria-hidden by construction, since it is
+     generated content. A holiday or product tint is --mark-current. */
+  .caret::after {
+    content: "";
+    display: inline-block;
+    width: 0.1em;
+    height: 0.8em;
+    margin-left: 0.06em;
+    vertical-align: -0.03em;
+    border-radius: 1px;
+    background: var(--mark-current);
+  }
+  /* A section's label: "// now". The slashes are the mark in force; the words
+     stay --ink-soft, since colour is a surface, not text (§3). Not an
+     .eyebrow: lower case, one per section rather than one per screen. */
+  .comment-label {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-ui);
+    color: var(--ink-soft);
+  }
+  .comment-label::before {
+    content: "// ";
+    content: "// " / "";
+    color: var(--mark-current);
+    white-space: pre;
+  }
+  /* Heavy headings, opted into by a site (ADR-0024): h1 to h3 inside the
+     element take the display treatment's weight and tracking. */
+  [data-headings="heavy"] :is(h1, h2, h3) {
+    font-weight: var(--weight-heavy);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+  }
   .rule { display: block; width: 56px; height: 3px; border: 0; border-radius: 2px; background: var(--mark-current); }
 }
 

@@ -8,7 +8,7 @@
     },
     "sans": {
       "$value": "'Geist', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      "$description": "── Type ─────────────────────────────────────────────────────────────\n  --sans     Geist — body and headings, both tiers\n  --mono     IBM Plex Mono — data that must read precise\n  --display  Silkscreen — MARKETING TIER ONLY (monogram, hero eyebrows)\n\nNOTE: Geist is not yet installed in `life` — only brignano.io\nself-hosts it. Until added, the stack falls through to Inter and that\nrepo renders as before. Adding it is a deliberate separate change."
+      "$description": "── Type ─────────────────────────────────────────────────────────────\n  --sans     Geist — body and headings, both tiers\n  --mono     IBM Plex Mono — data that must read precise\n  --display  Geist, the heavy display treatment — both tiers (ADR-0014)\n\nNOTE: Geist is not yet installed in `life` — only brignano.io\nself-hosts it. Until added, the stack falls through to Inter and that\nrepo renders as before. Adding it is a deliberate separate change."
     },
     "mono": {
       "$value": "'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace"
@@ -163,9 +163,6 @@
       "io.brignano": {
         "selector": ".tier-marketing"
       }
-    },
-    "display": {
-      "$value": "'Silkscreen', var(--mono)"
     },
     "text-xs": {
       "$value": "0.75rem"
