@@ -264,13 +264,34 @@ the letters read as a divider. Redraw it with `scripts/logo.py`, never by hand.
   never blinks on hover, scroll or forever, never under
   `prefers-reduced-motion`, and the tab icon doesn't blink at all.
 
+### The cursor look (ADR-0024)
+
+A site that sets its page in the cursor look (brignano.io) takes three pieces
+from the system, each opt-in:
+
+- **`.caret`** puts the cursor after a page's `h1`: a thin bar in
+  `--mark-current`, so a holiday or product tint follows it. Add `.cursor-blink`
+  for the logo's three blinks (ADR-0022); never more than that, and the rule on
+  motion is the logo's. One caret a page.
+- **`.comment-label`** sets a section's `// label` above its heading: mono, the
+  words in `--ink-soft`, the slashes in `--mark-current`. It is not an
+  `.eyebrow`: the eyebrow is one per screen, the label is one per section, and
+  a section carries one or the other. Amber is never the words' colour (§3).
+- **`data-headings="heavy"`** on `<html>`, `<body>` or a wrapper sets `h1` to
+  `h3` inside it at `--weight-heavy`, tight. It is a site's choice, made once;
+  without it headings stay at 600 and the heavy weight stays at once a screen.
+
+A tint for a holiday is any colour a consumer sets `--mark-current` to, and it
+has to hold the mark's floor, 3:1 on `--bg` and `--card` in both themes. The
+system doesn't ship holiday colours; the site owns them and checks them.
+
 Sizes change with the tier (`--text-xs` … `--text-4xl`); weight, leading and
 tracking don't:
 
 | Token | Value | For |
 |---|---|---|
 | `--weight-regular` / `-medium` / `-semibold` | 400 / 500 / 600 | text / controls and labels / headings. Nothing lighter or bolder. |
-| `--weight-heavy` | 800 | `.display` and `.stamp` only |
+| `--weight-heavy` | 800 | `.display`, `.stamp`, and headings inside `data-headings="heavy"` |
 | `--leading-display` | 1.15 | display headings |
 | `--leading-title` | 1.3 | titles |
 | `--leading-ui` | 1.4 | interface text |
