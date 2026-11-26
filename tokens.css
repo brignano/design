@@ -567,6 +567,16 @@
     0 10px 28px light-dark(transparent, rgba(0, 0, 0, 0.65));
   --scrim: light-dark(rgba(17, 17, 17, 0.55), rgba(0, 0, 0, 0.68));
   --shadow: var(--shadow-1); /* legacy alias */
+
+  /* ── Icon stroke (ADR-0025) ───────────────────────────────────────────
+     One rule per kit, carried by three tokens so one icon file serves every
+     kit: --icon-stroke (width), --icon-cap, --icon-join. Defaults are today's
+     Lucide look (2, round, round); Split is 1.5 square/miter, Ledger 1.5
+     butt/miter, Larch 1.75 round. `[data-kit] svg` applies them to inline icons;
+     the files in icons/ read them with a fallback, so an <img> still draws. */
+  --icon-stroke: 2;
+  --icon-cap: round;
+  --icon-join: round;
 }
 
 :root {

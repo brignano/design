@@ -737,7 +737,8 @@
 /* ── Icon (#87) ────────────────────────────────────────────────────────────
    <svg class="icon" aria-hidden="true">…</svg>   paste from icons/<name>.svg
    One curated set (Lucide, ISC: icons/LICENSE), drawn on a 24px grid at a
-   2px stroke in currentColor, so an icon takes its text's colour. Sizes
+   2px stroke in currentColor (a kit sets its own, ADR-0025), so an icon takes
+   its text's colour. Sizes
    follow the type scale at 1.25× the text they sit beside, the same ratio
    .btn gives an svg: .icon-sm beside --text-sm, .icon beside body text,
    .icon-lg beside --text-lg. Decorative icons take aria-hidden="true"; an
@@ -753,6 +754,13 @@
   }
   .icon-sm { width: calc(var(--text-sm) * 1.25); height: calc(var(--text-sm) * 1.25); }
   .icon-lg { width: calc(var(--text-lg) * 1.25); height: calc(var(--text-lg) * 1.25); }
+  /* The kit's stroke rule (ADR-0025). With no data-kit, the files' own
+     fallbacks (2, round, round) draw, as before. */
+  [data-kit] svg[stroke="currentColor"] {
+    stroke-width: var(--icon-stroke);
+    stroke-linecap: var(--icon-cap);
+    stroke-linejoin: var(--icon-join);
+  }
 }
 
 /* ── Layout primitives (#53) ──────────────────────────────────────────────

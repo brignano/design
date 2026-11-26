@@ -6,9 +6,7 @@
   viewBox="0 0 24 24"
   fill="none"
   stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
+  style="stroke-width: var(--icon-stroke, 2); stroke-linecap: var(--icon-cap, round); stroke-linejoin: var(--icon-join, round)"
 >
   <rect width="20" height="14" x="2" y="3" rx="2" />
   <line x1="8" x2="16" y1="21" y2="21" />

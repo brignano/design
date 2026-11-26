@@ -50,6 +50,9 @@
   --shadow-1: none;
   --shadow-2: none;
   --shadow-3: none;
+  --icon-stroke: 1.5;
+  --icon-cap: butt;
+  --icon-join: miter;
 }
 
 /* Aliases from :root that lead to a token this theme sets, declared again so

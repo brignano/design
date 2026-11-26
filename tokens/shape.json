@@ -51,6 +51,16 @@
           "note": "legacy alias"
         }
       }
+    },
+    "icon-stroke": {
+      "$value": "2",
+      "$description": "── Icon stroke (ADR-0025) ───────────────────────────────────────────\nOne rule per kit, carried by three tokens so one icon file serves every\nkit: --icon-stroke (width), --icon-cap, --icon-join. Defaults are today's\nLucide look (2, round, round); Split is 1.5 square/miter, Ledger 1.5\nbutt/miter, Larch 1.75 round. `[data-kit] svg` applies them to inline icons;\nthe files in icons/ read them with a fallback, so an <img> still draws."
+    },
+    "icon-cap": {
+      "$value": "round"
+    },
+    "icon-join": {
+      "$value": "round"
     }
   }
 }

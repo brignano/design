@@ -8,6 +8,9 @@
 <script src="_site.js"></script>
 <link rel="stylesheet" href="_preview.css">
 <link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="../kits/split.css">
+<link rel="stylesheet" href="../kits/ledger.css">
+<link rel="stylesheet" href="../kits/larch.css">
 <link rel="stylesheet" href="_docs.css">
 <style>
   /* Preview chrome: the searchable grid. Tokens only. */
@@ -36,7 +39,7 @@
 </head>
 <body>
 <h1>Icons</h1>
-<p class="sub">One outline set on a 24px grid at a 2px stroke, coloured by the text around it. Click an icon to copy its SVG.</p>
+<p class="sub">One outline set on a 24px grid, drawn at a 2px stroke until a kit sets its own, coloured by the text around it. Click an icon to copy its SVG.</p>
 
 <div class="pair">
   <div class="panel light"><span class="panel-label">Light</span>
@@ -53,6 +56,17 @@
       <span class="lg"><svg class="icon icon-lg" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M15 3h6v6"/> <path d="M10 14 21 3"/> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/> </svg>Large</span>
     </p>
   </div>
+</div>
+
+<h2>In each kit</h2>
+<p class="sub">The same files, drawn by each kit's stroke rule: Split 1.5 square, Ledger 1.5 flat, Larch 1.75 round.</p>
+<div class="pair">
+  <div class="panel light" data-kit="split"><span class="panel-label">Split · light</span><p class="icon-sizes" data-kit-row></p></div>
+  <div class="panel dark" data-kit="split"><span class="panel-label">Split · dark</span><p class="icon-sizes" data-kit-row></p></div>
+  <div class="panel light" data-kit="ledger"><span class="panel-label">Ledger · light</span><p class="icon-sizes" data-kit-row></p></div>
+  <div class="panel dark" data-kit="ledger"><span class="panel-label">Ledger · dark</span><p class="icon-sizes" data-kit-row></p></div>
+  <div class="panel light" data-kit="larch"><span class="panel-label">Larch · light</span><p class="icon-sizes" data-kit-row></p></div>
+  <div class="panel dark" data-kit="larch"><span class="panel-label">Larch · dark</span><p class="icon-sizes" data-kit-row></p></div>
 </div>
 
 <div class="icon-tools">
@@ -100,6 +114,7 @@
     <ul>
       <li><code>.icon-sm</code>, <code>.icon</code> and <code>.icon-lg</code> are 1.25 times <code>--text-sm</code>, the body size and <code>--text-lg</code>, so they track the tier. Inside <code>.btn</code> an svg sizes itself the same way.</li>
       <li>Every icon strokes in <code>currentColor</code>: set the colour on the text, never on the icon. That only works inline: an svg loaded through <code>&lt;img&gt;</code> or a CSS <code>url()</code> draws black, so paste the markup.</li>
+      <li>The stroke is a kit's: <code>--icon-stroke</code>, <code>--icon-cap</code> and <code>--icon-join</code> (ADR-0025). Inline icons take them under <code>data-kit</code>; the files read them with Lucide's values as the fallback, so an <code>&lt;img&gt;</code> still draws. After adding a file, run <code>node scripts/icons.mjs</code>.</li>
       <li>The files keep Lucide's names. The licence is in <code>icons/LICENSE</code> and ships with the package.</li>
     </ul>
   </section>
@@ -163,6 +178,13 @@
         li.append(button);
         grid.append(li);
       }
+      for (const row of document.querySelectorAll('[data-kit-row]'))
+        for (const name of ['house', 'search', 'settings', 'bell', 'user', 'circle-check', 'triangle-alert', 'chevron-right']) {
+          const text = files.find(([n]) => n === name)[1].replace(/<!--[\s\S]*?-->\s*/, '').trim();
+          const span = document.createElement('span');
+          span.innerHTML = text.replace('<svg', '<svg class="icon-lg" aria-hidden="true"');
+          row.append(span);
+        }
       show();
     });
   search.addEventListener('input', show);

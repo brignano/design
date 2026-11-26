@@ -242,6 +242,15 @@
     },
     "shadow-3": {
       "$value": "none"
+    },
+    "icon-stroke": {
+      "$value": "1.5"
+    },
+    "icon-cap": {
+      "$value": "butt"
+    },
+    "icon-join": {
+      "$value": "miter"
     }
   }
 }

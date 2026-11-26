@@ -32,3 +32,4 @@ record is only edited to mark it superseded; a change of mind is a new record.
 | [0022](0022-cursor-blink.md) | The logo's cursor blinks three times on load | 2026-11-23 |
 | [0023](0023-audit.md) | Apps are audited against the system, with one escape hatch | 2026-11-24 |
 | [0024](0024-cursor-look.md) | The cursor look: a caret, a comment label, heavy headings | 2026-11-26 |
+| [0025](0025-icon-stroke-tokens.md) | An icon's stroke is three tokens, one rule per kit | 2026-11-26 |
